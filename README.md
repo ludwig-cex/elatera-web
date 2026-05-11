@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Elatera Web
 
-## Getting Started
+Premiere-Website für **Elatera** — wissenschaftlich entwickelte Nahrungsergänzung für Erwachsene 55+.
 
-First, run the development server:
+V0 läuft im **Wartelisten-Modus**: keine Zahlungsabwicklung, keine echten Produkte im Lager. Alle Produktseiten sammeln E-Mail-Anmeldungen für die Premiere 2026.
+
+## Stack
+
+- Next.js 16 (App Router) + Turbopack
+- TypeScript
+- Tailwind CSS v4 mit Design-Tokens als CSS-Variablen
+- Radix UI Primitives (Accordion, Dialog, Tabs)
+- lucide-react Icons
+- next/font für Cormorant Garamond + DM Sans
+
+## Lokale Entwicklung
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Server startet auf [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Struktur
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/
+│   ├── page.tsx                    # Homepage
+│   ├── layout.tsx                  # Root Layout
+│   ├── globals.css                 # Design Tokens
+│   ├── products/[slug]/page.tsx    # Sales-Pages (Balance, Mobil, Nox)
+│   ├── pages/                      # Über uns, FAQ, Kontakt, Apotheken
+│   └── policies/                   # Impressum, AGB, Datenschutz, Widerruf
+├── components/
+│   ├── brand/logo.tsx              # Elatera-Logo (Variant 10 "Outlined Circle")
+│   ├── site/                       # Header, Footer, Top-Bar, Cookie-Banner
+│   ├── cart/                       # Warteliste (Context + Drawer)
+│   ├── product/                    # Sales-Page Sektionen
+│   └── sections/                   # Wiederverwendbare Sektionen
+└── lib/
+    ├── products.ts                 # Produktkatalog (3 SKUs)
+    └── utils.ts                    # cn, formatPrice helpers
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design System
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Quelle: Claude Design Handoff Bundle (2026-05-11).
 
-## Deploy on Vercel
+**Farben** (s. `globals.css`):
+- Brand: Forest `#1f3b32` · Moss `#2f5c47` · Pine `#0f2a23`
+- Accents: Copper `#a36b3a` · Gold `#b5915b`
+- Backgrounds: Paper `#f4f1ea` · Cream `#efe9dc` · Ivory `#faf6ec`
+- Product palettes: Balance (Eukalyptus) · Mobil (Sand) · Nox (Indigo)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Type**: Cormorant Garamond (Serif Display) + DM Sans (Body).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Logo**: Variante 10 "Outlined Circle" mit Cormorant-E im Kreis.
+
+## V0-Einschränkungen
+
+- Kein Stripe/Klarna verbunden — Verkaufsfunktion deaktiviert.
+- "In den Warenkorb" → "Auf Warteliste setzen"
+- Pre-Order-Versprechen: 10 % Vorteil bei Premiere.
+- Impressum/AGB/Datenschutz/Widerruf sind Platzhalter — werden zur Premiere durch rechtssichere Texte ersetzt.
+
+## Roadmap
+
+Siehe `../01_Master_Projektplan.md` im Parent-Ordner.

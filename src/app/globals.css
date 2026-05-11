@@ -1,26 +1,161 @@
 @import "tailwindcss";
 
+/* ============================================================
+ * Elatera Design Tokens
+ * Source: Claude Design handoff bundle (2026-05-11)
+ * ============================================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand */
+  --color-forest: #1f3b32;
+  --color-moss: #2f5c47;
+  --color-pine: #0f2a23;
+  --color-sage: #7a9686;
+
+  /* Support */
+  --color-navy: #14304a;
+  --color-indigo: #1d4768;
+  --color-steel: #6f8aa3;
+
+  /* Accents */
+  --color-copper: #a36b3a;
+  --color-gold: #b5915b;
+
+  /* Backgrounds */
+  --color-paper: #f4f1ea;
+  --color-cream: #efe9dc;
+  --color-ivory: #faf6ec;
+
+  /* Text */
+  --color-ink: #1f2a26;
+  --color-ink-soft: #3b4843;
+  --color-muted: #7a7060;
+  --color-on-dark: #faf6ec;
+
+  /* Product Accents */
+  --color-balance-bg: #e6ece4;
+  --color-balance-spine: #dde4d9;
+  --color-balance-badge: #2f5c47;
+  --color-balance-badge-text: #f4f1ea;
+  --color-balance-ink: #1f3b32;
+  --color-balance-sub-ink: #4f6a5d;
+  --color-balance-capsule: #2f5c47;
+
+  --color-mobil-bg: #efe4d3;
+  --color-mobil-spine: #e6d8c2;
+  --color-mobil-badge: #a36b3a;
+  --color-mobil-badge-text: #fbf5e8;
+  --color-mobil-ink: #4a2e16;
+  --color-mobil-sub-ink: #7b5634;
+  --color-mobil-capsule: #a36b3a;
+
+  --color-nox-bg: #dde2ea;
+  --color-nox-spine: #d3d9e3;
+  --color-nox-badge: #243a55;
+  --color-nox-badge-text: #eef0f5;
+  --color-nox-ink: #1a2840;
+  --color-nox-sub-ink: #3e547a;
+  --color-nox-capsule: #243a55;
+
+  /* Type */
+  --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
 }
 
+/* Tailwind theme bridge */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-forest: var(--color-forest);
+  --color-moss: var(--color-moss);
+  --color-pine: var(--color-pine);
+  --color-sage: var(--color-sage);
+  --color-navy: var(--color-navy);
+  --color-copper: var(--color-copper);
+  --color-gold: var(--color-gold);
+  --color-paper: var(--color-paper);
+  --color-cream: var(--color-cream);
+  --color-ivory: var(--color-ivory);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-muted: var(--color-muted);
+  --color-on-dark: var(--color-on-dark);
+
+  --color-balance-bg: var(--color-balance-bg);
+  --color-balance-badge: var(--color-balance-badge);
+  --color-mobil-bg: var(--color-mobil-bg);
+  --color-mobil-badge: var(--color-mobil-badge);
+  --color-nox-bg: var(--color-nox-bg);
+  --color-nox-badge: var(--color-nox-badge);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ============================================================
+ * Base styles
+ * ============================================================ */
+
+* {
+  border-color: rgb(0 0 0 / 0.08);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--color-ink);
+}
+
+/* Utility classes */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.serif { font-family: var(--font-serif); }
+.sans  { font-family: var(--font-sans); }
+
+.text-muted     { color: var(--color-muted); }
+.text-ink       { color: var(--color-ink); }
+.text-ink-soft  { color: var(--color-ink-soft); }
+
+.bg-paper  { background: var(--color-paper); }
+.bg-cream  { background: var(--color-cream); }
+.bg-ivory  { background: var(--color-ivory); }
+.bg-forest { background: var(--color-forest); }
+
+.container-content {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .container-content {
+    padding-inline: 2rem;
+  }
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+  border-radius: 6px;
 }

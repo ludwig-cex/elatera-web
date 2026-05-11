@@ -1,0 +1,34 @@
+import { notFound } from "next/navigation";
+import { PRODUCTS, type ProductSlug } from "@/lib/products";
+import { SalesPage } from "@/components/product/sales-page";
+import type { Metadata } from "next";
+
+export function generateStaticParams() {
+  return [{ slug: "balance" }, { slug: "mobil" }, { slug: "nox" }];
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const product = PRODUCTS[slug as ProductSlug];
+  if (!product) return {};
+  return {
+    title: `${product.name} — ${product.tagline}`,
+    description: product.hero.subheadline,
+  };
+}
+
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const product = PRODUCTS[slug as ProductSlug];
+  if (!product) notFound();
+
+  return <SalesPage product={product} />;
+}
