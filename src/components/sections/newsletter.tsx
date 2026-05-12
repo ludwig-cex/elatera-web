@@ -27,7 +27,7 @@ export function Newsletter() {
         {done ? (
           <div
             className="inline-flex items-center gap-3 px-6 py-4 rounded-lg"
-            style={{ background: "var(--color-balance-bg)", color: "var(--color-forest)" }}
+            style={{ background: "var(--color-vertera-bg)", color: "var(--color-forest)" }}
           >
             <Check className="w-5 h-5" />
             <span>Vielen Dank — bitte bestätigen Sie Ihre E-Mail in Ihrem Posteingang.</span>

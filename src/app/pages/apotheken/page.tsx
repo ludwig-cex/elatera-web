@@ -4,7 +4,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Apotheken-Bestellung",
-  description: "Alle Elatera-Produkte sind auch über Ihre Stamm-Apotheke bestellbar. Jedes Produkt hat eine eigene Pharmazentralnummer (PZN).",
+  description: "Alle Nutrasana-Produkte sind auch über Ihre Stamm-Apotheke bestellbar. Jedes Produkt hat eine eigene Pharmazentralnummer (PZN).",
 };
 
 export default function ApothekenPage() {
@@ -13,10 +13,10 @@ export default function ApothekenPage() {
       <div className="container-content max-w-3xl">
         <div className="eyebrow mb-3">Bestellung über die Apotheke</div>
         <h1 className="serif text-4xl sm:text-5xl leading-tight mb-5">
-          Alle Elatera-Produkte sind apothekenfähig
+          Alle Nutrasana-Produkte sind apothekenfähig
         </h1>
         <p className="text-lg leading-relaxed mb-10" style={{ color: "var(--color-ink-soft)" }}>
-          Wenn Sie Ihre Bestellung lieber direkt über Ihre Apotheke vornehmen möchten, ist das problemlos möglich. Jedes Elatera-Produkt verfügt über eine eigene Pharmazentralnummer (PZN), unter der es bei allen großen Pharma-Großhändlern bestellbar ist.
+          Wenn Sie Ihre Bestellung lieber direkt über Ihre Apotheke vornehmen möchten, ist das problemlos möglich. Jedes Nutrasana-Produkt verfügt über eine eigene Pharmazentralnummer (PZN), unter der es bei allen großen Pharma-Großhändlern bestellbar ist.
         </p>
 
         <div
@@ -48,19 +48,19 @@ export default function ApothekenPage() {
 
         <h2 className="serif text-2xl mb-4">Für Apotheker-Kollegen</h2>
         <p className="leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
-          Sie sind Apotheker und möchten Elatera in Ihr Sortiment aufnehmen? Wir freuen uns über Ihre Anfrage und beraten Sie zu unseren Konditionen und unserem Direktbestell-Programm.
+          Sie sind Apotheker und möchten Nutrasana in Ihr Sortiment aufnehmen? Wir freuen uns über Ihre Anfrage und beraten Sie zu unseren Konditionen und unserem Direktbestell-Programm.
         </p>
 
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <a
-            href="mailto:apotheken@elatera.de"
+            href="mailto:apotheken@nutrasana.de"
             className="rounded-lg p-5 flex items-center gap-4 hover:bg-cream/40 transition"
             style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.06)" }}
           >
             <Mail className="w-5 h-5 flex-none" style={{ color: "var(--color-forest)" }} />
             <div>
               <div className="font-medium text-sm">Per E-Mail</div>
-              <div className="text-sm text-muted">apotheken@elatera.de</div>
+              <div className="text-sm text-muted">apotheken@nutrasana.de</div>
             </div>
           </a>
           <a
@@ -78,7 +78,7 @@ export default function ApothekenPage() {
 
         <div
           className="rounded-lg p-5 flex items-start gap-3"
-          style={{ background: "var(--color-balance-bg)" }}
+          style={{ background: "var(--color-vertera-bg)" }}
         >
           <MapPin className="w-5 h-5 mt-0.5 flex-none" style={{ color: "var(--color-forest)" }} />
           <div className="text-sm leading-relaxed">

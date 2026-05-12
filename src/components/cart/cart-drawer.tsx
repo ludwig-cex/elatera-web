@@ -118,7 +118,7 @@ export function CartDrawer() {
             {submitted ? (
               <div
                 className="p-4 rounded text-center"
-                style={{ background: "var(--color-balance-bg)", color: "var(--color-forest)" }}
+                style={{ background: "var(--color-vertera-bg)", color: "var(--color-forest)" }}
               >
                 <Check className="w-6 h-6 mx-auto mb-2" />
                 <p className="text-sm font-medium">Sie sind auf der Warteliste.</p>

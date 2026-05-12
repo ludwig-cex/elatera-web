@@ -46,7 +46,7 @@ export function ProductCarousel() {
               <ChevronRight className="w-5 h-5" />
             </button>
             <Link
-              href="/products/balance"
+              href="/products/vertera"
               className="inline-flex items-center gap-2 px-5 py-3 rounded font-medium transition hover:opacity-90 text-sm"
               style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
             >

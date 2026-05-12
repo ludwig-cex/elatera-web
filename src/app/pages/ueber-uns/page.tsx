@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Über Elatera",
-  description: "Elatera entwickelt wissenschaftlich fundierte Nahrungsergänzung für die echten Bedürfnisse ab 55 — entwickelt von Apothekern, hergestellt in Deutschland.",
+  title: "Über Nutrasana",
+  description: "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzung für die echten Bedürfnisse ab 55 — entwickelt von Apothekern, hergestellt in Deutschland.",
 };
 
 export default function UeberUnsPage() {
@@ -16,7 +16,7 @@ export default function UeberUnsPage() {
 
         <div className="prose-content space-y-6 text-lg leading-relaxed" style={{ color: "var(--color-ink-soft)" }}>
           <p>
-            Elatera entstand aus einer einfachen Beobachtung: Der Markt für Nahrungsergänzung wird entweder von schreiender Anti-Aging-Werbung beherrscht — oder von trockenen Pharmaprodukten, die keinen Menschen ansprechen.
+            Nutrasana entstand aus einer einfachen Beobachtung: Der Markt für Nahrungsergänzung wird entweder von schreiender Anti-Aging-Werbung beherrscht — oder von trockenen Pharmaprodukten, die keinen Menschen ansprechen.
           </p>
           <p>
             Wir glauben, dass es zwischen diesen beiden Extremen einen ruhigeren, ehrlicheren Weg gibt. Einen Weg, der die echten Themen ernst nimmt — Gleichgewicht, Beweglichkeit, Schlaf — und dabei ohne falsche Versprechen auskommt.
@@ -38,7 +38,7 @@ export default function UeberUnsPage() {
           </ol>
 
           <h2 className="serif text-3xl mt-12 mb-4" style={{ color: "var(--color-ink)" }}>
-            Was Elatera einzigartig macht
+            Was Nutrasana einzigartig macht
           </h2>
           <p>
             Drei sorgfältig formulierte Produkte für konkrete Anliegen — Balance für innere Sicherheit und Gleichgewicht, Mobil für tägliche Beweglichkeit und Nox für ruhige Nächte. Wir wollen nichts beheben, was die Natur nicht vorgesehen hat. Aber wir möchten Ihnen die bestmögliche, ehrliche Unterstützung für Ihr Wohlbefinden geben.

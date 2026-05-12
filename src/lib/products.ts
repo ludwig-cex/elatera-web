@@ -1,9 +1,9 @@
 /**
- * Elatera Product Catalog
+ * Nutrasana Product Catalog
  * V0 = all out-of-stock, waitlist mode only.
  */
 
-export type ProductSlug = "balance" | "mobil" | "nox";
+export type ProductSlug = "vertera" | "mobilera" | "somnera";
 
 export type IngredientHighlight = {
   name: string;
@@ -22,8 +22,8 @@ export type Bundle = {
 
 export type Product = {
   slug: ProductSlug;
-  name: string;        // e.g. "Elatera Balance"
-  variant: string;     // e.g. "Balance"
+  name: string;        // e.g. "Vertera Intense"
+  variant: string;     // e.g. "Vertera"
   tagline: string;     // e.g. "Gleichgewicht & Schwindel"
   shortTagline: string;
   indication: string;  // long form
@@ -93,7 +93,7 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
       },
       {
         q: "Zu welcher Tageszeit sollte ich einnehmen?",
-        a: variant === "Nox"
+        a: variant === "Somnera"
           ? "Etwa 30 Minuten vor dem Zubettgehen — so kann der Wirkstoff seine volle Wirkung entfalten."
           : "Die Tageszeit ist beliebig wählbar. Wichtig ist die regelmäßige tägliche Einnahme.",
       },
@@ -177,16 +177,16 @@ const COMMON_BUNDLES: Bundle[] = [
 ];
 
 export const PRODUCTS: Record<ProductSlug, Product> = {
-  balance: {
-    slug: "balance",
-    name: "Elatera Balance",
-    variant: "Balance",
+  vertera: {
+    slug: "vertera",
+    name: "Vertera Intense",
+    variant: "Vertera",
     tagline: "Gleichgewicht & Schwindel",
     shortTagline: "für inneren Halt",
     indication: "Bei Schwindelgefühl, Gleichgewichtsstörungen und für innere Sicherheit im Alltag",
     pzn: "20226001",
     hero: {
-      headline: "Elatera Balance",
+      headline: "Vertera Intense",
       subheadline: "Für ein sicheres Stehen, einen klaren Kopf und Stabilität im Alltag.",
       badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Gleichgewicht · Schwindel · Nervenfunktion",
@@ -231,20 +231,20 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       { reference: "Marx et al. (2015)",  finding: "Ingwer wurde in mehreren Studien hinsichtlich seines Beitrags zum allgemeinen Wohlbefinden untersucht." },
       { reference: "Boyle et al. (2017)", finding: "Magnesium spielt eine zentrale Rolle bei der normalen Funktion des Nervensystems." },
     ],
-    faqs: COMMON_FAQS("Elatera Balance", "Balance"),
-    scientificIntro: "Elatera Balance kombiniert traditionelle Pflanzenextrakte mit essenziellen Mikronährstoffen in einer sorgfältig dosierten Rezeptur, entwickelt für Menschen, die ihren Alltag mit Sicherheit und Klarheit erleben möchten.",
+    faqs: COMMON_FAQS("Vertera Intense", "Balance"),
+    scientificIntro: "Vertera Intense kombiniert traditionelle Pflanzenextrakte mit essenziellen Mikronährstoffen in einer sorgfältig dosierten Rezeptur, entwickelt für Menschen, die ihren Alltag mit Sicherheit und Klarheit erleben möchten.",
   },
 
-  mobil: {
-    slug: "mobil",
-    name: "Elatera Mobil",
-    variant: "Mobil",
+  mobilera: {
+    slug: "mobilera",
+    name: "Mobilera Intense",
+    variant: "Mobilera",
     tagline: "Gelenke & Beweglichkeit",
     shortTagline: "für tägliche Beweglichkeit",
     indication: "Für die tägliche Beweglichkeit von Gelenken, Sehnen und Knochen",
     pzn: "20226002",
     hero: {
-      headline: "Elatera Mobil",
+      headline: "Mobilera Intense",
       subheadline: "Für geschmeidige Gelenke, eine starke Mitte und mühelose Bewegung.",
       badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Gelenke · Knochen · Beweglichkeit",
@@ -289,20 +289,20 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       { reference: "Kuptniratsaikul et al. (2014)", finding: "Curcumin wurde in einer randomisierten kontrollierten Studie evaluiert." },
       { reference: "Altman & Marcussen (2001)", finding: "Ingwer-Extrakt wurde in einer placebo-kontrollierten Studie untersucht." },
     ],
-    faqs: COMMON_FAQS("Elatera Mobil", "Mobil"),
-    scientificIntro: "Elatera Mobil vereint klassische Pflanzenextrakte mit den essenziellen Mikronährstoffen für Knochen, Knorpel und Muskeln — entwickelt für Menschen, die ihre Beweglichkeit täglich neu schätzen.",
+    faqs: COMMON_FAQS("Mobilera Intense", "Mobil"),
+    scientificIntro: "Mobilera Intense vereint klassische Pflanzenextrakte mit den essenziellen Mikronährstoffen für Knochen, Knorpel und Muskeln — entwickelt für Menschen, die ihre Beweglichkeit täglich neu schätzen.",
   },
 
-  nox: {
-    slug: "nox",
-    name: "Elatera Nox",
-    variant: "Nox",
+  somnera: {
+    slug: "somnera",
+    name: "Somnera Intense",
+    variant: "Somnera",
     tagline: "Schlaf & Erholung",
     shortTagline: "für ruhige Nächte",
     indication: "Für einen ruhigen Einschlafmoment und tieferes nächtliches Wohlbefinden",
     pzn: "20226003",
     hero: {
-      headline: "Elatera Nox",
+      headline: "Somnera Intense",
       subheadline: "Für sanftes Einschlafen, ruhige Nächte und ein erholtes Erwachen.",
       badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Schlaf · Einschlafzeit · Erholung",
@@ -347,9 +347,9 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       { reference: "Bent et al. (2006)", finding: "Baldrian wurde in einer systematischen Übersichtsarbeit untersucht." },
       { reference: "Akhondzadeh et al. (2001)", finding: "Passionsblume wurde in einer placebo-kontrollierten Studie evaluiert." },
     ],
-    faqs: COMMON_FAQS("Elatera Nox", "Nox"),
-    scientificIntro: "Elatera Nox kombiniert Melatonin mit pflanzlichen Klassikern der Apothekentradition zu einer abendlichen Routine, die zum sanften Einschlafen einlädt.",
+    faqs: COMMON_FAQS("Somnera Intense", "Nox"),
+    scientificIntro: "Somnera Intense kombiniert Melatonin mit pflanzlichen Klassikern der Apothekentradition zu einer abendlichen Routine, die zum sanften Einschlafen einlädt.",
   },
 };
 
-export const PRODUCT_LIST: Product[] = [PRODUCTS.balance, PRODUCTS.mobil, PRODUCTS.nox];
+export const PRODUCT_LIST: Product[] = [PRODUCTS.vertera, PRODUCTS.mobilera, PRODUCTS.somnera];

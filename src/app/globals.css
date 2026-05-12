@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
- * Elatera Design Tokens
+ * Nutrasana Design Tokens
  * Source: Claude Design handoff bundle (2026-05-11)
  * ============================================================ */
 
@@ -33,29 +33,29 @@
   --color-on-dark: #faf6ec;
 
   /* Product Accents */
-  --color-balance-bg: #e6ece4;
-  --color-balance-spine: #dde4d9;
-  --color-balance-badge: #2f5c47;
-  --color-balance-badge-text: #f4f1ea;
-  --color-balance-ink: #1f3b32;
-  --color-balance-sub-ink: #4f6a5d;
-  --color-balance-capsule: #2f5c47;
+  --color-vertera-bg: #e6ece4;
+  --color-vertera-spine: #dde4d9;
+  --color-vertera-badge: #2f5c47;
+  --color-vertera-badge-text: #f4f1ea;
+  --color-vertera-ink: #1f3b32;
+  --color-vertera-sub-ink: #4f6a5d;
+  --color-vertera-capsule: #2f5c47;
 
-  --color-mobil-bg: #efe4d3;
-  --color-mobil-spine: #e6d8c2;
-  --color-mobil-badge: #a36b3a;
-  --color-mobil-badge-text: #fbf5e8;
-  --color-mobil-ink: #4a2e16;
-  --color-mobil-sub-ink: #7b5634;
-  --color-mobil-capsule: #a36b3a;
+  --color-mobilera-bg: #efe4d3;
+  --color-mobilera-spine: #e6d8c2;
+  --color-mobilera-badge: #a36b3a;
+  --color-mobilera-badge-text: #fbf5e8;
+  --color-mobilera-ink: #4a2e16;
+  --color-mobilera-sub-ink: #7b5634;
+  --color-mobilera-capsule: #a36b3a;
 
-  --color-nox-bg: #dde2ea;
-  --color-nox-spine: #d3d9e3;
-  --color-nox-badge: #243a55;
-  --color-nox-badge-text: #eef0f5;
-  --color-nox-ink: #1a2840;
-  --color-nox-sub-ink: #3e547a;
-  --color-nox-capsule: #243a55;
+  --color-somnera-bg: #dde2ea;
+  --color-somnera-spine: #d3d9e3;
+  --color-somnera-badge: #243a55;
+  --color-somnera-badge-text: #eef0f5;
+  --color-somnera-ink: #1a2840;
+  --color-somnera-sub-ink: #3e547a;
+  --color-somnera-capsule: #243a55;
 
   /* Type */
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, serif;
@@ -79,12 +79,12 @@
   --color-muted: var(--color-muted);
   --color-on-dark: var(--color-on-dark);
 
-  --color-balance-bg: var(--color-balance-bg);
-  --color-balance-badge: var(--color-balance-badge);
-  --color-mobil-bg: var(--color-mobil-bg);
-  --color-mobil-badge: var(--color-mobil-badge);
-  --color-nox-bg: var(--color-nox-bg);
-  --color-nox-badge: var(--color-nox-badge);
+  --color-vertera-bg: var(--color-vertera-bg);
+  --color-vertera-badge: var(--color-vertera-badge);
+  --color-mobilera-bg: var(--color-mobilera-bg);
+  --color-mobilera-badge: var(--color-mobilera-badge);
+  --color-somnera-bg: var(--color-somnera-bg);
+  --color-somnera-badge: var(--color-somnera-badge);
 
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);

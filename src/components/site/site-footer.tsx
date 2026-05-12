@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ElateraLogo } from "@/components/brand/logo";
+import { NutrasanaLogo } from "@/components/brand/logo";
 import { Mail, Globe } from "lucide-react";
 
 export function SiteFooter() {
@@ -11,15 +11,15 @@ export function SiteFooter() {
       <div className="container-content">
         <div className="grid gap-12 md:grid-cols-12 mb-12">
           <div className="md:col-span-4">
-            <ElateraLogo color="ivory" />
+            <NutrasanaLogo color="ivory" />
             <p className="text-sm opacity-75 mt-4 max-w-sm leading-relaxed">
               Wissenschaftlich fundierte Gesundheitslösungen — entwickelt von Apothekern, hergestellt in Deutschland.
               In Deutschland produziert, laborgeprüft, von Apothekern empfohlen.
             </p>
             <div className="flex items-center gap-2 mt-6 text-sm opacity-75">
               <Mail className="w-4 h-4" />
-              <a href="mailto:kontakt@elatera.de" className="hover:opacity-100">
-                kontakt@elatera.de
+              <a href="mailto:kontakt@nutrasana.de" className="hover:opacity-100">
+                kontakt@nutrasana.de
               </a>
             </div>
             <div className="flex items-center gap-2 mt-2 text-sm opacity-75">
@@ -33,9 +33,9 @@ export function SiteFooter() {
               Produkte
             </div>
             <ul className="space-y-2 text-sm opacity-90">
-              <li><Link href="/products/balance" className="hover:opacity-70">Elatera Balance</Link></li>
-              <li><Link href="/products/mobil" className="hover:opacity-70">Elatera Mobil</Link></li>
-              <li><Link href="/products/nox" className="hover:opacity-70">Elatera Nox</Link></li>
+              <li><Link href="/products/vertera" className="hover:opacity-70">Vertera Intense</Link></li>
+              <li><Link href="/products/mobilera" className="hover:opacity-70">Mobilera Intense</Link></li>
+              <li><Link href="/products/somnera" className="hover:opacity-70">Somnera Intense</Link></li>
             </ul>
           </div>
 
@@ -56,7 +56,7 @@ export function SiteFooter() {
               Unternehmen
             </div>
             <ul className="space-y-2 text-sm opacity-90">
-              <li><Link href="/pages/ueber-uns" className="hover:opacity-70">Über Elatera</Link></li>
+              <li><Link href="/pages/ueber-uns" className="hover:opacity-70">Über Nutrasana</Link></li>
               <li><Link href="/policies/impressum" className="hover:opacity-70">Impressum</Link></li>
               <li><Link href="/policies/datenschutz" className="hover:opacity-70">Datenschutz</Link></li>
               <li><Link href="/policies/agb" className="hover:opacity-70">AGB</Link></li>
@@ -79,7 +79,7 @@ export function SiteFooter() {
           className="pt-8 flex flex-col md:flex-row gap-4 justify-between items-center text-xs opacity-60"
           style={{ borderTop: "1px solid rgba(255,255,255,0.10)" }}
         >
-          <p>© 2026 Elatera. Alle Rechte vorbehalten.</p>
+          <p>© 2026 Nutrasana. Alle Rechte vorbehalten.</p>
           <p>* Nährstoff-bezogene Health-Claims gemäß EU-Verordnung Nr. 1924/2006.</p>
         </div>
       </div>

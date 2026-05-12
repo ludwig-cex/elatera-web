@@ -1,5 +1,5 @@
 /**
- * SVG-Mockup of the Elatera product box.
+ * SVG-Mockup of the Nutrasana product box.
  * Pure SVG — no actual photography needed.
  * Adapted from the packaging.jsx design system file.
  */
@@ -72,7 +72,7 @@ export function ProductMockup({ product, className, width = 520, height = 320 }:
               color: p.ink,
             }}
           >
-            Elatera
+            Nutrasana
           </span>
           <span
             style={{

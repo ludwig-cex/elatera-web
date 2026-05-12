@@ -7,7 +7,7 @@ export function ExpertRecommendation() {
         <div className="text-center mb-12">
           <div className="eyebrow mb-3">Apotheker-Empfehlung</div>
           <h2 className="serif text-4xl sm:text-5xl leading-tight">
-            Experten empfehlen Elatera<sup className="text-base align-super">®</sup>
+            Experten empfehlen Nutrasana<sup className="text-base align-super">®</sup>
           </h2>
         </div>
 
@@ -19,7 +19,7 @@ export function ExpertRecommendation() {
           <div className="md:col-span-3 flex justify-center">
             <div
               className="relative w-36 h-36 rounded-full flex items-center justify-center"
-              style={{ background: "var(--color-balance-bg)", border: "1px solid rgba(0,0,0,0.06)" }}
+              style={{ background: "var(--color-vertera-bg)", border: "1px solid rgba(0,0,0,0.06)" }}
             >
               <svg width="100" height="100" viewBox="0 0 100 100" fill="none" aria-hidden>
                 <circle cx="50" cy="38" r="16" fill="var(--color-forest)" opacity="0.85" />
@@ -42,7 +42,7 @@ export function ExpertRecommendation() {
           <div className="md:col-span-9">
             <Quote className="w-7 h-7 mb-3" style={{ color: "var(--color-copper)" }} />
             <blockquote className="serif text-xl sm:text-2xl leading-snug mb-5" style={{ color: "var(--color-ink)" }}>
-              „Als Pharmazeut überzeugen mich die Elatera-Produkte durch die Kombination aus bewährten Pflanzenextrakten und essenziellen Mikronährstoffen. Die sorgfältig abgestimmten Rezepturen sind wissenschaftlich fundiert und darauf ausgerichtet, die Gesundheit auf natürliche Weise zu unterstützen. Besonders schätze ich den ganzheitlichen Ansatz, alltägliche Beschwerden mit hochwertigen, laborgeprüften Wirkstoffkombinationen anzugehen."
+              „Als Pharmazeut überzeugen mich die Nutrasana-Produkte durch die Kombination aus bewährten Pflanzenextrakten und essenziellen Mikronährstoffen. Die sorgfältig abgestimmten Rezepturen sind wissenschaftlich fundiert und darauf ausgerichtet, die Gesundheit auf natürliche Weise zu unterstützen. Besonders schätze ich den ganzheitlichen Ansatz, alltägliche Beschwerden mit hochwertigen, laborgeprüften Wirkstoffkombinationen anzugehen."
             </blockquote>
             <div className="flex items-center gap-3 text-sm">
               <div className="serif text-lg" style={{ color: "var(--color-forest)" }}>

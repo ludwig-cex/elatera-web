@@ -1,7 +1,6 @@
 /**
- * Elatera Logo — Variant 10 from design system
- * "Outlined Circle" with Cormorant E inside.
- * Premium-clean, senior-friendly, high contrast.
+ * Nutrasana Logo — Variant 10 from design system
+ * "Outlined Circle" with Cormorant N inside.
  */
 
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ type LogoProps = {
   color?: "forest" | "ivory" | "ink";
 };
 
-export function ElateraLogo({ className, variant = "horizontal", color = "forest" }: LogoProps) {
+export function NutrasanaLogo({ className, variant = "horizontal", color = "forest" }: LogoProps) {
   const colorMap = {
     forest: "var(--color-forest)",
     ivory: "var(--color-ivory)",
@@ -28,7 +27,7 @@ export function ElateraLogo({ className, variant = "horizontal", color = "forest
         height="40"
         viewBox="0 0 120 120"
         fill="none"
-        aria-label="Elatera"
+        aria-label="Nutrasana"
       >
         <circle cx="60" cy="60" r="56" fill="none" stroke={c} strokeWidth="3" />
         <text
@@ -40,7 +39,7 @@ export function ElateraLogo({ className, variant = "horizontal", color = "forest
           fontSize="86"
           fill={c}
         >
-          E
+          N
         </text>
       </svg>
     );
@@ -60,22 +59,21 @@ export function ElateraLogo({ className, variant = "horizontal", color = "forest
             fontSize="86"
             fill={c}
           >
-            E
+            N
           </text>
         </svg>
         <span
           className="serif text-2xl leading-none tracking-tight"
           style={{ color: c }}
         >
-          Elatera
+          Nutrasana
         </span>
       </div>
     );
   }
 
-  // horizontal (default)
   return (
-    <div className={cn("inline-flex items-center gap-3", className)} aria-label="Elatera">
+    <div className={cn("inline-flex items-center gap-3", className)} aria-label="Nutrasana">
       <svg width="36" height="36" viewBox="0 0 120 120" fill="none" aria-hidden="true">
         <circle cx="60" cy="60" r="56" fill="none" stroke={c} strokeWidth="3.5" />
         <text
@@ -87,15 +85,16 @@ export function ElateraLogo({ className, variant = "horizontal", color = "forest
           fontSize="86"
           fill={c}
         >
-          E
+          N
         </text>
       </svg>
       <span
         className="serif text-2xl leading-none tracking-tight"
         style={{ color: c }}
       >
-        Elatera
+        Nutrasana
       </span>
     </div>
   );
 }
+

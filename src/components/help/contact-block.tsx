@@ -41,11 +41,11 @@ export function ContactBlock() {
               <div>
                 <div className="text-sm opacity-70">E-Mail</div>
                 <a
-                  href="mailto:kundenservice@elatera.de"
+                  href="mailto:kundenservice@nutrasana.de"
                   className="serif text-lg leading-tight hover:opacity-80"
                   style={{ color: "var(--color-on-dark)" }}
                 >
-                  kundenservice@elatera.de
+                  kundenservice@nutrasana.de
                 </a>
               </div>
             </li>
@@ -101,7 +101,7 @@ export function ContactBlock() {
               <div className="text-center py-8">
                 <div
                   className="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center"
-                  style={{ background: "var(--color-balance-badge)" }}
+                  style={{ background: "var(--color-vertera-badge)" }}
                 >
                   <Check className="w-6 h-6" style={{ color: "var(--color-on-dark)" }} strokeWidth={3} />
                 </div>

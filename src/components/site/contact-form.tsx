@@ -15,7 +15,7 @@ export function ContactForm() {
     return (
       <div
         className="rounded-2xl p-8 text-center"
-        style={{ background: "var(--color-balance-bg)" }}
+        style={{ background: "var(--color-vertera-bg)" }}
       >
         <div
           className="w-12 h-12 rounded-full mx-auto mb-4 flex items-center justify-center"

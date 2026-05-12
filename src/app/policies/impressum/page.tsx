@@ -22,7 +22,7 @@ export default function Page() {
         <p className="text-muted leading-relaxed mb-6">
           [Platzhalter — Privatperson in der V0-Phase]<br />
           Anschrift auf Anfrage<br />
-          E-Mail: kontakt@elatera.de
+          E-Mail: kontakt@nutrasana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Haftung</h2>

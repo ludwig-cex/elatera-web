@@ -46,7 +46,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Was, wenn meine Sendung verloren geht?",
-        a: "Bitte schreiben Sie uns innerhalb von 14 Tagen nach dem voraussichtlichen Lieferdatum an kundenservice@elatera.de. Wir veranlassen entweder eine kostenfreie Ersatz-Lieferung oder erstatten Ihnen den vollen Betrag.",
+        a: "Bitte schreiben Sie uns innerhalb von 14 Tagen nach dem voraussichtlichen Lieferdatum an kundenservice@nutrasana.de. Wir veranlassen entweder eine kostenfreie Ersatz-Lieferung oder erstatten Ihnen den vollen Betrag.",
         keywords: ["verloren", "nicht erhalten"],
       },
     ],
@@ -58,7 +58,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
     icon: "pillbottle",
     articles: [
       {
-        q: "Wie nehme ich Elatera-Produkte ein?",
+        q: "Wie nehme ich Nutrasana-Produkte ein?",
         a: "Eine Kapsel täglich, unzerkaut mit einem großen Glas Wasser. Bei unseren Schlafprodukten empfehlen wir die Einnahme 30 Minuten vor dem Zubettgehen.",
         keywords: ["einnahme", "dosierung", "kapsel"],
       },
@@ -74,11 +74,11 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Sind die Produkte vegan und allergenfrei?",
-        a: "Alle Elatera-Produkte sind frei von den 14 EU-Hauptallergenen, laktosefrei, glutenfrei und ohne Gentechnik. Die Mehrheit ist vegan — Produkte mit Vitamin D3 aus Schafswollfett sind vegetarisch.",
+        a: "Alle Nutrasana-Produkte sind frei von den 14 EU-Hauptallergenen, laktosefrei, glutenfrei und ohne Gentechnik. Die Mehrheit ist vegan — Produkte mit Vitamin D3 aus Schafswollfett sind vegetarisch.",
         keywords: ["vegan", "allergen", "laktose", "gluten"],
       },
       {
-        q: "Wo wird Elatera hergestellt?",
+        q: "Wo wird Nutrasana hergestellt?",
         a: "Ausschließlich in Deutschland — in FSSC-22000-zertifizierten Anlagen. Jede Charge wird unabhängig laborgeprüft, bevor sie unser Haus verlässt.",
         keywords: ["herkunft", "made in germany", "labor"],
       },
@@ -92,12 +92,12 @@ export const HELP_CATEGORIES: HelpCategory[] = [
     articles: [
       {
         q: "Wie funktioniert die 90-Tage-Geld-zurück-Garantie?",
-        a: "Sollten Sie mit Ihrem Produkt nicht zufrieden sein, schreiben Sie uns innerhalb von 90 Tagen nach Erhalt eine kurze E-Mail an kundenservice@elatera.de. Wir veranlassen die Rücksendung und erstatten Ihnen den vollen Kaufpreis — ohne weitere Fragen.",
+        a: "Sollten Sie mit Ihrem Produkt nicht zufrieden sein, schreiben Sie uns innerhalb von 90 Tagen nach Erhalt eine kurze E-Mail an kundenservice@nutrasana.de. Wir veranlassen die Rücksendung und erstatten Ihnen den vollen Kaufpreis — ohne weitere Fragen.",
         keywords: ["garantie", "geld zurück", "90 tage"],
       },
       {
         q: "Wie sende ich ein Produkt zurück?",
-        a: "Schreiben Sie uns an kundenservice@elatera.de. Sie erhalten ein vorbereitetes Rücksendelabel per E-Mail. Verpacken Sie das Produkt sicher und geben es bei einer DHL-Filiale ab. Die Erstattung erfolgt innerhalb von 5–7 Werktagen nach Eingang.",
+        a: "Schreiben Sie uns an kundenservice@nutrasana.de. Sie erhalten ein vorbereitetes Rücksendelabel per E-Mail. Verpacken Sie das Produkt sicher und geben es bei einer DHL-Filiale ab. Die Erstattung erfolgt innerhalb von 5–7 Werktagen nach Eingang.",
         keywords: ["zurücksenden", "label", "rücksendung"],
       },
       {
@@ -107,7 +107,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Was, wenn ein Produkt beschädigt ankommt?",
-        a: "Bitte senden Sie uns binnen 7 Tagen ein Foto der Beschädigung und Ihre Bestellnummer an kundenservice@elatera.de. Wir veranlassen umgehend einen kostenfreien Ersatz.",
+        a: "Bitte senden Sie uns binnen 7 Tagen ein Foto der Beschädigung und Ihre Bestellnummer an kundenservice@nutrasana.de. Wir veranlassen umgehend einen kostenfreien Ersatz.",
         keywords: ["beschädigt", "defekt"],
       },
     ],
@@ -130,7 +130,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Wie kündige ich mein Spar-Abo?",
-        a: "Ebenfalls jederzeit, ohne Mindestlaufzeit, ohne Kündigungsfrist. Ein Klick im Kundenkonto unter 'Mein Abo' genügt. Sie können das Abo auch per E-Mail an kundenservice@elatera.de kündigen.",
+        a: "Ebenfalls jederzeit, ohne Mindestlaufzeit, ohne Kündigungsfrist. Ein Klick im Kundenkonto unter 'Mein Abo' genügt. Sie können das Abo auch per E-Mail an kundenservice@nutrasana.de kündigen.",
         keywords: ["kündigen", "stoppen"],
       },
       {
@@ -181,22 +181,22 @@ export const HELP_CATEGORIES: HelpCategory[] = [
   {
     slug: "allgemein",
     title: "Allgemeine Fragen",
-    description: "Über Elatera, Apotheken-Bezug und sonstige Anliegen.",
+    description: "Über Nutrasana, Apotheken-Bezug und sonstige Anliegen.",
     icon: "info",
     articles: [
       {
-        q: "Wer steckt hinter Elatera?",
-        a: "Elatera entwickelt wissenschaftlich fundierte Nahrungsergänzung in Deutschland. Unsere Rezepturen werden von approbierten Pharmazeuten entwickelt und in FSSC-22000-zertifizierten Anlagen produziert. Mehr dazu auf unserer Seite Über uns.",
+        q: "Wer steckt hinter Nutrasana?",
+        a: "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzung in Deutschland. Unsere Rezepturen werden von approbierten Pharmazeuten entwickelt und in FSSC-22000-zertifizierten Anlagen produziert. Mehr dazu auf unserer Seite Über uns.",
         keywords: ["über uns", "marke"],
       },
       {
-        q: "Sind Elatera-Produkte in der Apotheke erhältlich?",
+        q: "Sind Nutrasana-Produkte in der Apotheke erhältlich?",
         a: "Ja. Jedes Produkt verfügt über eine eigene Pharmazentralnummer (PZN) und ist über die großen Pharma-Großhändler (PHOENIX, NOWEDA, GEHE) für Apotheken beziehbar.",
         keywords: ["apotheke", "pzn"],
       },
       {
         q: "Wie kann ich euch erreichen?",
-        a: "Per E-Mail an kundenservice@elatera.de oder über das Kontakt-Formular auf dieser Seite. Wir antworten Mo–Fr binnen 24 Stunden.",
+        a: "Per E-Mail an kundenservice@nutrasana.de oder über das Kontakt-Formular auf dieser Seite. Wir antworten Mo–Fr binnen 24 Stunden.",
         keywords: ["kontakt", "erreichen"],
       },
       {

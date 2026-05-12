@@ -99,7 +99,7 @@ export function SalesPage({ product }: { product: Product }) {
               style={{ background: p.bg, border: `1px solid ${p.spineLine}` }}
             >
               <div className="eyebrow mb-2" style={{ color: p.subInk }}>
-                Was Elatera {product.variant} unterstützt
+                Was Nutrasana {product.variant} unterstützt
               </div>
               <ul className="space-y-2.5">
                 {product.uspBlocks.map((u, i) => (
@@ -209,7 +209,7 @@ export function SalesPage({ product }: { product: Product }) {
           </ol>
 
           <p className="text-xs text-muted mt-8 leading-relaxed text-center max-w-2xl mx-auto">
-            *Die hier angeführten Studien beziehen sich auf einzelne Inhaltsstoffe und stellen keine Aussage über das Endprodukt dar. Elatera-Produkte sind Nahrungsergänzungsmittel und kein Ersatz für eine ausgewogene Ernährung und gesunde Lebensweise.
+            *Die hier angeführten Studien beziehen sich auf einzelne Inhaltsstoffe und stellen keine Aussage über das Endprodukt dar. Nutrasana-Produkte sind Nahrungsergänzungsmittel und kein Ersatz für eine ausgewogene Ernährung und gesunde Lebensweise.
           </p>
         </div>
       </section>
@@ -222,7 +222,7 @@ export function SalesPage({ product }: { product: Product }) {
           <div className="text-center mb-10">
             <div className="eyebrow mb-3">Häufige Fragen</div>
             <h2 className="serif text-3xl sm:text-4xl leading-tight">
-              Alles, was Sie zu Elatera {product.variant} wissen sollten
+              Alles, was Sie zu Nutrasana {product.variant} wissen sollten
             </h2>
           </div>
           <FaqAccordion product={product} />

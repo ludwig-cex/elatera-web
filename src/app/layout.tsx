@@ -24,12 +24,12 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s — Elatera",
-    default: "Elatera — Ihre Gesundheit, einfach gemacht",
+    template: "%s — Nutrasana",
+    default: "Nutrasana — Ihre Gesundheit, einfach gemacht",
   },
   description:
-    "Elatera entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
-  metadataBase: new URL("https://elatera.de"),
+    "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
+  metadataBase: new URL("https://nutrasana.de"),
   robots: {
     index: false,
     follow: false,

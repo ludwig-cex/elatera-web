@@ -10,7 +10,7 @@ import { ContactBlock } from "@/components/help/contact-block";
 export const metadata: Metadata = {
   title: "Hilfe & Kontakt",
   description:
-    "Antworten auf häufige Fragen rund um Bestellung, Versand, Produkte und Ihr Spar-Abo bei Elatera. Schreiben Sie uns — wir antworten binnen 24 Stunden.",
+    "Antworten auf häufige Fragen rund um Bestellung, Versand, Produkte und Ihr Spar-Abo bei Nutrasana. Schreiben Sie uns — wir antworten binnen 24 Stunden.",
 };
 
 export default function HilfeKontaktPage() {
@@ -21,7 +21,7 @@ export default function HilfeKontaktPage() {
         className="py-20 sm:py-24"
         style={{
           background:
-            "linear-gradient(180deg, var(--color-balance-bg) 0%, var(--color-paper) 100%)",
+            "linear-gradient(180deg, var(--color-vertera-bg) 0%, var(--color-paper) 100%)",
         }}
       >
         <div className="container-content text-center max-w-3xl mx-auto">

@@ -4,7 +4,7 @@ import { SalesPage } from "@/components/product/sales-page";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
-  return [{ slug: "balance" }, { slug: "mobil" }, { slug: "nox" }];
+  return [{ slug: "vertera" }, { slug: "mobilera" }, { slug: "somnera" }];
 }
 
 export async function generateMetadata({

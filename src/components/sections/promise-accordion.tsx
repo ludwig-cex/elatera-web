@@ -26,7 +26,7 @@ const PROMISES = [
   {
     icon: PillBottle,
     title: "Bekannt aus der Apotheke",
-    body: "Jedes Elatera-Produkt verfügt über eine eigene Pharmazentralnummer (PZN) und ist über Ihre Stamm-Apotheke beziehbar — ein Trust-Signal, dem Sie vertrauen können.",
+    body: "Jedes Nutrasana-Produkt verfügt über eine eigene Pharmazentralnummer (PZN) und ist über Ihre Stamm-Apotheke beziehbar — ein Trust-Signal, dem Sie vertrauen können.",
   },
   {
     icon: ShieldCheck,

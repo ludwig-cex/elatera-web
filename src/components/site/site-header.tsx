@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
-import { ElateraLogo } from "@/components/brand/logo";
+import { NutrasanaLogo } from "@/components/brand/logo";
 import { useCart } from "@/components/cart/cart-context";
 import { PRODUCT_LIST } from "@/lib/products";
 
@@ -29,8 +29,8 @@ export function SiteHeader() {
       }}
     >
       <div className="container-content flex items-center justify-between h-[72px]">
-        <Link href="/" aria-label="Elatera — Startseite">
-          <ElateraLogo />
+        <Link href="/" aria-label="Nutrasana — Startseite">
+          <NutrasanaLogo />
         </Link>
 
         {/* Desktop nav */}

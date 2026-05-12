@@ -22,7 +22,7 @@ export default function HomePage() {
               className="relative min-h-[460px] sm:min-h-[560px] flex items-center"
               style={{
                 background:
-                  "linear-gradient(135deg, var(--color-balance-bg) 0%, var(--color-cream) 50%, var(--color-mobil-bg) 100%)",
+                  "linear-gradient(135deg, var(--color-vertera-bg) 0%, var(--color-cream) 50%, var(--color-mobilera-bg) 100%)",
               }}
             >
               {/* Dekorative SVG-Produktmockups rechts */}
@@ -52,7 +52,7 @@ export default function HomePage() {
                   }}
                 >
                   <div className="eyebrow mb-4" style={{ color: "var(--color-moss)" }}>
-                    Elatera · Made in Germany
+                    Nutrasana · Made in Germany
                   </div>
                   <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-5">
                     Ihre Gesundheit,
@@ -60,11 +60,11 @@ export default function HomePage() {
                     <span style={{ color: "var(--color-moss)" }}>einfach gemacht.</span>
                   </h1>
                   <p className="text-lg leading-relaxed mb-7" style={{ color: "var(--color-ink-soft)" }}>
-                    Elatera<sup className="text-sm">®</sup> ist Ihre Gesundheitsmarke des Vertrauens — wissenschaftlich fundierte
+                    Nutrasana<sup className="text-sm">®</sup> ist Ihre Gesundheitsmarke des Vertrauens — wissenschaftlich fundierte
                     Produkte, online bestellbar und bequem nach Hause geliefert.
                   </p>
                   <Link
-                    href="/products/balance"
+                    href="/products/vertera"
                     className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium transition hover:opacity-90"
                     style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
                   >
@@ -103,7 +103,7 @@ export default function HomePage() {
       <section className="py-20 sm:py-24">
         <div className="container-content max-w-5xl">
           <div className="text-center mb-14">
-            <div className="eyebrow mb-3">Warum Elatera</div>
+            <div className="eyebrow mb-3">Warum Nutrasana</div>
             <h2 className="serif text-4xl sm:text-5xl leading-tight mb-4">
               Ehrlich. Wissenschaftlich. Aus der Apotheke.
             </h2>
@@ -113,7 +113,7 @@ export default function HomePage() {
             <div>
               <div
                 className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-balance-bg)", color: "var(--color-forest)" }}
+                style={{ background: "var(--color-vertera-bg)", color: "var(--color-forest)" }}
               >
                 <FlaskConical className="w-5 h-5" />
               </div>
@@ -125,7 +125,7 @@ export default function HomePage() {
             <div>
               <div
                 className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-mobil-bg)", color: "var(--color-copper)" }}
+                style={{ background: "var(--color-mobilera-bg)", color: "var(--color-copper)" }}
               >
                 <PillBottle className="w-5 h-5" />
               </div>
@@ -137,7 +137,7 @@ export default function HomePage() {
             <div>
               <div
                 className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-nox-bg)", color: "var(--color-navy)" }}
+                style={{ background: "var(--color-somnera-bg)", color: "var(--color-navy)" }}
               >
                 <ShieldCheck className="w-5 h-5" />
               </div>
@@ -175,10 +175,10 @@ export default function HomePage() {
             Unsere Haltung
           </div>
           <h2 className="serif text-3xl sm:text-4xl leading-tight mb-5" style={{ color: "var(--color-on-dark)" }}>
-            Was Elatera einzigartig macht
+            Was Nutrasana einzigartig macht
           </h2>
           <p className="text-base sm:text-lg leading-relaxed mb-8 opacity-85 max-w-2xl mx-auto">
-            Wir glauben, dass Gesundheit jenseits von Marketing-Versprechen funktioniert. Lesen Sie, warum wir Elatera so gestaltet haben, wie wir es getan haben.
+            Wir glauben, dass Gesundheit jenseits von Marketing-Versprechen funktioniert. Lesen Sie, warum wir Nutrasana so gestaltet haben, wie wir es getan haben.
           </p>
           <Link
             href="/pages/ueber-uns"

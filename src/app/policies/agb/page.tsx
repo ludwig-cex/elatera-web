@@ -8,7 +8,7 @@ export default function Page() {
       <div className="container-content max-w-2xl">
         <div className="eyebrow mb-3">Rechtliches</div>
         <h1 className="serif text-4xl sm:text-5xl leading-tight mb-6">Allgemeine Geschäftsbedingungen</h1>
-        <p className="text-muted leading-relaxed mb-8">Diese AGB regeln das Vertragsverhältnis zwischen Elatera und Ihnen als Kunde.</p>
+        <p className="text-muted leading-relaxed mb-8">Diese AGB regeln das Vertragsverhältnis zwischen Nutrasana und Ihnen als Kunde.</p>
 
         <div className="rounded-lg p-5 mb-10" style={{ background: "var(--color-cream)" }}>
           <p className="text-sm leading-relaxed">
@@ -22,7 +22,7 @@ export default function Page() {
         <p className="text-muted leading-relaxed mb-6">
           [Platzhalter — Privatperson in der V0-Phase]<br />
           Anschrift auf Anfrage<br />
-          E-Mail: kontakt@elatera.de
+          E-Mail: kontakt@nutrasana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Haftung</h2>
