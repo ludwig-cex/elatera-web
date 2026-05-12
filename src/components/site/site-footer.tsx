@@ -13,7 +13,7 @@ export function SiteFooter() {
           <div className="md:col-span-4">
             <ElateraLogo color="ivory" />
             <p className="text-sm opacity-75 mt-4 max-w-sm leading-relaxed">
-              Wissenschaftlich entwickelte Nahrungsergänzung für ein lebendiges Älterwerden.
+              Wissenschaftlich fundierte Gesundheitslösungen — entwickelt von Apothekern, hergestellt in Deutschland.
               In Deutschland produziert, laborgeprüft, von Apothekern empfohlen.
             </p>
             <div className="flex items-center gap-2 mt-6 text-sm opacity-75">

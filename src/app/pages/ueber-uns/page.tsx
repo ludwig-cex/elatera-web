@@ -41,7 +41,7 @@ export default function UeberUnsPage() {
             Was Elatera einzigartig macht
           </h2>
           <p>
-            Drei sorgfältig formulierte Produkte für konkrete Anliegen — Balance für innere Sicherheit und Gleichgewicht, Mobil für tägliche Beweglichkeit und Nox für ruhige Nächte. Wir wollen nichts beheben, was die Natur nicht vorgesehen hat. Aber wir möchten Ihnen die bestmögliche Unterstützung für ein gutes Älterwerden geben.
+            Drei sorgfältig formulierte Produkte für konkrete Anliegen — Balance für innere Sicherheit und Gleichgewicht, Mobil für tägliche Beweglichkeit und Nox für ruhige Nächte. Wir wollen nichts beheben, was die Natur nicht vorgesehen hat. Aber wir möchten Ihnen die bestmögliche, ehrliche Unterstützung für Ihr Wohlbefinden geben.
           </p>
           <p>
             Wir freuen uns, dass Sie hier sind.

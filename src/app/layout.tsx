@@ -25,7 +25,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: {
     template: "%s — Elatera",
-    default: "Elatera — Nahrungsergänzung für ein lebendiges Älterwerden",
+    default: "Elatera — Ihre Gesundheit, einfach gemacht",
   },
   description:
     "Elatera entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
