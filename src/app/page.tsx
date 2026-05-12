@@ -1,23 +1,27 @@
 import Link from "next/link";
-import { ArrowRight, FlaskConical, PillBottle, ShieldCheck, Star } from "lucide-react";
-import { ProductCarousel } from "@/components/sections/product-carousel";
-import { PressLogos } from "@/components/sections/press-logos";
-import { SocialProof } from "@/components/sections/social-proof";
-import { Newsletter } from "@/components/sections/newsletter";
-import { PromiseAccordion } from "@/components/sections/promise-accordion";
-import { ExpertRecommendation } from "@/components/sections/expert-recommendation";
-import { RatingTile } from "@/components/sections/rating-tile";
+import { ArrowRight, Star } from "lucide-react";
 import { PRODUCT_LIST } from "@/lib/products";
 import { ProductMockup } from "@/components/product/product-mockup";
+import { SubheroBanner } from "@/components/sections/subhero-banner";
+import { FeatureProductBanner } from "@/components/sections/feature-product-banner";
+import { TrustBadgesRow } from "@/components/sections/trust-badges-row";
+import { ProductCarousel } from "@/components/sections/product-carousel";
+import { UspThreeColumns } from "@/components/sections/usp-three-columns";
+import { IndicationsNav } from "@/components/sections/indications-nav";
+import { HomepageFaq } from "@/components/sections/homepage-faq";
+import { ExpertRecommendation } from "@/components/sections/expert-recommendation";
+import { CustomerStories } from "@/components/sections/customer-stories";
+import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
+import { Newsletter } from "@/components/sections/newsletter";
+import { ShippingPartners } from "@/components/sections/shipping-partners";
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO — Fortea-style: Bild + Textbox */}
-      <section className="pt-10 sm:pt-14 pb-14 sm:pb-20">
+      {/* 1. HERO — Fortea-style: Bild + Textbox */}
+      <section className="pt-10 sm:pt-14 pb-10 sm:pb-12">
         <div className="container-content">
           <div className="relative rounded-3xl overflow-hidden">
-            {/* Hero-Bild als Verlauf mit überlappenden Produktmockups (Platzhalter für späteres Foto) */}
             <div
               className="relative min-h-[460px] sm:min-h-[560px] flex items-center"
               style={{
@@ -25,7 +29,6 @@ export default function HomePage() {
                   "linear-gradient(135deg, var(--color-vertera-bg) 0%, var(--color-cream) 50%, var(--color-mobilera-bg) 100%)",
               }}
             >
-              {/* Dekorative SVG-Produktmockups rechts */}
               <div className="absolute inset-y-0 right-0 hidden lg:flex items-center pointer-events-none">
                 <div className="flex gap-6 pr-10 opacity-95">
                   {PRODUCT_LIST.map((p, i) => (
@@ -42,7 +45,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Textbox-Card */}
               <div className="container-content relative">
                 <div
                   className="max-w-xl rounded-2xl p-8 sm:p-12 shadow-md backdrop-blur"
@@ -60,8 +62,7 @@ export default function HomePage() {
                     <span style={{ color: "var(--color-moss)" }}>einfach gemacht.</span>
                   </h1>
                   <p className="text-lg leading-relaxed mb-7" style={{ color: "var(--color-ink-soft)" }}>
-                    Nutrasana<sup className="text-sm">®</sup> ist Ihre Gesundheitsmarke des Vertrauens — wissenschaftlich fundierte
-                    Produkte, online bestellbar und bequem nach Hause geliefert.
+                    Nutrasana<sup className="text-sm">®</sup> ist Ihre Gesundheitsmarke des Vertrauens — wissenschaftlich fundierte Produkte, online bestellbar und bequem nach Hause geliefert.
                   </p>
                   <Link
                     href="/products/vertera"
@@ -96,103 +97,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PRODUKT-KAROUSSEL */}
+      {/* 2. SUBHERO — "Für jedes Anliegen die richtige Lösung" */}
+      <SubheroBanner />
+
+      {/* 3. FEATURE-BANNER pro Produkt (alternierend) */}
+      <FeatureProductBanner product={PRODUCT_LIST[0]} />
+      <FeatureProductBanner product={PRODUCT_LIST[1]} flipped />
+      <FeatureProductBanner product={PRODUCT_LIST[2]} />
+
+      {/* 4. TRUST-BADGES-Reihe */}
+      <TrustBadgesRow />
+
+      {/* 5. PRODUKT-KAROUSSEL — alle 3 als Cards */}
       <ProductCarousel />
 
-      {/* WARUM ELATERA */}
-      <section className="py-20 sm:py-24">
-        <div className="container-content max-w-5xl">
-          <div className="text-center mb-14">
-            <div className="eyebrow mb-3">Warum Nutrasana</div>
-            <h2 className="serif text-4xl sm:text-5xl leading-tight mb-4">
-              Ehrlich. Wissenschaftlich. Aus der Apotheke.
-            </h2>
-          </div>
+      {/* 6. 3-Spalten-USP — Wissenschaft / Pharmazeut / Apotheker */}
+      <UspThreeColumns />
 
-          <div className="grid gap-8 md:grid-cols-3 mb-14">
-            <div>
-              <div
-                className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-vertera-bg)", color: "var(--color-forest)" }}
-              >
-                <FlaskConical className="w-5 h-5" />
-              </div>
-              <h3 className="serif text-2xl mb-3">Wissenschaftlich fundiert</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                Unsere Produkte wurden auf aktuellsten wissenschaftlichen Studien und Erkenntnissen aufgebaut. Jede Rezeptur ist sorgfältig durchdacht und zielgerichtet formuliert.
-              </p>
-            </div>
-            <div>
-              <div
-                className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-mobilera-bg)", color: "var(--color-copper)" }}
-              >
-                <PillBottle className="w-5 h-5" />
-              </div>
-              <h3 className="serif text-2xl mb-3">Von Apothekern empfohlen</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                Unsere Lösungen genießen das Vertrauen von Apothekern und werden regelmäßig weiterempfohlen. Jedes Produkt verfügt über eine eigene PZN.
-              </p>
-            </div>
-            <div>
-              <div
-                className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
-                style={{ background: "var(--color-somnera-bg)", color: "var(--color-navy)" }}
-              >
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <h3 className="serif text-2xl mb-3">Risikofreie Garantie</h3>
-              <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                90 Tage Geld-zurück-Garantie ohne Wenn und Aber. Wenn ein Produkt nicht zu Ihnen passt, schicken Sie es zurück — wir erstatten den vollen Kaufpreis.
-              </p>
-            </div>
-          </div>
+      {/* 7. INDIKATIONEN-Icon-Nav */}
+      <IndicationsNav />
 
-          {/* Bewertungskachel */}
-          <RatingTile />
-        </div>
-      </section>
+      {/* 8. FAQ-Accordion auf Homepage */}
+      <HomepageFaq />
 
-      <PressLogos />
-
-      {/* Experten-Empfehlung (Andreas Sander) */}
+      {/* 9. APOTHEKER-Testimonial (Sander) */}
       <ExpertRecommendation />
 
-      {/* Versprechen als Accordion */}
-      <PromiseAccordion />
+      {/* 10. KUNDENSTIMMEN als Accordion */}
+      <CustomerStories />
 
-      <SocialProof />
+      {/* 11. EFSA-Disclaimer */}
+      <EfsaDisclaimer />
 
+      {/* 12. Newsletter */}
       <Newsletter />
 
-      {/* Philosophie-CTA am Ende */}
-      <section className="py-16 sm:py-20" style={{ background: "var(--color-pine)", color: "var(--color-on-dark)" }}>
-        <div className="container-content max-w-3xl text-center">
-          <div
-            className="eyebrow mb-4"
-            style={{ color: "var(--color-on-dark)", opacity: 0.7 }}
-          >
-            Unsere Haltung
-          </div>
-          <h2 className="serif text-3xl sm:text-4xl leading-tight mb-5" style={{ color: "var(--color-on-dark)" }}>
-            Was Nutrasana einzigartig macht
-          </h2>
-          <p className="text-base sm:text-lg leading-relaxed mb-8 opacity-85 max-w-2xl mx-auto">
-            Wir glauben, dass Gesundheit jenseits von Marketing-Versprechen funktioniert. Lesen Sie, warum wir Nutrasana so gestaltet haben, wie wir es getan haben.
-          </p>
-          <Link
-            href="/pages/ueber-uns"
-            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium transition hover:opacity-90"
-            style={{
-              border: "1px solid rgba(250, 246, 236, 0.45)",
-              color: "var(--color-on-dark)",
-            }}
-          >
-            Unsere Philosophie
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </section>
+      {/* 13. Versandpartner */}
+      <ShippingPartners />
     </>
   );
 }
