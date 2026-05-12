@@ -1,6 +1,6 @@
-# Elatera Web
+# Nutrasana Web
 
-Premiere-Website für **Elatera** — wissenschaftlich entwickelte Nahrungsergänzung für Erwachsene 55+.
+Premiere-Website für **Nutrasana** — wissenschaftlich entwickelte Nahrungsergänzung für Erwachsene 55+.
 
 V0 läuft im **Wartelisten-Modus**: keine Zahlungsabwicklung, keine echten Produkte im Lager. Alle Produktseiten sammeln E-Mail-Anmeldungen für die Premiere 2026.
 
@@ -37,11 +37,11 @@ src/
 │   ├── page.tsx                    # Homepage
 │   ├── layout.tsx                  # Root Layout
 │   ├── globals.css                 # Design Tokens
-│   ├── products/[slug]/page.tsx    # Sales-Pages (Balance, Mobil, Nox)
+│   ├── products/[slug]/page.tsx    # Sales-Pages (Vertera, Mobilera, Somnera)
 │   ├── pages/                      # Über uns, FAQ, Kontakt, Apotheken
 │   └── policies/                   # Impressum, AGB, Datenschutz, Widerruf
 ├── components/
-│   ├── brand/logo.tsx              # Elatera-Logo (Variant 10 "Outlined Circle")
+│   ├── brand/logo.tsx              # Nutrasana-Logo (Variant 10 "Outlined Circle")
 │   ├── site/                       # Header, Footer, Top-Bar, Cookie-Banner
 │   ├── cart/                       # Warteliste (Context + Drawer)
 │   ├── product/                    # Sales-Page Sektionen
