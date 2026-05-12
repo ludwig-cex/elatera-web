@@ -90,11 +90,8 @@ export function SiteHeader() {
           <Link href="/pages/ueber-uns" className="hover:opacity-70 transition font-medium">
             Über uns
           </Link>
-          <Link href="/pages/faq" className="hover:opacity-70 transition font-medium">
-            Fragen
-          </Link>
-          <Link href="/pages/kontakt" className="hover:opacity-70 transition font-medium">
-            Kontakt
+          <Link href="/pages/hilfe-kontakt" className="hover:opacity-70 transition font-medium">
+            Hilfe & Kontakt
           </Link>
         </nav>
 
@@ -164,11 +161,8 @@ export function SiteHeader() {
             <Link href="/pages/ueber-uns" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
               Über uns
             </Link>
-            <Link href="/pages/faq" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
-              Fragen
-            </Link>
-            <Link href="/pages/kontakt" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
-              Kontakt
+            <Link href="/pages/hilfe-kontakt" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
+              Hilfe & Kontakt
             </Link>
           </nav>
         </div>
