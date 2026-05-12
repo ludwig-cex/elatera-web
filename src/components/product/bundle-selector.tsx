@@ -119,7 +119,7 @@ export function BundleSelector({ product }: { product: Product }) {
         Auf Warteliste setzen — {formatPrice(selected.priceCents / 100)}
       </button>
       <p className="text-[11px] text-muted text-center">
-        Premiere kommt in Kürze. Wir berechnen Ihnen jetzt nichts. Mit der Anmeldung erhalten Sie 10 % Pre-Order-Vorteil.
+        Bald wieder verfügbar. Mit der Anmeldung auf der Warteliste erhalten Sie 10 % Vorteil und kostenlosen Versand bei Verfügbarkeit.
       </p>
     </div>
   );

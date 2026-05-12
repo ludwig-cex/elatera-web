@@ -11,12 +11,12 @@ export default function UeberUnsPage() {
       <div className="container-content max-w-3xl">
         <div className="eyebrow mb-3">Über uns</div>
         <h1 className="serif text-4xl sm:text-6xl leading-tight mb-8">
-          Älterwerden, ohne Theater.
+          Gesundheit, einfach gemacht.
         </h1>
 
         <div className="prose-content space-y-6 text-lg leading-relaxed" style={{ color: "var(--color-ink-soft)" }}>
           <p>
-            Elatera entstand aus einer einfachen Beobachtung: Der Markt für Nahrungsergänzung ab 55 wird entweder von schreiender Anti-Aging-Werbung beherrscht — oder von trockenen Pharmaprodukten, die keinen Menschen ansprechen.
+            Elatera entstand aus einer einfachen Beobachtung: Der Markt für Nahrungsergänzung wird entweder von schreiender Anti-Aging-Werbung beherrscht — oder von trockenen Pharmaprodukten, die keinen Menschen ansprechen.
           </p>
           <p>
             Wir glauben, dass es zwischen diesen beiden Extremen einen ruhigeren, ehrlicheren Weg gibt. Einen Weg, der die echten Themen ernst nimmt — Gleichgewicht, Beweglichkeit, Schlaf — und dabei ohne falsche Versprechen auskommt.
@@ -27,24 +27,24 @@ export default function UeberUnsPage() {
           </h2>
           <ol className="space-y-4 list-decimal pl-5">
             <li>
-              <span className="font-medium text-ink">Wissenschaft zuerst.</span> Alle unsere Health-Claims sind EFSA-konform. Was wir nicht sagen dürfen, sagen wir nicht.
+              <span className="font-medium" style={{ color: "var(--color-ink)" }}>Wissenschaft zuerst.</span> Unsere Produkte wurden auf aktuellsten wissenschaftlichen Studien und Erkenntnissen aufgebaut. Jede Rezeptur ist sorgfältig durchdacht.
             </li>
             <li>
-              <span className="font-medium text-ink">Apotheker-Qualität.</span> Jede Rezeptur wird von approbierten Apothekern entwickelt und getestet. Jede Charge erhält eine eigene PZN.
+              <span className="font-medium" style={{ color: "var(--color-ink)" }}>Apotheker-Qualität.</span> Jede Rezeptur wird von approbierten Apothekern entwickelt und getestet. Jedes Produkt erhält eine eigene PZN.
             </li>
             <li>
-              <span className="font-medium text-ink">Made in Germany, wirklich.</span> Produktion ausschließlich in FSSC-22000-zertifizierten Anlagen in Deutschland. Kein Outsourcing, kein Greenwashing.
+              <span className="font-medium" style={{ color: "var(--color-ink)" }}>Made in Germany, wirklich.</span> Produktion ausschließlich in FSSC-22000-zertifizierten Anlagen in Deutschland. Kein Outsourcing, kein Greenwashing.
             </li>
           </ol>
 
           <h2 className="serif text-3xl mt-12 mb-4" style={{ color: "var(--color-ink)" }}>
-            Was als Nächstes kommt
+            Was Elatera einzigartig macht
           </h2>
           <p>
-            Aktuell bauen wir unser Sortiment vorsichtig auf. Die Premiere unserer ersten drei Produkte — Balance, Mobil und Nox — startet im Sommer 2026. Wer sich heute auf die Warteliste setzt, erhält zum Launch einen exklusiven Vorteil.
+            Drei sorgfältig formulierte Produkte für konkrete Anliegen — Balance für innere Sicherheit und Gleichgewicht, Mobil für tägliche Beweglichkeit und Nox für ruhige Nächte. Wir wollen nichts beheben, was die Natur nicht vorgesehen hat. Aber wir möchten Ihnen die bestmögliche Unterstützung für ein gutes Älterwerden geben.
           </p>
           <p>
-            Wir freuen uns, Sie an Bord zu haben.
+            Wir freuen uns, dass Sie hier sind.
           </p>
         </div>
       </div>

@@ -12,7 +12,7 @@ export default function Page() {
 
         <div className="rounded-lg p-5 mb-10" style={{ background: "var(--color-cream)" }}>
           <p className="text-sm leading-relaxed">
-            <strong>V0-Hinweis:</strong> Dieser Text ist ein Platzhalter und wird zur Premiere durch
+            <strong>V0-Hinweis:</strong> Dieser Text ist ein Platzhalter und wird mit Verfügbarkeit der Produkte durch
             rechtssichere Texte (eRecht24 / Trusted Shops) ersetzt. Solange unser Shop im
             Wartelisten-Modus läuft, findet kein Verkauf statt.
           </p>
@@ -21,7 +21,7 @@ export default function Page() {
         <h2 className="serif text-2xl mb-3">Verantwortlich</h2>
         <p className="text-muted leading-relaxed mb-6">
           [Platzhalter — Privatperson in der V0-Phase]<br />
-          Anschrift folgt zur Premiere<br />
+          Anschrift auf Anfrage<br />
           E-Mail: kontakt@elatera.de
         </p>
 

@@ -24,7 +24,7 @@ export default function KontaktPage() {
           <div className="rounded-lg p-5" style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.06)" }}>
             <Phone className="w-5 h-5 mb-3" style={{ color: "var(--color-forest)" }} />
             <div className="font-medium text-sm mb-1">Telefon</div>
-            <span className="text-sm text-muted">Folgt zur Premiere</span>
+            <span className="text-sm text-muted">Auf Anfrage</span>
           </div>
           <div className="rounded-lg p-5" style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.06)" }}>
             <MapPin className="w-5 h-5 mb-3" style={{ color: "var(--color-forest)" }} />

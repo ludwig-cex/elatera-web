@@ -38,27 +38,39 @@ export default function FaqPage() {
 
         <div className="space-y-8">
           <div>
-            <h2 className="serif text-2xl mb-3">Wann startet die Premiere?</h2>
-            <p className="text-muted leading-relaxed">
-              Wir planen die Premiere für Sommer 2026. Wer sich heute auf die Warteliste setzt, erhält 14 Tage Vorlauf und 10 % Pre-Order-Vorteil.
+            <h2 className="serif text-2xl mb-3">Wann sind die Produkte wieder verfügbar?</h2>
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              Wer sich auf unsere Warteliste setzt, wird als Erste:r benachrichtigt, sobald das jeweilige Produkt wieder verfügbar ist — und erhält dazu einen exklusiven 10 %-Vorteil und kostenlosen Versand.
             </p>
           </div>
           <div>
             <h2 className="serif text-2xl mb-3">Berechnen Sie schon jetzt etwas?</h2>
-            <p className="text-muted leading-relaxed">
-              Nein. Wir berechnen erst, wenn das Produkt verfügbar und tatsächlich versendet wird. Die Anmeldung auf der Warteliste ist verbindlich, aber zahlungslos.
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              Nein. Wir berechnen erst, wenn das Produkt tatsächlich versendet wird. Die Anmeldung auf der Warteliste ist unverbindlich und zahlungslos.
             </p>
           </div>
           <div>
             <h2 className="serif text-2xl mb-3">Werden meine Daten weitergegeben?</h2>
-            <p className="text-muted leading-relaxed">
-              Nein. Wir nutzen Ihre E-Mail ausschließlich für Premiere-Informationen und unseren redaktionellen Newsletter. Sie können jederzeit widersprechen.
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              Nein. Wir nutzen Ihre E-Mail ausschließlich für Versand-Benachrichtigungen und unseren redaktionellen Newsletter. Sie können jederzeit widersprechen.
             </p>
           </div>
           <div>
             <h2 className="serif text-2xl mb-3">Können Apotheken Elatera beziehen?</h2>
-            <p className="text-muted leading-relaxed">
-              Ja, ab Premiere über alle großen Pharma-Großhändler. Details auf der Seite <Link href="/pages/apotheken" className="underline">Apotheken</Link>.
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              Ja — alle Elatera-Produkte verfügen über eine eigene PZN und sind über die großen Pharma-Großhändler (PHOENIX, NOWEDA, GEHE) beziehbar.
+            </p>
+          </div>
+          <div>
+            <h2 className="serif text-2xl mb-3">Wie lange dauert der Versand?</h2>
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              In Deutschland 1–3 Werktage mit DHL. In Österreich und der Schweiz 2–5 Werktage. Versandkostenfrei ab 60&nbsp;€ Warenkorb oder dauerhaft im Spar-Abo.
+            </p>
+          </div>
+          <div>
+            <h2 className="serif text-2xl mb-3">Wie funktioniert das Spar-Abo?</h2>
+            <p style={{ color: "var(--color-muted)" }} className="leading-relaxed">
+              Sie wählen Ihren Liefer-Rhythmus (alle 30, 90 oder 180 Tage) und erhalten dauerhaft Rabatt sowie kostenlosen Versand. Pausieren und Kündigen jederzeit ohne Frist im Kundenkonto möglich.
             </p>
           </div>
         </div>

@@ -34,7 +34,7 @@ export function SalesPage({ product }: { product: Product }) {
                   className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs"
                   style={{ background: "var(--color-cream)", color: "var(--color-ink-soft)" }}
                 >
-                  Bis zu 45 % Rabatt zur Premiere
+                  Bis zu 45 % Rabatt im Bundle
                 </span>
               </div>
 

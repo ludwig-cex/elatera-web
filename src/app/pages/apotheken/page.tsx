@@ -71,7 +71,7 @@ export default function ApothekenPage() {
             <Phone className="w-5 h-5 flex-none" style={{ color: "var(--color-forest)" }} />
             <div>
               <div className="font-medium text-sm">Telefonisch</div>
-              <div className="text-sm text-muted">Telefonnummer folgt zur Premiere</div>
+              <div className="text-sm text-muted">Telefonnummer auf Anfrage</div>
             </div>
           </a>
         </div>
@@ -82,7 +82,7 @@ export default function ApothekenPage() {
         >
           <MapPin className="w-5 h-5 mt-0.5 flex-none" style={{ color: "var(--color-forest)" }} />
           <div className="text-sm leading-relaxed">
-            <span className="font-medium">Beziehbar über:</span> alle großen Pharma-Großhändler (PHOENIX, NOWEDA, GEHE) — ab Premiere 2026.
+            <span className="font-medium">Beziehbar über:</span> alle großen Pharma-Großhändler (PHOENIX, NOWEDA, GEHE).
           </div>
         </div>
       </div>

@@ -188,7 +188,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Elatera Balance",
       subheadline: "Für ein sicheres Stehen, einen klaren Kopf und Stabilität im Alltag.",
-      badge: "Premiere — auf Warteliste verfügbar",
+      badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Gleichgewicht · Schwindel · Nervenfunktion",
     },
     palette: {
@@ -246,7 +246,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Elatera Mobil",
       subheadline: "Für geschmeidige Gelenke, eine starke Mitte und mühelose Bewegung.",
-      badge: "Premiere — auf Warteliste verfügbar",
+      badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Gelenke · Knochen · Beweglichkeit",
     },
     palette: {
@@ -304,7 +304,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Elatera Nox",
       subheadline: "Für sanftes Einschlafen, ruhige Nächte und ein erholtes Erwachen.",
-      badge: "Premiere — auf Warteliste verfügbar",
+      badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Schlaf · Einschlafzeit · Erholung",
     },
     palette: {

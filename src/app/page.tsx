@@ -1,112 +1,105 @@
 import Link from "next/link";
-import { ArrowRight, FlaskConical, Award, ShieldCheck } from "lucide-react";
-import { PRODUCT_LIST } from "@/lib/products";
-import { ProductMockup } from "@/components/product/product-mockup";
-import { TrustRow } from "@/components/sections/trust-row";
+import { ArrowRight, FlaskConical, PillBottle, ShieldCheck, Star } from "lucide-react";
+import { ProductCarousel } from "@/components/sections/product-carousel";
 import { PressLogos } from "@/components/sections/press-logos";
 import { SocialProof } from "@/components/sections/social-proof";
 import { Newsletter } from "@/components/sections/newsletter";
-import { PromiseGrid } from "@/components/sections/promise-grid";
+import { PromiseAccordion } from "@/components/sections/promise-accordion";
+import { ExpertRecommendation } from "@/components/sections/expert-recommendation";
+import { RatingTile } from "@/components/sections/rating-tile";
+import { PRODUCT_LIST } from "@/lib/products";
+import { ProductMockup } from "@/components/product/product-mockup";
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO */}
-      <section className="pt-12 sm:pt-20 pb-16 sm:pb-24">
-        <div className="container-content grid gap-12 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-6">
-            <div className="eyebrow mb-4">Nahrungsergänzung · Made in Germany · Premiere 2026</div>
-            <h1 className="serif text-5xl sm:text-6xl lg:text-7xl leading-[1.04] mb-6">
-              Älterwerden,
-              <br />
-              <span style={{ color: "var(--color-moss)" }}>lebendig.</span>
-            </h1>
-            <p className="text-lg leading-relaxed max-w-xl mb-8" style={{ color: "var(--color-ink-soft)" }}>
-              Elatera entwickelt wissenschaftlich fundierte Nahrungsergänzung für die echten Bedürfnisse ab 55 — entwickelt von Apothekern, hergestellt in Deutschland, ehrlich kommuniziert.
-            </p>
-            <div className="flex flex-wrap gap-3 mb-10">
-              <Link
-                href="/products/balance"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-medium transition hover:opacity-90"
-                style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
-              >
-                Produkte ansehen
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="/pages/ueber-uns"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded font-medium transition hover:bg-cream/60"
-                style={{ border: "1px solid var(--color-forest)", color: "var(--color-forest)" }}
-              >
-                Unsere Philosophie
-              </Link>
-            </div>
-            <TrustRow />
-          </div>
-
-          <div className="lg:col-span-6 relative">
-            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-3">
-              {PRODUCT_LIST.map((p, i) => (
-                <div
-                  key={p.slug}
-                  className="relative"
-                  style={{ transform: `translateY(${i * 16}px)` }}
-                >
-                  <ProductMockup product={p} width={260} height={300} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PRODUCTS */}
-      <section className="py-20 sm:py-24" style={{ background: "var(--color-cream)" }}>
+      {/* HERO — Fortea-style: Bild + Textbox */}
+      <section className="pt-10 sm:pt-14 pb-14 sm:pb-20">
         <div className="container-content">
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <div className="eyebrow mb-3">Drei Premieren</div>
-            <h2 className="serif text-4xl sm:text-5xl leading-tight mb-4">
-              Was möchten Sie heute unterstützen?
-            </h2>
-            <p style={{ color: "var(--color-muted)" }}>
-              Jedes Elatera-Produkt richtet sich an ein klares Bedürfnis — und kombiniert Pflanzen-Tradition mit wissenschaftlicher Mikronährstoff-Rezeptur.
-            </p>
-          </div>
+          <div className="relative rounded-3xl overflow-hidden">
+            {/* Hero-Bild als Verlauf mit überlappenden Produktmockups (Platzhalter für späteres Foto) */}
+            <div
+              className="relative min-h-[460px] sm:min-h-[560px] flex items-center"
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--color-balance-bg) 0%, var(--color-cream) 50%, var(--color-mobil-bg) 100%)",
+              }}
+            >
+              {/* Dekorative SVG-Produktmockups rechts */}
+              <div className="absolute inset-y-0 right-0 hidden lg:flex items-center pointer-events-none">
+                <div className="flex gap-6 pr-10 opacity-95">
+                  {PRODUCT_LIST.map((p, i) => (
+                    <div
+                      key={p.slug}
+                      className="relative"
+                      style={{
+                        transform: `translateY(${(i - 1) * 20}px) rotate(${(i - 1) * -4}deg)`,
+                      }}
+                    >
+                      <ProductMockup product={p} width={220} height={280} />
+                    </div>
+                  ))}
+                </div>
+              </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {PRODUCT_LIST.map((p) => (
-              <Link
-                key={p.slug}
-                href={`/products/${p.slug}`}
-                className="group block rounded-2xl p-7 transition hover:shadow-lg"
-                style={{ background: p.palette.bg }}
-              >
-                <div className="aspect-[5/3] mb-5 flex items-center justify-center">
-                  <ProductMockup product={p} width={300} height={280} />
-                </div>
-                <div className="eyebrow mb-2" style={{ color: p.palette.subInk }}>
-                  {p.tagline}
-                </div>
-                <h3 className="serif text-3xl leading-tight mb-2" style={{ color: p.palette.ink }}>
-                  {p.name}
-                </h3>
-                <p className="text-sm mb-5" style={{ color: p.palette.subInk }}>
-                  {p.shortTagline}
-                </p>
-                <span
-                  className="inline-flex items-center gap-2 text-sm font-medium transition group-hover:gap-3"
-                  style={{ color: p.palette.badge }}
+              {/* Textbox-Card */}
+              <div className="container-content relative">
+                <div
+                  className="max-w-xl rounded-2xl p-8 sm:p-12 shadow-md backdrop-blur"
+                  style={{
+                    background: "rgba(250, 246, 236, 0.94)",
+                    border: "1px solid rgba(0,0,0,0.06)",
+                  }}
                 >
-                  Auf Warteliste setzen
-                  <ArrowRight className="w-4 h-4" />
-                </span>
-              </Link>
-            ))}
+                  <div className="eyebrow mb-4" style={{ color: "var(--color-moss)" }}>
+                    Elatera · Made in Germany
+                  </div>
+                  <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-5">
+                    Ihre Gesundheit,
+                    <br />
+                    <span style={{ color: "var(--color-moss)" }}>einfach gemacht.</span>
+                  </h1>
+                  <p className="text-lg leading-relaxed mb-7" style={{ color: "var(--color-ink-soft)" }}>
+                    Elatera<sup className="text-sm">®</sup> ist Ihre Gesundheitsmarke des Vertrauens — wissenschaftlich fundierte
+                    Produkte, online bestellbar und bequem nach Hause geliefert.
+                  </p>
+                  <Link
+                    href="/products/balance"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium transition hover:opacity-90"
+                    style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
+                  >
+                    Jetzt Produkte entdecken
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+
+                  <div className="mt-6 flex items-center gap-3 text-sm" style={{ color: "var(--color-muted)" }}>
+                    <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="w-4 h-4 fill-current"
+                          style={{ color: "var(--color-copper)" }}
+                        />
+                      ))}
+                    </div>
+                    <span>
+                      <span className="font-medium" style={{ color: "var(--color-ink)" }}>
+                        4,8/5,0
+                      </span>{" "}
+                      · über 1.200 Bewertungen
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* WHY ELATERA */}
+      {/* PRODUKT-KAROUSSEL */}
+      <ProductCarousel />
+
+      {/* WARUM ELATERA */}
       <section className="py-20 sm:py-24">
         <div className="container-content max-w-5xl">
           <div className="text-center mb-14">
@@ -116,7 +109,7 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-3 mb-14">
             <div>
               <div
                 className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
@@ -124,9 +117,9 @@ export default function HomePage() {
               >
                 <FlaskConical className="w-5 h-5" />
               </div>
-              <h3 className="serif text-2xl mb-3">Wissenschaftliche Rezepturen</h3>
+              <h3 className="serif text-2xl mb-3">Wissenschaftlich fundiert</h3>
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                Jede Formel basiert auf EFSA-konformen Health-Claims, kombiniert mit traditionellen Pflanzenextrakten in relevanten Dosierungen. Keine Wellness-Mode.
+                Unsere Produkte wurden auf aktuellsten wissenschaftlichen Studien und Erkenntnissen aufgebaut. Jede Rezeptur ist sorgfältig durchdacht und zielgerichtet formuliert.
               </p>
             </div>
             <div>
@@ -134,11 +127,11 @@ export default function HomePage() {
                 className="w-12 h-12 rounded-full mb-5 flex items-center justify-center"
                 style={{ background: "var(--color-mobil-bg)", color: "var(--color-copper)" }}
               >
-                <Award className="w-5 h-5" />
+                <PillBottle className="w-5 h-5" />
               </div>
-              <h3 className="serif text-2xl mb-3">In Deutschland gefertigt</h3>
+              <h3 className="serif text-2xl mb-3">Von Apothekern empfohlen</h3>
               <p className="text-sm leading-relaxed" style={{ color: "var(--color-muted)" }}>
-                Produktion ausschließlich in FSSC-22000-zertifizierten Anlagen. Jede Charge wird unabhängig laborgeprüft, bevor sie unser Haus verlässt.
+                Unsere Lösungen genießen das Vertrauen von Apothekern und werden regelmäßig weiterempfohlen. Jedes Produkt verfügt über eine eigene PZN.
               </p>
             </div>
             <div>
@@ -154,13 +147,52 @@ export default function HomePage() {
               </p>
             </div>
           </div>
+
+          {/* Bewertungskachel */}
+          <RatingTile />
         </div>
       </section>
 
       <PressLogos />
-      <PromiseGrid />
+
+      {/* Experten-Empfehlung (Andreas Sander) */}
+      <ExpertRecommendation />
+
+      {/* Versprechen als Accordion */}
+      <PromiseAccordion />
+
       <SocialProof />
+
       <Newsletter />
+
+      {/* Philosophie-CTA am Ende */}
+      <section className="py-16 sm:py-20" style={{ background: "var(--color-pine)", color: "var(--color-on-dark)" }}>
+        <div className="container-content max-w-3xl text-center">
+          <div
+            className="eyebrow mb-4"
+            style={{ color: "var(--color-on-dark)", opacity: 0.7 }}
+          >
+            Unsere Haltung
+          </div>
+          <h2 className="serif text-3xl sm:text-4xl leading-tight mb-5" style={{ color: "var(--color-on-dark)" }}>
+            Was Elatera einzigartig macht
+          </h2>
+          <p className="text-base sm:text-lg leading-relaxed mb-8 opacity-85 max-w-2xl mx-auto">
+            Wir glauben, dass Gesundheit jenseits von Marketing-Versprechen funktioniert. Lesen Sie, warum wir Elatera so gestaltet haben, wie wir es getan haben.
+          </p>
+          <Link
+            href="/pages/ueber-uns"
+            className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium transition hover:opacity-90"
+            style={{
+              border: "1px solid rgba(250, 246, 236, 0.45)",
+              color: "var(--color-on-dark)",
+            }}
+          >
+            Unsere Philosophie
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </section>
     </>
   );
 }

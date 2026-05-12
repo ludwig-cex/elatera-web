@@ -58,7 +58,7 @@ export function CartDrawer() {
                 <Mail className="w-7 h-7 opacity-50" />
               </div>
               <p className="text-muted text-sm">
-                Noch keine Produkte auf Ihrer Warteliste. Entdecken Sie unsere Premiere-Linie.
+                Noch keine Produkte auf Ihrer Warteliste. Entdecken Sie unsere Produktlinie.
               </p>
             </div>
           ) : (
@@ -123,7 +123,7 @@ export function CartDrawer() {
                 <Check className="w-6 h-6 mx-auto mb-2" />
                 <p className="text-sm font-medium">Sie sind auf der Warteliste.</p>
                 <p className="text-xs mt-1 opacity-80">
-                  Wir benachrichtigen Sie, sobald die Premiere startet — mit Ihrem 10 %-Vorteil.
+                  Wir benachrichtigen Sie, sobald Ihr Produkt wieder verfügbar ist — mit Ihrem 10 %-Vorteil.
                 </p>
               </div>
             ) : (

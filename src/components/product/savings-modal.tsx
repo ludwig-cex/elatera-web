@@ -56,7 +56,7 @@ export function SavingsModal({ product }: { product: { palette: { badge: string;
               Nur für Warteliste — 10 % zusätzlich
             </div>
             <h2 className="serif text-2xl leading-tight">
-              Sichern Sie sich Ihren Premiere-Vorteil
+              Sichern Sie sich Ihren exklusiven Vorteil
             </h2>
             <p className="text-sm text-muted mt-2">
               Wenn Sie sich heute auf die Warteliste setzen, erhalten Sie zum Launch einen exklusiven Bonus.
