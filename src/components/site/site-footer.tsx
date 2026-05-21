@@ -33,9 +33,9 @@ export function SiteFooter() {
               Produkte
             </div>
             <ul className="space-y-2 text-sm opacity-90">
-              <li><Link href="/products/vertera" className="hover:opacity-70">Vertera Intense</Link></li>
-              <li><Link href="/products/mobilera" className="hover:opacity-70">Mobilera Intense</Link></li>
-              <li><Link href="/products/somnera" className="hover:opacity-70">Somnera Intense</Link></li>
+              <li><Link href="/products/vertisana" className="hover:opacity-70">Vertisana Intense</Link></li>
+              <li><Link href="/products/mobilisana" className="hover:opacity-70">Mobilisana Intense</Link></li>
+              <li><Link href="/products/somnisana" className="hover:opacity-70">Somnisana Intense</Link></li>
             </ul>
           </div>
 

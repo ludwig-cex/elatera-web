@@ -9,7 +9,7 @@ export function SubheroBanner() {
           className="relative rounded-3xl overflow-hidden"
           style={{
             background:
-              "linear-gradient(135deg, var(--color-mobilera-bg) 0%, var(--color-cream) 60%, var(--color-vertera-bg) 100%)",
+              "linear-gradient(135deg, var(--color-mobilisana-bg) 0%, var(--color-cream) 60%, var(--color-vertisana-bg) 100%)",
           }}
         >
           <div className="relative px-8 py-14 sm:px-16 sm:py-20 lg:py-24 text-center max-w-3xl mx-auto">
@@ -29,7 +29,7 @@ export function SubheroBanner() {
               entwickelt, in Deutschland produziert, von Apothekern empfohlen.
             </p>
             <Link
-              href="/products/vertera"
+              href="/products/vertisana"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium transition hover:opacity-90"
               style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
             >

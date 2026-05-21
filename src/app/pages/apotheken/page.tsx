@@ -78,7 +78,7 @@ export default function ApothekenPage() {
 
         <div
           className="rounded-lg p-5 flex items-start gap-3"
-          style={{ background: "var(--color-vertera-bg)" }}
+          style={{ background: "var(--color-vertisana-bg)" }}
         >
           <MapPin className="w-5 h-5 mt-0.5 flex-none" style={{ color: "var(--color-forest)" }} />
           <div className="text-sm leading-relaxed">

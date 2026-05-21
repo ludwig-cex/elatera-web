@@ -7,6 +7,8 @@ import { TopBar } from "@/components/site/top-bar";
 import { CookieBanner } from "@/components/site/cookie-banner";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { UtmCapture } from "@/components/site/utm-capture";
+import { Analytics } from "@vercel/analytics/next";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
@@ -45,6 +47,7 @@ export default function RootLayout({
     <html lang="de" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
         <CartProvider>
+          <UtmCapture />
           <TopBar />
           <SiteHeader />
           <main>{children}</main>
@@ -52,6 +55,7 @@ export default function RootLayout({
           <CartDrawer />
           <CookieBanner />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

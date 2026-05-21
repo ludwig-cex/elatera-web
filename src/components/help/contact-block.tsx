@@ -101,7 +101,7 @@ export function ContactBlock() {
               <div className="text-center py-8">
                 <div
                   className="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center"
-                  style={{ background: "var(--color-vertera-badge)" }}
+                  style={{ background: "var(--color-vertisana-badge)" }}
                 >
                   <Check className="w-6 h-6" style={{ color: "var(--color-on-dark)" }} strokeWidth={3} />
                 </div>

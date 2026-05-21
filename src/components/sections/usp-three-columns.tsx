@@ -23,7 +23,7 @@ const USPS = [
 
 export function UspThreeColumns() {
   return (
-    <section className="py-20 sm:py-24">
+    <section className="py-12 sm:py-20 lg:py-24">
       <div className="container-content">
         <div className="text-center max-w-2xl mx-auto mb-14">
           <div className="eyebrow mb-3">Warum Nutrasana</div>

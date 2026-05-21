@@ -1,13 +1,18 @@
-import { Star, ChevronRight, Sparkles } from "lucide-react";
+import { Star, Sparkles, Truck, ShieldCheck, Award, FlaskConical } from "lucide-react";
 import type { Product } from "@/lib/products";
-import { ProductMockup } from "./product-mockup";
+import { HeroGallery } from "./hero-gallery";
 import { BundleSelector } from "./bundle-selector";
 import { FaqAccordion } from "./faq-accordion";
-import { AvailabilityChecker } from "./availability-checker";
 import { SavingsModal } from "./savings-modal";
+import { ProductDescription } from "./product-description";
+import { BenefitBlocks } from "./benefit-blocks";
+import { IngredientDeepDive } from "./ingredient-deep-dive";
+import { LabHero } from "./lab-hero";
 import { PharmacistQuote } from "@/components/sections/pharmacist-quote";
 import { PromiseGrid } from "@/components/sections/promise-grid";
 import { PressLogos } from "@/components/sections/press-logos";
+import { SocialProof } from "@/components/sections/social-proof";
+import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
 import { Newsletter } from "@/components/sections/newsletter";
 
 export function SalesPage({ product }: { product: Product }) {
@@ -15,13 +20,15 @@ export function SalesPage({ product }: { product: Product }) {
 
   return (
     <>
-      {/* 1. HERO + 2. PRODUCT IMAGE + 3. STATUS BADGE + 4. TRUST QUARTET + 9. AVAILABILITY + 10. BUNDLE + 11. CTA + 12. CHECKOUT BENEFITS + 15. PHARMACIST */}
+      {/* ============================================================
+         §1 HERO — Gallery + Title + Bundle + CTA + Trust Quartet
+         ============================================================ */}
       <section className="py-10 sm:py-14">
         <div className="container-content grid lg:grid-cols-12 gap-10 lg:gap-14">
           {/* Image side */}
-          <div className="lg:col-span-6">
-            <div className="sticky top-24">
-              {/* Status badge */}
+          <div className="lg:col-span-6 min-w-0">
+            <div className="sticky top-24 min-w-0">
+              {/* Status badges — §3 Fortea: Bestseller-Hinweis */}
               <div className="flex flex-wrap gap-2 mb-4">
                 <span
                   className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
@@ -38,36 +45,12 @@ export function SalesPage({ product }: { product: Product }) {
                 </span>
               </div>
 
-              {/* Product mockup as hero image */}
-              <div
-                className="rounded-2xl p-8 sm:p-12 mb-4 flex items-center justify-center"
-                style={{ background: p.bg }}
-              >
-                <ProductMockup product={product} width={520} height={320} />
-              </div>
-
-              {/* Thumbnail row (placeholder grid of mini-mockups) */}
-              <div className="grid grid-cols-5 gap-2">
-                {[...Array(5)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="aspect-square rounded-lg flex items-center justify-center"
-                    style={{
-                      background: i === 0 ? p.bg : "var(--color-ivory)",
-                      border: `1px solid ${i === 0 ? p.badge : "rgba(0,0,0,0.06)"}`,
-                    }}
-                  >
-                    <div className="serif italic text-lg" style={{ color: p.subInk }}>
-                      {product.variant.charAt(0)}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <HeroGallery product={product} />
             </div>
           </div>
 
-          {/* Info & purchase side */}
-          <div className="lg:col-span-6">
+          {/* Info & cart side */}
+          <div className="lg:col-span-6 min-w-0">
             <div className="eyebrow mb-3">{product.hero.eyebrow}</div>
             <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
               {product.hero.headline}
@@ -93,35 +76,33 @@ export function SalesPage({ product }: { product: Product }) {
               </span>
             </div>
 
-            {/* USP Block */}
-            <div
-              className="rounded-lg p-5 mb-7"
-              style={{ background: p.bg, border: `1px solid ${p.spineLine}` }}
-            >
-              <div className="eyebrow mb-2" style={{ color: p.subInk }}>
-                Was Nutrasana {product.variant} unterstützt
-              </div>
-              <ul className="space-y-2.5">
-                {product.uspBlocks.map((u, i) => (
-                  <li key={i} className="flex gap-3 text-sm leading-relaxed">
-                    <ChevronRight className="w-4 h-4 mt-0.5 flex-none" style={{ color: p.badge }} />
-                    <span>
-                      <span className="font-medium">{u.title}.</span> {u.description}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+            {/* Trust-Quartett — §4 Fortea */}
+            <div className="grid grid-cols-2 gap-2 mb-6">
+              {[
+                { icon: <Truck className="w-4 h-4" />, label: "Versandkostenfrei" },
+                { icon: <ShieldCheck className="w-4 h-4" />, label: "90 Tage Geld zurück" },
+                { icon: <Award className="w-4 h-4" />, label: "Made in Germany" },
+                { icon: <FlaskConical className="w-4 h-4" />, label: "Laborgeprüft je Charge" },
+              ].map((b) => (
+                <div
+                  key={b.label}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs"
+                  style={{
+                    background: "var(--color-ivory)",
+                    border: "1px solid rgba(0,0,0,0.06)",
+                    color: "var(--color-ink-soft)",
+                  }}
+                >
+                  <span style={{ color: p.badge }}>{b.icon}</span>
+                  <span className="font-medium">{b.label}</span>
+                </div>
+              ))}
             </div>
 
-            {/* Availability */}
-            <div className="mb-6">
-              <AvailabilityChecker accentColor={p.badge} />
-            </div>
-
-            {/* Bundle selector */}
+            {/* Bundle selector + Cart CTA — §10/11 Fortea */}
             <BundleSelector product={product} />
 
-            {/* PZN line */}
+            {/* PZN line — §12 Fortea-Inline */}
             <div className="mt-5 text-xs text-muted text-center">
               PZN <span className="font-mono">{product.pzn}</span> · 30 Kapseln · 1× täglich · Inhalt 14&nbsp;g
             </div>
@@ -129,58 +110,45 @@ export function SalesPage({ product }: { product: Product }) {
         </div>
       </section>
 
-      {/* PRESS LOGOS */}
-      <PressLogos />
+      {/* §2 PRODUKTBESCHREIBUNG */}
+      <ProductDescription product={product} />
 
-      {/* PHARMACIST */}
+      {/* §3 DREI BENEFIT-BLÖCKE — mit Bildern */}
+      <BenefitBlocks product={product} />
+
+      {/* §4 INHALTSSTOFFE IM DETAIL — 6-Karten-Carousel (hochgezogen) */}
+      <IngredientDeepDive product={product} />
+
+      {/* §5 EXPERTEN-STATEMENT */}
       <PharmacistQuote product={product} />
 
-      {/* INGREDIENTS DEEP DIVE */}
-      <section className="py-20" style={{ background: "var(--color-cream)" }}>
-        <div className="container-content">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="eyebrow mb-3">Inhaltsstoffe im Detail</div>
-            <h2 className="serif text-3xl sm:text-4xl leading-tight mb-3">
-              {product.ingredients.length} ausgewählte Inhaltsstoffe
-            </h2>
-            <p className="text-muted">
-              Jeder Inhaltsstoff wurde mit Blick auf Wirksamkeit, Reinheit und Bioverfügbarkeit ausgewählt.
-            </p>
-          </div>
+      {/* §6 NUTRASANA-VERSPRECHEN (7 Trust-Punkte) */}
+      <PromiseGrid />
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {product.ingredients.map((ing) => (
-              <div
-                key={ing.name}
-                className="rounded-lg p-6"
-                style={{ background: "var(--color-ivory)" }}
-              >
-                <div
-                  className="w-12 h-12 rounded-full mb-4 flex items-center justify-center"
-                  style={{ background: p.bg }}
-                >
-                  <span className="serif text-2xl" style={{ color: p.badge }}>
-                    {ing.name.charAt(0)}
-                  </span>
-                </div>
-                <h3 className="serif text-xl leading-tight mb-2">{ing.name}</h3>
-                <p className="text-sm leading-relaxed text-muted mb-3">{ing.description}</p>
-                {ing.efsaClaim && (
-                  <p className="text-xs italic" style={{ color: p.subInk }}>
-                    * {ing.efsaClaim}
-                  </p>
-                )}
-              </div>
-            ))}
+      {/* §7 KUNDENZUFRIEDENHEIT — adapted für Wartelisten-Kontext */}
+      <SocialProof />
+
+      {/* §8 MEDIENLOGOS — Bekannt aus */}
+      <PressLogos />
+
+      {/* §11 FAQ — 5 Kategorien */}
+      <section className="py-12 sm:py-20" style={{ background: "var(--color-cream)" }}>
+        <div className="container-content max-w-3xl">
+          <div className="text-center mb-10">
+            <div className="eyebrow mb-3">Häufige Fragen</div>
+            <h2 className="serif text-3xl sm:text-4xl leading-tight">
+              Alles, was Sie zu {product.name} wissen sollten
+            </h2>
           </div>
+          <FaqAccordion product={product} />
         </div>
       </section>
 
-      {/* SCIENTIFIC INTRO + STUDIES */}
-      <section className="py-20">
+      {/* §12 STUDIENLAGE */}
+      <section className="py-12 sm:py-20">
         <div className="container-content max-w-3xl">
           <div className="text-center mb-12">
-            <div className="eyebrow mb-3">Wissenschaftliche Fundierung</div>
+            <div className="eyebrow mb-3">Empirische Evidenz und Studienlage</div>
             <h2 className="serif text-3xl sm:text-4xl leading-tight mb-4">
               Was die Forschung sagt
             </h2>
@@ -209,29 +177,21 @@ export function SalesPage({ product }: { product: Product }) {
           </ol>
 
           <p className="text-xs text-muted mt-8 leading-relaxed text-center max-w-2xl mx-auto">
-            *Die hier angeführten Studien beziehen sich auf einzelne Inhaltsstoffe und stellen keine Aussage über das Endprodukt dar. Nutrasana-Produkte sind Nahrungsergänzungsmittel und kein Ersatz für eine ausgewogene Ernährung und gesunde Lebensweise.
+            * Die hier angeführten Studien beziehen sich auf einzelne Inhaltsstoffe und stellen keine Aussage über das Endprodukt dar. Nutrasana-Produkte sind Nahrungsergänzungsmittel und kein Ersatz für eine ausgewogene Ernährung und gesunde Lebensweise.
           </p>
         </div>
       </section>
 
-      <PromiseGrid />
+      {/* §13 LAB-HERO — Production / Quality */}
+      <LabHero product={product} />
 
-      {/* FAQ */}
-      <section className="py-20" style={{ background: "var(--color-cream)" }}>
-        <div className="container-content max-w-3xl">
-          <div className="text-center mb-10">
-            <div className="eyebrow mb-3">Häufige Fragen</div>
-            <h2 className="serif text-3xl sm:text-4xl leading-tight">
-              Alles, was Sie zu Nutrasana {product.variant} wissen sollten
-            </h2>
-          </div>
-          <FaqAccordion product={product} />
-        </div>
-      </section>
+      {/* §14 RECHTLICHE HINWEISE */}
+      <EfsaDisclaimer />
 
+      {/* §15 NEWSLETTER / SPARPLAN-CTA */}
       <Newsletter />
 
-      {/* Last-minute savings modal */}
+      {/* §16 LAST-MINUTE SAVINGS MODAL */}
       <SavingsModal product={product} />
     </>
   );

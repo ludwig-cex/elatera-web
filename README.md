@@ -37,7 +37,7 @@ src/
 │   ├── page.tsx                    # Homepage
 │   ├── layout.tsx                  # Root Layout
 │   ├── globals.css                 # Design Tokens
-│   ├── products/[slug]/page.tsx    # Sales-Pages (Vertera, Mobilera, Somnera)
+│   ├── products/[slug]/page.tsx    # Sales-Pages (Vertisana, Mobilisana, Somnisana)
 │   ├── pages/                      # Über uns, FAQ, Kontakt, Apotheken
 │   └── policies/                   # Impressum, AGB, Datenschutz, Widerruf
 ├── components/

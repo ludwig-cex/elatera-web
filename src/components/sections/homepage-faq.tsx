@@ -19,7 +19,7 @@ const FAQS = [
   },
   {
     q: "Werden die Produkte von Experten empfohlen?",
-    a: "Jede Rezeptur wird gemeinsam mit approbierten Pharmazeuten entwickelt. Andreas Sander empfiehlt unsere Produkte explizit als Apotheker. Zusätzlich verfügt jedes Nutrasana-Produkt über eine eigene Pharmazentralnummer (PZN).",
+    a: "Jede Rezeptur wird gemeinsam mit approbierten Pharmazeuten entwickelt und fachlich begleitet. Zusätzlich verfügt jedes Nutrasana-Produkt über eine eigene Pharmazentralnummer (PZN).",
   },
   {
     q: "Was beinhaltet die 90-Tage-Geld-zurück-Garantie?",
@@ -29,7 +29,7 @@ const FAQS = [
 
 export function HomepageFaq() {
   return (
-    <section className="py-20 sm:py-24" style={{ background: "var(--color-cream)" }}>
+    <section className="py-12 sm:py-20 lg:py-24" style={{ background: "var(--color-cream)" }}>
       <div className="container-content max-w-3xl">
         <div className="text-center mb-10">
           <div className="eyebrow mb-3">Häufige Fragen</div>

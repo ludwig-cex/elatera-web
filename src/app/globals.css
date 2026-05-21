@@ -33,29 +33,29 @@
   --color-on-dark: #faf6ec;
 
   /* Product Accents */
-  --color-vertera-bg: #e6ece4;
-  --color-vertera-spine: #dde4d9;
-  --color-vertera-badge: #2f5c47;
-  --color-vertera-badge-text: #f4f1ea;
-  --color-vertera-ink: #1f3b32;
-  --color-vertera-sub-ink: #4f6a5d;
-  --color-vertera-capsule: #2f5c47;
+  --color-vertisana-bg: #e6ece4;
+  --color-vertisana-spine: #dde4d9;
+  --color-vertisana-badge: #2f5c47;
+  --color-vertisana-badge-text: #f4f1ea;
+  --color-vertisana-ink: #1f3b32;
+  --color-vertisana-sub-ink: #4f6a5d;
+  --color-vertisana-capsule: #2f5c47;
 
-  --color-mobilera-bg: #efe4d3;
-  --color-mobilera-spine: #e6d8c2;
-  --color-mobilera-badge: #a36b3a;
-  --color-mobilera-badge-text: #fbf5e8;
-  --color-mobilera-ink: #4a2e16;
-  --color-mobilera-sub-ink: #7b5634;
-  --color-mobilera-capsule: #a36b3a;
+  --color-mobilisana-bg: #efe4d3;
+  --color-mobilisana-spine: #e6d8c2;
+  --color-mobilisana-badge: #a36b3a;
+  --color-mobilisana-badge-text: #fbf5e8;
+  --color-mobilisana-ink: #4a2e16;
+  --color-mobilisana-sub-ink: #7b5634;
+  --color-mobilisana-capsule: #a36b3a;
 
-  --color-somnera-bg: #dde2ea;
-  --color-somnera-spine: #d3d9e3;
-  --color-somnera-badge: #243a55;
-  --color-somnera-badge-text: #eef0f5;
-  --color-somnera-ink: #1a2840;
-  --color-somnera-sub-ink: #3e547a;
-  --color-somnera-capsule: #243a55;
+  --color-somnisana-bg: #dde2ea;
+  --color-somnisana-spine: #d3d9e3;
+  --color-somnisana-badge: #243a55;
+  --color-somnisana-badge-text: #eef0f5;
+  --color-somnisana-ink: #1a2840;
+  --color-somnisana-sub-ink: #3e547a;
+  --color-somnisana-capsule: #243a55;
 
   /* Type */
   --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, serif;
@@ -79,12 +79,12 @@
   --color-muted: var(--color-muted);
   --color-on-dark: var(--color-on-dark);
 
-  --color-vertera-bg: var(--color-vertera-bg);
-  --color-vertera-badge: var(--color-vertera-badge);
-  --color-mobilera-bg: var(--color-mobilera-bg);
-  --color-mobilera-badge: var(--color-mobilera-badge);
-  --color-somnera-bg: var(--color-somnera-bg);
-  --color-somnera-badge: var(--color-somnera-badge);
+  --color-vertisana-bg: var(--color-vertisana-bg);
+  --color-vertisana-badge: var(--color-vertisana-badge);
+  --color-mobilisana-bg: var(--color-mobilisana-bg);
+  --color-mobilisana-badge: var(--color-mobilisana-badge);
+  --color-somnisana-bg: var(--color-somnisana-bg);
+  --color-somnisana-badge: var(--color-somnisana-badge);
 
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
@@ -100,9 +100,12 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
+  max-width: 100%;
+  overflow-x: clip;
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-sans);

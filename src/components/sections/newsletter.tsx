@@ -14,7 +14,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="py-20">
+    <section className="py-12 sm:py-20">
       <div className="container-content max-w-2xl text-center">
         <div className="eyebrow mb-3">Newsletter</div>
         <h2 className="serif text-3xl sm:text-4xl leading-tight mb-3">
@@ -27,7 +27,7 @@ export function Newsletter() {
         {done ? (
           <div
             className="inline-flex items-center gap-3 px-6 py-4 rounded-lg"
-            style={{ background: "var(--color-vertera-bg)", color: "var(--color-forest)" }}
+            style={{ background: "var(--color-vertisana-bg)", color: "var(--color-forest)" }}
           >
             <Check className="w-5 h-5" />
             <span>Vielen Dank — bitte bestätigen Sie Ihre E-Mail in Ihrem Posteingang.</span>

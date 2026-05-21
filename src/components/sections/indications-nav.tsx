@@ -3,14 +3,14 @@ import { Compass, Bone, Moon } from "lucide-react";
 import { PRODUCT_LIST } from "@/lib/products";
 
 const ICON_MAP = {
-  vertera: Compass,
-  mobilera: Bone,
-  somnera: Moon,
+  vertisana: Compass,
+  mobilisana: Bone,
+  somnisana: Moon,
 } as const;
 
 export function IndicationsNav() {
   return (
-    <section className="py-16 sm:py-20" style={{ background: "var(--color-cream)" }}>
+    <section className="py-10 sm:py-16 lg:py-20" style={{ background: "var(--color-cream)" }}>
       <div className="container-content">
         <div className="text-center max-w-xl mx-auto mb-10">
           <div className="eyebrow mb-3">Wofür suchen Sie Unterstützung?</div>

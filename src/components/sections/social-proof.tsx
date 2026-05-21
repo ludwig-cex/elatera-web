@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Star } from "lucide-react";
 
 export function SocialProof() {
@@ -7,23 +8,26 @@ export function SocialProof() {
       age: 68,
       text: "Endlich ein Produkt, das nicht wie Lifestyle daherkommt. Sachlich, ehrlich, in meiner Apotheke verfügbar.",
       rating: 5,
+      portrait: "/portraits/brigitte-k.png",
     },
     {
       name: "Hans-Werner P.",
       age: 71,
       text: "Auf Empfehlung meiner Apothekerin probiert. Nach acht Wochen merklich besser. Bleibe dabei.",
       rating: 5,
+      portrait: "/portraits/hans-werner-p.png",
     },
     {
       name: "Renate S.",
       age: 64,
       text: "Saubere Verpackung, keine bunten Versprechen. Genau so soll Gesundheit kommuniziert werden.",
       rating: 5,
+      portrait: "/portraits/renate-s.png",
     },
   ];
 
   return (
-    <section className="py-14 sm:py-20" style={{ background: "var(--color-cream)" }}>
+    <section className="py-10 sm:py-16 lg:py-20" style={{ background: "var(--color-cream)" }}>
       <div className="container-content">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="flex justify-center gap-1 mb-3">
@@ -46,10 +50,15 @@ export function SocialProof() {
               className="rounded-lg p-6"
               style={{ background: "var(--color-ivory)" }}
             >
-              <div className="flex gap-0.5 mb-3">
-                {[...Array(r.rating)].map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-current" style={{ color: "var(--color-copper)" }} />
-                ))}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden flex-none">
+                  <Image src={r.portrait} alt={r.name} fill sizes="44px" className="object-cover" />
+                </div>
+                <div className="flex gap-0.5">
+                  {[...Array(r.rating)].map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-current" style={{ color: "var(--color-copper)" }} />
+                  ))}
+                </div>
               </div>
               <p className="serif text-lg leading-snug mb-4">„{r.text}"</p>
               <div className="text-xs text-muted">

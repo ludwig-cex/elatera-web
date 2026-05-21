@@ -56,7 +56,7 @@ export function ProductMockup({ product, className, width = 520, height = 320 }:
             fontFamily: "var(--font-sans)",
           }}
         >
-          ELATERA
+          NUTRASANA
         </div>
       </div>
 

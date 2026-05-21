@@ -2,17 +2,26 @@
 
 import { useState, useEffect } from "react";
 import { X, Gift, Truck, RefreshCw, ShieldCheck } from "lucide-react";
+import { useCart } from "@/components/cart/cart-context";
 
 export function SavingsModal({ product }: { product: { palette: { badge: string; badgeText: string; bg: string } } }) {
   const [open, setOpen] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const { isOpen: drawerOpen, items } = useCart();
 
   useEffect(() => {
     const seen = sessionStorage.getItem("elatera-savings-modal-seen");
     if (seen || dismissed) return;
+    // Don't arm if user already engaged with the waitlist
+    if (drawerOpen || items.length > 0) return;
     const timer = setTimeout(() => setOpen(true), 18000);
     return () => clearTimeout(timer);
-  }, [dismissed]);
+  }, [dismissed, drawerOpen, items.length]);
+
+  // Auto-hide if user opens the waitlist while modal is up
+  useEffect(() => {
+    if (open && (drawerOpen || items.length > 0)) setOpen(false);
+  }, [open, drawerOpen, items.length]);
 
   const close = () => {
     setOpen(false);
@@ -53,13 +62,13 @@ export function SavingsModal({ product }: { product: { palette: { badge: string;
               style={{ background: product.palette.bg, color: product.palette.badge }}
             >
               <Gift className="w-3.5 h-3.5" />
-              Nur für Warteliste — 10 % zusätzlich
+              10 %-Willkommen-Vorteil
             </div>
             <h2 className="serif text-2xl leading-tight">
               Sichern Sie sich Ihren exklusiven Vorteil
             </h2>
             <p className="text-sm text-muted mt-2">
-              Wenn Sie sich heute auf die Warteliste setzen, erhalten Sie zum Launch einen exklusiven Bonus.
+              Tragen Sie sich heute ein und erhalten Sie zum nächsten Launch einen exklusiven Bonus auf Ihre erste Bestellung.
             </p>
           </div>
 

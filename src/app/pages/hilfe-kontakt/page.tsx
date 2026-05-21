@@ -21,7 +21,7 @@ export default function HilfeKontaktPage() {
         className="py-20 sm:py-24"
         style={{
           background:
-            "linear-gradient(180deg, var(--color-vertera-bg) 0%, var(--color-paper) 100%)",
+            "linear-gradient(180deg, var(--color-vertisana-bg) 0%, var(--color-paper) 100%)",
         }}
       >
         <div className="container-content text-center max-w-3xl mx-auto">

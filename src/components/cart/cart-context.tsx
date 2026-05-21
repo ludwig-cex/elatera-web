@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
-export type WaitlistItem = {
+export type CartItem = {
   productSlug: string;
   productName: string;
   variant: string;
@@ -13,12 +13,12 @@ export type WaitlistItem = {
 };
 
 type CartState = {
-  items: WaitlistItem[];
+  items: CartItem[];
   isOpen: boolean;
   isSavingsModalOpen: boolean;
-  addToWaitlist: (item: WaitlistItem) => void;
-  removeFromWaitlist: (index: number) => void;
-  clearWaitlist: () => void;
+  addToCart: (item: CartItem) => void;
+  removeFromCart: (index: number) => void;
+  clearCart: () => void;
   open: () => void;
   close: () => void;
   openSavingsModal: () => void;
@@ -28,20 +28,20 @@ type CartState = {
 const CartContext = createContext<CartState | null>(null);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<WaitlistItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSavingsModalOpen, setIsSavingsModalOpen] = useState(false);
 
-  const addToWaitlist = useCallback((item: WaitlistItem) => {
+  const addToCart = useCallback((item: CartItem) => {
     setItems((prev) => [...prev, item]);
     setIsOpen(true);
   }, []);
 
-  const removeFromWaitlist = useCallback((index: number) => {
+  const removeFromCart = useCallback((index: number) => {
     setItems((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
-  const clearWaitlist = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => setItems([]), []);
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
   const openSavingsModal = useCallback(() => setIsSavingsModalOpen(true), []);
@@ -53,9 +53,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
         items,
         isOpen,
         isSavingsModalOpen,
-        addToWaitlist,
-        removeFromWaitlist,
-        clearWaitlist,
+        addToCart,
+        removeFromCart,
+        clearCart,
         open,
         close,
         openSavingsModal,

@@ -3,12 +3,13 @@
  * V0 = all out-of-stock, waitlist mode only.
  */
 
-export type ProductSlug = "vertera" | "mobilera" | "somnera";
+export type ProductSlug = "vertisana" | "mobilisana" | "somnisana";
 
 export type IngredientHighlight = {
   name: string;
   description: string;
   efsaClaim?: string;
+  image?: string;        // slug under /products/<slug>/ingredients/
 };
 
 export type Bundle = {
@@ -20,13 +21,20 @@ export type Bundle = {
   highlight?: string; // e.g. "Sehr beliebt"
 };
 
+export type SpecialFeature = {
+  title: string;
+  description: string;
+};
+
 export type Product = {
   slug: ProductSlug;
-  name: string;        // e.g. "Vertera Intense"
-  variant: string;     // e.g. "Vertera"
+  name: string;        // e.g. "Vertisana Intense"
+  variant: string;     // e.g. "Vertisana"
   tagline: string;     // e.g. "Gleichgewicht & Schwindel"
   shortTagline: string;
   indication: string;  // long form
+  description: string; // paragraph shown between hero and benefit blocks
+  specialFeatures: SpecialFeature[]; // "Was X besonders macht" — 3 Punkte
   pzn: string;
   hero: {
     headline: string;
@@ -45,7 +53,7 @@ export type Product = {
     subInk: string;
     capsule: string;
   };
-  uspBlocks: { title: string; description: string }[];
+  uspBlocks: { title: string; description: string; image?: string }[];
   ingredients: IngredientHighlight[];
   bundles: Bundle[];
   pharmacistQuote: {
@@ -56,6 +64,21 @@ export type Product = {
   studies: { reference: string; finding: string }[];
   faqs: { category: string; items: { q: string; a: string }[] }[];
   scientificIntro: string;
+  images: {
+    solo: string;              // front of box, head-on
+    stillleben: string;        // box on podium in scene
+    flatlay: string;           // ingredient flatlay
+    nutrients: string;         // Nährstoff-Tabelle (Canva)
+    claims: string;            // EFSA claims tile (Canva)
+    credentials: string;       // Pharmazeut tile (Canva)
+    hero: string;              // hero banner — couple on right, negative space on left
+    lifestyle: {
+      couplePrimary: string;   // strongest couple-with-product shot
+      coupleSecondary: string;
+      soloWoman: string;
+      soloMan: string;
+    };
+  };
 };
 
 const COMMON_FAQS = (productName: string, variant: string): { category: string; items: { q: string; a: string }[] }[] => [
@@ -93,7 +116,7 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
       },
       {
         q: "Zu welcher Tageszeit sollte ich einnehmen?",
-        a: variant === "Somnera"
+        a: variant === "Somnisana"
           ? "Etwa 30 Minuten vor dem Zubettgehen — so kann der Wirkstoff seine volle Wirkung entfalten."
           : "Die Tageszeit ist beliebig wählbar. Wichtig ist die regelmäßige tägliche Einnahme.",
       },
@@ -165,8 +188,8 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
 ];
 
 const COMMON_PHARMACIST = {
-  name: "Dr. Andreas Heller",
-  title: "Approbierter Apotheker",
+  name: "Jonas Gütermann",
+  title: "Approbierter Pharmazeut",
   quote: "Eine wissenschaftlich durchdachte Formulierung mit Inhaltsstoffen in relevanten Dosierungen — genau das, was meine Patientinnen und Patienten brauchen.",
 };
 
@@ -177,19 +200,25 @@ const COMMON_BUNDLES: Bundle[] = [
 ];
 
 export const PRODUCTS: Record<ProductSlug, Product> = {
-  vertera: {
-    slug: "vertera",
-    name: "Vertera Intense",
-    variant: "Vertera",
-    tagline: "Gleichgewicht & Schwindel",
+  vertisana: {
+    slug: "vertisana",
+    name: "Vertisana Intense",
+    variant: "Vertisana",
+    tagline: "Gleichgewicht & innere Balance",
     shortTagline: "für inneren Halt",
-    indication: "Bei Schwindelgefühl, Gleichgewichtsstörungen und für innere Sicherheit im Alltag",
+    indication: "Für ein stabiles Körpergefühl, innere Balance und Sicherheit im Alltag",
+    description: "Vertisana Intense richtet sich an Menschen, die ihr Gleichgewichtsempfinden und ihre innere Stabilität gezielt unterstützen möchten. Die Rezeptur vereint traditionelle Pflanzenextrakte aus der Apothekenkultur mit ausgewählten Mikronährstoffen — entwickelt für mehr Sicherheit beim Aufstehen, klare Momente im Alltag und ein ruhiges Körpergefühl.",
+    specialFeatures: [
+      { title: "Synergistische Formel", description: "Pflanzliche Klassiker wie Ginkgo und Ingwer kombiniert mit B-Vitaminen und Magnesium für ein gezielt aufeinander abgestimmtes Wirkprofil." },
+      { title: "Relevante Dosierung", description: "Wirkstoffmengen oberhalb gängiger Drogeriemarkt-Standards — entwickelt für spürbare Unterstützung statt symbolischer Zufuhr." },
+      { title: "Optimierte Aufnahme", description: "Mit schwarzem Pfeffer (Piperin) für eine verbesserte Bioverfügbarkeit der pflanzlichen Inhaltsstoffe." },
+    ],
     pzn: "20226001",
     hero: {
-      headline: "Vertera Intense",
+      headline: "Vertisana Intense",
       subheadline: "Für ein sicheres Stehen, einen klaren Kopf und Stabilität im Alltag.",
       badge: "Bestseller — bald wieder verfügbar",
-      eyebrow: "Gleichgewicht · Schwindel · Nervenfunktion",
+      eyebrow: "Gleichgewicht · Balance · Nervenfunktion",
     },
     palette: {
       bg: "#e6ece4",
@@ -206,45 +235,69 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       {
         title: "Nervenfunktion",
         description: "Vitamin B6 und B12 tragen zu einem normalen Nervensystem bei — der Basis für inneren Halt.",
+        image: "/products/vertisana/benefits/nervenfunktion.png",
       },
       {
         title: "Energiestoffwechsel",
         description: "Magnesium und Vitamin B6 tragen zum normalen Energiestoffwechsel und zur Verringerung von Müdigkeit bei.",
+        image: "/products/vertisana/benefits/energiestoffwechsel.png",
       },
       {
         title: "Psychische Funktion",
         description: "Magnesium trägt zu einer normalen psychischen Funktion bei — wichtig in Phasen innerer Anspannung.",
+        image: "/products/vertisana/benefits/psychische-funktion.png",
       },
     ],
     ingredients: [
-      { name: "Ginkgo-Biloba-Extrakt", description: "Tradition aus der Pflanzenheilkunde, hochkonzentriert standardisiert." },
-      { name: "Ingwer-Extrakt", description: "Ein bewährter Pflanzenwirkstoff für das Gleichgewichtsempfinden." },
-      { name: "Magnesium", description: "Trägt zu normaler Nervenfunktion bei.", efsaClaim: "Magnesium trägt zur normalen Funktion des Nervensystems bei." },
-      { name: "Vitamin B6", description: "Trägt zum normalen Energiestoffwechsel bei.", efsaClaim: "Vitamin B6 trägt zu einer normalen Funktion des Nervensystems bei." },
-      { name: "Vitamin B12", description: "Trägt zum normalen Nervensystem bei.", efsaClaim: "Vitamin B12 trägt zur normalen Funktion des Nervensystems bei." },
-      { name: "Schwarzer Pfeffer", description: "Piperin unterstützt die Bioverfügbarkeit der pflanzlichen Inhaltsstoffe." },
+      { name: "Ginkgo-Biloba-Extrakt", description: "Tradition aus der Pflanzenheilkunde, hochkonzentriert standardisiert.", image: "ginkgo" },
+      { name: "Ingwer-Extrakt", description: "Klassischer Pflanzenwirkstoff aus der Apothekentradition, standardisiert auf Gingerole.", image: "ingwer" },
+      { name: "Magnesium", description: "Trägt zu normaler Nervenfunktion bei.", efsaClaim: "Magnesium trägt zur normalen Funktion des Nervensystems bei.", image: "magnesium" },
+      { name: "Vitamin B6", description: "Trägt zum normalen Energiestoffwechsel bei.", efsaClaim: "Vitamin B6 trägt zu einer normalen Funktion des Nervensystems bei.", image: "vitamin-b6" },
+      { name: "Vitamin B12", description: "Trägt zum normalen Nervensystem bei.", efsaClaim: "Vitamin B12 trägt zur normalen Funktion des Nervensystems bei.", image: "vitamin-b12" },
+      { name: "Schwarzer Pfeffer", description: "Piperin unterstützt die Bioverfügbarkeit der pflanzlichen Inhaltsstoffe.", image: "schwarzer-pfeffer" },
     ],
     bundles: COMMON_BUNDLES,
     pharmacistQuote: COMMON_PHARMACIST,
     studies: [
-      { reference: "Hilton et al. (2017)", finding: "Standardisierter Ginkgo-Extrakt zeigte in kontrollierten Studien Hinweise auf eine Unterstützung des Gleichgewichtsempfindens." },
+      { reference: "Hilton et al. (2017)", finding: "Standardisierter Ginkgo-Extrakt wurde in mehreren kontrollierten Studien hinsichtlich seiner Anwendung untersucht." },
       { reference: "Marx et al. (2015)",  finding: "Ingwer wurde in mehreren Studien hinsichtlich seines Beitrags zum allgemeinen Wohlbefinden untersucht." },
       { reference: "Boyle et al. (2017)", finding: "Magnesium spielt eine zentrale Rolle bei der normalen Funktion des Nervensystems." },
     ],
-    faqs: COMMON_FAQS("Vertera Intense", "Balance"),
-    scientificIntro: "Vertera Intense kombiniert traditionelle Pflanzenextrakte mit essenziellen Mikronährstoffen in einer sorgfältig dosierten Rezeptur, entwickelt für Menschen, die ihren Alltag mit Sicherheit und Klarheit erleben möchten.",
+    faqs: COMMON_FAQS("Vertisana Intense", "Balance"),
+    scientificIntro: "Vertisana Intense kombiniert traditionelle Pflanzenextrakte mit essenziellen Mikronährstoffen in einer sorgfältig dosierten Rezeptur, entwickelt für Menschen, die ihren Alltag mit Sicherheit und Klarheit erleben möchten.",
+    images: {
+      solo:        "/products/vertisana/solo.png",
+      stillleben:  "/products/vertisana/stillleben.png",
+      flatlay:     "/products/vertisana/flatlay.png",
+      nutrients:   "/products/vertisana/nutrients.png",
+      claims:      "/products/vertisana/claims.png",
+      credentials: "/products/vertisana/credentials.png",
+      hero:        "/products/vertisana/hero.png",
+      lifestyle: {
+        couplePrimary:   "/products/vertisana/lifestyle/couple-kitchen.png",
+        coupleSecondary: "/products/vertisana/lifestyle/couple-sofa.png",
+        soloWoman:       "/products/vertisana/lifestyle/solo-woman.png",
+        soloMan:         "/products/vertisana/lifestyle/solo-man.png",
+      },
+    },
   },
 
-  mobilera: {
-    slug: "mobilera",
-    name: "Mobilera Intense",
-    variant: "Mobilera",
+  mobilisana: {
+    slug: "mobilisana",
+    name: "Mobilisana Intense",
+    variant: "Mobilisana",
     tagline: "Gelenke & Beweglichkeit",
     shortTagline: "für tägliche Beweglichkeit",
     indication: "Für die tägliche Beweglichkeit von Gelenken, Sehnen und Knochen",
+    description: "Mobilisana Intense richtet sich an Menschen, die ihre Gelenk- und Rückenfunktion gezielt unterstützen möchten. Die Rezeptur kombiniert klassische Pflanzenextrakte mit den essenziellen Mikronährstoffen für Knochen, Knorpel und Muskeln — für eine geschmeidige Beweglichkeit im Alltag, eine starke Mitte und mühelose Bewegungen.",
+    specialFeatures: [
+      { title: "Synergistische Formel", description: "Curcumin, Teufelskralle und Ingwer abgestimmt mit den Mineralien und Vitaminen, die zur normalen Knochen- und Muskelfunktion beitragen." },
+      { title: "Relevante Dosierung", description: "Pflanzliche Extrakte in standardisierter Konzentration und Mikronährstoffe in Mengen, die den EFSA-Empfehlungen entsprechen oder darüber hinausgehen." },
+      { title: "Optimierte Aufnahme", description: "Curcumin in einer Form mit verbesserter Bioverfügbarkeit für eine effizientere Verwertung im Körper." },
+    ],
     pzn: "20226002",
     hero: {
-      headline: "Mobilera Intense",
+      headline: "Mobilisana Intense",
       subheadline: "Für geschmeidige Gelenke, eine starke Mitte und mühelose Bewegung.",
       badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Gelenke · Knochen · Beweglichkeit",
@@ -264,23 +317,26 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       {
         title: "Kollagenbildung",
         description: "Vitamin C trägt zu einer normalen Kollagenbildung für die normale Funktion von Knorpel und Knochen bei.",
+        image: "/products/mobilisana/benefits/knorpel.png",
       },
       {
         title: "Knochenerhalt",
         description: "Vitamin D, Magnesium und Zink tragen zur Erhaltung normaler Knochen bei.",
+        image: "/products/mobilisana/benefits/knochen.png",
       },
       {
         title: "Muskelfunktion",
         description: "Vitamin D und Magnesium tragen zur Erhaltung einer normalen Muskelfunktion bei.",
+        image: "/products/mobilisana/benefits/muskel.png",
       },
     ],
     ingredients: [
-      { name: "Curcumin-Extrakt", description: "Aus der goldenen Wurzel — standardisiert und mit hoher Bioverfügbarkeit." },
-      { name: "Teufelskrallen-Extrakt", description: "Traditioneller Pflanzenwirkstoff aus der südafrikanischen Heilpflanze." },
-      { name: "Ingwer-Extrakt", description: "Klassiker aus der Pflanzenheilkunde." },
-      { name: "Vitamin C", description: "Für die normale Kollagenbildung.", efsaClaim: "Vitamin C trägt zur normalen Kollagenbildung für die normale Funktion der Knorpel bei." },
-      { name: "Vitamin D", description: "Für den Erhalt normaler Knochen.", efsaClaim: "Vitamin D trägt zur Erhaltung normaler Knochen bei." },
-      { name: "Magnesium & Zink", description: "Essenzielle Mineralien für Knochen, Muskeln und Bindegewebe." },
+      { name: "Curcumin-Extrakt", description: "Aus der goldenen Wurzel — standardisiert und mit hoher Bioverfügbarkeit.", image: "curcumin" },
+      { name: "Teufelskrallen-Extrakt", description: "Traditioneller Pflanzenwirkstoff aus der südafrikanischen Heilpflanze.", image: "teufelskralle" },
+      { name: "Ingwer-Extrakt", description: "Klassiker aus der Pflanzenheilkunde.", image: "ingwer" },
+      { name: "Vitamin C", description: "Für die normale Kollagenbildung.", efsaClaim: "Vitamin C trägt zur normalen Kollagenbildung für die normale Funktion der Knorpel bei.", image: "vitamin-c" },
+      { name: "Vitamin D", description: "Für den Erhalt normaler Knochen.", efsaClaim: "Vitamin D trägt zur Erhaltung normaler Knochen bei.", image: "vitamin-d" },
+      { name: "Magnesium & Zink", description: "Essenzielle Mineralien für Knochen, Muskeln und Bindegewebe.", image: "magnesium-zink" },
     ],
     bundles: COMMON_BUNDLES,
     pharmacistQuote: COMMON_PHARMACIST,
@@ -289,20 +345,41 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       { reference: "Kuptniratsaikul et al. (2014)", finding: "Curcumin wurde in einer randomisierten kontrollierten Studie evaluiert." },
       { reference: "Altman & Marcussen (2001)", finding: "Ingwer-Extrakt wurde in einer placebo-kontrollierten Studie untersucht." },
     ],
-    faqs: COMMON_FAQS("Mobilera Intense", "Mobil"),
-    scientificIntro: "Mobilera Intense vereint klassische Pflanzenextrakte mit den essenziellen Mikronährstoffen für Knochen, Knorpel und Muskeln — entwickelt für Menschen, die ihre Beweglichkeit täglich neu schätzen.",
+    faqs: COMMON_FAQS("Mobilisana Intense", "Mobil"),
+    scientificIntro: "Mobilisana Intense vereint klassische Pflanzenextrakte mit den essenziellen Mikronährstoffen für Knochen, Knorpel und Muskeln — entwickelt für Menschen, die ihre Beweglichkeit täglich neu schätzen.",
+    images: {
+      solo:        "/products/mobilisana/solo.png",
+      stillleben:  "/products/mobilisana/stillleben.png",
+      flatlay:     "/products/mobilisana/flatlay.png",
+      nutrients:   "/products/mobilisana/nutrients.png",
+      claims:      "/products/mobilisana/claims.png",
+      credentials: "/products/mobilisana/credentials.png",
+      hero:        "/products/mobilisana/hero.png",
+      lifestyle: {
+        couplePrimary:   "/products/mobilisana/lifestyle/couple-outdoor.png",
+        coupleSecondary: "/products/mobilisana/lifestyle/couple-kitchen.png",
+        soloWoman:       "/products/mobilisana/lifestyle/solo-woman.png",
+        soloMan:         "/products/mobilisana/lifestyle/solo-man.png",
+      },
+    },
   },
 
-  somnera: {
-    slug: "somnera",
-    name: "Somnera Intense",
-    variant: "Somnera",
+  somnisana: {
+    slug: "somnisana",
+    name: "Somnisana Intense",
+    variant: "Somnisana",
     tagline: "Schlaf & Erholung",
     shortTagline: "für ruhige Nächte",
     indication: "Für einen ruhigen Einschlafmoment und tieferes nächtliches Wohlbefinden",
+    description: "Somnisana Intense richtet sich an Menschen, die ihren abendlichen Übergang in die Nachtruhe sanft begleiten möchten. Die Rezeptur vereint Melatonin in studienbasierter Dosierung mit pflanzlichen Klassikern der Apothekentradition — für ein ruhiges Einschlafen, eine ungestörte Nacht und ein erholtes Erwachen.",
+    specialFeatures: [
+      { title: "Synergistische Formel", description: "Melatonin kombiniert mit Baldrian, Passionsblume und Lavendel — eine abendliche Routine in einer Kapsel statt mehrerer Präparate." },
+      { title: "Relevante Dosierung", description: "1 mg Melatonin entspricht exakt der EFSA-Vorgabe für die Verkürzung der Einschlafzeit — keine Unter- und keine Überdosierung." },
+      { title: "Optimierte Aufnahme", description: "Pflanzliche Extrakte in standardisierter Form, Magenpassage-geschützte Kapsel für eine zuverlässige Freisetzung am Wirkort." },
+    ],
     pzn: "20226003",
     hero: {
-      headline: "Somnera Intense",
+      headline: "Somnisana Intense",
       subheadline: "Für sanftes Einschlafen, ruhige Nächte und ein erholtes Erwachen.",
       badge: "Bestseller — bald wieder verfügbar",
       eyebrow: "Schlaf · Einschlafzeit · Erholung",
@@ -322,23 +399,26 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       {
         title: "Verkürzt die Einschlafzeit",
         description: "Melatonin trägt zur Verkürzung der Einschlafzeit bei. Die positive Wirkung stellt sich ein, wenn 1 mg Melatonin kurz vor dem Schlafengehen eingenommen wird.",
+        image: "/products/somnisana/benefits/einschlafen.png",
       },
       {
         title: "Nervenfunktion",
         description: "Magnesium und Vitamin B6 tragen zur normalen Funktion des Nervensystems bei.",
+        image: "/products/somnisana/benefits/nervensystem.png",
       },
       {
         title: "Psychische Funktion",
         description: "Magnesium trägt zu einer normalen psychischen Funktion bei.",
+        image: "/products/somnisana/benefits/muedigkeit.png",
       },
     ],
     ingredients: [
-      { name: "Melatonin (1 mg)", description: "Für die Verkürzung der Einschlafzeit.", efsaClaim: "Melatonin trägt zur Verkürzung der Einschlafzeit bei. Die positive Wirkung stellt sich bei Einnahme von 1 mg Melatonin kurz vor dem Schlafengehen ein." },
-      { name: "Baldrian-Extrakt", description: "Traditioneller Pflanzenwirkstoff der Apothekenkultur." },
-      { name: "Passionsblume", description: "Ein klassischer Begleiter ruhiger Abende." },
-      { name: "Lavendel-Extrakt", description: "Hochwertige Extraktion aus französischen Lavendelblüten." },
-      { name: "Magnesium", description: "Für die normale Funktion des Nervensystems." },
-      { name: "Vitamin B6", description: "Für einen normalen Energiestoffwechsel." },
+      { name: "Melatonin (1 mg)", description: "Für die Verkürzung der Einschlafzeit.", efsaClaim: "Melatonin trägt zur Verkürzung der Einschlafzeit bei. Die positive Wirkung stellt sich bei Einnahme von 1 mg Melatonin kurz vor dem Schlafengehen ein.", image: "melatonin" },
+      { name: "Baldrian-Extrakt", description: "Traditioneller Pflanzenwirkstoff der Apothekenkultur.", image: "baldrian" },
+      { name: "Passionsblume", description: "Ein klassischer Begleiter ruhiger Abende.", image: "passionsblume" },
+      { name: "Lavendel-Extrakt", description: "Hochwertige Extraktion aus französischen Lavendelblüten.", image: "lavendel" },
+      { name: "Magnesium", description: "Für die normale Funktion des Nervensystems.", image: "magnesium" },
+      { name: "Vitamin B6", description: "Für einen normalen Energiestoffwechsel.", image: "vitamin-b6" },
     ],
     bundles: COMMON_BUNDLES,
     pharmacistQuote: COMMON_PHARMACIST,
@@ -347,9 +427,24 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
       { reference: "Bent et al. (2006)", finding: "Baldrian wurde in einer systematischen Übersichtsarbeit untersucht." },
       { reference: "Akhondzadeh et al. (2001)", finding: "Passionsblume wurde in einer placebo-kontrollierten Studie evaluiert." },
     ],
-    faqs: COMMON_FAQS("Somnera Intense", "Nox"),
-    scientificIntro: "Somnera Intense kombiniert Melatonin mit pflanzlichen Klassikern der Apothekentradition zu einer abendlichen Routine, die zum sanften Einschlafen einlädt.",
+    faqs: COMMON_FAQS("Somnisana Intense", "Nox"),
+    scientificIntro: "Somnisana Intense kombiniert Melatonin mit pflanzlichen Klassikern der Apothekentradition zu einer abendlichen Routine, die zum sanften Einschlafen einlädt.",
+    images: {
+      solo:        "/products/somnisana/solo.png",
+      stillleben:  "/products/somnisana/stillleben.png",
+      flatlay:     "/products/somnisana/flatlay.png",
+      nutrients:   "/products/somnisana/nutrients.png",
+      claims:      "/products/somnisana/claims.png",
+      credentials: "/products/somnisana/credentials.png",
+      hero:        "/products/somnisana/hero.png",
+      lifestyle: {
+        couplePrimary:   "/products/somnisana/lifestyle/couple-bedroom.png",
+        coupleSecondary: "/products/somnisana/lifestyle/couple-kitchen.png",
+        soloWoman:       "/products/somnisana/lifestyle/solo-woman.png",
+        soloMan:         "/products/somnisana/lifestyle/solo-man.png",
+      },
+    },
   },
 };
 
-export const PRODUCT_LIST: Product[] = [PRODUCTS.vertera, PRODUCTS.mobilera, PRODUCTS.somnera];
+export const PRODUCT_LIST: Product[] = [PRODUCTS.vertisana, PRODUCTS.mobilisana, PRODUCTS.somnisana];

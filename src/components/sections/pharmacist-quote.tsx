@@ -1,26 +1,25 @@
+import Image from "next/image";
 import type { Product } from "@/lib/products";
 
 export function PharmacistQuote({ product }: { product: Product }) {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-10 sm:py-16 lg:py-20">
       <div className="container-content max-w-3xl">
         <div
           className="rounded-2xl p-7 sm:p-10 flex flex-col md:flex-row gap-7 items-start md:items-center"
           style={{ background: product.palette.bg }}
         >
-          {/* Avatar — placeholder doctor portrait */}
           <div
-            className="flex-none w-24 h-24 rounded-full flex items-center justify-center"
+            className="flex-none w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden relative"
             style={{ background: product.palette.spine, border: `1px solid ${product.palette.spineLine}` }}
           >
-            <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
-              <circle cx="28" cy="20" r="9" fill={product.palette.badge} opacity="0.85" />
-              <path
-                d="M10 50 C 10 38 18 32 28 32 C 38 32 46 38 46 50 Z"
-                fill={product.palette.badge}
-                opacity="0.85"
-              />
-            </svg>
+            <Image
+              src="/portraits/jonas-guetermann.png"
+              alt={product.pharmacistQuote.name}
+              fill
+              sizes="128px"
+              className="object-cover"
+            />
           </div>
 
           <div className="flex-1">
