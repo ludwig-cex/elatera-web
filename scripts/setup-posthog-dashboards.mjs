@@ -104,12 +104,9 @@ async function ensureInsight(name, query, dashboards, description = "") {
 
 // ---- Helpers für Query-Bau ----
 
-const hostFilter = (host) => ({
-  type: "AND",
-  values: [
-    { key: "$host", value: host, operator: "exact", type: "event" },
-  ],
-});
+const hostFilter = (host) => [
+  { key: "$host", value: host, operator: "exact", type: "event" },
+];
 
 const ev = (event, math = null, math_property = null) => {
   const node = { kind: "EventsNode", event };
