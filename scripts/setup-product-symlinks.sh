@@ -1,24 +1,46 @@
 #!/bin/bash
-# Sets up symlinks under public/products/<key>/ pointing to
-# credentials_output/produkte/<key>/. Renames credentials_output filenames
-# to match the conventions used by elatera-web's products.ts:
+# Copies real files into public/products/<key>/ from credentials_output/produkte/<key>/.
+# We use real files (not symlinks) because Vercel's build cannot follow symlinks
+# that point outside the repo root (../../../credentials_output/...).
+#
+# Renames credentials_output filenames to match elatera-web's products.ts:
 #   solo.png        ← packshot.png
 #   stillleben.png  ← packshot_stillleben.png
 #   nutrients.png   ← nutrient_table.png
 #   claims.png      ← claims_tile.png
 #   credentials.png ← credentials_tile.png
 #   hero.png        ← hero_slide.png
-#   benefits/       ← (folder-symlink)
-#   lifestyle/      ← (folder-symlink)
+#   qualitaet.png   ← universal/qualitaet.png  (shared)
+#   benefits/       ← (entire folder, real files)
+#   lifestyle/      ← (entire folder, real files; iteration_alt/ excluded)
 #   ingredients/<slug-with-dashes>.png ← inhaltsstoffe/closeups/<slug_with_underscores>.png
 #
 # Existing files for vertisana/mobilisana/somnisana are LEFT UNTOUCHED —
-# this script only fills in mentisana/urisana/tendisana/gastrosana/audisana/cordisana.
+# this script only fills in the 6 new products. Re-run any time the
+# credentials_output source changes to refresh.
 
 set -e
 cd "$(dirname "$0")/.."   # → elatera-web/
 
 CRED=../credentials_output
+
+# Replace target with a real file copy (cp -L follows symlinks at source if any).
+# Uses cp -f to overwrite. Idempotent.
+copy_file() {
+  local src="$1" dst="$2"
+  rm -f "$dst"
+  cp -L "$src" "$dst"
+}
+
+# Replace target dir with real-file copies of source dir contents.
+# Removes any existing symlink/dir first. Idempotent.
+copy_dir() {
+  local src="$1" dst="$2"
+  rm -rf "$dst"
+  mkdir -p "$dst"
+  # -L = dereference symlinks at source, -R = recursive
+  cp -RL "$src/." "$dst/"
+}
 
 # Per-product ingredient lists (bindestrich-slug:underscore-source)
 ingredients_for() {
@@ -35,32 +57,36 @@ ingredients_for() {
 for key in mentisana urisana tendisana gastrosana audisana cordisana; do
   echo "--- $key ---"
   dir="public/products/$key"
+  # Wipe and rebuild — guarantees we're consistent with source.
+  rm -rf "$dir"
   mkdir -p "$dir/ingredients"
 
-  # Top-level file symlinks (with rename)
-  ln -sf "../../../$CRED/produkte/$key/packshot.png"             "$dir/solo.png"
-  ln -sf "../../../$CRED/produkte/$key/packshot_stillleben.png"  "$dir/stillleben.png"
-  ln -sf "../../../$CRED/produkte/$key/flatlay.png"              "$dir/flatlay.png"
-  ln -sf "../../../$CRED/produkte/$key/nutrient_table.png"       "$dir/nutrients.png"
-  ln -sf "../../../$CRED/produkte/$key/claims_tile.png"          "$dir/claims.png"
-  ln -sf "../../../$CRED/produkte/$key/credentials_tile.png"     "$dir/credentials.png"
-  ln -sf "../../../$CRED/produkte/$key/hero_slide.png"           "$dir/hero.png"
+  # Top-level files (with rename)
+  copy_file "$CRED/produkte/$key/packshot.png"             "$dir/solo.png"
+  copy_file "$CRED/produkte/$key/packshot_stillleben.png"  "$dir/stillleben.png"
+  copy_file "$CRED/produkte/$key/flatlay.png"              "$dir/flatlay.png"
+  copy_file "$CRED/produkte/$key/nutrient_table.png"       "$dir/nutrients.png"
+  copy_file "$CRED/produkte/$key/claims_tile.png"          "$dir/claims.png"
+  copy_file "$CRED/produkte/$key/credentials_tile.png"     "$dir/credentials.png"
+  copy_file "$CRED/produkte/$key/hero_slide.png"           "$dir/hero.png"
 
   # Universal qualitaet tile (shared across products)
-  ln -sf "../../../$CRED/universal/qualitaet.png" "$dir/qualitaet.png"
+  copy_file "$CRED/universal/qualitaet.png" "$dir/qualitaet.png"
 
-  # Folder symlinks (benefits/, lifestyle/)
-  ln -sfn "../../../$CRED/produkte/$key/benefits"  "$dir/benefits"
-  ln -sfn "../../../$CRED/produkte/$key/lifestyle" "$dir/lifestyle"
+  # Benefits and lifestyle subdirs (exclude lifestyle/iteration_alt/)
+  copy_dir "$CRED/produkte/$key/benefits"  "$dir/benefits"
+  copy_dir "$CRED/produkte/$key/lifestyle" "$dir/lifestyle"
+  rm -rf "$dir/lifestyle/iteration_alt"
 
-  # Per-ingredient symlinks (dash slug → underscore source)
+  # Per-ingredient files (dash slug → underscore source)
   for pair in $(ingredients_for "$key"); do
     dash="${pair%%:*}"
     under="${pair##*:}"
-    ln -sf "../../../../$CRED/inhaltsstoffe/closeups/$under.png" "$dir/ingredients/$dash.png"
+    copy_file "$CRED/inhaltsstoffe/closeups/$under.png" "$dir/ingredients/$dash.png"
   done
 
-  echo "  $(ls "$dir" | wc -l | tr -d ' ') entries in $dir/"
+  size=$(du -sh "$dir" | cut -f1)
+  echo "  $(find "$dir" -type f | wc -l | tr -d ' ') files, $size in $dir/"
 done
 
 echo
