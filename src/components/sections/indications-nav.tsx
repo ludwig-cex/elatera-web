@@ -1,11 +1,17 @@
 import Link from "next/link";
-import { Compass, Bone, Moon } from "lucide-react";
+import { Compass, Bone, Moon, Brain, Droplet, Activity, Sparkles, Ear, Heart } from "lucide-react";
 import { PRODUCT_LIST } from "@/lib/products";
 
 const ICON_MAP = {
   vertisana: Compass,
   mobilisana: Bone,
   somnisana: Moon,
+  mentisana: Brain,
+  urisana: Droplet,
+  tendisana: Activity,
+  gastrosana: Sparkles,
+  audisana: Ear,
+  cordisana: Heart,
 } as const;
 
 export function IndicationsNav() {

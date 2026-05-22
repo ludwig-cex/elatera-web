@@ -25,9 +25,13 @@ export default function HomePage() {
       <TrustBand />
 
       {/* 4. FEATURE-BANNER pro Produkt (Product Spotlight, alternierend) */}
-      <FeatureProductBanner product={PRODUCT_LIST[0]} />
-      <FeatureProductBanner product={PRODUCT_LIST[1]} flipped />
-      <FeatureProductBanner product={PRODUCT_LIST[2]} />
+      {PRODUCT_LIST.map((product, i) => (
+        <FeatureProductBanner
+          key={product.slug}
+          product={product}
+          flipped={i % 2 === 1}
+        />
+      ))}
 
       {/* 6. 3-Spalten-USP — Wissenschaft / Pharmazeut / Apotheker */}
       <UspThreeColumns />

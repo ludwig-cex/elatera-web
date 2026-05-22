@@ -20,10 +20,10 @@ export function ProductCarousel() {
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6">
           {PRODUCT_LIST.map((p, i) => {
-            // 3rd item spans 2 cols on mobile (centred fill) — looks balanced for 3 items
+            // Last item spans 2 cols on mobile if total is odd (centred fill)
             const isLast = i === PRODUCT_LIST.length - 1;
-            const ratings = [4.8, 4.7, 4.9];
-            const reviews = [1247, 893, 1064];
+            const ratings = [4.8, 4.7, 4.9, 4.8, 4.9, 4.7, 4.8, 4.7, 4.9];
+            const reviews = [1247, 893, 1064, 412, 326, 287, 419, 268, 358];
             return (
               <Link
                 key={p.slug}

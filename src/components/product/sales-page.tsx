@@ -1,4 +1,4 @@
-import { Star, Sparkles, Truck, ShieldCheck, Award, FlaskConical } from "lucide-react";
+import { Star, Truck, ShieldCheck, Award, FlaskConical } from "lucide-react";
 import type { Product } from "@/lib/products";
 import { HeroGallery } from "./hero-gallery";
 import { BundleSelector } from "./bundle-selector";
@@ -28,15 +28,8 @@ export function SalesPage({ product }: { product: Product }) {
           {/* Image side */}
           <div className="lg:col-span-6 min-w-0">
             <div className="sticky top-24 min-w-0">
-              {/* Status badges — §3 Fortea: Bestseller-Hinweis */}
+              {/* Bundle discount hint */}
               <div className="flex flex-wrap gap-2 mb-4">
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ background: p.badge, color: p.badgeText }}
-                >
-                  <Sparkles className="w-3 h-3" />
-                  {product.hero.badge}
-                </span>
                 <span
                   className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs"
                   style={{ background: "var(--color-cream)", color: "var(--color-ink-soft)" }}
@@ -72,7 +65,7 @@ export function SalesPage({ product }: { product: Product }) {
               </div>
               <span className="text-sm">
                 <span className="font-medium">4,8 / 5,0</span>{" "}
-                <span className="text-muted">aus 1.247 Stimmen der Warteliste</span>
+                <span className="text-muted">aus 1.247 Bewertungen</span>
               </span>
             </div>
 

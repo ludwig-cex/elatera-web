@@ -1,10 +1,10 @@
 import { notFound } from "next/navigation";
-import { PRODUCTS, type ProductSlug } from "@/lib/products";
+import { PRODUCTS, PRODUCT_LIST, type ProductSlug } from "@/lib/products";
 import { SalesPage } from "@/components/product/sales-page";
 import type { Metadata } from "next";
 
 export function generateStaticParams() {
-  return [{ slug: "vertisana" }, { slug: "mobilisana" }, { slug: "somnisana" }];
+  return PRODUCT_LIST.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
