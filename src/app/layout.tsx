@@ -48,8 +48,10 @@ export default function RootLayout({
       <body>
         <CartProvider>
           <UtmCapture />
-          <TopBar />
-          <SiteHeader />
+          <div className="sticky top-0 z-50">
+            <TopBar />
+            <SiteHeader />
+          </div>
           <main>{children}</main>
           <SiteFooter />
           <CartDrawer />

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { NutrasanaLogo } from "@/components/brand/logo";
@@ -22,7 +23,7 @@ export function SiteHeader() {
 
   return (
     <header
-      className="sticky top-0 z-40 transition-all"
+      className="z-40 transition-all"
       style={{
         background: scrolled ? "var(--color-ivory)" : "var(--color-cream)",
         borderBottom: "1px solid rgba(31, 59, 50, 0.10)",
@@ -107,12 +108,16 @@ export function SiteHeader() {
                       onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                     >
                       <div
-                        className="w-10 h-10 rounded flex-none flex items-center justify-center"
+                        className="w-12 h-12 rounded flex-none overflow-hidden relative"
                         style={{ background: p.palette.bg }}
                       >
-                        <span className="serif italic text-lg" style={{ color: p.palette.badge }}>
-                          {p.variant.charAt(0)}
-                        </span>
+                        <Image
+                          src={p.images.solo}
+                          alt=""
+                          fill
+                          sizes="48px"
+                          className="object-contain p-0.5"
+                        />
                       </div>
                       <div>
                         <div className="serif text-lg leading-tight" style={{ color: "var(--color-ink)" }}>
@@ -166,12 +171,16 @@ export function SiteHeader() {
                 className="flex items-center gap-3 py-3 px-2 rounded"
               >
                 <div
-                  className="w-9 h-9 rounded flex-none flex items-center justify-center"
+                  className="w-11 h-11 rounded flex-none overflow-hidden relative"
                   style={{ background: p.palette.bg }}
                 >
-                  <span className="serif italic" style={{ color: p.palette.badge }}>
-                    {p.variant.charAt(0)}
-                  </span>
+                  <Image
+                    src={p.images.solo}
+                    alt=""
+                    fill
+                    sizes="44px"
+                    className="object-contain p-0.5"
+                  />
                 </div>
                 <div>
                   <div className="serif text-lg leading-tight">{p.name}</div>
