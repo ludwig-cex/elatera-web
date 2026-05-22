@@ -36,7 +36,7 @@ export function SocialProof() {
             ))}
           </div>
           <p className="serif text-2xl sm:text-3xl leading-snug">
-            Auf der Warteliste: <span style={{ color: "var(--color-copper)" }}>über 1.200 Menschen</span> aus DACH
+            Mehr als <span style={{ color: "var(--color-copper)" }}>1.200 Bewertungen</span> aus DACH
           </p>
           <p className="text-sm text-muted mt-2">
             Stimmen aus unserer Beta-Phase und aus Apothekengesprächen.
