@@ -19,7 +19,9 @@ export default function HomePage() {
       <HeroCarousel />
 
       {/* 2. PRODUKT-ÜBERSICHT — "Unsere Produkte" direkt unter dem Carousel */}
-      <ProductCarousel />
+      <div id="produkte" style={{ scrollMarginTop: 120 }}>
+        <ProductCarousel />
+      </div>
 
       {/* 3. TRUST-BAND — Fortea-Stil */}
       <TrustBand />

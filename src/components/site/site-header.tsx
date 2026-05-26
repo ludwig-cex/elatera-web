@@ -82,56 +82,59 @@ export function SiteHeader() {
             onMouseEnter={() => setProductsOpen(true)}
             onMouseLeave={() => setProductsOpen(false)}
           >
-            <button className="flex items-center gap-1 hover:opacity-70 transition font-medium">
+            <Link href="/#produkte" className="flex items-center gap-1 hover:opacity-70 transition font-medium">
               Alle Produkte
               <ChevronDown className="w-3.5 h-3.5" />
-            </button>
+            </Link>
             {productsOpen && (
               <div
                 className="absolute top-full left-1/2 -translate-x-1/2 pt-1"
                 style={{ minWidth: 360 }}
               >
                 <div
-                  className="rounded-lg p-2 shadow-lg"
+                  className="rounded-lg p-2 shadow-lg flex flex-col"
                   style={{
                     background: "var(--color-ivory)",
                     border: "1px solid rgba(0,0,0,0.08)",
+                    maxHeight: "min(72vh, 600px)",
                   }}
                 >
-                  {PRODUCT_LIST.map((p) => (
-                    <Link
-                      key={p.slug}
-                      href={`/products/${p.slug}`}
-                      className="flex items-start gap-3 p-3 rounded transition"
-                      style={{ background: "transparent" }}
-                      onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-cream)")}
-                      onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                    >
-                      <div
-                        className="w-12 h-12 rounded flex-none overflow-hidden relative"
-                        style={{ background: p.palette.bg }}
+                  <div className="overflow-y-auto" style={{ minHeight: 0 }}>
+                    {PRODUCT_LIST.map((p) => (
+                      <Link
+                        key={p.slug}
+                        href={`/products/${p.slug}`}
+                        className="flex items-start gap-3 p-3 rounded transition"
+                        style={{ background: "transparent" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-cream)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
                       >
-                        <Image
-                          src={p.images.solo}
-                          alt=""
-                          fill
-                          sizes="48px"
-                          className="object-contain p-0.5"
-                        />
-                      </div>
-                      <div>
-                        <div className="serif text-lg leading-tight" style={{ color: "var(--color-ink)" }}>
-                          {p.name}
+                        <div
+                          className="w-12 h-12 rounded flex-none overflow-hidden relative"
+                          style={{ background: p.palette.bg }}
+                        >
+                          <Image
+                            src={p.images.solo}
+                            alt=""
+                            fill
+                            sizes="48px"
+                            className="object-contain p-0.5"
+                          />
                         </div>
-                        <div className="text-xs mt-0.5" style={{ color: "var(--color-muted)" }}>
-                          {p.tagline}
+                        <div>
+                          <div className="serif text-lg leading-tight" style={{ color: "var(--color-ink)" }}>
+                            {p.name}
+                          </div>
+                          <div className="text-xs mt-0.5" style={{ color: "var(--color-muted)" }}>
+                            {p.tagline}
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
+                      </Link>
+                    ))}
+                  </div>
                   <Link
-                    href="/products"
-                    className="block px-3 py-2 mt-1 text-xs font-medium border-t"
+                    href="/#produkte"
+                    className="block flex-none px-3 py-2 mt-1 text-xs font-medium border-t"
                     style={{ borderColor: "rgba(0,0,0,0.08)", color: "var(--color-forest)" }}
                   >
                     → Alle Produkte ansehen
@@ -188,6 +191,14 @@ export function SiteHeader() {
                 </div>
               </Link>
             ))}
+            <Link
+              href="/#produkte"
+              onClick={() => setMobileOpen(false)}
+              className="py-3 px-2 rounded text-sm font-medium"
+              style={{ color: "var(--color-forest)" }}
+            >
+              → Alle Produkte ansehen
+            </Link>
             <div className="eyebrow py-2 mt-2">Weitere</div>
             <Link href="/pages/ueber-uns" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
               Über Nutrasana
