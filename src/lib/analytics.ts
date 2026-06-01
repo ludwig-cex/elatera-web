@@ -1,6 +1,7 @@
 import posthog from "posthog-js";
 import { track as vercelTrack } from "@vercel/analytics";
 import { taboola } from "./taboola";
+import { outbrain } from "./outbrain";
 
 type Props = Record<string, string | number | boolean | null>;
 
@@ -14,8 +15,17 @@ const TABOOLA_EVENTS: Record<string, string> = {
   intent_email_submitted: "lead",
 };
 
+// Same funnel mapped to Outbrain conversion event names. These names must
+// match the custom conversions configured in the Outbrain dashboard.
+const OUTBRAIN_EVENTS: Record<string, string> = {
+  product_viewed: "View Content",
+  add_to_cart: "Add to Cart",
+  checkout_clicked: "Initiate Checkout",
+  intent_email_submitted: "Lead",
+};
+
 // Single call site for product/cart funnel events. Fans out to PostHog
-// (funnels, autocapture context), Vercel Web Analytics, and Taboola.
+// (funnels, autocapture context), Vercel Web Analytics, Taboola and Outbrain.
 // Every call is guarded so analytics can never break a user flow.
 export function track(event: string, props?: Props) {
   try {
@@ -31,6 +41,12 @@ export function track(event: string, props?: Props) {
   try {
     const taboolaEvent = TABOOLA_EVENTS[event];
     if (taboolaEvent) taboola(taboolaEvent);
+  } catch {
+    // ignore
+  }
+  try {
+    const outbrainEvent = OUTBRAIN_EVENTS[event];
+    if (outbrainEvent) outbrain(outbrainEvent);
   } catch {
     // ignore
   }

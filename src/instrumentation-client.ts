@@ -1,5 +1,6 @@
 import posthog from "posthog-js";
 import { loadTaboola, taboola } from "@/lib/taboola";
+import { loadOutbrain, outbrain } from "@/lib/outbrain";
 
 // Cookieless / anonymous analytics (DSGVO-conscious, pre-launch stage):
 // - persistence: "memory" → no cookies, no localStorage, no device identifier
@@ -30,8 +31,13 @@ if (key) {
 loadTaboola();
 taboola("page_view");
 
+// Outbrain Pixel (native-ad attribution). Base pixel + initial PAGE_VIEW.
+loadOutbrain();
+outbrain("PAGE_VIEW");
+
 export function onRouterTransitionStart(url: string) {
   taboola("page_view");
+  outbrain("PAGE_VIEW");
   if (!key) return;
   try {
     posthog.capture("$pageview", { $current_url: url });
