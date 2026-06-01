@@ -9,7 +9,7 @@ import { track } from "@/lib/analytics";
 
 export function BundleSelector({ product }: { product: Product }) {
   const [selected, setSelected] = useState<Bundle>(product.bundles[1]); // 3-month default
-  const [isSubscription, setIsSubscription] = useState(true);
+  const [isSubscription, setIsSubscription] = useState(false);
   const { addToCart } = useCart();
 
   useEffect(() => {
