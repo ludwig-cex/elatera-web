@@ -31,10 +31,13 @@ export const metadata: Metadata = {
   },
   description:
     "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
-  metadataBase: new URL("https://nutrasana.de"),
+  metadataBase: new URL("https://www.nutra-sana.de"),
+  alternates: {
+    canonical: "/",
+  },
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
 };
 
