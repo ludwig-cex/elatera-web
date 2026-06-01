@@ -13,10 +13,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/pages/faq",
     "/pages/hilfe-kontakt",
     "/pages/kontakt",
-    "/policies/impressum",
-    "/policies/agb",
-    "/policies/datenschutz",
-    "/policies/widerruf",
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({

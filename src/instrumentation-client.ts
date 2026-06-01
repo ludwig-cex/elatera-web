@@ -1,4 +1,5 @@
 import posthog from "posthog-js";
+import { loadTaboola, taboola } from "@/lib/taboola";
 
 // Cookieless / anonymous analytics (DSGVO-conscious, pre-launch stage):
 // - persistence: "memory" → no cookies, no localStorage, no device identifier
@@ -24,7 +25,13 @@ if (key) {
   }
 }
 
+// Taboola Universal Pixel (native-ad attribution). Conversions are fired
+// from lib/analytics.ts; here we load the base pixel + initial page_view.
+loadTaboola();
+taboola("page_view");
+
 export function onRouterTransitionStart(url: string) {
+  taboola("page_view");
   if (!key) return;
   try {
     posthog.capture("$pageview", { $current_url: url });
