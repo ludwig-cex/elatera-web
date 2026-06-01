@@ -9,19 +9,19 @@ export const JOBS = [
     file: "public/products/vertisana/benefits/nervenfunktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm daylight: a smooth pale ceramic bowl on a sunlit wooden table holding still water with a single floating green leaf, perfectly calm surface, minimalist composition, shallow depth of field, no text, no logos, 5:3, muted sage-green and warm cream palette.",
+      "Photorealistic editorial close-up, warm soft daylight: the steady relaxed hands of a calm woman around 60 holding a small porcelain cup of herbal tea with perfect stillness in a sunlit sage-toned kitchen, sense of balanced composure, candid lifestyle moment, shallow depth of field, no readable text, no logos, no packaging, 5:3, muted sage-green palette.",
   },
   {
     file: "public/products/vertisana/benefits/energiestoffwechsel.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, fresh morning sunlight streaming through a window: a small bunch of fresh sage and mint on a pale linen cloth next to a glass carafe of water, vital and clean mood, shallow depth of field, no text, no logos, no packaging, 5:3, muted sage-green palette.",
+      "Photorealistic editorial photo, fresh morning sunlight: a vital active woman around 60 in a soft sage-green linen top walking with a light energetic step along a sunlit garden path between fresh herbs, candid lively but calm moment, three-quarter view, shallow depth of field, no readable text, no logos, no packaging, 5:3, muted sage-green palette.",
   },
   {
     file: "public/products/vertisana/benefits/psychische-funktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, calm soft daylight: an open hardcover book with a folded reading glasses resting on a pale linen blanket by a sunlit window, peaceful quiet moment, shallow depth of field, no readable text on pages, no logos, 5:3, muted sage-green and warm cream palette.",
+      "Photorealistic editorial photo, soft warm daylight: a serene woman around 60 in profile by a sunlit window with a peaceful clear expression, soft sage-green clothing, gentle composed mood, shallow depth of field, no readable text, no logos, no packaging, 5:3, muted sage-green palette.",
   },
 
   // ── Mobilisana — Gelenke & Beweglichkeit, warm sand-beige palette ──
@@ -29,19 +29,19 @@ export const JOBS = [
     file: "public/products/mobilisana/benefits/knorpel.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, warm golden sunlight: detailed texture of densely woven natural linen and jute fibers showing a fine interconnected structure, shallow depth of field, minimalist artisan still life, no text, no logos, no people, 5:3, warm sand-beige palette.",
+      "Photorealistic editorial photo, warm golden morning light: a relaxed healthy woman around 60 in a soft beige cotton top doing a gentle side stretch with one arm reaching overhead, in a sunlit airy room, side profile, graceful supple posture suggesting flexible joints, shallow depth of field, candid lifestyle moment, no readable text, no logos, no packaging, 5:3, warm sand-beige palette.",
   },
   {
     file: "public/products/mobilisana/benefits/knochen.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, warm golden daylight: a stack of three smooth round river stones balanced confidently on a pale wooden floor, grounded steady composition, shallow depth of field, no text, no logos, no people, 5:3, warm sand-beige palette.",
+      "Photorealistic editorial photo, warm golden afternoon sunlight: a healthy active man around 65 striding confidently up a few sunlit wooden steps on a forest path, side view from the waist down, upright relaxed posture, hiking boots and beige outdoor trousers, sense of strong steady gait, no walking stick, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm sand-beige and forest-green palette.",
   },
   {
     file: "public/products/mobilisana/benefits/muskel.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, golden morning light in a garden: a pair of natural wooden-handled pruning shears resting on a sun-warmed weathered wooden bench amid green foliage, sense of active everyday movement, shallow depth of field, no text, no logos, no people, 5:3, warm sand-beige palette.",
+      "Photorealistic editorial close-up, warm soft golden light: the relaxed bare forearm and hand of an active woman around 60 lifting a wooden watering can in a sunlit garden, gentle natural muscle definition visible in the forearm, candid everyday motion, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm sand-beige and verdant green palette.",
   },
 
   // ── Somnisana — Schlaf & Erholung, deep calm blue palette ──
@@ -49,19 +49,19 @@ export const JOBS = [
     file: "public/products/somnisana/benefits/einschlafen.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm bedside lamp light at dusk: a tidy wooden bedside table with a softly lit ceramic lamp, an open hardcover book set face-down, and a glass of water, peaceful pre-sleep mood, shallow depth of field, no readable text on pages, no logos, no packaging, 5:3, deep calm blue and warm amber palette.",
+      "Photorealistic editorial photo, soft warm bedside lamplight at dusk: a calm woman around 60 in soft pajamas settling gently into bed with sheets drawn up, eyes lowered, peaceful pre-sleep gesture, side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, deep calm blue and warm amber palette.",
   },
   {
     file: "public/products/somnisana/benefits/nervensystem.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm evening light: a folded chunky wool throw blanket draped over a cozy armchair near a window at dusk, restful peaceful composition, shallow depth of field, no text, no logos, no people, 5:3, deep calm blue palette.",
+      "Photorealistic editorial close-up, soft warm evening light: the relaxed hands of an older woman around 60 cradling a warm cup of herbal tea on her lap with a deep blue knit blanket over her legs, peaceful restful pose, shallow depth of field, no readable text, no logos, no packaging, 5:3, deep calm blue and warm amber palette.",
   },
   {
     file: "public/products/somnisana/benefits/muedigkeit.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft cool morning daylight: sheer linen curtains gently catching the first morning light at an open window, a slim glass of water on the sill, fresh awakening mood, shallow depth of field, no text, no logos, no people, 5:3, deep calm blue palette transitioning to warm dawn light.",
+      "Photorealistic editorial photo, soft cool morning daylight: a refreshed woman around 60 in soft pajamas stretching her arms gently upward at an open window with sheer curtains and morning light streaming in, side view, fresh awakening mood, shallow depth of field, no readable text, no logos, no packaging, 5:3, deep calm blue palette transitioning to warm dawn light.",
   },
 
   // ── Mentisana — Gedächtnis & Erinnerung, clear light-blue palette ──
@@ -69,19 +69,19 @@ export const JOBS = [
     file: "public/products/mentisana/benefits/kognitive-funktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, clear cool daylight: an open notebook with a vintage fountain pen and a single clear glass of water on a sunlit pale wooden desk, focused tidy minimalist composition, shallow depth of field, no readable text on the page, no logos, 5:3, soft cool blue and ivory palette.",
+      "Photorealistic editorial photo, clear cool daylight: a focused man around 65 in a soft cool-blue shirt doing a daily crossword puzzle at a sunlit pale wooden desk, pen in hand, calm concentrated expression in three-quarter side view, shallow depth of field, no readable text on the paper, no logos, no packaging, 5:3, soft cool blue and ivory palette.",
   },
   {
     file: "public/products/mentisana/benefits/nervensystem.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, soft clear daylight: a single fresh green sage leaf placed centered on a pale smooth stone, dewdrop on the leaf, minimalist still life, shallow depth of field, no text, no logos, 5:3, soft cool blue and stone-grey palette.",
+      "Photorealistic editorial photo, calm soft daylight: a composed older woman around 60 in a soft cool-blue cardigan sitting calmly by a sunlit window with an open book in her lap, attentive serene mood, side profile, shallow depth of field, no readable text on the page, no logos, no packaging, 5:3, soft cool blue and ivory palette.",
   },
   {
     file: "public/products/mentisana/benefits/psychische-funktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, calm clear daylight: a small glass vase with a few stems of fresh lavender on a sunlit windowsill, peaceful composed mood, shallow depth of field, no text, no logos, no people, 5:3, soft cool blue and ivory palette.",
+      "Photorealistic editorial close-up, soft clear daylight: the relaxed hands of an older man writing in a leather-bound journal at a sunlit pale wooden desk, calm clear focused gesture, shallow depth of field, no readable text in the journal, no logos, no packaging, 5:3, soft cool blue and ivory palette.",
   },
 
   // ── Urisana — Blase & Harnwege, warm rose palette ──
@@ -89,19 +89,19 @@ export const JOBS = [
     file: "public/products/urisana/benefits/schleimhaeute.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft natural daylight: a tall clear glass of cool water with a thin slice of lemon and a sprig of mint on a pale linen cloth, fresh hydrating mood, shallow depth of field, no text, no logos, 5:3, warm rose and ivory palette.",
+      "Photorealistic editorial close-up, soft natural daylight: the hands of a healthy woman around 60 pouring fresh cool water from a glass carafe into a clear tumbler at a sunlit kitchen counter, fresh hydrating moment, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm rose and ivory palette.",
   },
   {
     file: "public/products/urisana/benefits/immunfunktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, warm golden afternoon sunlight: a small ceramic bowl of fresh ripe cranberries and pumpkin seeds on a pale wooden surface, vital wholesome composition, shallow depth of field, no text, no logos, 5:3, warm rose and amber palette.",
+      "Photorealistic editorial photo, warm golden morning sunlight: an active woman around 60 in a soft rose-colored scarf walking confidently with a small woven basket along a sunlit garden path with autumn fruits and leaves, vital wholesome mood, three-quarter side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm rose and golden autumn palette.",
   },
   {
     file: "public/products/urisana/benefits/zellschutz.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, soft warm morning sunlight: fresh dewdrops glistening on green leaves with a few rose-pink petals, natural protective beauty, shallow depth of field, no text, no logos, 5:3, warm rose and verdant green palette.",
+      "Photorealistic editorial close-up, warm soft daylight: the relaxed hands of an older woman gently holding a small ceramic bowl of fresh ripe red cranberries with a few rose petals scattered around, natural antioxidant composition, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm rose and verdant palette.",
   },
 
   // ── Tendisana — Sehnen & Bänder, warm earthy palette ──
@@ -109,19 +109,19 @@ export const JOBS = [
     file: "public/products/tendisana/benefits/bindegewebe.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, warm sunlight: a coiled length of densely woven natural hemp rope on a pale wooden surface, fine sturdy interconnected structure, shallow depth of field, no text, no logos, 5:3, warm earthy tan and ivory palette.",
+      "Photorealistic editorial photo, warm golden morning light: an active woman around 60 in soft beige outdoor clothing crouching gracefully to tie her hiking boots on a wooden step in sunlit forest, flexible confident posture, side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm earthy tan palette.",
   },
   {
     file: "public/products/tendisana/benefits/knorpel.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, soft warm daylight: a delicate spiral fiddlehead fern frond unfurling on a pale stone, graceful natural curve, minimalist composition, shallow depth of field, no text, no logos, 5:3, warm earthy and verdant green palette.",
+      "Photorealistic editorial photo, warm soft morning sunlight: an older man around 65 doing a gentle full-body stretch at an open window with arms reaching toward the warm rising sun, graceful supple posture, side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm earthy tan and golden palette.",
   },
   {
     file: "public/products/tendisana/benefits/knochen.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, warm afternoon daylight: a smooth solid river stone resting on a pale wooden surface beside a fresh sprig of rosemary, grounded steady composition, shallow depth of field, no text, no logos, 5:3, warm earthy tan and stone-grey palette.",
+      "Photorealistic editorial photo, warm afternoon sunlight: side view of the legs of an active woman around 60 in soft earthy trousers and sturdy walking shoes striding confidently along a sunlit forest path, steady balanced stride, no walking stick, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm earthy tan and forest-green palette.",
   },
 
   // ── Gastrosana — Magen & Verdauung, warm cream-peach palette ──
@@ -129,19 +129,19 @@ export const JOBS = [
     file: "public/products/gastrosana/benefits/schleimhaeute.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm morning light: a warm cup of herbal tea with a chamomile flower floating, steaming gently, on a pale wooden windowsill, soothing gentle mood, shallow depth of field, no text, no logos, no people, 5:3, warm cream and soft peach palette.",
+      "Photorealistic editorial photo, soft warm morning daylight: a calm woman around 60 cradling a warm cup of chamomile tea with both hands by a sunlit window, peaceful comforted expression in profile, soft cream and peach-colored clothing, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm cream and soft peach palette.",
   },
   {
     file: "public/products/gastrosana/benefits/saeure-basen.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial still life, soft warm daylight: a fresh green apple and a halved bright lemon balanced together on a pale ceramic plate on a sunlit wooden table, natural balance metaphor, shallow depth of field, no text, no logos, 5:3, warm cream and pale yellow-green palette.",
+      "Photorealistic editorial close-up, soft warm daylight: the relaxed hands of an older woman gently arranging a fresh bowl of mixed seasonal fruits (apple, pear, lemon) and fresh herbs at a sunlit pale wooden table, balanced nourishing composition, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm cream and pale yellow-green palette.",
   },
   {
     file: "public/products/gastrosana/benefits/zellschutz.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, warm soft daylight: a small bundle of fresh rosemary, thyme and sage tied with twine on a pale linen cloth, herbal protective composition, shallow depth of field, no text, no logos, 5:3, warm cream and herb-green palette.",
+      "Photorealistic editorial photo, warm afternoon sunlight: a woman around 60 in a soft cream apron snipping fresh rosemary and thyme from a sunlit windowsill herb garden, gentle protective ritual, side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm cream and herb-green palette.",
   },
 
   // ── Audisana — Ohren & Hörfunktion, warm beige with sage palette ──
@@ -149,19 +149,19 @@ export const JOBS = [
     file: "public/products/audisana/benefits/nervensystem.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm daylight: a single small brass wind chime hanging quietly in a sunlit courtyard with soft blurred green leaves in the background, calm attentive quiet mood, shallow depth of field, no text, no logos, no people, 5:3, warm beige and sage-green palette.",
+      "Photorealistic editorial photo, warm soft afternoon daylight: a calm man around 65 in a soft beige cardigan sitting quietly in a sunlit garden chair with eyes gently closed and head slightly tilted as if listening attentively to birdsong, peaceful concentrated mood, side profile, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm beige and sage-green palette.",
   },
   {
     file: "public/products/audisana/benefits/psychische-funktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, soft warm daylight: a pair of folded reading glasses resting next to an open hardcover book on a pale linen tablecloth, calm attentive composition, shallow depth of field, no readable text on pages, no logos, 5:3, warm beige and sage-green palette.",
+      "Photorealistic editorial photo, warm soft daylight: a composed older woman around 60 in a soft beige cardigan at a sunlit window with a calm peaceful expression in profile, hands gently folded, serene mood, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm beige and sage-green palette.",
   },
   {
     file: "public/products/audisana/benefits/zellschutz.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial close-up, warm afternoon sunlight: a small branch of an olive tree with green leaves and a few unripe olives in soft natural light, natural protective mood, shallow depth of field, no text, no logos, 5:3, warm beige and sage-green palette.",
+      "Photorealistic editorial close-up, warm afternoon sunlight: the relaxed hands of an older person gently holding a small fresh olive branch with green leaves and a few unripe olives, natural protective composition, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm beige and sage-green palette.",
   },
 
   // ── Cordisana — Herz & Gefäße, warm burgundy-rust palette ──
@@ -169,18 +169,18 @@ export const JOBS = [
     file: "public/products/cordisana/benefits/herzfunktion.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, warm golden afternoon sunlight: a chunky hand-knitted wool throw blanket folded over a cozy armchair near a sunlit window, comforting warm mood, shallow depth of field, no text, no logos, no people, 5:3, warm burgundy and amber palette.",
+      "Photorealistic editorial photo, warm golden afternoon sunlight: a calm woman around 60 cradling a warm ceramic mug of tea with both hands by a sunlit window, peaceful warm-hearted mood, soft burgundy knit cardigan, three-quarter side view, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm burgundy and amber palette.",
   },
   {
     file: "public/products/cordisana/benefits/blutgefaesse.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial photo, warm afternoon daylight: a clear gentle stream of water flowing over smooth rounded stones, soft ripples and reflections, sense of natural flow, shallow depth of field, no text, no logos, no people, 5:3, warm burgundy-tinted rocks and clear water palette.",
+      "Photorealistic editorial photo, warm soft daylight: an older woman around 60 in a soft burgundy top doing a gentle graceful arm-flow yoga motion at a sunlit window, arms in fluid relaxed motion, side view, sense of flow, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm burgundy and amber palette.",
   },
   {
     file: "public/products/cordisana/benefits/zellschutz.png",
     aspect: "5:3",
     prompt:
-      "Photorealistic editorial still life, warm soft daylight: a halved ripe pomegranate showing its deep red seeds on a pale stone surface, rich antioxidant fruit composition, shallow depth of field, no text, no logos, 5:3, warm burgundy and ivory palette.",
+      "Photorealistic editorial close-up, warm soft afternoon daylight: the relaxed hands of an older woman gently holding a halved ripe pomegranate revealing deep red seeds on a pale ceramic plate, rich antioxidant composition, shallow depth of field, no readable text, no logos, no packaging, 5:3, warm burgundy and ivory palette.",
   },
 ];

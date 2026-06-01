@@ -20,6 +20,13 @@ if (!KEY) {
 }
 
 const FORCE = process.argv.includes("--force");
+// --only=<substring>  filter JOBS to file paths containing this substring,
+// so you can iterate on a single product or image without re-spending the
+// rest of the catalog (e.g. `--only=mobilisana` or `--only=knochen`).
+const ONLY = process.argv.find((a) => a.startsWith("--only="))?.slice("--only=".length);
+// --not=<substring>   inverse of --only; skip JOBS whose file paths contain
+// this substring. Handy for "regenerate everything except this one product".
+const NOT = process.argv.find((a) => a.startsWith("--not="))?.slice("--not=".length);
 const MODELS = (
   process.env.GEMINI_IMAGE_MODEL
     ? [process.env.GEMINI_IMAGE_MODEL]
@@ -110,6 +117,14 @@ let skipped = 0;
 let failed = 0;
 
 for (const job of JOBS) {
+  if (ONLY && !job.file.includes(ONLY)) {
+    skipped++;
+    continue;
+  }
+  if (NOT && job.file.includes(NOT)) {
+    skipped++;
+    continue;
+  }
   if (!FORCE && (await fileExists(job.file))) {
     console.log(`= skip (vorhanden): ${job.file}`);
     skipped++;
