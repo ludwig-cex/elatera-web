@@ -203,9 +203,9 @@ const COMMON_PHARMACIST = {
 };
 
 const COMMON_BUNDLES: Bundle[] = [
-  { months: 1, capsules: 30,  priceCents: 5999,  discountPct: 0 },
-  { months: 3, capsules: 90,  priceCents: 11518, rrpCents: 17997, discountPct: 36, highlight: "Sehr beliebt" },
-  { months: 6, capsules: 180, priceCents: 19796, rrpCents: 35994, discountPct: 45 },
+  { months: 1, capsules: 30,  priceCents: 4999,  discountPct: 0 },
+  { months: 3, capsules: 90,  priceCents: 9898,  rrpCents: 14997, discountPct: 34, highlight: "Sehr beliebt" },
+  { months: 6, capsules: 180, priceCents: 16496, rrpCents: 29994, discountPct: 45 },
 ];
 
 export const PRODUCTS: Record<ProductSlug, Product> = {
