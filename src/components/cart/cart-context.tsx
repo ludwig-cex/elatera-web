@@ -16,6 +16,9 @@ type CartState = {
   items: CartItem[];
   isOpen: boolean;
   isSavingsModalOpen: boolean;
+  /** Wall-clock ms when the current "reservation" window started.
+   *  Null while the cart is empty. Used by the drawer's countdown banner. */
+  reservedSince: number | null;
   addToCart: (item: CartItem) => void;
   removeFromCart: (index: number) => void;
   clearCart: () => void;
@@ -31,17 +34,28 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSavingsModalOpen, setIsSavingsModalOpen] = useState(false);
+  const [reservedSince, setReservedSince] = useState<number | null>(null);
 
   const addToCart = useCallback((item: CartItem) => {
     setItems((prev) => [...prev, item]);
     setIsOpen(true);
+    // Start the reservation window on the first item; keep it stable while the
+    // cart is non-empty so the countdown persists across drawer close/reopen.
+    setReservedSince((prev) => prev ?? Date.now());
   }, []);
 
   const removeFromCart = useCallback((index: number) => {
-    setItems((prev) => prev.filter((_, i) => i !== index));
+    setItems((prev) => {
+      const next = prev.filter((_, i) => i !== index);
+      if (next.length === 0) setReservedSince(null);
+      return next;
+    });
   }, []);
 
-  const clearCart = useCallback(() => setItems([]), []);
+  const clearCart = useCallback(() => {
+    setItems([]);
+    setReservedSince(null);
+  }, []);
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
   const openSavingsModal = useCallback(() => setIsSavingsModalOpen(true), []);
@@ -53,6 +67,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         items,
         isOpen,
         isSavingsModalOpen,
+        reservedSince,
         addToCart,
         removeFromCart,
         clearCart,

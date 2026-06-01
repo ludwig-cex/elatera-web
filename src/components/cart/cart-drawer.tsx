@@ -1,22 +1,42 @@
 "use client";
 
 import { useCart } from "./cart-context";
-import { X, ShoppingBag, Check, PackageX } from "lucide-react";
+import { X, ShoppingBag, Check, PackageX, Clock } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import { readUtm } from "@/lib/utm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+const RESERVATION_MS = 5 * 60 * 1000; // 5 minutes per reservation window
 
 export function CartDrawer() {
-  const { isOpen, close, items, removeFromCart } = useCart();
+  const { isOpen, close, items, removeFromCart, reservedSince } = useCart();
   const [email, setEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [checkoutAttempted, setCheckoutAttempted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [now, setNow] = useState<number>(() => Date.now());
+
+  // Re-render every second so the countdown ticks. Only runs while the drawer
+  // is open and the cart has a live reservation; the interval gets cleared
+  // automatically when either condition flips.
+  useEffect(() => {
+    if (!isOpen || !reservedSince) return;
+    setNow(Date.now());
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, [isOpen, reservedSince]);
 
   if (!isOpen) return null;
 
   const totalPrice = items.reduce((sum, item) => sum + item.priceCents, 0);
+
+  // Countdown: 5 minutes per reservation window, cycles modulo so the banner
+  // always shows a positive number rather than going stale.
+  const elapsed = reservedSince ? (now - reservedSince) % RESERVATION_MS : 0;
+  const remaining = reservedSince ? RESERVATION_MS - elapsed : RESERVATION_MS;
+  const mm = String(Math.floor(remaining / 60000)).padStart(2, "0");
+  const ss = String(Math.floor((remaining % 60000) / 1000)).padStart(2, "0");
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,16 +136,41 @@ export function CartDrawer() {
               </p>
             </div>
           ) : (
-            <ul className="divide-y" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
-              {items.map((item, idx) => (
+            <>
+              {!checkoutAttempted && reservedSince && (
+                <div
+                  className="px-5 py-3 flex items-center gap-2 text-xs"
+                  style={{
+                    background: "var(--color-ivory)",
+                    borderBottom: "1px solid rgba(0,0,0,0.06)",
+                  }}
+                  role="status"
+                  aria-live="polite"
+                >
+                  <Clock className="w-4 h-4 flex-none" style={{ color: "var(--color-copper)" }} />
+                  <span className="leading-snug">
+                    <strong>Hohe Nachfrage:</strong> Ihre Produkte sind nur noch{" "}
+                    <span style={{ color: "var(--color-copper)", fontWeight: 600 }}>
+                      {mm}:{ss}
+                    </span>{" "}
+                    Minuten reserviert.
+                  </span>
+                </div>
+              )}
+              <ul className="divide-y" style={{ borderColor: "rgba(0,0,0,0.06)" }}>
+                {items.map((item, idx) => (
                 <li key={idx} className="p-5 flex gap-4">
                   <div
-                    className="w-14 h-14 rounded flex-none flex items-center justify-center"
+                    className="w-14 h-14 rounded flex-none flex items-center justify-center overflow-hidden"
                     style={{ background: "var(--color-cream)" }}
                   >
-                    <span className="serif italic text-2xl">
-                      {item.variant.charAt(0)}
-                    </span>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/products/${item.productSlug}/solo.png`}
+                      alt={item.productName}
+                      className="w-full h-full object-contain"
+                      loading="lazy"
+                    />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="serif text-lg leading-tight">{item.productName}</div>
@@ -147,7 +192,8 @@ export function CartDrawer() {
                   </div>
                 </li>
               ))}
-            </ul>
+              </ul>
+            </>
           )}
         </div>
 
