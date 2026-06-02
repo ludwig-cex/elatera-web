@@ -23,9 +23,11 @@ export default function Page() {
 
         <h2 className="serif text-2xl mb-3">Verantwortlicher</h2>
         <p className="text-muted leading-relaxed mb-6">
-          [PLATZHALTER — Firmierung / Name]<br />
-          [PLATZHALTER — Anschrift]<br />
-          E-Mail: [PLATZHALTER]
+          HEALTH POINT MEDIA LTD<br />
+          Laura Schneider<br />
+          Suite A Bank House, 81 Judes Road<br />
+          Egham, TW20 0DF, United Kingdom<br />
+          E-Mail: Laura@healthpointmedia.com
         </p>
 
         <h2 className="serif text-2xl mb-3">Hosting</h2>
