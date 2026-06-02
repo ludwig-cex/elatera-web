@@ -149,9 +149,6 @@ export function SiteHeader() {
           <Link href="/pages/hilfe-kontakt" className="hover:opacity-70 transition font-medium">
             Hilfe & Kontakt
           </Link>
-          <Link href="/pages/apotheken" className="hover:opacity-70 transition font-medium">
-            Apotheken-Bestellung
-          </Link>
         </div>
       </nav>
 
@@ -205,9 +202,6 @@ export function SiteHeader() {
             </Link>
             <Link href="/pages/hilfe-kontakt" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
               Hilfe & Kontakt
-            </Link>
-            <Link href="/pages/apotheken" onClick={() => setMobileOpen(false)} className="py-3 px-2 rounded">
-              Apotheken-Bestellung
             </Link>
           </nav>
         </div>
