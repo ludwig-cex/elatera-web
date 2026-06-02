@@ -74,7 +74,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Sind die Produkte vegan und allergenfrei?",
-        a: "Alle Nutrasana-Produkte sind frei von den 14 EU-Hauptallergenen, laktosefrei, glutenfrei und ohne Gentechnik. Die Mehrheit ist vegan — Produkte mit Vitamin D3 aus Schafswollfett sind vegetarisch.",
+        a: "Alle Nutrasana-Produkte sind frei von den 14 EU-Hauptallergenen, laktosefrei, glutenfrei und ohne Gentechnik. Die meisten sind außerdem vegan — nur Rezepturen mit Vitamin D3 (aus Schafwolle) sind vegetarisch statt vegan.",
         keywords: ["vegan", "allergen", "laktose", "gluten"],
       },
       {

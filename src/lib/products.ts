@@ -95,24 +95,24 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
     category: "Produkt & Funktion",
     items: [
       {
-        q: `Was ist ${productName} genau?`,
-        a: `${productName} ist ein wissenschaftlich entwickeltes Nahrungsergänzungsmittel — eine sorgfältig abgestimmte Kombination aus pflanzlichen Extrakten und essenziellen Mikronährstoffen, hergestellt in Deutschland und laborgeprüft nach FSSC 22000.`,
+        q: `Was ist ${productName} eigentlich?`,
+        a: `${productName} ist ein Nahrungsergänzungsmittel, das pflanzliche Extrakte mit ausgewählten Vitaminen und Mineralstoffen kombiniert. Entwickelt mit Apothekern, hergestellt und laborgeprüft in Deutschland.`,
       },
       {
-        q: "Was ist im Produkt enthalten?",
-        a: "Die genaue Zutatenliste finden Sie weiter oben auf dieser Seite. Alle Inhaltsstoffe werden vor Verarbeitung auf Reinheit geprüft.",
+        q: "Was steckt drin?",
+        a: "Die komplette Zutatenliste finden Sie weiter oben auf dieser Seite. Jede Zutat prüfen wir vor der Verarbeitung auf Reinheit.",
       },
       {
-        q: "Welche Funktion haben die Mikronährstoffe?",
-        a: "Die EFSA-konformen Health-Claims der einzelnen Inhaltsstoffe finden Sie bei jedem Wirkstoff einzeln aufgeführt.",
+        q: "Was bewirken die einzelnen Nährstoffe?",
+        a: "Was jeder Nährstoff im Körper tut, steht direkt bei den Inhaltsstoffen — jeweils mit der offiziell in der EU zugelassenen Aussage.",
       },
       {
-        q: "Ist das Produkt gut verträglich?",
-        a: `${productName} ist allergenfrei nach den 14 EU-Hauptallergenen, laktosefrei, glutenfrei und ohne künstliche Zusätze.`,
+        q: "Wird das gut vertragen?",
+        a: `Ja. ${productName} ist frei von den 14 EU-Hauptallergenen, ohne Laktose, ohne Gluten und ohne künstliche Zusätze.`,
       },
       {
-        q: "Gibt es Nebenwirkungen oder Wechselwirkungen?",
-        a: "Bei bestimmungsgemäßer Anwendung sind keine Nebenwirkungen bekannt. Bei der Einnahme von Medikamenten oder einer bestehenden Erkrankung empfehlen wir Rücksprache mit Ihrem Arzt oder Apotheker.",
+        q: "Gibt es Neben- oder Wechselwirkungen?",
+        a: "Bei normaler Anwendung sind keine bekannt. Wenn Sie Medikamente nehmen oder eine Erkrankung haben, sprechen Sie vorher einmal kurz mit Arzt oder Apotheker.",
       },
     ],
   },
@@ -120,26 +120,26 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
     category: "Einnahme & Anwendung",
     items: [
       {
-        q: "Wie ist die empfohlene Dosierung?",
-        a: "1 Kapsel täglich, unzerkaut, mit einem großen Glas Wasser.",
+        q: "Wie viel nehme ich am Tag?",
+        a: "Eine Kapsel täglich, unzerkaut mit einem großen Glas Wasser.",
       },
       {
-        q: "Zu welcher Tageszeit sollte ich einnehmen?",
+        q: "Wann am Tag ist am besten?",
         a: variant === "Somnisana"
-          ? "Etwa 30 Minuten vor dem Zubettgehen — so kann der Wirkstoff seine volle Wirkung entfalten."
-          : "Die Tageszeit ist beliebig wählbar. Wichtig ist die regelmäßige tägliche Einnahme.",
+          ? "Rund 30 Minuten vor dem Schlafengehen — dann kann das Melatonin seine zugelassene Wirkung entfalten."
+          : "Das ist Ihnen überlassen. Wichtig ist nur, dass Sie es regelmäßig nehmen, am besten jeden Tag zur gleichen Zeit.",
       },
       {
-        q: "Wie lange sollte ich einnehmen?",
-        a: "Wir empfehlen mindestens 8–12 Wochen tägliche Einnahme, um die volle Wirkung zu erfahren.",
+        q: "Wie lange sollte ich es nehmen?",
+        a: "Geben Sie sich am besten 8 bis 12 Wochen. Mikronährstoffe wirken über die regelmäßige Einnahme, nicht über Nacht.",
       },
       {
-        q: "Was, wenn ich eine Einnahme vergesse?",
-        a: "Bitte nicht nachholen — am nächsten Tag einfach mit der gewohnten Dosis fortfahren.",
+        q: "Was, wenn ich einen Tag vergesse?",
+        a: "Kein Problem. Holen Sie die Dosis nicht nach, machen Sie am nächsten Tag einfach normal weiter.",
       },
       {
         q: "Darf ich die Kapsel teilen oder öffnen?",
-        a: "Nein. Bitte unzerkaut mit Wasser einnehmen, damit die magensaftresistente Hülle ihre Funktion erfüllt.",
+        a: "Bitte nicht — am besten ganz mit Wasser schlucken. Nur so erfüllt die magensaftresistente Hülle ihren Zweck.",
       },
     ],
   },
@@ -147,16 +147,16 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
     category: "Inhaltsstoffe & Verträglichkeit",
     items: [
       {
-        q: "Ist die Rezeptur vegan?",
-        a: "Die meisten Inhaltsstoffe sind pflanzlich. Vitamin D3 (sofern enthalten) stammt aus Schafswollfett, wodurch das Produkt vegetarisch, aber nicht vegan ist.",
+        q: "Ist es vegan?",
+        a: "Fast alle Zutaten sind pflanzlich. Enthält die Rezeptur Vitamin D3 (das wir aus Schafwolle gewinnen), ist sie vegetarisch statt vegan — ein Blick in die Zutatenliste oben zeigt Ihnen, was für dieses Produkt gilt.",
       },
       {
-        q: "Enthält das Produkt Laktose oder Gluten?",
-        a: "Nein, das Produkt ist laktosefrei und glutenfrei.",
+        q: "Laktose oder Gluten enthalten?",
+        a: "Nein, beides nicht — laktose- und glutenfrei.",
       },
       {
-        q: "Ist das Produkt gentechnikfrei?",
-        a: "Ja. Alle Inhaltsstoffe sind ohne gentechnische Veränderung.",
+        q: "Ist es gentechnikfrei?",
+        a: "Ja, alle Zutaten sind ohne Gentechnik.",
       },
     ],
   },
@@ -164,16 +164,16 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
     category: "Zielgruppe & Hinweise",
     items: [
       {
-        q: "Für wen ist das Produkt geeignet?",
-        a: "Für Erwachsene, die ihr Wohlbefinden gezielt unterstützen möchten.",
+        q: "Für wen ist das gedacht?",
+        a: "Für Erwachsene, die gezielt etwas für ihr Wohlbefinden tun möchten.",
       },
       {
         q: "Schwangerschaft, Stillzeit, Kinder?",
-        a: "Bei Schwangerschaft und Stillzeit bitte Rücksprache mit dem Arzt halten. Nicht für Kinder unter 18 Jahren bestimmt.",
+        a: "In Schwangerschaft und Stillzeit halten Sie bitte vorher Rücksprache mit Ihrem Arzt. Für Kinder und Jugendliche unter 18 ist es nicht gedacht.",
       },
       {
-        q: "Bin ich als Diabetiker betroffen?",
-        a: "Das Produkt enthält keinen zugesetzten Zucker. Trotzdem empfehlen wir bei Diabetes eine ärztliche Rücksprache vor Einnahmebeginn.",
+        q: "Worauf sollte ich als Diabetiker achten?",
+        a: "Es ist kein Zucker zugesetzt. Zur Sicherheit sprechen Sie bei Diabetes trotzdem einmal mit Ihrem Arzt, bevor Sie starten.",
       },
     ],
   },
@@ -181,16 +181,16 @@ const COMMON_FAQS = (productName: string, variant: string): { category: string; 
     category: "Weitere Fragen",
     items: [
       {
-        q: "Wie lagere ich das Produkt richtig?",
-        a: "Kühl, trocken und außerhalb der Reichweite von Kindern lagern. Nach dem Öffnen innerhalb von 12 Monaten verbrauchen.",
+        q: "Wie lagere ich es richtig?",
+        a: "Kühl und trocken, außerhalb der Reichweite von Kindern. Nach dem Öffnen am besten innerhalb von 12 Monaten aufbrauchen.",
       },
       {
-        q: "Wie viele Kapseln enthält eine Packung?",
-        a: "30 Kapseln pro Packung — entspricht einem Monatsvorrat bei täglicher Einnahme.",
+        q: "Wie viele Kapseln sind in einer Packung?",
+        a: "30 Kapseln — ein Monatsvorrat bei einer Kapsel am Tag.",
       },
       {
-        q: "Wo wird das Produkt hergestellt?",
-        a: "Ausschließlich in Deutschland, in FSSC-22000-zertifizierten Anlagen, mit jeder Charge laborgeprüft.",
+        q: "Wo wird es hergestellt?",
+        a: "Ausschließlich in Deutschland, in FSSC-22000-zertifizierten Anlagen, jede Charge laborgeprüft.",
       },
     ],
   },
