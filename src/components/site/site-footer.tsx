@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { NutrasanaLogo } from "@/components/brand/logo";
 import { Mail, Globe } from "lucide-react";
+import { PRODUCT_LIST } from "@/lib/products";
 
 export function SiteFooter() {
   return (
@@ -33,9 +34,13 @@ export function SiteFooter() {
               Produkte
             </div>
             <ul className="space-y-2 text-sm opacity-90">
-              <li><Link href="/products/vertisana" className="hover:opacity-70">Vertisana Intense</Link></li>
-              <li><Link href="/products/mobilisana" className="hover:opacity-70">Mobilisana Intense</Link></li>
-              <li><Link href="/products/somnisana" className="hover:opacity-70">Somnisana Intense</Link></li>
+              {PRODUCT_LIST.map((p) => (
+                <li key={p.slug}>
+                  <Link href={`/products/${p.slug}`} className="hover:opacity-70">
+                    {p.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
