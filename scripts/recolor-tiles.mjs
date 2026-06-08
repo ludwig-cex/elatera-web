@@ -23,8 +23,14 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+// Tiles with a flat baked-in background → recolor by replacing that colour.
 const TILES = ["credentials", "claims", "nutrients"];
 const PHOTO_TILE = "credentials";
+// qualitaet ships with a TRANSPARENT background (text + check outlines only),
+// so the gallery container colour showed through in the big view but the
+// inactive thumbnail (ivory button) made it look white/odd next to the now
+// opaque tiles. Flatten it onto palette.bg so every tile is opaque and uniform.
+const FLATTEN_TILES = ["qualitaet"];
 const TOL = 16; // per-channel tolerance around the sampled background colour
 
 // --- Parse slug -> palette.bg from products.ts (single source of truth) ---
@@ -58,6 +64,15 @@ async function recolor(file, target, isPhoto) {
   return { share: (changed / (w * h)) * 100, src: C };
 }
 
+// Composite a transparent tile onto an opaque palette background.
+async function flattenOnto(file, target) {
+  const buf = await sharp(file)
+    .flatten({ background: { r: target[0], g: target[1], b: target[2] } })
+    .png()
+    .toBuffer();
+  await sharp(buf).toFile(file);
+}
+
 for (const slug of slugs) {
   const target = palette[slug];
   for (const tile of TILES) {
@@ -70,6 +85,15 @@ for (const slug of slugs) {
     console.log(
       `~ ${slug}/${tile}: bg ${c.join(",")} -> ${target.join(",")}  (${share.toFixed(1)}% recolored)`,
     );
+  }
+  for (const tile of FLATTEN_TILES) {
+    const file = join(root, `public/products/${slug}/${tile}.png`);
+    if (!existsSync(file)) {
+      console.log(`  ${slug}/${tile}: MISSING — skipped`);
+      continue;
+    }
+    await flattenOnto(file, target);
+    console.log(`▣ ${slug}/${tile}: flattened onto ${target.join(",")}`);
   }
 }
 console.log("\nDone. Review the tiles, then commit public/products/*/{credentials,claims,nutrients}.png");

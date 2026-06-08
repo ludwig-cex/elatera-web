@@ -11,7 +11,7 @@ function buildViews(product: Product): View[] {
   return [
     { src: img.solo,                    label: "Verpackung Vorderseite",       objectFit: "contain" },
     { src: img.lifestyle.couplePrimary, label: "Im Alltag — Paar mit Produkt", objectFit: "cover" },
-    { src: img.credentials,             label: "Empfohlen von Pharmazeut",     objectFit: "cover" },
+    { src: img.credentials,             label: "Empfohlen von Pharmazeut",     objectFit: "contain" },
     { src: img.flatlay,                 label: "Inhaltsstoffe",                objectFit: "cover" },
     { src: img.claims,                  label: "Health-Claims",                objectFit: "contain" },
     { src: `/products/${product.slug}/qualitaet.png`, label: "Qualität, der Sie vertrauen können", objectFit: "contain" },
