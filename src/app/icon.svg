@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Nutrasana">
+  <rect width="120" height="120" rx="26" fill="#faf6ec"/>
+  <circle cx="60" cy="61" r="45" fill="none" stroke="#1f3b32" stroke-width="4.5"/>
+  <text x="60" y="86" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif" font-weight="600" font-size="70" fill="#1f3b32">N</text>
+</svg>
