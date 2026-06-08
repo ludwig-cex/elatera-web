@@ -8,8 +8,9 @@
 // (auto-detected from /api/projects/ otherwise) and POSTHOG_API_HOST
 // (defaults to https://eu.posthog.com).
 //
-// Idempotent: searches by exact name and skips existing dashboards/insights.
-// To recreate after deletions just delete them in PostHog UI and re-run.
+// Idempotent: matches by exact name. Dashboards are reused; insights are
+// PATCHed on re-run so query/filter changes (e.g. the .de+.com host regex)
+// land without having to delete them in the PostHog UI first.
 
 const KEY = process.env.POSTHOG_PERSONAL_API_KEY;
 const HOST = (process.env.POSTHOG_API_HOST || "https://eu.posthog.com").replace(/\/$/, "");
@@ -24,8 +25,14 @@ if (!KEY) {
   process.exit(1);
 }
 
-const SHOP_HOST = "www.nutra-sana.com";
-const AD_HOST = "www.mein-apothekenrat.de";
+// Match the registrable domain on BOTH TLDs (.de und .com) and regardless of
+// www/apex subdomain. The shop runs on nutra-sana.de AND nutra-sana.com; a
+// single exact "www.nutra-sana.com" filter silently dropped all .de traffic
+// (which is where the canonical/links actually point) — that was a second
+// reason the cross-site funnel looked empty. $host is the bare hostname, so
+// anchoring the regex at the end is enough to avoid false matches.
+const SHOP_HOST = "nutra-sana\\.(de|com)$";
+const AD_HOST = "mein-apothekenrat\\.(de|com)$";
 
 async function api(method, path, body) {
   const res = await fetch(`${HOST}/api${path}`, {
@@ -89,7 +96,14 @@ async function findInsight(name) {
 async function ensureInsight(name, query, dashboards, description = "") {
   const ex = await findInsight(name);
   if (ex) {
-    console.log(`= Insight existiert: ${name}`);
+    // Patch the existing insight so query/filter fixes (e.g. the .de+.com host
+    // regex) actually land on re-run instead of being silently skipped.
+    await api("PATCH", `/projects/${projectId}/insights/${ex.id}/`, {
+      query,
+      description,
+      dashboards,
+    });
+    console.log(`~ Insight aktualisiert: ${name}`);
     return ex.id;
   }
   const ins = await api("POST", `/projects/${projectId}/insights/`, {
@@ -104,8 +118,9 @@ async function ensureInsight(name, query, dashboards, description = "") {
 
 // ---- Helpers für Query-Bau ----
 
-const hostFilter = (host) => [
-  { key: "$host", value: host, operator: "exact", type: "event" },
+// Regex match so one filter covers both TLDs and www/apex variants.
+const hostFilter = (hostRe) => [
+  { key: "$host", value: hostRe, operator: "regex", type: "event" },
 ];
 
 const ev = (event, math = null, math_property = null) => {
@@ -152,11 +167,11 @@ const funnel = ({ series, properties, days = 30 }) => ({
 
 const DASH_SHOP = await ensureDashboard(
   "Nutra-Sana Shop — Funnel & Cart",
-  "Conversion-Funnel bis zur E-Mail-Eintragung, Warenkorb-Verhalten, Inhalte. Filter: $host = www.nutra-sana.com",
+  "Conversion-Funnel bis zur E-Mail-Eintragung, Warenkorb-Verhalten, Inhalte. Filter: $host matcht nutra-sana.de UND nutra-sana.com (www/apex).",
 );
 const DASH_AD = await ensureDashboard(
   "Mein Apothekenrat — Advertorial",
-  "Advertorial-Reichweite, CTA-Klicks zum Shop, Quellen. Filter: $host = www.mein-apothekenrat.de",
+  "Advertorial-Reichweite, CTA-Klicks zum Shop, Quellen. Filter: $host matcht mein-apothekenrat.de UND .com (www/apex).",
 );
 const DASH_X = await ensureDashboard(
   "Cross-Site Funnel — Advertorial → Shop → Lead",
@@ -358,17 +373,13 @@ await ensureInsight(
         {
           kind: "EventsNode",
           event: "$pageview",
-          properties: [
-            { key: "$host", value: AD_HOST, operator: "exact", type: "event" },
-          ],
+          properties: hostFilter(AD_HOST),
         },
         { kind: "EventsNode", event: "advertorial_cta_click" },
         {
           kind: "EventsNode",
           event: "$pageview",
-          properties: [
-            { key: "$host", value: SHOP_HOST, operator: "exact", type: "event" },
-          ],
+          properties: hostFilter(SHOP_HOST),
         },
         { kind: "EventsNode", event: "add_to_cart" },
         { kind: "EventsNode", event: "intent_email_submitted" },
