@@ -34,15 +34,15 @@ export function ProductCarousel() {
                 style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.06)" }}
               >
                 <div
-                  className="relative aspect-square sm:aspect-[5/4]"
+                  className="relative aspect-square sm:aspect-[5/4] overflow-hidden"
                   style={{ background: p.palette.bg }}
                 >
                   <Image
-                    src={p.images.solo}
+                    src={p.images.stillleben}
                     alt={p.name}
                     fill
                     sizes="(min-width: 1024px) 380px, 45vw"
-                    className="object-contain p-3 sm:p-5"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="p-4 sm:p-5 lg:p-6">
