@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Check, ShoppingBag } from "lucide-react";
 import type { Product, Bundle } from "@/lib/products";
 import { formatPrice, formatPricePerDay } from "@/lib/utils";
@@ -10,7 +10,23 @@ import { track } from "@/lib/analytics";
 export function BundleSelector({ product }: { product: Product }) {
   const [selected, setSelected] = useState<Bundle>(product.bundles[1]); // 3-month default
   const [isSubscription, setIsSubscription] = useState(false);
-  const { addToCart } = useCart();
+  const { addToCart, isOpen: cartOpen } = useCart();
+
+  // Sticky add-to-cart bar: appears once the main CTA scrolls out of view so
+  // the primary action stays reachable on long product pages. Hidden while the
+  // cart drawer is open to avoid stacking two CTAs.
+  const ctaRef = useRef<HTMLButtonElement>(null);
+  const [ctaVisible, setCtaVisible] = useState(true);
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => setCtaVisible(entry.isIntersecting), {
+      threshold: 0,
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const showSticky = !ctaVisible && !cartOpen;
 
   useEffect(() => {
     track("product_viewed", { product: product.slug, variant: product.variant });
@@ -37,6 +53,7 @@ export function BundleSelector({ product }: { product: Product }) {
   };
 
   return (
+    <>
     <div className="space-y-4">
       {/* Variant selection */}
       <div>
@@ -131,6 +148,7 @@ export function BundleSelector({ product }: { product: Product }) {
       </label>
 
       <button
+        ref={ctaRef}
         type="button"
         onClick={handleAddToCart}
         className="w-full py-4 rounded-lg font-medium text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2"
@@ -140,5 +158,52 @@ export function BundleSelector({ product }: { product: Product }) {
         In den Warenkorb — {formatPrice(selected.priceCents / 100)}
       </button>
     </div>
+
+      {/* Sticky add-to-cart bar (slides up once the main CTA is out of view) */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-40 transition-transform duration-300 ease-out"
+        style={{
+          transform: showSticky ? "translateY(0)" : "translateY(110%)",
+          background: "var(--color-ivory)",
+          borderTop: "1px solid rgba(0,0,0,0.08)",
+          boxShadow: "0 -6px 24px -12px rgba(15,42,35,0.30)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+        aria-hidden={!showSticky}
+      >
+        <div className="container-content flex items-center gap-3 sm:gap-4 py-3">
+          <div
+            className="hidden sm:block w-11 h-11 rounded-lg flex-none overflow-hidden relative"
+            style={{ background: product.palette.bg }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={product.images.solo}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="font-medium leading-tight truncate">{product.name}</div>
+            <div className="text-xs text-muted truncate">
+              {selected.months} {selected.months === 1 ? "Monat" : "Monate"} ·{" "}
+              {formatPrice(selected.priceCents / 100)}
+              {isSubscription ? " · Spar-Abo" : ""}
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            tabIndex={showSticky ? 0 : -1}
+            className="flex-none py-3 px-4 sm:px-6 rounded-lg font-medium text-sm sm:text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2 whitespace-nowrap"
+            style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
+          >
+            <ShoppingBag className="w-5 h-5" />
+            <span className="hidden sm:inline">In den Warenkorb — </span>
+            {formatPrice(selected.priceCents / 100)}
+          </button>
+        </div>
+      </div>
+    </>
   );
 }
