@@ -114,11 +114,11 @@ export function SiteHeader() {
                           style={{ background: p.palette.bg }}
                         >
                           <Image
-                            src={p.images.solo}
+                            src={p.images.stillleben}
                             alt=""
                             fill
                             sizes="48px"
-                            className="object-contain p-0.5"
+                            className="object-cover"
                           />
                         </div>
                         <div>
@@ -175,11 +175,11 @@ export function SiteHeader() {
                   style={{ background: p.palette.bg }}
                 >
                   <Image
-                    src={p.images.solo}
+                    src={p.images.stillleben}
                     alt=""
                     fill
                     sizes="44px"
-                    className="object-contain p-0.5"
+                    className="object-cover"
                   />
                 </div>
                 <div>
