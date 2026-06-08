@@ -151,6 +151,17 @@ h1, h2, h3, h4, h5, h6 {
   padding-inline: 1.25rem;
 }
 
+/* "Alle Produkte" left drawer: shift the page content right so it stays
+   visible (compressed) while the drawer is open. Desktop only. */
+.products-shift {
+  transition: padding-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 1024px) {
+  .products-shift.is-open {
+    padding-left: 340px;
+  }
+}
+
 @media (min-width: 768px) {
   .container-content {
     padding-inline: 2rem;

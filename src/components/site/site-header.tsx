@@ -6,13 +6,14 @@ import { useState, useEffect } from "react";
 import { ShoppingBag, Menu, X, ChevronDown } from "lucide-react";
 import { NutrasanaLogo } from "@/components/brand/logo";
 import { useCart } from "@/components/cart/cart-context";
+import { useProductsMenu } from "./products-menu-context";
 import { track } from "@/lib/analytics";
 import { PRODUCT_LIST } from "@/lib/products";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [productsOpen, setProductsOpen] = useState(false);
+  const { open: productsMenuOpen, toggle: toggleProductsMenu } = useProductsMenu();
   const { items, open: openCart } = useCart();
 
   useEffect(() => {
@@ -77,71 +78,19 @@ export function SiteHeader() {
         <div className="container-content flex items-center justify-center gap-10 h-[44px] text-[14px]"
           style={{ color: "var(--color-forest)" }}
         >
-          <div
-            className="relative h-full flex items-center"
-            onMouseEnter={() => setProductsOpen(true)}
-            onMouseLeave={() => setProductsOpen(false)}
-          >
-            <Link href="/#produkte" className="flex items-center gap-1 hover:opacity-70 transition font-medium">
+          <div className="relative h-full flex items-center">
+            <button
+              type="button"
+              onClick={toggleProductsMenu}
+              aria-expanded={productsMenuOpen}
+              aria-haspopup="menu"
+              className="flex items-center gap-1 hover:opacity-70 transition font-medium"
+            >
               Alle Produkte
-              <ChevronDown className="w-3.5 h-3.5" />
-            </Link>
-            {productsOpen && (
-              <div
-                className="absolute top-full left-1/2 -translate-x-1/2 pt-1"
-                style={{ minWidth: 360 }}
-              >
-                <div
-                  className="rounded-lg p-2 shadow-lg flex flex-col"
-                  style={{
-                    background: "var(--color-ivory)",
-                    border: "1px solid rgba(0,0,0,0.08)",
-                    maxHeight: "min(72vh, 600px)",
-                  }}
-                >
-                  <div className="overflow-y-auto" style={{ minHeight: 0 }}>
-                    {PRODUCT_LIST.map((p) => (
-                      <Link
-                        key={p.slug}
-                        href={`/products/${p.slug}`}
-                        className="flex items-start gap-3 p-3 rounded transition"
-                        style={{ background: "transparent" }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-cream)")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                      >
-                        <div
-                          className="w-12 h-12 rounded flex-none overflow-hidden relative"
-                          style={{ background: p.palette.bg }}
-                        >
-                          <Image
-                            src={p.images.stillleben}
-                            alt=""
-                            fill
-                            sizes="48px"
-                            className="object-cover"
-                          />
-                        </div>
-                        <div>
-                          <div className="serif text-lg leading-tight" style={{ color: "var(--color-ink)" }}>
-                            {p.name}
-                          </div>
-                          <div className="text-xs mt-0.5" style={{ color: "var(--color-muted)" }}>
-                            {p.tagline}
-                          </div>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                  <Link
-                    href="/#produkte"
-                    className="block flex-none px-3 py-2 mt-1 text-xs font-medium border-t"
-                    style={{ borderColor: "rgba(0,0,0,0.08)", color: "var(--color-forest)" }}
-                  >
-                    → Alle Produkte ansehen
-                  </Link>
-                </div>
-              </div>
-            )}
+              <ChevronDown
+                className={`w-3.5 h-3.5 transition-transform ${productsMenuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
           </div>
           <Link href="/pages/ueber-uns" className="hover:opacity-70 transition font-medium">
             Über Nutrasana

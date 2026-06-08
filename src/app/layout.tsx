@@ -7,6 +7,9 @@ import { TopBar } from "@/components/site/top-bar";
 import { CookieBanner } from "@/components/site/cookie-banner";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { ProductsMenuProvider } from "@/components/site/products-menu-context";
+import { ProductsDrawer } from "@/components/site/products-drawer";
+import { ProductsShift } from "@/components/site/products-shift";
 import { UtmCapture } from "@/components/site/utm-capture";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -50,15 +53,20 @@ export default function RootLayout({
     <html lang="de" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
         <CartProvider>
-          <UtmCapture />
-          <div className="sticky top-0 z-50">
-            <TopBar />
-            <SiteHeader />
-          </div>
-          <main>{children}</main>
-          <SiteFooter />
-          <CartDrawer />
-          <CookieBanner />
+          <ProductsMenuProvider>
+            <ProductsDrawer />
+            <ProductsShift>
+              <UtmCapture />
+              <div className="sticky top-0 z-50">
+                <TopBar />
+                <SiteHeader />
+              </div>
+              <main>{children}</main>
+              <SiteFooter />
+            </ProductsShift>
+            <CartDrawer />
+            <CookieBanner />
+          </ProductsMenuProvider>
         </CartProvider>
         <Analytics />
       </body>
