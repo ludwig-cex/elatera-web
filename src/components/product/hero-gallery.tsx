@@ -10,7 +10,6 @@ function buildViews(product: Product): View[] {
   const img = product.images;
   return [
     { src: img.stillleben,              label: "Produkt",                      objectFit: "cover" },
-    { src: img.solo,                    label: "Verpackung Vorderseite",       objectFit: "cover" },
     { src: img.lifestyle.couplePrimary, label: "Im Alltag — Paar mit Produkt", objectFit: "cover" },
     { src: img.credentials,             label: "Empfohlen von Pharmazeut",     objectFit: "contain" },
     { src: img.flatlay,                 label: "Inhaltsstoffe",                objectFit: "cover" },
