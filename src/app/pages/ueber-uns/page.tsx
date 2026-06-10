@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Über Nutrasana",
   description:
     "Nutrasana entwickelt ehrliche Nahrungsergänzung für die Themen, die im Alltag zählen — gemeinsam mit Apothekern entwickelt, in Deutschland hergestellt und laborgeprüft.",
+  alternates: { canonical: "/pages/ueber-uns" },
 };
 
 const PROMISES = [

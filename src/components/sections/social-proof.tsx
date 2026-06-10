@@ -27,7 +27,7 @@ export function SocialProof() {
   ];
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20" style={{ background: "var(--color-cream)" }}>
+    <section id="bewertungen" className="py-10 sm:py-16 lg:py-20" style={{ background: "var(--color-cream)", scrollMarginTop: 120 }}>
       <div className="container-content">
         <div className="text-center max-w-2xl mx-auto mb-10">
           <div className="flex justify-center gap-1 mb-3">

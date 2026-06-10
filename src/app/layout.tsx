@@ -34,10 +34,9 @@ export const metadata: Metadata = {
   },
   description:
     "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
+  // Kein globales alternates.canonical hier: es würde von allen Unterseiten
+  // geerbt und jede Seite (inkl. Produktseiten) auf "/" kanonisieren.
   metadataBase: new URL("https://www.nutra-sana.de"),
-  alternates: {
-    canonical: "/",
-  },
   robots: {
     index: true,
     follow: true,

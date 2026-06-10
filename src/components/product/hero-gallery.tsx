@@ -11,6 +11,7 @@ function buildViews(product: Product): View[] {
   return [
     { src: img.stillleben,              label: "Produkt",                      objectFit: "cover" },
     { src: img.lifestyle.couplePrimary, label: "Im Alltag — Paar mit Produkt", objectFit: "cover" },
+    { src: img.lifestyle.soloWoman,     label: "Im Alltag — tägliche Anwendung", objectFit: "cover" },
     { src: img.credentials,             label: "Empfohlen von Pharmazeut",     objectFit: "contain" },
     { src: img.flatlay,                 label: "Inhaltsstoffe",                objectFit: "cover" },
     { src: img.claims,                  label: "Health-Claims",                objectFit: "contain" },
@@ -34,16 +35,16 @@ export function HeroGallery({ product }: { product: Product }) {
         <Image
           key={current.src}
           src={current.src}
-          alt={current.label}
+          alt={`${product.name} — ${current.label}`}
           fill
           sizes="(min-width: 1024px) 560px, 100vw"
           className={current.objectFit === "contain" ? "object-contain p-4" : "object-cover"}
-          priority={active === 0}
+          {...(active === 0 ? { loading: "eager" as const, fetchPriority: "high" as const } : {})}
         />
       </div>
 
       <div
-        className="flex sm:grid sm:grid-cols-7 gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory sm:overflow-x-visible sm:mx-0 sm:px-0"
+        className="flex sm:grid sm:grid-cols-8 gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x snap-mandatory sm:overflow-x-visible sm:mx-0 sm:px-0"
         style={{ scrollbarWidth: "none" }}
       >
         {views.map((view, i) => {

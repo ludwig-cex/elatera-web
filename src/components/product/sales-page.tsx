@@ -1,5 +1,6 @@
 import { Star, Truck, ShieldCheck, Award, FlaskConical } from "lucide-react";
-import type { Product } from "@/lib/products";
+import { CUSTOMER_QUOTES, type Product } from "@/lib/products";
+import { CrossSell } from "./cross-sell";
 import { HeroGallery } from "./hero-gallery";
 import { BundleSelector } from "./bundle-selector";
 import { FaqAccordion } from "./faq-accordion";
@@ -52,8 +53,8 @@ export function SalesPage({ product }: { product: Product }) {
               {product.hero.subheadline}
             </p>
 
-            {/* Rating */}
-            <div className="flex items-center gap-3 mb-6">
+            {/* Rating — links to the reviews section further down */}
+            <a href="#bewertungen" className="flex items-center gap-3 mb-6 group w-fit">
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -65,9 +66,9 @@ export function SalesPage({ product }: { product: Product }) {
               </div>
               <span className="text-sm">
                 <span className="font-medium">4,8 / 5,0</span>{" "}
-                <span className="text-muted">aus 1.247 Bewertungen</span>
+                <span className="text-muted underline-offset-2 group-hover:underline">aus 1.247 Bewertungen</span>
               </span>
-            </div>
+            </a>
 
             {/* Trust-Quartett — §4 Fortea */}
             <div className="grid grid-cols-2 gap-2 mb-6">
@@ -98,6 +99,27 @@ export function SalesPage({ product }: { product: Product }) {
             {/* PZN line — §12 Fortea-Inline */}
             <div className="mt-5 text-xs text-muted text-center">
               PZN <span className="font-mono">{product.pzn}</span> · 30 Kapseln · 1× täglich · Inhalt 14&nbsp;g
+            </div>
+
+            {/* Produktspezifische Kundenstimmen direkt unter der Preisbox */}
+            <div className="mt-6 space-y-3">
+              {CUSTOMER_QUOTES[product.slug].map((q) => (
+                <figure
+                  key={q.name}
+                  className="p-4 rounded-lg"
+                  style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.06)" }}
+                >
+                  <div className="flex gap-0.5 mb-1.5">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: "var(--color-copper)" }} />
+                    ))}
+                  </div>
+                  <blockquote className="text-sm leading-relaxed">„{q.text}"</blockquote>
+                  <figcaption className="text-xs text-muted mt-1.5">
+                    — {q.name}, {q.age} · <a href="#bewertungen" className="underline underline-offset-2">alle Bewertungen</a>
+                  </figcaption>
+                </figure>
+              ))}
             </div>
           </div>
         </div>
@@ -180,6 +202,9 @@ export function SalesPage({ product }: { product: Product }) {
 
       {/* §14 RECHTLICHE HINWEISE */}
       <EfsaDisclaimer />
+
+      {/* §14b CROSS-SELL — "Wird oft kombiniert mit" */}
+      <CrossSell product={product} />
 
       {/* §15 NEWSLETTER / SPARPLAN-CTA */}
       <Newsletter />

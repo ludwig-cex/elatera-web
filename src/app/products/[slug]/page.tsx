@@ -18,6 +18,7 @@ export async function generateMetadata({
   return {
     title: `${product.name} — ${product.tagline}`,
     description: product.hero.subheadline,
+    alternates: { canonical: `/products/${product.slug}` },
   };
 }
 

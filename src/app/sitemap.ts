@@ -6,12 +6,12 @@ const BASE_URL = "https://www.nutra-sana.de";
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
+  // /pages/faq und /pages/kontakt sind reine Redirects auf /pages/hilfe-kontakt
+  // und gehören deshalb nicht in die Sitemap.
   const staticPaths = [
     "",
     "/pages/ueber-uns",
-    "/pages/faq",
     "/pages/hilfe-kontakt",
-    "/pages/kontakt",
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({

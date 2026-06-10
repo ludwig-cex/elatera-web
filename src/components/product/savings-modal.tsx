@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { X, Gift, Truck, RefreshCw, ShieldCheck } from "lucide-react";
 import { useCart } from "@/components/cart/cart-context";
+import { readUtm } from "@/lib/utm";
 
 export function SavingsModal({ product }: { product: { palette: { badge: string; badgeText: string; bg: string } } }) {
   const [open, setOpen] = useState(false);
@@ -14,8 +15,26 @@ export function SavingsModal({ product }: { product: { palette: { badge: string;
     if (seen || dismissed) return;
     // Don't arm if user already engaged with the waitlist
     if (drawerOpen || items.length > 0) return;
-    const timer = setTimeout(() => setOpen(true), 18000);
-    return () => clearTimeout(timer);
+    // Paid traffic (Advertorial → Shop) never gets the modal: it would
+    // interrupt the LP→PDP flow mid-read and hurt the funnel.
+    const utm = readUtm();
+    if (utm.utm_source || utm.tblci || utm.obclickid || utm.ob_click_id || utm.fbclid || utm.gclid || utm.msclkid) return;
+
+    const show = () => {
+      setOpen(true);
+      window.clearTimeout(timer);
+      document.documentElement.removeEventListener("mouseleave", onExitIntent);
+    };
+    // Exit intent (desktop): fire when the cursor leaves through the top edge.
+    const onExitIntent = (e: MouseEvent) => {
+      if (e.clientY <= 0) show();
+    };
+    const timer = window.setTimeout(show, 45000);
+    document.documentElement.addEventListener("mouseleave", onExitIntent);
+    return () => {
+      window.clearTimeout(timer);
+      document.documentElement.removeEventListener("mouseleave", onExitIntent);
+    };
   }, [dismissed, drawerOpen, items.length]);
 
   // Auto-hide if user opens the waitlist while modal is up

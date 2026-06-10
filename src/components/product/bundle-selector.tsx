@@ -171,6 +171,12 @@ export function BundleSelector({ product }: { product: Product }) {
         }}
         aria-hidden={!showSticky}
       >
+        <div
+          className="text-[11px] text-center py-1"
+          style={{ color: "var(--color-muted)", borderBottom: "1px solid rgba(0,0,0,0.05)" }}
+        >
+          90 Tage Geld-zurück-Garantie · Versandkostenfrei ab 60&nbsp;€<span className="hidden sm:inline"> · Made in Germany</span>
+        </div>
         <div className="container-content flex items-center gap-3 sm:gap-4 py-3">
           <div
             className="hidden sm:block w-11 h-11 rounded-lg flex-none overflow-hidden relative"
@@ -180,6 +186,7 @@ export function BundleSelector({ product }: { product: Product }) {
             <img
               src={product.images.solo}
               alt=""
+              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover"
             />
           </div>

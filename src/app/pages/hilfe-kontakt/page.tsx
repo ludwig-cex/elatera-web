@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title: "Hilfe & Kontakt",
   description:
     "Antworten auf häufige Fragen rund um Bestellung, Versand, Produkte und Ihr Spar-Abo bei Nutrasana. Schreiben Sie uns — wir antworten binnen 24 Stunden.",
+  alternates: { canonical: "/pages/hilfe-kontakt" },
 };
 
 export default function HilfeKontaktPage() {

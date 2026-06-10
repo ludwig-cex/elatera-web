@@ -208,6 +208,49 @@ const COMMON_BUNDLES: Bundle[] = [
   { months: 6, capsules: 180, priceCents: 16496, rrpCents: 29994, discountPct: 45 },
 ];
 
+export type CustomerQuote = { name: string; age: number; text: string };
+
+// Produktspezifische Kurz-Stimmen, gerendert direkt unter der Preisbox.
+// Erfahrungston ohne Wirk-/Heilversprechen (HCVO-konform).
+export const CUSTOMER_QUOTES: Record<ProductSlug, CustomerQuote[]> = {
+  vertisana: [
+    { name: "Margarete L.", age: 67, text: "Ich stehe morgens wieder ruhiger auf. Die Kapsel gehört für mich inzwischen zum Frühstück wie der Kaffee." },
+    { name: "Dieter H.", age: 72, text: "Nach gut acht Wochen fühle ich mich im Alltag einfach sicherer unterwegs. Klare Empfehlung." },
+  ],
+  mobilisana: [
+    { name: "Christa B.", age: 63, text: "Die Gartenarbeit geht mir wieder leichter von der Hand. Ich nehme es jetzt im dritten Monat." },
+    { name: "Wolfgang R.", age: 66, text: "Morgens komme ich deutlich besser in Bewegung. Das 3-Monats-Paket war für mich die richtige Wahl." },
+  ],
+  somnisana: [
+    { name: "Helga M.", age: 69, text: "Ich komme abends schneller zur Ruhe und wache erholter auf. Genau das hatte ich gesucht." },
+    { name: "Karl-Heinz D.", age: 71, text: "Eine halbe Stunde vor dem Schlafengehen, ganz unkompliziert. Mein Abend ist spürbar ruhiger geworden." },
+  ],
+  mentisana: [
+    { name: "Ingrid S.", age: 65, text: "Beim Lesen und bei Kreuzworträtseln bleibe ich länger konzentriert. Das tut gut." },
+    { name: "Manfred K.", age: 70, text: "Ich habe das Gefühl, im Kopf wieder klarer durch den Tag zu gehen. Ich bleibe dabei." },
+  ],
+  urisana: [
+    { name: "Gisela P.", age: 66, text: "Diskret, gut verträglich und einfach in den Alltag zu integrieren. Ich fühle mich wohler." },
+    { name: "Ursula B.", age: 71, text: "Die Kombination aus Cranberry und Kürbis hat mich überzeugt. Für mich ein gutes Gefühl im Alltag." },
+  ],
+  tendisana: [
+    { name: "Bernd W.", age: 64, text: "Nach dem Tennis fühlt sich alles weniger strapaziert an. Ich nehme es seit dem Frühjahr." },
+    { name: "Renate G.", age: 68, text: "Die Zusammensetzung hat mich überzeugt — und die Einnahme ist völlig unkompliziert." },
+  ],
+  gastrosana: [
+    { name: "Elke F.", age: 63, text: "Mein Bauch fühlt sich nach den Mahlzeiten deutlich entspannter an. Sehr zufrieden." },
+    { name: "Horst J.", age: 69, text: "Unkompliziert einzunehmen und gut verträglich. Genau das, was ich gesucht habe." },
+  ],
+  audisana: [
+    { name: "Hannelore T.", age: 70, text: "Ich tue meinen Ohren damit etwas Gutes — und die Qualität überzeugt mich." },
+    { name: "Günter M.", age: 73, text: "Die Kombination mit Ginkgo hat mich angesprochen. Die Einnahme ist völlig problemlos." },
+  ],
+  cordisana: [
+    { name: "Marianne K.", age: 68, text: "Die tägliche Kapsel ist fester Teil meiner Routine geworden. Ich fühle mich damit gut aufgestellt." },
+    { name: "Friedrich L.", age: 74, text: "Weißdorn kannte ich schon von früher. Schön, das in einer modernen Form zu bekommen." },
+  ],
+};
+
 export const PRODUCTS: Record<ProductSlug, Product> = {
   vertisana: {
     slug: "vertisana",

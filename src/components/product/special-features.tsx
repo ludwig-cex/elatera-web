@@ -7,8 +7,8 @@ export function SpecialFeatures({ product }: { product: Product }) {
   // Maps each of the 3 special features to a relevant image:
   // 0 = synergistic formula → ingredient flatlay
   // 1 = relevant dosage     → solo packshot
-  // 2 = optimized uptake    → lifestyle (real-world use)
-  const featureImages = [img.flatlay, img.stillleben, img.lifestyle.couplePrimary];
+  // 2 = optimized uptake    → lifestyle solo (couplePrimary läuft bereits in der Galerie)
+  const featureImages = [img.flatlay, img.stillleben, img.lifestyle.soloWoman];
   const featureFits: ("cover" | "contain")[] = ["cover", "cover", "cover"];
 
   return (

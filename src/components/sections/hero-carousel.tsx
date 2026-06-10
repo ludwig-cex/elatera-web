@@ -65,8 +65,10 @@ export function HeroCarousel() {
                   src={s.product.images.hero}
                   alt={`Älteres Paar präsentiert ${s.product.name}`}
                   fill
-                  sizes="100vw"
-                  priority={i === 0}
+                  sizes="(min-width: 1024px) 1240px, 100vw"
+                  {...(i === 0
+                    ? { loading: "eager" as const, fetchPriority: "high" as const }
+                    : { loading: "lazy" as const })}
                   className="object-cover object-[60%_center]"
                 />
               </div>
@@ -94,8 +96,10 @@ export function HeroCarousel() {
                 src={s.product.images.hero}
                 alt={`Älteres Paar präsentiert ${s.product.name}`}
                 fill
-                sizes="1240px"
-                priority={i === 0}
+                sizes="(min-width: 1024px) 1240px, 100vw"
+                {...(i === 0
+                  ? { loading: "eager" as const, fetchPriority: "high" as const }
+                  : { loading: "lazy" as const })}
                 className="object-cover"
               />
               <div

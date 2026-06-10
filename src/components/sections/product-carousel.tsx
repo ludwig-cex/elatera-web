@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Star } from "lucide-react";
 import { PRODUCT_LIST } from "@/lib/products";
+import { formatPricePerDay } from "@/lib/utils";
 
 /**
  * "Unsere Produkte" grid — Fortea-style 2-col (mobile) / 3-col (desktop)
@@ -24,6 +25,9 @@ export function ProductCarousel() {
             const isLast = i === PRODUCT_LIST.length - 1;
             const ratings = [4.8, 4.7, 4.9, 4.8, 4.9, 4.7, 4.8, 4.7, 4.9];
             const reviews = [1247, 893, 1064, 412, 326, 287, 419, 268, 358];
+            const bestPerDay = p.bundles.reduce((best, b) =>
+              b.priceCents / b.capsules < best.priceCents / best.capsules ? b : best
+            );
             return (
               <Link
                 key={p.slug}
@@ -39,7 +43,7 @@ export function ProductCarousel() {
                 >
                   <Image
                     src={p.images.stillleben}
-                    alt={p.name}
+                    alt={`${p.name} Produktverpackung — ${p.tagline}`}
                     fill
                     sizes="(min-width: 1024px) 380px, 45vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -64,6 +68,11 @@ export function ProductCarousel() {
                     </div>
                     <span className="text-[11px] sm:text-xs">
                       {ratings[i].toString().replace(".", ",")} <span className="opacity-70">({reviews[i]})</span>
+                    </span>
+                  </div>
+                  <div className="mt-2">
+                    <span className="font-medium text-xs sm:text-sm" style={{ color: p.palette.ink }}>
+                      ab {formatPricePerDay(bestPerDay.priceCents, bestPerDay.capsules)} pro Tag
                     </span>
                   </div>
                   <span
