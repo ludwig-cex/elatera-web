@@ -2,6 +2,7 @@ import posthog from "posthog-js";
 import { track as vercelTrack } from "@vercel/analytics";
 import { taboola } from "./taboola";
 import { outbrain } from "./outbrain";
+import { meta } from "./meta";
 
 type Props = Record<string, string | number | boolean | null>;
 
@@ -21,6 +22,16 @@ const OUTBRAIN_EVENTS: Record<string, string> = {
   product_viewed: "View Content",
   add_to_cart: "Add to Cart",
   checkout_clicked: "Initiate Checkout",
+  intent_email_submitted: "Lead",
+};
+
+// Same funnel mapped to Meta (Facebook) standard event names so the pixel
+// can optimize toward them. intent_email_submitted is the real conversion
+// in this pre-launch model (the email/intent capture = Lead).
+const META_EVENTS: Record<string, string> = {
+  product_viewed: "ViewContent",
+  add_to_cart: "AddToCart",
+  checkout_clicked: "InitiateCheckout",
   intent_email_submitted: "Lead",
 };
 
@@ -47,6 +58,12 @@ export function track(event: string, props?: Props) {
   try {
     const outbrainEvent = OUTBRAIN_EVENTS[event];
     if (outbrainEvent) outbrain(outbrainEvent);
+  } catch {
+    // ignore
+  }
+  try {
+    const metaEvent = META_EVENTS[event];
+    if (metaEvent) meta(metaEvent);
   } catch {
     // ignore
   }
