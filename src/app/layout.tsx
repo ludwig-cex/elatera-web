@@ -41,6 +41,13 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Meta (Facebook) Business domain verification for nutra-sana.de. Required
+  // before Aggregated Event Measurement event ranking can be configured.
+  verification: {
+    other: {
+      "facebook-domain-verification": "zi88sdhgfmrl7iltslyx1plpuqpu1w",
+    },
+  },
 };
 
 export default function RootLayout({
