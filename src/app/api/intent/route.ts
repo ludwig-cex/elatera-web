@@ -1,3 +1,6 @@
+import { after } from "next/server";
+import { notifyTelegram } from "@/lib/notify";
+
 export const runtime = "nodejs";
 
 const KLAVIYO_LIST_ID = "WPrLGr";
@@ -33,6 +36,12 @@ async function withTimeout(input: string, init: RequestInit, ms = 8000) {
   } finally {
     clearTimeout(t);
   }
+}
+
+// E-Mail für die Push-Nachricht maskieren (kein Klartext-PII an Telegram).
+function maskEmail(email: string): string {
+  const [local, domain] = email.split("@");
+  return `${local.slice(0, 2)}***@${domain}`;
 }
 
 export async function POST(request: Request) {
@@ -133,6 +142,23 @@ export async function POST(request: Request) {
       console.error("[intent] klaviyo list add failed", listRes.status, txt.slice(0, 300));
       return Response.json({ ok: false, error: "klaviyo_list" }, { status: 502 });
     }
+
+    // 3) Push-Benachrichtigung nach der Response (blockiert den Nutzer nicht).
+    const products = (body.items ?? []).map((i) => i.product).join(", ") || "—";
+    const value =
+      typeof body.totalCents === "number"
+        ? `${(body.totalCents / 100).toFixed(2).replace(".", ",")} €`
+        : "—";
+    const adId = utm.utm_content || "organisch";
+    after(() =>
+      notifyTelegram(
+        `🎉 Neuer Intent auf nutra-sana.de\n` +
+          `Produkte: ${products}\n` +
+          `Warenkorbwert: ${value}\n` +
+          `Quelle: ${utm.utm_source || "direkt"} · Ad: ${adId}\n` +
+          `E-Mail: ${maskEmail(email)}`,
+      ),
+    );
 
     return Response.json({ ok: true });
   } catch (err) {
