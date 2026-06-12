@@ -1,13 +1,20 @@
 "use client";
 
 import { useCart } from "./cart-context";
-import { X, ShoppingBag, Check, PackageX, Clock } from "lucide-react";
+import { X, ShoppingBag, Check, PackageX, Clock, ShieldCheck } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import { readUtm } from "@/lib/utm";
 import { useEffect, useState } from "react";
+import { Elements } from "@stripe/react-stripe-js";
+import { stripePromise, stripeEnabled } from "@/lib/stripe-client";
+import { CheckoutForm } from "./checkout-form";
 
 const RESERVATION_MS = 5 * 60 * 1000; // 5 minutes per reservation window
+
+// Stripe path: cart -> payment -> done. Legacy path (no publishable key):
+// cart -> out-of-stock email capture (checkoutAttempted/submitted).
+type Step = "cart" | "payment" | "done";
 
 export function CartDrawer() {
   const { isOpen, close, items, removeFromCart, reservedSince } = useCart();
@@ -15,6 +22,7 @@ export function CartDrawer() {
   const [honeypot, setHoneypot] = useState("");
   const [checkoutAttempted, setCheckoutAttempted] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [step, setStep] = useState<Step>("cart");
   const [now, setNow] = useState<number>(() => Date.now());
 
   // Re-render every second so the countdown ticks. Only runs while the drawer
@@ -27,9 +35,23 @@ export function CartDrawer() {
     return () => clearInterval(id);
   }, [isOpen, reservedSince]);
 
+  // Reset the funnel when the cart empties out.
+  useEffect(() => {
+    if (items.length === 0) {
+      setStep("cart");
+      setCheckoutAttempted(false);
+      setSubmitted(false);
+    }
+  }, [items.length]);
+
   if (!isOpen) return null;
 
   const totalPrice = items.reduce((sum, item) => sum + item.priceCents, 0);
+  const payloadItems = items.map((i) => ({
+    product: i.productSlug,
+    months: i.months,
+    subscription: i.isSubscription,
+  }));
 
   // Countdown: 5 minutes per reservation window, cycles modulo so the banner
   // always shows a positive number rather than going stale.
@@ -38,18 +60,14 @@ export function CartDrawer() {
   const mm = String(Math.floor(remaining / 60000)).padStart(2, "0");
   const ss = String(Math.floor((remaining % 60000) / 1000)).padStart(2, "0");
 
+  const showReservation = !!reservedSince && (stripeEnabled ? step === "cart" : !checkoutAttempted);
+
+  // Legacy fallback: out-of-stock email capture (used when Stripe isn't configured).
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !email.includes("@")) return;
 
-    const payloadItems = items.map((i) => ({
-      product: i.productSlug,
-      months: i.months,
-      subscription: i.isSubscription,
-    }));
-
     // Primary capture: server endpoint -> Klaviyo (with UTM attribution).
-    // Fire-and-forget so the UX never blocks on the network.
     try {
       void fetch("/api/intent", {
         method: "POST",
@@ -65,8 +83,7 @@ export function CartDrawer() {
       }).catch(() => {});
     } catch {}
 
-    // Local backup so a transient API error never silently loses a lead
-    // during the pre-launch test.
+    // Local backup so a transient API error never silently loses a lead.
     try {
       if (typeof window !== "undefined") {
         const key = "nutrasana_intent_signups";
@@ -91,7 +108,6 @@ export function CartDrawer() {
 
   const onCheckoutClick = () => {
     track("checkout_clicked", { items: items.length, value: totalPrice / 100 });
-    track("out_of_stock_shown", { items: items.length, value: totalPrice / 100 });
     // Betreiber-Ping (Telegram), fire-and-forget — darf die UI nie blockieren.
     fetch("/api/cart-ping", {
       method: "POST",
@@ -103,7 +119,40 @@ export function CartDrawer() {
         utm: readUtm(),
       }),
     }).catch(() => null);
-    setCheckoutAttempted(true);
+
+    if (stripeEnabled) {
+      setStep("payment");
+    } else {
+      // No Stripe key yet -> legacy out-of-stock flow.
+      track("out_of_stock_shown", { items: items.length, value: totalPrice / 100 });
+      setCheckoutAttempted(true);
+    }
+  };
+
+  // Stripe path: card authorized successfully (webhook releases the hold and
+  // sends the apology mail). Keep the restock list populated and reveal the
+  // out-of-stock confirmation.
+  const onPaid = (paidEmail: string) => {
+    try {
+      void fetch("/api/intent", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({
+          email: paidEmail,
+          items: payloadItems,
+          totalCents: totalPrice,
+          utm: readUtm(),
+        }),
+      }).catch(() => {});
+    } catch {}
+    track("payment_authorized", { items: items.length, value: totalPrice / 100 });
+    track("intent_email_submitted", {
+      items: items.length,
+      value: totalPrice / 100,
+      products: items.map((i) => i.productSlug).join(","),
+    });
+    setStep("done");
   };
 
   return (
@@ -148,7 +197,7 @@ export function CartDrawer() {
             </div>
           ) : (
             <>
-              {!checkoutAttempted && reservedSince && (
+              {showReservation && (
                 <div
                   className="px-5 py-3 flex items-center gap-2 text-xs"
                   style={{
@@ -218,7 +267,63 @@ export function CartDrawer() {
               <span>{formatPrice(totalPrice / 100)}</span>
             </div>
 
-            {!checkoutAttempted ? (
+            {stripeEnabled ? (
+              step === "cart" ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={onCheckoutClick}
+                    className="w-full py-3 rounded font-medium text-sm transition hover:opacity-90"
+                    style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
+                  >
+                    Zur Kasse
+                  </button>
+                  <p className="text-[11px] text-muted text-center">
+                    Versandkostenfrei ab 60&nbsp;€ · 90 Tage Geld-zurück-Garantie
+                  </p>
+                </>
+              ) : step === "payment" ? (
+                <div className="space-y-3">
+                  <Elements
+                    stripe={stripePromise}
+                    options={{
+                      mode: "payment",
+                      amount: totalPrice,
+                      currency: "eur",
+                      captureMethod: "manual",
+                      appearance: { theme: "stripe" },
+                    }}
+                  >
+                    <CheckoutForm
+                      items={payloadItems}
+                      totalCents={totalPrice}
+                      onSuccess={onPaid}
+                    />
+                  </Elements>
+                  <button
+                    type="button"
+                    onClick={() => setStep("cart")}
+                    className="w-full text-xs text-muted hover:text-ink underline"
+                  >
+                    Zurück zum Warenkorb
+                  </button>
+                </div>
+              ) : (
+                // step === "done"
+                <div
+                  className="p-4 rounded text-center"
+                  style={{ background: "var(--color-vertisana-bg)", color: "var(--color-forest)" }}
+                >
+                  <PackageX className="w-6 h-6 mx-auto mb-2" />
+                  <p className="text-sm font-medium">Leider gerade ausverkauft</p>
+                  <p className="text-xs mt-1 opacity-80 leading-relaxed">
+                    Ihre Zahlung wurde nur kurz reserviert und <strong>nicht abgebucht</strong> —
+                    die Reservierung gibt Ihre Bank automatisch wieder frei. Wir benachrichtigen
+                    Sie per E-Mail, sobald wieder lieferbar — mit Ihrem 10&nbsp;%-Willkommen-Vorteil.
+                  </p>
+                </div>
+              )
+            ) : !checkoutAttempted ? (
               <>
                 <button
                   type="button"
@@ -309,6 +414,12 @@ export function CartDrawer() {
                   </p>
                 </form>
               </div>
+            )}
+
+            {stripeEnabled && step === "payment" && (
+              <p className="text-[11px] text-muted text-center flex items-center justify-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" /> Sichere Zahlung über Stripe
+              </p>
             )}
           </footer>
         )}
