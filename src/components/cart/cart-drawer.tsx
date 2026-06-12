@@ -310,17 +310,55 @@ export function CartDrawer() {
                 </div>
               ) : (
                 // step === "done"
-                <div
-                  className="p-4 rounded text-center"
-                  style={{ background: "var(--color-vertisana-bg)", color: "var(--color-forest)" }}
-                >
-                  <PackageX className="w-6 h-6 mx-auto mb-2" />
-                  <p className="text-sm font-medium">Leider gerade ausverkauft</p>
-                  <p className="text-xs mt-1 opacity-80 leading-relaxed">
-                    Ihre Zahlung wurde nur kurz reserviert und <strong>nicht abgebucht</strong> —
-                    die Reservierung gibt Ihre Bank automatisch wieder frei. Wir benachrichtigen
-                    Sie per E-Mail, sobald wieder lieferbar — mit Ihrem 10&nbsp;%-Willkommen-Vorteil.
-                  </p>
+                <div className="space-y-3">
+                  {/* Headline */}
+                  <div className="text-center pt-1">
+                    <div
+                      className="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center"
+                      style={{ background: "var(--color-ivory)" }}
+                    >
+                      <PackageX className="w-7 h-7" style={{ color: "var(--color-copper)" }} />
+                    </div>
+                    <p className="serif text-2xl leading-tight">Leider gerade ausverkauft</p>
+                    <p className="text-xs text-muted mt-1.5 leading-relaxed">
+                      Wir konnten Ihre Bestellung nicht abschließen. Das tut uns
+                      aufrichtig leid.
+                    </p>
+                  </div>
+
+                  {/* Kein Geld abgebucht — deutlich hervorgehoben */}
+                  <div
+                    className="p-4 rounded-lg flex items-start gap-3"
+                    style={{ background: "var(--color-vertisana-bg)", color: "var(--color-forest)" }}
+                  >
+                    <ShieldCheck className="w-6 h-6 mt-0.5 flex-none" />
+                    <div>
+                      <div className="text-base font-semibold leading-tight">
+                        Es wurde kein Geld abgebucht.
+                      </div>
+                      <p className="text-xs mt-1.5 opacity-90 leading-relaxed">
+                        Ihre Karte wurde nur kurz{" "}
+                        <strong>vorgemerkt (reserviert)</strong>, aber{" "}
+                        <strong>nicht belastet</strong>. Diese Reservierung gibt
+                        Ihre Bank automatisch wieder frei. Es fließt kein Geld.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* 10 % Willkommen-Vorteil */}
+                  <div
+                    className="p-4 rounded-lg text-center"
+                    style={{ background: "var(--color-cream)", border: "1px solid rgba(0,0,0,0.06)" }}
+                  >
+                    <p className="text-base font-semibold" style={{ color: "var(--color-copper)" }}>
+                      10&nbsp;% Willkommen-Vorteil
+                    </p>
+                    <p className="text-xs text-muted mt-1.5 leading-relaxed">
+                      Als Entschuldigung schenken wir Ihnen 10&nbsp;% auf Ihre erste
+                      Bestellung. Sobald wir wieder Vorrat haben, melden wir uns
+                      per E-Mail mit Ihrem persönlichen Gutschein.
+                    </p>
+                  </div>
                 </div>
               )
             ) : !checkoutAttempted ? (
