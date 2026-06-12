@@ -92,6 +92,17 @@ export function CartDrawer() {
   const onCheckoutClick = () => {
     track("checkout_clicked", { items: items.length, value: totalPrice / 100 });
     track("out_of_stock_shown", { items: items.length, value: totalPrice / 100 });
+    // Betreiber-Ping (Telegram), fire-and-forget — darf die UI nie blockieren.
+    fetch("/api/cart-ping", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      keepalive: true,
+      body: JSON.stringify({
+        products: items.map((i) => i.productSlug),
+        totalCents: totalPrice,
+        utm: readUtm(),
+      }),
+    }).catch(() => null);
     setCheckoutAttempted(true);
   };
 

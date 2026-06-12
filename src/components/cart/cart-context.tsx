@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
-import { readUtm } from "@/lib/utm";
 
 export type CartItem = {
   productSlug: string;
@@ -43,19 +42,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     // Start the reservation window on the first item; keep it stable while the
     // cart is non-empty so the countdown persists across drawer close/reopen.
     setReservedSince((prev) => prev ?? Date.now());
-    // Betreiber-Ping (Telegram), fire-and-forget — darf die UI nie blockieren.
-    fetch("/api/cart-ping", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      keepalive: true,
-      body: JSON.stringify({
-        product: item.productSlug,
-        months: item.months,
-        priceCents: item.priceCents,
-        subscription: item.isSubscription,
-        utm: readUtm(),
-      }),
-    }).catch(() => null);
   }, []);
 
   const removeFromCart = useCallback((index: number) => {

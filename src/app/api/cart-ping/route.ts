@@ -3,14 +3,12 @@ import { notifyTelegram } from "@/lib/notify";
 
 export const runtime = "nodejs";
 
-// Leichtgewichtiger Ping bei "In den Warenkorb" — reine Betreiber-Info,
+// Leichtgewichtiger Ping beim Klick auf "Zur Kasse" — reine Betreiber-Info,
 // keine PII. Antwortet immer ok, damit der Client nie blockiert/retried.
 
 type CartPingBody = {
-  product?: string;
-  months?: number;
-  priceCents?: number;
-  subscription?: boolean;
+  products?: string[];
+  totalCents?: number;
   utm?: Record<string, string>;
 };
 
@@ -22,16 +20,16 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
-  const product =
-    typeof body.product === "string" && /^[a-z][a-z-]{2,29}$/.test(body.product)
-      ? body.product
-      : null;
-  if (!product) return Response.json({ ok: true });
+  const products = Array.isArray(body.products)
+    ? body.products
+        .filter((p) => typeof p === "string" && /^[a-z][a-z-]{2,29}$/.test(p))
+        .slice(0, 10)
+    : [];
+  if (products.length === 0) return Response.json({ ok: true });
 
-  const months = [1, 3, 6].includes(body.months as number) ? (body.months as number) : null;
-  const price =
-    typeof body.priceCents === "number" && body.priceCents > 0 && body.priceCents < 100000
-      ? `${(body.priceCents / 100).toFixed(2).replace(".", ",")} €`
+  const value =
+    typeof body.totalCents === "number" && body.totalCents > 0 && body.totalCents < 1000000
+      ? `${(body.totalCents / 100).toFixed(2).replace(".", ",")} €`
       : "—";
   const utm = body.utm ?? {};
   const source = typeof utm.utm_source === "string" ? utm.utm_source.slice(0, 50) : "";
@@ -39,9 +37,9 @@ export async function POST(request: Request) {
 
   after(() =>
     notifyTelegram(
-      `🛒 In den Warenkorb gelegt\n` +
-        `Produkt: ${product}${months ? ` · ${months} Monat${months > 1 ? "e" : ""}` : ""}${body.subscription ? " · Spar-Abo" : ""}\n` +
-        `Wert: ${price}\n` +
+      `🛒 „Zur Kasse" geklickt\n` +
+        `Produkte: ${products.join(", ")}\n` +
+        `Warenkorbwert: ${value}\n` +
         `Quelle: ${source || "direkt"} · Ad: ${adId || "organisch"}`,
     ),
   );
