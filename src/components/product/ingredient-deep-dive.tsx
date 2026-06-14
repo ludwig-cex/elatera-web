@@ -29,7 +29,7 @@ export function IngredientDeepDive({ product }: { product: Product }) {
               Jeder Wirkstoff ein eigenes Profil
             </h2>
             <p className="text-muted mt-3 max-w-xl">
-              Auswahl, Herkunft, Standardisierung, Wirkbezug — jeder Inhaltsstoff in einer eigenen Karte.
+              Bei jedem Inhaltsstoff legen wir Auswahl, Herkunft, Standardisierung und Wirkbezug offen. So wissen Sie genau, was Sie nehmen und warum.
             </p>
           </div>
           <div className="hidden sm:flex gap-2">
