@@ -8,7 +8,7 @@ import { useCart } from "@/components/cart/cart-context";
 import { track } from "@/lib/analytics";
 
 export function BundleSelector({ product }: { product: Product }) {
-  const [selected, setSelected] = useState<Bundle>(product.bundles[1]); // 3-month default
+  const [selected, setSelected] = useState<Bundle>(product.bundles[0]); // 1-month default
   const [isSubscription, setIsSubscription] = useState(false);
   const { addToCart, isOpen: cartOpen } = useCart();
 
