@@ -36,12 +36,12 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Versenden Sie nach Österreich und in die Schweiz?",
-        a: "Ja, wir liefern in alle DACH-Länder. In Österreich und der Schweiz beträgt die Versandkosten 7,90 € (in der Schweiz fällt zusätzlich Schweizer Mehrwertsteuer beim Zoll an).",
+        a: "Ja, wir liefern in alle DACH-Länder. In Österreich und der Schweiz betragen die Versandkosten 7,90 € (in der Schweiz fällt zusätzlich Schweizer Mehrwertsteuer beim Zoll an).",
         keywords: ["österreich", "schweiz", "ausland"],
       },
       {
         q: "Wie kann ich meine Sendung verfolgen?",
-        a: "Sobald Ihre Bestellung das Lager verlässt, erhalten Sie eine E-Mail mit einem DHL-Sendungsnummer und Tracking-Link.",
+        a: "Sobald Ihre Bestellung das Lager verlässt, erhalten Sie eine E-Mail mit DHL-Sendungsnummer und Tracking-Link.",
         keywords: ["tracking", "sendungsverfolgung"],
       },
       {

@@ -10,7 +10,7 @@ import {
 
 const ITEMS = [
   { icon: FlaskConical, label: "LABORGEPRÜFT" },
-  { icon: ShieldCheck,  label: "ISO-ZERTIFIZIERT" },
+  { icon: ShieldCheck,  label: "FSSC 22000" },
   { icon: Star,         label: "HERVORRAGEND BEWERTET" },
   { icon: Newspaper,    label: "BEKANNT AUS DER APOTHEKE" },
   { icon: Award,        label: "MADE IN GERMANY" },

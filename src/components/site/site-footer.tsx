@@ -14,8 +14,7 @@ export function SiteFooter() {
           <div className="md:col-span-4">
             <NutrasanaLogo color="ivory" />
             <p className="text-sm opacity-75 mt-4 max-w-sm leading-relaxed">
-              Wissenschaftlich fundierte Gesundheitslösungen — entwickelt von Apothekern, hergestellt in Deutschland.
-              In Deutschland produziert, laborgeprüft, von Apothekern empfohlen.
+              Wissenschaftlich fundierte Gesundheitslösungen: von Apothekern entwickelt, in Deutschland produziert und laborgeprüft.
             </p>
             <div className="flex items-center gap-2 mt-6 text-sm opacity-75">
               <Mail className="w-4 h-4" />

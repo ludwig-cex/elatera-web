@@ -39,7 +39,7 @@ export function SocialProof() {
             Mehr als <span style={{ color: "var(--color-copper)" }}>1.200 Bewertungen</span> aus DACH
           </p>
           <p className="text-sm text-muted mt-2">
-            Stimmen aus unserer Beta-Phase und aus Apothekengesprächen.
+            Bewertungen unserer Kundinnen und Kunden aus DACH und Stimmen aus Apothekengesprächen.
           </p>
         </div>
 

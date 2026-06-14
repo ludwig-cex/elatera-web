@@ -21,12 +21,12 @@ const PROMISES = [
   {
     icon: FlaskConical,
     title: "Laborgeprüfte Qualität",
-    body: "Jede einzelne Charge unserer Produkte durchläuft eine unabhängige Laborprüfung. Wir geben Reinheit, Wirkstoffgehalt und Schadstofffreiheit unabhängig prüfen.",
+    body: "Jede einzelne Charge unserer Produkte durchläuft eine unabhängige Laborprüfung. Geprüft werden Reinheit, Wirkstoffgehalt und Schadstofffreiheit.",
   },
   {
     icon: PillBottle,
     title: "Bekannt aus der Apotheke",
-    body: "Jedes Nutrasana-Produkt verfügt über eine eigene Pharmazentralnummer (PZN) und ist über Ihre Stamm-Apotheke beziehbar — ein Trust-Signal, dem Sie vertrauen können.",
+    body: "Jedes Nutrasana-Produkt verfügt über eine eigene Pharmazentralnummer (PZN) und ist über Ihre Stamm-Apotheke beziehbar.",
   },
   {
     icon: ShieldCheck,
@@ -60,7 +60,7 @@ export function PromiseAccordion() {
             Sieben Punkte, auf die wir uns verpflichten
           </h2>
           <p style={{ color: "var(--color-muted)" }}>
-            Jeder Punkt unten ist ein konkretes Versprechen, kein Marketing-Versprechen.
+            Jeder dieser Punkte ist ein konkretes Versprechen, keine leere Floskel.
           </p>
         </div>
 

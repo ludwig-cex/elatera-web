@@ -25,7 +25,7 @@ const STORIES: Story[] = [
     name: "Hans-Werner P., 71",
     teaser: "Auf Empfehlung meiner Apothekerin probiert — bleibe dabei.",
     body:
-      "Meine Apothekerin hat mir Nutrasana empfohlen, als ich nach einer ehrlichen Alternative zu großen Pharma-Marken gefragt habe. Die wissenschaftliche Erklärung hat mich überzeugt, das Spar-Abo macht es bequem. Nach drei Monaten merklich besser. Bleibe dabei.",
+      "Meine Apothekerin hat mir Nutrasana empfohlen, als ich nach einer ehrlichen Alternative zu großen Pharma-Marken gefragt habe. Die wissenschaftliche Erklärung hat mich überzeugt, das Spar-Abo macht es bequem. Nach acht Wochen merklich besser. Bleibe dabei.",
     product: "Mobilisana Intense",
     portrait: "/portraits/hans-werner-p.png",
   },
@@ -33,7 +33,7 @@ const STORIES: Story[] = [
     name: "Renate S., 64",
     teaser: "Saubere Verpackung, keine bunten Versprechen.",
     body:
-      "Genau so soll Gesundheit kommuniziert werden: ohne Anti-Aging-Phrasen, ohne Wellness-Mode. Die Etiketten sind klar lesbar, die EFSA-Hinweise transparent, und die Sterne-Bewertungen wirken echt — keine 5,0 mit 100 Reviews, sondern eine ehrliche 4,8 mit fundierten Kommentaren.",
+      "Genau so soll Gesundheit kommuniziert werden: ohne Anti-Aging-Phrasen, ohne Wellness-Mode. Die Etiketten sind klar lesbar, die EFSA-Hinweise transparent. So stelle ich mir seriöse Kommunikation vor.",
     product: "Somnisana Intense",
     portrait: "/portraits/renate-s.png",
   },

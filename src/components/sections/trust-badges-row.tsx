@@ -3,7 +3,7 @@ import { Award, FlaskConical, ShieldCheck, Star, PillBottle } from "lucide-react
 const BADGES = [
   { icon: Award, label: "Made in Germany" },
   { icon: FlaskConical, label: "Laborgeprüft" },
-  { icon: ShieldCheck, label: "ISO-Zertifiziert" },
+  { icon: ShieldCheck, label: "FSSC 22000" },
   { icon: Star, label: "Hervorragend bewertet" },
   { icon: PillBottle, label: "Bekannt aus der Apotheke" },
 ];

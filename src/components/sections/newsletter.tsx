@@ -21,7 +21,7 @@ export function Newsletter() {
           Wertvolle Experten-Tipps per E-Mail
         </h2>
         <p className="text-muted max-w-md mx-auto mb-6">
-          Erhalten Sie alle 2 Wochen einen kurzen, fundierten Tipp unserer Apotheker und Wissenschaftler. Jederzeit abbestellbar.
+          Erhalten Sie alle 2 Wochen einen kurzen, fundierten Tipp von unserem Apotheker. Jederzeit abbestellbar.
         </p>
 
         {done ? (
