@@ -26,7 +26,7 @@ export default function Page() {
 
         <h2 className="serif text-2xl mb-3">Kontakt</h2>
         <p className="text-muted leading-relaxed mb-6">
-          E-Mail: Laura@healthpointmedia.com
+          E-Mail: kundenservice@nutrasana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Registereintrag</h2>
