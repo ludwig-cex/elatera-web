@@ -54,7 +54,7 @@ export function BenefitBlocks({ product }: { product: Product }) {
         </div>
 
         <p className="text-[11px] text-muted text-center mt-6 max-w-2xl mx-auto leading-relaxed">
-          * EFSA-konforme Health-Claims gemäß EU-Verordnung 1924/2006. Aussagen zu pflanzlichen Inhaltsstoffen sind „on hold"-Claims und werden derzeit von der EFSA geprüft.
+          * EFSA-konforme Health-Claims gemäß EU-Verordnung 1924/2006.
         </p>
       </div>
     </section>

@@ -18,8 +18,8 @@ export function SiteFooter() {
             </p>
             <div className="flex items-center gap-2 mt-6 text-sm opacity-75">
               <Mail className="w-4 h-4" />
-              <a href="mailto:kontakt@nutrasana.de" className="hover:opacity-100">
-                kontakt@nutrasana.de
+              <a href="mailto:kundenservice@nutrasana.de" className="hover:opacity-100">
+                kundenservice@nutrasana.de
               </a>
             </div>
             <div className="flex items-center gap-2 mt-2 text-sm opacity-75">

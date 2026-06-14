@@ -20,9 +20,11 @@ export default function Page() {
 
         <h2 className="serif text-2xl mb-3">Verantwortlich</h2>
         <p className="text-muted leading-relaxed mb-6">
-          [Platzhalter — Privatperson in der V0-Phase]<br />
-          Anschrift auf Anfrage<br />
-          E-Mail: kontakt@nutrasana.de
+          HEALTH POINT MEDIA LTD<br />
+          Laura Schneider<br />
+          Suite A Bank House, 81 Judes Road<br />
+          Egham, TW20 0DF, United Kingdom<br />
+          E-Mail: kundenservice@nutrasana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Haftung</h2>

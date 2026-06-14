@@ -13,21 +13,13 @@ export default function Page() {
           personenbezogener Daten auf dieser Website.
         </p>
 
-        <div className="rounded-lg p-5 mb-10" style={{ background: "var(--color-cream)" }}>
-          <p className="text-sm leading-relaxed">
-            <strong>Hinweis:</strong> Mit <code>[PLATZHALTER]</code> markierte Felder sind vor
-            Schaltung bezahlter Werbung mit den echten Betreiberdaten zu füllen. Die Beschreibung
-            der eingesetzten Dienste ist inhaltlich zutreffend und vor Launch juristisch zu prüfen.
-          </p>
-        </div>
-
         <h2 className="serif text-2xl mb-3">Verantwortlicher</h2>
         <p className="text-muted leading-relaxed mb-6">
           HEALTH POINT MEDIA LTD<br />
           Laura Schneider<br />
           Suite A Bank House, 81 Judes Road<br />
           Egham, TW20 0DF, United Kingdom<br />
-          E-Mail: Laura@healthpointmedia.com
+          E-Mail: kundenservice@nutrasana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Hosting</h2>
@@ -59,9 +51,10 @@ export default function Page() {
           Interesses vor Markteinführung. Rechtsgrundlage ist Ihre Einwilligung
           (Art.&nbsp;6 Abs.&nbsp;1 lit.&nbsp;a DSGVO), die Sie jederzeit mit Wirkung für die
           Zukunft widerrufen können. Die Verarbeitung erfolgt über den Dienstleister{" "}
-          <strong>Klaviyo</strong> [PLATZHALTER — Klaviyo, Inc., AV-Vertrag &amp; SCC vor Anbindung
-          dokumentieren]. Eine Weitergabe zu anderen Zwecken erfolgt nicht. Speicherung bis zum
-          Widerruf bzw. längstens [PLATZHALTER — Frist].
+          <strong>Klaviyo</strong> (Klaviyo, Inc., USA). Es besteht ein
+          Auftragsverarbeitungsvertrag; die Datenübermittlung in die USA erfolgt auf Basis der
+          EU-Standardvertragsklauseln. Eine Weitergabe zu anderen Zwecken erfolgt nicht.
+          Speicherung bis zum Widerruf Ihrer Einwilligung.
         </p>
 
         <h2 className="serif text-2xl mb-3">Ihre Rechte</h2>
@@ -69,7 +62,7 @@ export default function Page() {
           Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
           Datenübertragbarkeit und Widerspruch sowie das Recht, eine erteilte Einwilligung zu
           widerrufen. Zudem besteht ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde.
-          Anfragen richten Sie bitte an: [PLATZHALTER — Kontakt].
+          Anfragen richten Sie bitte an: kundenservice@nutrasana.de.
         </p>
 
         <h2 className="serif text-2xl mb-3">Haftung für Links</h2>
