@@ -16,17 +16,23 @@ export function BundleSelector({ product }: { product: Product }) {
   // the primary action stays reachable on long product pages. Hidden while the
   // cart drawer is open to avoid stacking two CTAs.
   const ctaRef = useRef<HTMLButtonElement>(null);
-  const [ctaVisible, setCtaVisible] = useState(true);
+  const [scrolledPast, setScrolledPast] = useState(false);
   useEffect(() => {
     const el = ctaRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setCtaVisible(entry.isIntersecting), {
-      threshold: 0,
-    });
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        // Show the sticky bar only once the main CTA has scrolled ABOVE the
+        // viewport (user moved past it), not while it is still below and simply
+        // not reached yet. boundingClientRect.top < 0 == scrolled past.
+        setScrolledPast(!entry.isIntersecting && entry.boundingClientRect.top < 0);
+      },
+      { threshold: 0 },
+    );
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const showSticky = !ctaVisible && !cartOpen;
+  const showSticky = scrolledPast && !cartOpen;
 
   useEffect(() => {
     track("product_viewed", { product: product.slug, variant: product.variant });
@@ -159,7 +165,10 @@ export function BundleSelector({ product }: { product: Product }) {
       </button>
     </div>
 
-      {/* Sticky add-to-cart bar (slides up once the main CTA is out of view) */}
+      {/* Sticky add-to-cart bar — appears only after the main CTA has scrolled
+         out of view above. Content is centered and width-constrained so the bar
+         stays compact on desktop instead of stretching full-bleed. Shows
+         product, price and the add-to-cart action at a glance. */}
       <div
         className="fixed inset-x-0 bottom-0 z-40 transition-transform duration-300 ease-out"
         style={{
@@ -171,44 +180,40 @@ export function BundleSelector({ product }: { product: Product }) {
         }}
         aria-hidden={!showSticky}
       >
-        <div
-          className="text-[11px] text-center py-1"
-          style={{ color: "var(--color-muted)", borderBottom: "1px solid rgba(0,0,0,0.05)" }}
-        >
-          90 Tage Geld-zurück-Garantie · Versandkostenfrei ab 60&nbsp;€<span className="hidden sm:inline"> · Made in Germany</span>
-        </div>
-        <div className="container-content flex items-center gap-3 sm:gap-4 py-3">
-          <div
-            className="hidden sm:block w-11 h-11 rounded-lg flex-none overflow-hidden relative"
-            style={{ background: product.palette.bg }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={product.images.solo}
-              alt=""
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="font-medium leading-tight truncate">{product.name}</div>
-            <div className="text-xs text-muted truncate">
-              {selected.months} {selected.months === 1 ? "Monat" : "Monate"} ·{" "}
-              {formatPrice(selected.priceCents / 100)}
-              {isSubscription ? " · Spar-Abo" : ""}
+        <div className="container-content">
+          <div className="mx-auto max-w-3xl flex items-center gap-3 sm:gap-4 py-2.5">
+            <div
+              className="w-11 h-11 rounded-lg flex-none overflow-hidden relative"
+              style={{ background: product.palette.bg }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.images.solo}
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
             </div>
+            <div className="min-w-0 flex-1">
+              <div className="font-medium leading-tight truncate">{product.name}</div>
+              <div className="text-sm text-muted truncate">
+                {selected.months} {selected.months === 1 ? "Monat" : "Monate"} ·{" "}
+                {formatPrice(selected.priceCents / 100)}
+                {isSubscription ? " · Spar-Abo" : ""}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              tabIndex={showSticky ? 0 : -1}
+              className="flex-none py-2.5 px-5 sm:px-7 rounded-lg font-medium text-sm sm:text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2 whitespace-nowrap"
+              style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
+            >
+              <ShoppingBag className="w-5 h-5" />
+              <span className="hidden sm:inline">In den Warenkorb</span>
+              <span className="sm:hidden">Warenkorb</span>
+            </button>
           </div>
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            tabIndex={showSticky ? 0 : -1}
-            className="flex-none py-3 px-4 sm:px-6 rounded-lg font-medium text-sm sm:text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2 whitespace-nowrap"
-            style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
-          >
-            <ShoppingBag className="w-5 h-5" />
-            <span className="hidden sm:inline">In den Warenkorb — </span>
-            {formatPrice(selected.priceCents / 100)}
-          </button>
         </div>
       </div>
     </>
