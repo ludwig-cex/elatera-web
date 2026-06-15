@@ -9,6 +9,9 @@ export type ArticleFaq = { q: string; a: string };
 export type Article = {
   slug: string; // URL slug under /ratgeber, e.g. "gelenkschmerzen-im-alter"
   productSlug: ProductSlug;
+  // Set on spoke articles to link up to their pillar article's slug. Pillar
+  // articles leave this undefined.
+  pillarSlug?: string;
   eyebrow: string; // kicker, e.g. "Gelenke & Beweglichkeit"
   title: string; // H1 + SEO title
   metaDescription: string; // ~150-160 chars

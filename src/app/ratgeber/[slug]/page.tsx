@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ARTICLES, getArticle } from "@/lib/ratgeber";
+import { ARTICLES, getArticle, getSpokes } from "@/lib/ratgeber";
 import { PRODUCTS } from "@/lib/products";
 import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
 
@@ -47,6 +47,8 @@ export default async function RatgeberArticlePage({
   const article = getArticle(slug);
   if (!article) notFound();
   const product = PRODUCTS[article.productSlug];
+  const pillar = article.pillarSlug ? getArticle(article.pillarSlug) : undefined;
+  const spokes = article.pillarSlug ? [] : getSpokes(article.slug);
 
   const articleLd = {
     "@context": "https://schema.org",
@@ -94,7 +96,14 @@ export default async function RatgeberArticlePage({
             <Link href="/ratgeber" className="hover:opacity-70">
               Ratgeber
             </Link>{" "}
-            <span aria-hidden>/</span> <span>{article.eyebrow}</span>
+            <span aria-hidden>/</span>{" "}
+            {pillar ? (
+              <Link href={`/ratgeber/${pillar.slug}`} className="hover:opacity-70">
+                {article.eyebrow}
+              </Link>
+            ) : (
+              <span>{article.eyebrow}</span>
+            )}
           </nav>
 
           {/* Header */}
@@ -133,8 +142,8 @@ export default async function RatgeberArticlePage({
             ))}
           </div>
 
-          {/* Studienlage — aus den Produktdaten */}
-          {product.studies?.length > 0 && (
+          {/* Studienlage — nur auf Pillar-Artikeln (vermeidet Duplicate Content auf Spokes) */}
+          {!article.pillarSlug && product.studies?.length > 0 && (
             <section className="mt-12">
               <h2 className="serif text-2xl sm:text-3xl leading-tight mb-2">Studienlage</h2>
               <p className="text-sm text-muted mb-5">{product.scientificIntro}</p>
@@ -210,6 +219,28 @@ export default async function RatgeberArticlePage({
                   </div>
                 ))}
               </div>
+            </section>
+          )}
+
+          {/* Weitere Ratgeber zum Thema — Spokes (nur auf Pillar-Artikeln) */}
+          {spokes.length > 0 && (
+            <section className="mt-12">
+              <h2 className="serif text-2xl sm:text-3xl leading-tight mb-5">
+                Weitere Ratgeber zum Thema
+              </h2>
+              <ul className="space-y-2">
+                {spokes.map((s) => (
+                  <li key={s.slug}>
+                    <Link
+                      href={`/ratgeber/${s.slug}`}
+                      className="text-base hover:underline underline-offset-4"
+                      style={{ color: "var(--color-forest)" }}
+                    >
+                      {s.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </section>
           )}
         </div>

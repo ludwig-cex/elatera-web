@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ARTICLES } from "@/lib/ratgeber";
+import { PILLARS } from "@/lib/ratgeber";
 
 export const metadata: Metadata = {
   title: "Ratgeber — Gesundheit & Wohlbefinden ab 55",
@@ -35,7 +35,7 @@ export default function RatgeberHubPage() {
         </header>
 
         <div className="grid sm:grid-cols-2 gap-4">
-          {ARTICLES.map((a) => (
+          {PILLARS.map((a) => (
             <Link
               key={a.slug}
               href={`/ratgeber/${a.slug}`}
