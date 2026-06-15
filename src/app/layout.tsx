@@ -11,6 +11,7 @@ import { ProductsMenuProvider } from "@/components/site/products-menu-context";
 import { ProductsDrawer } from "@/components/site/products-drawer";
 import { ProductsShift } from "@/components/site/products-shift";
 import { UtmCapture } from "@/components/site/utm-capture";
+import { StructuredData } from "@/components/site/structured-data";
 import { Analytics } from "@vercel/analytics/next";
 
 const cormorant = Cormorant_Garamond({
@@ -30,13 +31,39 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: {
     template: "%s — Nutrasana",
-    default: "Nutrasana — Ihre Gesundheit, einfach gemacht",
+    default: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
   },
   description:
-    "Nutrasana entwickelt wissenschaftlich fundierte Nahrungsergänzungsmittel für die Bedürfnisse ab 55. Hergestellt in Deutschland, von Apothekern empfohlen.",
+    "Nutrasana: durchdachte Nahrungsergänzung in Apotheken-Qualität für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt und in Deutschland hergestellt.",
   // Kein globales alternates.canonical hier: es würde von allen Unterseiten
   // geerbt und jede Seite (inkl. Produktseiten) auf "/" kanonisieren.
   metadataBase: new URL("https://www.nutra-sana.de"),
+  applicationName: "Nutrasana",
+  keywords: [
+    "Nutrasana",
+    "nutra-sana",
+    "nutrasana",
+    "Nahrungsergänzung",
+    "Apotheken-Qualität",
+    "Vertisana",
+    "Mobilisana",
+    "Somnisana",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "de_DE",
+    siteName: "Nutrasana",
+    url: "https://www.nutra-sana.de",
+    title: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
+    description:
+      "Durchdachte Nahrungsergänzung für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
+    description:
+      "Durchdachte Nahrungsergänzung für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
+  },
   robots: {
     index: true,
     follow: true,
@@ -58,6 +85,7 @@ export default function RootLayout({
   return (
     <html lang="de" className={`${cormorant.variable} ${dmSans.variable}`}>
       <body>
+        <StructuredData />
         <CartProvider>
           <ProductsMenuProvider>
             <ProductsDrawer />
