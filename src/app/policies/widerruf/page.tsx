@@ -33,7 +33,7 @@ export default function Page() {
           <br />
           Egham, TW20 0DF, United Kingdom
           <br />
-          E-Mail: kundenservice@nutrasana.de
+          E-Mail: kundenservice@nutra-sana.de
           <br />
           <br />
           mittels einer eindeutigen Erklärung (z.&nbsp;B. ein mit der Post versandter Brief oder eine
@@ -83,7 +83,7 @@ export default function Page() {
           style={{ background: "var(--color-cream)" }}
         >
           An: HEALTH POINT MEDIA LTD, Suite A Bank House, 81 Judes Road, Egham, TW20 0DF, United
-          Kingdom, E-Mail: kundenservice@nutrasana.de
+          Kingdom, E-Mail: kundenservice@nutra-sana.de
           <br />
           <br />
           Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf

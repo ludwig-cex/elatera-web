@@ -46,7 +46,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Was, wenn meine Sendung verloren geht?",
-        a: "Bitte schreiben Sie uns innerhalb von 14 Tagen nach dem voraussichtlichen Lieferdatum an kundenservice@nutrasana.de. Wir veranlassen entweder eine kostenfreie Ersatz-Lieferung oder erstatten Ihnen den vollen Betrag.",
+        a: "Bitte schreiben Sie uns innerhalb von 14 Tagen nach dem voraussichtlichen Lieferdatum an kundenservice@nutra-sana.de. Wir veranlassen entweder eine kostenfreie Ersatz-Lieferung oder erstatten Ihnen den vollen Betrag.",
         keywords: ["verloren", "nicht erhalten"],
       },
     ],
@@ -92,12 +92,12 @@ export const HELP_CATEGORIES: HelpCategory[] = [
     articles: [
       {
         q: "Wie funktioniert die 90-Tage-Geld-zurück-Garantie?",
-        a: "Sollten Sie mit Ihrem Produkt nicht zufrieden sein, schreiben Sie uns innerhalb von 90 Tagen nach Erhalt eine kurze E-Mail an kundenservice@nutrasana.de. Wir veranlassen die Rücksendung und erstatten Ihnen den vollen Kaufpreis — ohne weitere Fragen.",
+        a: "Sollten Sie mit Ihrem Produkt nicht zufrieden sein, schreiben Sie uns innerhalb von 90 Tagen nach Erhalt eine kurze E-Mail an kundenservice@nutra-sana.de. Wir veranlassen die Rücksendung und erstatten Ihnen den vollen Kaufpreis — ohne weitere Fragen.",
         keywords: ["garantie", "geld zurück", "90 tage"],
       },
       {
         q: "Wie sende ich ein Produkt zurück?",
-        a: "Schreiben Sie uns an kundenservice@nutrasana.de. Sie erhalten ein vorbereitetes Rücksendelabel per E-Mail. Verpacken Sie das Produkt sicher und geben es bei einer DHL-Filiale ab. Die Erstattung erfolgt innerhalb von 5–7 Werktagen nach Eingang.",
+        a: "Schreiben Sie uns an kundenservice@nutra-sana.de. Sie erhalten ein vorbereitetes Rücksendelabel per E-Mail. Verpacken Sie das Produkt sicher und geben es bei einer DHL-Filiale ab. Die Erstattung erfolgt innerhalb von 5–7 Werktagen nach Eingang.",
         keywords: ["zurücksenden", "label", "rücksendung"],
       },
       {
@@ -107,7 +107,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Was, wenn ein Produkt beschädigt ankommt?",
-        a: "Bitte senden Sie uns binnen 7 Tagen ein Foto der Beschädigung und Ihre Bestellnummer an kundenservice@nutrasana.de. Wir veranlassen umgehend einen kostenfreien Ersatz.",
+        a: "Bitte senden Sie uns binnen 7 Tagen ein Foto der Beschädigung und Ihre Bestellnummer an kundenservice@nutra-sana.de. Wir veranlassen umgehend einen kostenfreien Ersatz.",
         keywords: ["beschädigt", "defekt"],
       },
     ],
@@ -130,7 +130,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Wie kündige ich mein Spar-Abo?",
-        a: "Ebenfalls jederzeit, ohne Mindestlaufzeit, ohne Kündigungsfrist. Ein Klick im Kundenkonto unter 'Mein Abo' genügt. Sie können das Abo auch per E-Mail an kundenservice@nutrasana.de kündigen.",
+        a: "Ebenfalls jederzeit, ohne Mindestlaufzeit, ohne Kündigungsfrist. Ein Klick im Kundenkonto unter 'Mein Abo' genügt. Sie können das Abo auch per E-Mail an kundenservice@nutra-sana.de kündigen.",
         keywords: ["kündigen", "stoppen"],
       },
       {
@@ -196,7 +196,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Wie kann ich euch erreichen?",
-        a: "Per E-Mail an kundenservice@nutrasana.de oder über das Kontakt-Formular auf dieser Seite. Wir antworten Mo–Fr binnen 24 Stunden.",
+        a: "Per E-Mail an kundenservice@nutra-sana.de oder über das Kontakt-Formular auf dieser Seite. Wir antworten Mo–Fr binnen 24 Stunden.",
         keywords: ["kontakt", "erreichen"],
       },
       {

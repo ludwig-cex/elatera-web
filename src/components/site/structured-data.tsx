@@ -15,7 +15,7 @@ const organization = {
   alternateName: BRAND_VARIANTS,
   url: SITE,
   logo: `${SITE}/apple-icon.png`,
-  email: "kundenservice@nutrasana.de",
+  email: "kundenservice@nutra-sana.de",
   description:
     "Nutrasana entwickelt durchdachte Nahrungsergänzung in Apotheken-Qualität – von Pharmazeuten formuliert, in Deutschland hergestellt.",
   brand: ["Vertisana", "Mobilisana", "Somnisana"],

@@ -19,7 +19,7 @@ export default function Page() {
           Laura Schneider<br />
           Suite A Bank House, 81 Judes Road<br />
           Egham, TW20 0DF, United Kingdom<br />
-          E-Mail: kundenservice@nutrasana.de
+          E-Mail: kundenservice@nutra-sana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">Hosting</h2>
@@ -62,7 +62,7 @@ export default function Page() {
           Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung,
           Datenübertragbarkeit und Widerspruch sowie das Recht, eine erteilte Einwilligung zu
           widerrufen. Zudem besteht ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde.
-          Anfragen richten Sie bitte an: kundenservice@nutrasana.de.
+          Anfragen richten Sie bitte an: kundenservice@nutra-sana.de.
         </p>
 
         <h2 className="serif text-2xl mb-3">Haftung für Links</h2>

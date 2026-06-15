@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     default: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
   },
   description:
-    "Nutrasana: durchdachte Nahrungsergänzung in Apotheken-Qualität für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt und in Deutschland hergestellt.",
+    "Nutrasana: Nahrungsergänzung in Apotheken-Qualität für Gelenke, Gedächtnis, Schlaf, Gleichgewicht & mehr – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
   // Kein globales alternates.canonical hier: es würde von allen Unterseiten
   // geerbt und jede Seite (inkl. Produktseiten) auf "/" kanonisieren.
   metadataBase: new URL("https://www.nutra-sana.de"),
@@ -56,13 +56,13 @@ export const metadata: Metadata = {
     url: "https://www.nutra-sana.de",
     title: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
     description:
-      "Durchdachte Nahrungsergänzung für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
+      "Nahrungsergänzung in Apotheken-Qualität für Gelenke, Gedächtnis, Schlaf, Gleichgewicht & mehr – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
   },
   twitter: {
     card: "summary",
     title: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
     description:
-      "Durchdachte Nahrungsergänzung für Gelenke, Schlaf und Gleichgewicht – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
+      "Nahrungsergänzung in Apotheken-Qualität für Gelenke, Gedächtnis, Schlaf, Gleichgewicht & mehr – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
   },
   robots: {
     index: true,

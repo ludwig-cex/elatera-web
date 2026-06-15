@@ -41,11 +41,11 @@ export function ContactBlock() {
               <div>
                 <div className="text-sm opacity-70">E-Mail</div>
                 <a
-                  href="mailto:kundenservice@nutrasana.de"
+                  href="mailto:kundenservice@nutra-sana.de"
                   className="serif text-lg leading-tight hover:opacity-80"
                   style={{ color: "var(--color-on-dark)" }}
                 >
-                  kundenservice@nutrasana.de
+                  kundenservice@nutra-sana.de
                 </a>
               </div>
             </li>

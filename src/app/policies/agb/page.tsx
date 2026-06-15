@@ -31,7 +31,7 @@ export default function Page() {
           <br />
           Egham, TW20 0DF, United Kingdom
           <br />
-          E-Mail: kundenservice@nutrasana.de
+          E-Mail: kundenservice@nutra-sana.de
         </p>
 
         <h2 className="serif text-2xl mb-3">§ 2 Vertragsschluss</h2>
