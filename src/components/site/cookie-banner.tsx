@@ -2,21 +2,45 @@
 
 import { useState, useEffect } from "react";
 
+const CONSENT_KEY = "elatera-cookie-consent";
+
+// localStorage can throw (Safari private mode, sandboxed iframes, embedded
+// previews, storage disabled). Reading/writing is wrapped so a blocked store
+// never prevents the banner from being dismissed on interaction — otherwise
+// the banner would hang permanently in those contexts.
+function readConsent(): string | null {
+  try {
+    return localStorage.getItem(CONSENT_KEY);
+  } catch {
+    return null;
+  }
+}
+
+function writeConsent(level: string) {
+  try {
+    localStorage.setItem(CONSENT_KEY, level);
+  } catch {
+    // Storage blocked — the choice can't persist across reloads here, but the
+    // banner is still dismissed for this session below.
+  }
+}
+
 export function CookieBanner() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    const consent = localStorage.getItem("elatera-cookie-consent");
-    if (!consent) {
-      setTimeout(() => setShow(true), 1200);
+    if (!readConsent()) {
+      const t = setTimeout(() => setShow(true), 1200);
+      return () => clearTimeout(t);
     }
   }, []);
 
   if (!show) return null;
 
   const accept = (level: "all" | "essential") => {
-    localStorage.setItem("elatera-cookie-consent", level);
+    // Dismiss first so interaction always works, even if persistence fails.
     setShow(false);
+    writeConsent(level);
   };
 
   return (
