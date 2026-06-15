@@ -7,13 +7,35 @@ const KLAVIYO_LIST_ID = "WPrLGr";
 const KLAVIYO_BASE = "https://a.klaviyo.com/api";
 const KLAVIYO_REVISION = "2024-10-15";
 
+type Shipping = {
+  name?: string;
+  phone?: string;
+  address?: {
+    line1?: string;
+    line2?: string | null;
+    city?: string;
+    state?: string | null;
+    postal_code?: string;
+    country?: string;
+  };
+};
+
 type IntentBody = {
   email?: string;
   honeypot?: string; // bots fill this; humans never see it
   items?: { product: string; months: number; subscription: boolean }[];
   totalCents?: number;
+  shipping?: Shipping;
   utm?: Record<string, string>;
 };
+
+// Klaviyo standard "first_name"/"last_name" from a single full-name string.
+function splitName(name?: string): { first_name?: string; last_name?: string } {
+  const parts = (name ?? "").trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return {};
+  if (parts.length === 1) return { first_name: parts[0] };
+  return { first_name: parts.slice(0, -1).join(" "), last_name: parts[parts.length - 1] };
+}
 
 function isEmail(v: unknown): v is string {
   return typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && v.length <= 254;
@@ -70,6 +92,14 @@ export async function POST(request: Request) {
   const email = body.email.trim().toLowerCase();
 
   const utm = body.utm ?? {};
+  const ship = body.shipping;
+  const addr = ship?.address;
+  const addressSummary = addr
+    ? [addr.line1, addr.line2, `${addr.postal_code ?? ""} ${addr.city ?? ""}`.trim(), addr.country]
+        .filter((p) => p && String(p).trim() !== "")
+        .join(", ")
+    : null;
+
   const properties: Record<string, unknown> = {
     intent_source: "nutra-sana cart out-of-stock",
     cart_products: (body.items ?? []).map((i) => i.product).join(","),
@@ -78,6 +108,11 @@ export async function POST(request: Request) {
       typeof body.totalCents === "number" ? body.totalCents / 100 : null,
     cart_subscription: (body.items ?? []).some((i) => i.subscription),
     first_intent_at: new Date().toISOString(),
+    // Lieferdaten als Properties (sichtbar im Profil, robust auch wenn die
+    // Standard-Felder mal abgelehnt würden).
+    ...(ship?.name ? { ship_name: ship.name } : {}),
+    ...(addressSummary ? { ship_address: addressSummary } : {}),
+    ...(ship?.phone ? { ship_phone: ship.phone } : {}),
     ...Object.fromEntries(
       Object.entries(utm)
         .filter(([, v]) => typeof v === "string" && v !== "")
@@ -86,6 +121,19 @@ export async function POST(request: Request) {
     ),
   };
 
+  // Klaviyo-Standardfelder (Name + Location) für ein sauberes CRM-Profil.
+  const stdAttrs: Record<string, unknown> = { ...splitName(ship?.name) };
+  if (addr && (addr.line1 || addr.postal_code || addr.city)) {
+    stdAttrs.location = {
+      address1: addr.line1 || undefined,
+      address2: addr.line2 || undefined,
+      city: addr.city || undefined,
+      region: addr.state || undefined,
+      zip: addr.postal_code || undefined,
+      country: addr.country || undefined,
+    };
+  }
+
   try {
     // 1) Create profile (upsert on 409 duplicate).
     let profileId: string | null = null;
@@ -93,7 +141,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: klaviyoHeaders(key),
       body: JSON.stringify({
-        data: { type: "profile", attributes: { email, properties } },
+        data: { type: "profile", attributes: { email, ...stdAttrs, properties } },
       }),
     });
 
@@ -110,7 +158,7 @@ export async function POST(request: Request) {
           method: "PATCH",
           headers: klaviyoHeaders(key),
           body: JSON.stringify({
-            data: { type: "profile", id: profileId, attributes: { properties } },
+            data: { type: "profile", id: profileId, attributes: { ...stdAttrs, properties } },
           }),
         }).catch(() => null);
       }
@@ -156,7 +204,8 @@ export async function POST(request: Request) {
           `Produkte: ${products}\n` +
           `Warenkorbwert: ${value}\n` +
           `Quelle: ${utm.utm_source || "direkt"} · Ad: ${adId}\n` +
-          `E-Mail: ${maskEmail(email)}`,
+          `E-Mail: ${maskEmail(email)}\n` +
+          `Lieferadresse: ${addressSummary ? "✓ erfasst (Details im CRM)" : "—"}`,
       ),
     );
 

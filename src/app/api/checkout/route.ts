@@ -2,10 +2,24 @@ import { getStripe } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
+type Shipping = {
+  name?: string;
+  phone?: string;
+  address?: {
+    line1?: string;
+    line2?: string | null;
+    city?: string;
+    state?: string | null;
+    postal_code?: string;
+    country?: string;
+  };
+};
+
 type CheckoutBody = {
   email?: string;
   items?: { product: string; months: number; subscription: boolean }[];
   totalCents?: number;
+  shipping?: Shipping;
   utm?: Record<string, string>;
 };
 
@@ -39,6 +53,25 @@ export async function POST(request: Request) {
   const utm = body.utm ?? {};
   const products = (body.items ?? []).map((i) => i.product).join(",").slice(0, 450);
 
+  // Optional delivery address -> attach to the PaymentIntent (and a few flat
+  // metadata fields so it is searchable in the Stripe dashboard).
+  const addr = body.shipping?.address;
+  const shippingParam =
+    addr && addr.line1 && addr.country
+      ? {
+          name: (body.shipping?.name ?? "").slice(0, 200) || "—",
+          phone: body.shipping?.phone?.slice(0, 40),
+          address: {
+            line1: addr.line1.slice(0, 200),
+            line2: addr.line2 ? addr.line2.slice(0, 200) : undefined,
+            city: addr.city?.slice(0, 100),
+            state: addr.state ? addr.state.slice(0, 100) : undefined,
+            postal_code: addr.postal_code?.slice(0, 20),
+            country: addr.country.slice(0, 2),
+          },
+        }
+      : undefined;
+
   try {
     const stripe = getStripe();
     const pi = await stripe.paymentIntents.create({
@@ -47,10 +80,15 @@ export async function POST(request: Request) {
       capture_method: "manual", // authorize only — never captured
       receipt_email: email,
       automatic_payment_methods: { enabled: true },
+      ...(shippingParam ? { shipping: shippingParam } : {}),
       metadata: {
         funnel: "oos-validation",
         email,
         products,
+        ship_name: shippingParam?.name ?? "",
+        ship_city: addr?.city ?? "",
+        ship_zip: addr?.postal_code ?? "",
+        ship_country: addr?.country ?? "",
         utm_source: (utm.utm_source ?? "").slice(0, 100),
         utm_content: (utm.utm_content ?? "").slice(0, 100),
       },

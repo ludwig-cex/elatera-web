@@ -6,6 +6,7 @@ import { formatPrice } from "@/lib/utils";
 import { track } from "@/lib/analytics";
 import { readUtm } from "@/lib/utm";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Elements } from "@stripe/react-stripe-js";
 import { stripePromise, stripeEnabled } from "@/lib/stripe-client";
 import { CheckoutForm } from "./checkout-form";
@@ -18,6 +19,7 @@ type Step = "cart" | "payment" | "done";
 
 export function CartDrawer() {
   const { isOpen, close, items, removeFromCart, reservedSince } = useCart();
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [checkoutAttempted, setCheckoutAttempted] = useState(false);
@@ -120,13 +122,9 @@ export function CartDrawer() {
       }),
     }).catch(() => null);
 
-    if (stripeEnabled) {
-      setStep("payment");
-    } else {
-      // No Stripe key yet -> legacy out-of-stock flow.
-      track("out_of_stock_shown", { items: items.length, value: totalPrice / 100 });
-      setCheckoutAttempted(true);
-    }
+    // Dedizierte Checkout-Seite (Client-Navigation -> Cart-State bleibt erhalten).
+    close();
+    router.push("/checkout");
   };
 
   // Stripe path: card authorized successfully (webhook releases the hold and
@@ -208,9 +206,12 @@ export function CartDrawer() {
                   aria-live="polite"
                 >
                   <Clock className="w-4 h-4 flex-none" style={{ color: "var(--color-copper)" }} />
-                  <span className="leading-snug">
+                  <span className="leading-snug" style={{ fontVariantNumeric: "tabular-nums" }}>
                     <strong>Hohe Nachfrage:</strong> Ihre Produkte sind nur noch{" "}
-                    <span style={{ color: "var(--color-copper)", fontWeight: 600 }}>
+                    <span
+                      className="whitespace-nowrap"
+                      style={{ color: "var(--color-copper)", fontWeight: 600 }}
+                    >
                       {mm}:{ss}
                     </span>{" "}
                     Minuten reserviert.

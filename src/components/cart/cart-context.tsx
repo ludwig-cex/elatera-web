@@ -1,6 +1,15 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  type ReactNode,
+} from "react";
+
+const STORAGE_KEY = "nutrasana_cart";
 
 export type CartItem = {
   productSlug: string;
@@ -35,6 +44,37 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSavingsModalOpen, setIsSavingsModalOpen] = useState(false);
   const [reservedSince, setReservedSince] = useState<number | null>(null);
+
+  // Hydrate from sessionStorage after mount (SSR-safe: avoids hydration
+  // mismatch). Lets the dedicated /checkout page survive a reload or deep link
+  // without losing the cart.
+  useEffect(() => {
+    try {
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as {
+        items?: CartItem[];
+        reservedSince?: number | null;
+      };
+      if (Array.isArray(parsed.items) && parsed.items.length > 0) {
+        setItems(parsed.items);
+        setReservedSince(
+          typeof parsed.reservedSince === "number" ? parsed.reservedSince : Date.now(),
+        );
+      }
+    } catch {
+      // ignore — storage blocked or corrupt
+    }
+  }, []);
+
+  // Persist on every change.
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ items, reservedSince }));
+    } catch {
+      // ignore
+    }
+  }, [items, reservedSince]);
 
   const addToCart = useCallback((item: CartItem) => {
     setItems((prev) => [...prev, item]);

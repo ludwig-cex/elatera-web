@@ -6,9 +6,34 @@ import { readUtm } from "@/lib/utm";
 
 type Item = { product: string; months: number; subscription: boolean };
 
-// Deferred-intent flow: the PaymentElement renders immediately (amount/currency
-// come from the parent <Elements options>), and the manual-capture
-// PaymentIntent is created server-side only when the user submits.
+export type Shipping = {
+  name: string;
+  phone?: string;
+  address: {
+    line1: string;
+    line2?: string;
+    city: string;
+    state?: string;
+    postal_code: string;
+    country: string;
+  };
+};
+
+const COUNTRIES = [
+  { code: "DE", label: "Deutschland" },
+  { code: "AT", label: "Österreich" },
+  { code: "CH", label: "Schweiz" },
+];
+
+const fieldStyle = {
+  background: "var(--color-ivory)",
+  border: "1px solid rgba(0,0,0,0.12)",
+} as const;
+const FIELD = "w-full px-4 py-3 rounded-lg outline-none focus:ring-2";
+
+// Shopify-style checkout form: contact -> delivery address (all fields visible
+// at once, German) -> payment. Address is collected via native inputs for full
+// layout control; Stripe handles only the card data (PaymentElement).
 export function CheckoutForm({
   items,
   totalCents,
@@ -16,25 +41,41 @@ export function CheckoutForm({
 }: {
   items: Item[];
   totalCents: number;
-  onSuccess: (email: string) => void;
+  onSuccess: (email: string, shipping: Shipping | null) => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
+
   const [email, setEmail] = useState("");
+  const [vorname, setVorname] = useState("");
+  const [nachname, setNachname] = useState("");
+  const [strasse, setStrasse] = useState("");
+  const [plz, setPlz] = useState("");
+  const [stadt, setStadt] = useState("");
+  const [land, setLand] = useState("DE");
+
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
-    if (!email || !email.includes("@")) {
-      setError("Bitte geben Sie eine gültige E-Mail-Adresse ein.");
+
+    const missing: string[] = [];
+    if (!email.includes("@")) missing.push("E-Mail");
+    if (!vorname.trim()) missing.push("Vorname");
+    if (!nachname.trim()) missing.push("Nachname");
+    if (!strasse.trim()) missing.push("Straße");
+    if (!plz.trim()) missing.push("PLZ");
+    if (!stadt.trim()) missing.push("Stadt");
+    if (missing.length > 0) {
+      setError(`Bitte ausfüllen: ${missing.join(", ")}.`);
       return;
     }
+
     setBusy(true);
     setError(null);
 
-    // Validate the Payment Element before creating the intent.
     const { error: submitError } = await elements.submit();
     if (submitError) {
       setError(submitError.message ?? "Bitte prüfen Sie Ihre Zahlungsdaten.");
@@ -42,13 +83,22 @@ export function CheckoutForm({
       return;
     }
 
-    // Create the manual-capture PaymentIntent server-side.
+    const shipping: Shipping = {
+      name: `${vorname.trim()} ${nachname.trim()}`.trim(),
+      address: {
+        line1: strasse.trim(),
+        city: stadt.trim(),
+        postal_code: plz.trim(),
+        country: land,
+      },
+    };
+
     let clientSecret: string | null = null;
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email, items, totalCents, utm: readUtm() }),
+        body: JSON.stringify({ email, items, totalCents, shipping, utm: readUtm() }),
       });
       const j = await res.json();
       clientSecret = j?.clientSecret ?? null;
@@ -65,8 +115,17 @@ export function CheckoutForm({
       elements,
       clientSecret,
       confirmParams: {
-        return_url: `${window.location.origin}/?checkout=done`,
+        return_url: `${window.location.origin}/checkout?done=1`,
         receipt_email: email,
+        shipping,
+        payment_method_data: {
+          billing_details: {
+            name: shipping.name,
+            email,
+            phone: shipping.phone,
+            address: shipping.address,
+          },
+        },
       },
       redirect: "if_required",
     });
@@ -77,31 +136,126 @@ export function CheckoutForm({
       return;
     }
 
-    // Authorized. The webhook releases the hold and triggers the apology mail.
-    onSuccess(email);
+    onSuccess(email, shipping);
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-3">
-      <input
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="ihr-name@beispiel.de"
-        className="w-full px-4 py-3 rounded text-sm outline-none focus:ring-2"
-        style={{ background: "var(--color-ivory)", border: "1px solid rgba(0,0,0,0.10)" }}
-      />
-      <PaymentElement options={{ layout: "tabs" }} />
+    <form onSubmit={onSubmit} className="space-y-8">
+      {/* Kontakt */}
+      <section>
+        <h2 className="text-lg font-medium mb-3">Kontakt</h2>
+        <input
+          type="email"
+          required
+          autoComplete="email"
+          aria-label="E-Mail-Adresse"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-Mail-Adresse"
+          className={FIELD}
+          style={fieldStyle}
+        />
+      </section>
+
+      {/* Lieferadresse */}
+      <section>
+        <h2 className="text-lg font-medium mb-3">Lieferadresse</h2>
+        <div className="space-y-3">
+          <select
+            aria-label="Land / Region"
+            autoComplete="country"
+            value={land}
+            onChange={(e) => setLand(e.target.value)}
+            className={FIELD}
+            style={fieldStyle}
+          >
+            {COUNTRIES.map((c) => (
+              <option key={c.code} value={c.code}>
+                {c.label}
+              </option>
+            ))}
+          </select>
+
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              required
+              autoComplete="given-name"
+              aria-label="Vorname"
+              value={vorname}
+              onChange={(e) => setVorname(e.target.value)}
+              placeholder="Vorname"
+              className={FIELD}
+              style={fieldStyle}
+            />
+            <input
+              required
+              autoComplete="family-name"
+              aria-label="Nachname"
+              value={nachname}
+              onChange={(e) => setNachname(e.target.value)}
+              placeholder="Nachname"
+              className={FIELD}
+              style={fieldStyle}
+            />
+          </div>
+
+          <input
+            required
+            autoComplete="address-line1"
+            aria-label="Straße und Hausnummer"
+            value={strasse}
+            onChange={(e) => setStrasse(e.target.value)}
+            placeholder="Straße und Hausnummer"
+            className={FIELD}
+            style={fieldStyle}
+          />
+
+          <div className="grid grid-cols-[1fr_2fr] gap-3">
+            <input
+              required
+              inputMode="numeric"
+              autoComplete="postal-code"
+              aria-label="PLZ"
+              value={plz}
+              onChange={(e) => setPlz(e.target.value)}
+              placeholder="PLZ"
+              className={FIELD}
+              style={fieldStyle}
+            />
+            <input
+              required
+              autoComplete="address-level2"
+              aria-label="Stadt"
+              value={stadt}
+              onChange={(e) => setStadt(e.target.value)}
+              placeholder="Stadt"
+              className={FIELD}
+              style={fieldStyle}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Zahlung */}
+      <section>
+        <h2 className="text-lg font-medium mb-3">Zahlung</h2>
+        <PaymentElement
+          options={{
+            layout: "tabs",
+            fields: { billingDetails: { address: "never" } },
+          }}
+        />
+      </section>
+
       {error && (
-        <p className="text-xs" style={{ color: "var(--color-copper)" }}>
+        <p className="text-sm" style={{ color: "var(--color-copper)" }}>
           {error}
         </p>
       )}
       <button
         type="submit"
         disabled={!stripe || busy}
-        className="w-full py-3 rounded font-medium text-sm transition hover:opacity-90 disabled:opacity-60"
+        className="w-full py-3.5 rounded-lg font-medium transition hover:opacity-90 disabled:opacity-60"
         style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
       >
         {busy ? "Wird verarbeitet …" : "Jetzt zahlungspflichtig bestellen"}

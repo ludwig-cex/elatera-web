@@ -11,6 +11,7 @@ import { ProductsMenuProvider } from "@/components/site/products-menu-context";
 import { ProductsDrawer } from "@/components/site/products-drawer";
 import { ProductsShift } from "@/components/site/products-shift";
 import { UtmCapture } from "@/components/site/utm-capture";
+import { ChromeGate } from "@/components/site/chrome-gate";
 import { StructuredData } from "@/components/site/structured-data";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -91,12 +92,16 @@ export default function RootLayout({
             <ProductsDrawer />
             <ProductsShift>
               <UtmCapture />
-              <div className="sticky top-0 z-50">
-                <TopBar />
-                <SiteHeader />
-              </div>
+              <ChromeGate>
+                <div className="sticky top-0 z-50">
+                  <TopBar />
+                  <SiteHeader />
+                </div>
+              </ChromeGate>
               <main>{children}</main>
-              <SiteFooter />
+              <ChromeGate>
+                <SiteFooter />
+              </ChromeGate>
             </ProductsShift>
             <CartDrawer />
             <CookieBanner />
