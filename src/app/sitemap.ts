@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PRODUCT_LIST } from "@/lib/products";
+import { ARTICLES } from "@/lib/ratgeber";
 
 const BASE_URL = "https://www.nutra-sana.de";
 
@@ -10,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // und gehören deshalb nicht in die Sitemap.
   const staticPaths = [
     "",
+    "/ratgeber",
     "/pages/ueber-uns",
     "/pages/hilfe-kontakt",
   ];
@@ -28,5 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticEntries, ...productEntries];
+  const ratgeberEntries: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
+    url: `${BASE_URL}/ratgeber/${article.slug}`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticEntries, ...productEntries, ...ratgeberEntries];
 }

@@ -48,6 +48,7 @@ export function SiteFooter() {
               Service
             </div>
             <ul className="space-y-2 text-sm opacity-90">
+              <li><Link href="/ratgeber" className="hover:opacity-70">Ratgeber</Link></li>
               <li><Link href="/pages/hilfe-kontakt" className="hover:opacity-70">Hilfe & Kontakt</Link></li>
               <li><Link href="/pages/hilfe-kontakt#kontakt" className="hover:opacity-70">Kontakt-Formular</Link></li>
               <li><Link href="/policies/widerruf" className="hover:opacity-70">Widerruf</Link></li>
