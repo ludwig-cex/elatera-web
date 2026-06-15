@@ -32,7 +32,22 @@ export function BundleSelector({ product }: { product: Product }) {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const showSticky = scrolledPast && !cartOpen;
+
+  // Mobile vs desktop drives the sticky-bar behaviour. On mobile the in-flow
+  // buy box sits below the fold and ~78% of visitors never scroll to it (PostHog),
+  // so the sticky add-to-cart must be reachable from the start. On desktop the
+  // buy box is visible in the hero column, so the bar only appears after the
+  // main CTA has scrolled past.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const showSticky = (isMobile || scrolledPast) && !cartOpen;
 
   useEffect(() => {
     track("product_viewed", { product: product.slug, variant: product.variant });
