@@ -24,37 +24,25 @@ export function SalesPage({ product }: { product: Product }) {
       {/* ============================================================
          §1 HERO — Gallery + Title + Bundle + CTA + Trust Quartet
          ============================================================ */}
-      <section className="py-10 sm:py-14">
-        <div className="container-content grid lg:grid-cols-12 gap-10 lg:gap-14">
+      <section className="py-5 sm:py-14">
+        <div className="container-content grid lg:grid-cols-12 gap-6 lg:gap-14">
           {/* Image side */}
           <div className="lg:col-span-6 min-w-0">
             <div className="sticky top-24 min-w-0">
-              {/* Bundle discount hint */}
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs"
-                  style={{ background: "var(--color-cream)", color: "var(--color-ink-soft)" }}
-                >
-                  Bis zu 45 % Rabatt im Bundle
-                </span>
-              </div>
-
               <HeroGallery product={product} />
             </div>
           </div>
 
           {/* Info & cart side */}
           <div className="lg:col-span-6 min-w-0">
-            <div className="eyebrow mb-3">{product.hero.eyebrow}</div>
-            <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
+            <div className="eyebrow mb-2 sm:mb-3">{product.hero.eyebrow}</div>
+            <h1 className="serif text-3xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
               {product.hero.headline}
             </h1>
-            <p className="text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
-              {product.hero.subheadline}
-            </p>
 
-            {/* Rating — links to the reviews section further down */}
-            <a href="#bewertungen" className="flex items-center gap-3 mb-6 group w-fit">
+            {/* Rating — pulled high so the social proof lands above the fold
+               on mobile (where the buy box itself sits below it). */}
+            <a href="#bewertungen" className="flex items-center gap-3 mb-3 group w-fit">
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
@@ -69,6 +57,15 @@ export function SalesPage({ product }: { product: Product }) {
                 <span className="text-muted underline-offset-2 group-hover:underline">aus 1.247 Bewertungen</span>
               </span>
             </a>
+
+            <p className="text-base sm:text-lg leading-relaxed mb-4" style={{ color: "var(--color-ink-soft)" }}>
+              {product.hero.subheadline}
+            </p>
+
+            {/* Value stack — justifies the premium price in one glance */}
+            <p className="text-sm font-medium mb-5" style={{ color: "var(--color-forest)" }}>
+              Schon ab 0,92 € pro Tag — bis zu 45 % gespart im Vorrats-Bundle.
+            </p>
 
             {/* Trust-Quartett — §4 Fortea */}
             <div className="grid grid-cols-2 gap-2 mb-6">

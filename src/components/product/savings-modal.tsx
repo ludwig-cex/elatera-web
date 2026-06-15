@@ -87,7 +87,7 @@ export function SavingsModal({ product }: { product: { palette: { badge: string;
               Sichern Sie sich Ihren exklusiven Vorteil
             </h2>
             <p className="text-sm text-muted mt-2">
-              Tragen Sie sich heute ein und erhalten Sie zum nächsten Launch einen exklusiven Bonus auf Ihre erste Bestellung.
+              Sichern Sie sich 10 % Rabatt auf Ihre erste Bestellung — plus kostenlosen Versand und 90 Tage Geld-zurück-Garantie.
             </p>
           </div>
 

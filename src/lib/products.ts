@@ -1,6 +1,5 @@
 /**
  * Nutrasana Product Catalog
- * V0 = all out-of-stock, waitlist mode only.
  */
 
 export type ProductSlug =
@@ -269,7 +268,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Vertisana Intense",
       subheadline: "Für ein sicheres Stehen, einen klaren Kopf und Stabilität im Alltag.",
-      badge: "Bestseller — bald wieder verfügbar",
+      badge: "Bestseller",
       eyebrow: "Gleichgewicht · Balance · Nervenfunktion",
     },
     palette: {
@@ -351,7 +350,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Mobilisana Intense",
       subheadline: "Für geschmeidige Gelenke, eine starke Mitte und mühelose Bewegung.",
-      badge: "Bestseller — bald wieder verfügbar",
+      badge: "Bestseller",
       eyebrow: "Gelenke · Knochen · Beweglichkeit",
     },
     palette: {
@@ -433,7 +432,7 @@ export const PRODUCTS: Record<ProductSlug, Product> = {
     hero: {
       headline: "Somnisana Intense",
       subheadline: "Für sanftes Einschlafen, ruhige Nächte und ein erholtes Erwachen.",
-      badge: "Bestseller — bald wieder verfügbar",
+      badge: "Bestseller",
       eyebrow: "Schlaf · Einschlafzeit · Erholung",
     },
     palette: {
@@ -518,7 +517,7 @@ PRODUCTS.mentisana = {
     hero: {
       headline: "Mentisana Intense",
       subheadline: "Für ein waches Gedächtnis, klare Gedanken und konzentriertes Denken im Alltag.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Gedächtnis · Kognition · Klarheit",
     },
     palette: {
@@ -590,7 +589,7 @@ PRODUCTS.urisana = {
     hero: {
       headline: "Urisana Intense",
       subheadline: "Für unbeschwerte Tage, ein sicheres Gefühl und gute Schleimhautfunktion.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Blase · Harnwege · Schleimhäute",
     },
     palette: {
@@ -661,7 +660,7 @@ PRODUCTS.tendisana = {
     hero: {
       headline: "Tendisana Intense",
       subheadline: "Für geschmeidige Sehnen, stabile Bänder und eine elastische Bewegung im Alltag.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Sehnen · Bänder · Bindegewebe",
     },
     palette: {
@@ -733,7 +732,7 @@ PRODUCTS.gastrosana = {
     hero: {
       headline: "Gastrosana Intense",
       subheadline: "Für ein ruhiges Bauchgefühl, geschützte Schleimhäute und ausgeglichene Verdauung.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Magen · Schleimhäute · Verdauung",
     },
     palette: {
@@ -805,7 +804,7 @@ PRODUCTS.audisana = {
     hero: {
       headline: "Audisana Intense",
       subheadline: "Für klare Wahrnehmung, ein gutes Körpergefühl und aufmerksame Tage.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Ohren · Hörfunktion · Nervensystem",
     },
     palette: {
@@ -876,7 +875,7 @@ PRODUCTS.cordisana = {
     hero: {
       headline: "Cordisana Intense",
       subheadline: "Für ein starkes Herz, gesunde Gefäße und ein vitales Lebensgefühl.",
-      badge: "Bald wieder verfügbar",
+      badge: "Jetzt erhältlich",
       eyebrow: "Herz · Gefäße · Vitalität",
     },
     palette: {
