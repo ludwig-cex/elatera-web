@@ -49,6 +49,10 @@ export type Product = {
     subheadline: string;
     badge: string;
     eyebrow: string;
+    // Optional problem-/benefit-led headline. When set, it becomes the big H1
+    // and the product name moves to a small kicker above (warm-traffic / message
+    // match). When absent, the name+category layout is used.
+    lead?: string;
   };
   palette: {
     bg: string;

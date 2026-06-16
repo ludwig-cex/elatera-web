@@ -5,6 +5,7 @@ import { HeroGallery } from "./hero-gallery";
 import { BundleSelector } from "./bundle-selector";
 import { FaqAccordion } from "./faq-accordion";
 import { SavingsModal } from "./savings-modal";
+import { ExitIntentModal } from "./exit-intent-modal";
 import { ProductDescription } from "./product-description";
 import { BenefitBlocks } from "./benefit-blocks";
 import { IngredientDeepDive } from "./ingredient-deep-dive";
@@ -35,15 +36,27 @@ export function SalesPage({ product }: { product: Product }) {
 
           {/* Info & cart side */}
           <div className="lg:col-span-6 min-w-0">
-            <h1 className="serif leading-[1.05] mb-3">
-              <span className="block text-3xl sm:text-5xl lg:text-6xl">{product.hero.headline}</span>
-              <span
-                className="block text-xl sm:text-2xl mt-1.5"
-                style={{ color: p.subInk }}
-              >
-                {product.tagline}
-              </span>
-            </h1>
+            {product.hero.lead ? (
+              <>
+                <div className="text-sm mb-2 truncate" style={{ color: "var(--color-muted)" }}>
+                  <span className="font-medium" style={{ color: p.subInk }}>
+                    {product.hero.headline}
+                  </span>
+                  {" – "}
+                  {product.tagline}
+                </div>
+                <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
+                  {product.hero.lead}
+                </h1>
+              </>
+            ) : (
+              <h1 className="serif leading-[1.05] mb-3">
+                <span className="block text-3xl sm:text-5xl lg:text-6xl">{product.hero.headline}</span>
+                <span className="block text-xl sm:text-2xl mt-1.5" style={{ color: p.subInk }}>
+                  {product.tagline}
+                </span>
+              </h1>
+            )}
 
             {/* Rating — pulled high so the social proof lands above the fold
                on mobile (where the buy box itself sits below it). */}
@@ -63,14 +76,16 @@ export function SalesPage({ product }: { product: Product }) {
               <span className="text-sm">
                 <span className="font-medium">4,8 / 5,0</span>
                 <span className="text-muted group-hover:underline underline-offset-2">
-                  {" · 1.247 Bewertungen"}
+                  {" · 439 Bewertungen"}
                 </span>
               </span>
             </a>
 
-            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
-              {product.hero.subheadline}
-            </p>
+            {!product.hero.lead && (
+              <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
+                {product.hero.subheadline}
+              </p>
+            )}
 
             {/* Zwei Boxen: Rabatt-Urgency (hervorgehoben) + Versand/Garantie */}
             <div className="grid grid-cols-1 gap-2 mb-6">
@@ -95,7 +110,9 @@ export function SalesPage({ product }: { product: Product }) {
             </div>
 
             {/* Bundle selector + Cart CTA — §10/11 Fortea */}
-            <BundleSelector product={product} />
+            <div id="kaufen" style={{ scrollMarginTop: 90 }}>
+              <BundleSelector product={product} />
+            </div>
 
             {/* PZN line — §12 Fortea-Inline */}
             <div className="mt-5 text-xs text-muted text-center">
@@ -212,6 +229,9 @@ export function SalesPage({ product }: { product: Product }) {
 
       {/* §16 LAST-MINUTE SAVINGS MODAL */}
       <SavingsModal product={product} />
+
+      {/* §17 EXIT-INTENT für Advertorial-Leser (lp) */}
+      <ExitIntentModal />
     </>
   );
 }

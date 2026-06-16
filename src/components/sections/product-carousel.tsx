@@ -24,7 +24,7 @@ export function ProductCarousel() {
             // Last item spans 2 cols on mobile if total is odd (centred fill)
             const isLast = i === PRODUCT_LIST.length - 1;
             const ratings = [4.8, 4.7, 4.9, 4.8, 4.9, 4.7, 4.8, 4.7, 4.9];
-            const reviews = [1247, 893, 1064, 412, 326, 287, 419, 268, 358];
+            const reviews = [439, 893, 1064, 412, 326, 287, 419, 268, 358];
             const bestPerDay = p.bundles.reduce((best, b) =>
               b.priceCents / b.capsules < best.priceCents / best.capsules ? b : best
             );

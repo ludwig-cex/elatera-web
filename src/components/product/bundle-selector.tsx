@@ -47,6 +47,16 @@ export function BundleSelector({ product }: { product: Product }) {
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  // Deep-link from the advertorial (#kaufen): land on the buy box even after a
+  // late layout shift (hero image loading after the initial anchor jump).
+  useEffect(() => {
+    if (typeof window === "undefined" || window.location.hash !== "#kaufen") return;
+    const t = setTimeout(() => {
+      document.getElementById("kaufen")?.scrollIntoView({ block: "start" });
+    }, 250);
+    return () => clearTimeout(t);
+  }, []);
+
   const showSticky = (isMobile || scrolledPast) && !cartOpen;
 
   useEffect(() => {
