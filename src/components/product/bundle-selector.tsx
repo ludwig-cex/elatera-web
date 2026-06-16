@@ -94,16 +94,19 @@ export function BundleSelector({ product }: { product: Product }) {
                 onClick={() => setSelected(b)}
                 className="w-full text-left p-4 sm:p-5 flex items-center gap-4 transition-colors"
                 style={{
+                  // No dimming of unselected options — they must read as fully
+                  // available choices, not greyed-out/disabled. Selection is shown
+                  // by the filled radio + the active row's background highlight.
                   background: isActive ? product.palette.bg : "var(--color-ivory)",
                   borderTop: idx !== 0 ? "1px solid rgba(0,0,0,0.06)" : "none",
-                  opacity: isActive ? 1 : 0.75,
+                  boxShadow: isActive ? `inset 0 0 0 2px ${product.palette.badge}` : "none",
                 }}
               >
                 <span
                   className="w-5 h-5 rounded-full flex-none flex items-center justify-center"
                   style={{
                     background: isActive ? product.palette.badge : "transparent",
-                    border: isActive ? "none" : "2px solid rgba(0,0,0,0.20)",
+                    border: isActive ? "none" : "2px solid rgba(0,0,0,0.35)",
                   }}
                 >
                   {isActive && <Check className="w-3 h-3" style={{ color: product.palette.badgeText }} strokeWidth={3} />}

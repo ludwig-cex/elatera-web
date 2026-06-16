@@ -70,22 +70,24 @@ export function SalesPage({ product }: { product: Product }) {
             {/* Trust-Quartett — §4 Fortea */}
             <div className="grid grid-cols-2 gap-2 mb-6">
               {[
-                { icon: <Truck className="w-4 h-4" />, label: "Versandkostenfrei" },
-                { icon: <ShieldCheck className="w-4 h-4" />, label: "90 Tage Geld zurück" },
+                { icon: <Truck className="w-4 h-4" />, label: "Gratis Versand" },
+                { icon: <ShieldCheck className="w-4 h-4" />, label: "90 Tage Garantie" },
                 { icon: <Award className="w-4 h-4" />, label: "Made in Germany" },
-                { icon: <FlaskConical className="w-4 h-4" />, label: "Laborgeprüft je Charge" },
+                { icon: <FlaskConical className="w-4 h-4" />, label: "Laborgeprüft" },
               ].map((b) => (
                 <div
                   key={b.label}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs"
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm"
                   style={{
                     background: "var(--color-ivory)",
                     border: "1px solid rgba(0,0,0,0.06)",
                     color: "var(--color-ink-soft)",
                   }}
                 >
-                  <span style={{ color: p.badge }}>{b.icon}</span>
-                  <span className="font-medium">{b.label}</span>
+                  <span className="flex-none" style={{ color: p.badge }}>
+                    {b.icon}
+                  </span>
+                  <span className="font-medium leading-tight">{b.label}</span>
                 </div>
               ))}
             </div>
