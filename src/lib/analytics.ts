@@ -63,7 +63,46 @@ export function track(event: string, props?: Props) {
   }
   try {
     const metaEvent = META_EVENTS[event];
-    if (metaEvent) meta(metaEvent);
+    if (metaEvent) {
+      const eventId =
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `${event}-${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const value = typeof props?.value === "number" ? props.value : undefined;
+      const productSlug = typeof props?.product === "string" ? props.product : undefined;
+
+      const metaParams: Record<string, unknown> = {};
+      if (value != null) {
+        metaParams.value = value;
+        metaParams.currency = "EUR";
+      }
+      if (productSlug) {
+        metaParams.content_ids = [productSlug];
+        metaParams.content_type = "product";
+      }
+
+      // Browser pixel (deduplicated against the CAPI event via eventID).
+      meta(metaEvent, metaParams, eventId);
+
+      // Server-side Conversions API mirror — fire-and-forget, never blocks the UI.
+      try {
+        void fetch("/api/meta", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            event_name: metaEvent,
+            event_id: eventId,
+            event_source_url: typeof location !== "undefined" ? location.href : undefined,
+            value,
+            currency: value != null ? "EUR" : undefined,
+            content_ids: productSlug ? [productSlug] : undefined,
+          }),
+        }).catch(() => {});
+      } catch {
+        // ignore
+      }
+    }
   } catch {
     // ignore
   }

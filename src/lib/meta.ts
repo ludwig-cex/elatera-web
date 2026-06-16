@@ -50,10 +50,12 @@ export function loadMeta() {
 
 // Fire a Meta standard event (PageView on load/route change, or a conversion
 // like ViewContent / AddToCart / InitiateCheckout / Lead).
-export function meta(event: string, params?: Record<string, unknown>) {
+export function meta(event: string, params?: Record<string, unknown>, eventId?: string) {
   if (!PIXEL_ID || typeof window === "undefined") return;
   try {
-    window.fbq?.("track", event, params);
+    // eventID lets the server-side CAPI event deduplicate against this pixel event.
+    if (eventId) window.fbq?.("track", event, params, { eventID: eventId });
+    else window.fbq?.("track", event, params);
   } catch {
     // ignore
   }
