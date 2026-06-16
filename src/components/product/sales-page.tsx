@@ -1,4 +1,4 @@
-import { Star, Truck, ShieldCheck, Award, FlaskConical } from "lucide-react";
+import { Star, ShieldCheck, Clock } from "lucide-react";
 import { CUSTOMER_QUOTES, type Product } from "@/lib/products";
 import { CrossSell } from "./cross-sell";
 import { HeroGallery } from "./hero-gallery";
@@ -35,26 +35,36 @@ export function SalesPage({ product }: { product: Product }) {
 
           {/* Info & cart side */}
           <div className="lg:col-span-6 min-w-0">
-            <div className="eyebrow mb-2 sm:mb-3">{product.hero.eyebrow}</div>
-            <h1 className="serif text-3xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
-              {product.hero.headline}
+            <h1 className="serif leading-[1.05] mb-3">
+              <span className="block text-3xl sm:text-5xl lg:text-6xl">{product.hero.headline}</span>
+              <span
+                className="block text-xl sm:text-2xl mt-1.5"
+                style={{ color: p.subInk }}
+              >
+                {product.tagline}
+              </span>
             </h1>
 
             {/* Rating — pulled high so the social proof lands above the fold
                on mobile (where the buy box itself sits below it). */}
-            <a href="#bewertungen" className="flex items-center gap-3 mb-3 group w-fit">
+            <a
+              href="#bewertungen"
+              className="flex items-center gap-2 mb-4 group w-fit whitespace-nowrap"
+            >
               <div className="flex gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
-                    className="w-5 h-5 fill-current"
+                    className="w-4 h-4 fill-current"
                     style={{ color: "var(--color-copper)" }}
                   />
                 ))}
               </div>
               <span className="text-sm">
-                <span className="font-medium">4,8 / 5,0</span>{" "}
-                <span className="text-muted underline-offset-2 group-hover:underline">aus 1.247 Bewertungen</span>
+                <span className="font-medium">4,8 / 5,0</span>
+                <span className="text-muted group-hover:underline underline-offset-2">
+                  {" · 1.247 Bewertungen"}
+                </span>
               </span>
             </a>
 
@@ -62,29 +72,26 @@ export function SalesPage({ product }: { product: Product }) {
               {product.hero.subheadline}
             </p>
 
-            {/* Trust-Quartett — §4 Fortea */}
-            <div className="grid grid-cols-2 gap-2 mb-6">
-              {[
-                { icon: <Truck className="w-4 h-4" />, label: "Gratis Versand" },
-                { icon: <ShieldCheck className="w-4 h-4" />, label: "90 Tage Garantie" },
-                { icon: <Award className="w-4 h-4" />, label: "Made in Germany" },
-                { icon: <FlaskConical className="w-4 h-4" />, label: "Laborgeprüft" },
-              ].map((b) => (
-                <div
-                  key={b.label}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm"
-                  style={{
-                    background: "var(--color-ivory)",
-                    border: "1px solid rgba(0,0,0,0.06)",
-                    color: "var(--color-ink-soft)",
-                  }}
-                >
-                  <span className="flex-none" style={{ color: p.badge }}>
-                    {b.icon}
-                  </span>
-                  <span className="font-medium leading-tight">{b.label}</span>
-                </div>
-              ))}
+            {/* Zwei Boxen: Rabatt-Urgency (hervorgehoben) + Versand/Garantie */}
+            <div className="grid grid-cols-1 gap-2 mb-6">
+              <div
+                className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium"
+                style={{ background: p.bg, color: p.badge, border: `1px solid ${p.badge}40` }}
+              >
+                <Clock className="w-4 h-4 flex-none" />
+                <span className="leading-tight">Nur für kurze Zeit: Bis zu 45 % Rabatt</span>
+              </div>
+              <div
+                className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm"
+                style={{
+                  background: "var(--color-ivory)",
+                  border: "1px solid rgba(0,0,0,0.06)",
+                  color: "var(--color-ink-soft)",
+                }}
+              >
+                <ShieldCheck className="w-4 h-4 flex-none" style={{ color: p.badge }} />
+                <span className="font-medium leading-tight">Gratis Versand &amp; 90 Tage Garantie</span>
+              </div>
             </div>
 
             {/* Bundle selector + Cart CTA — §10/11 Fortea */}
