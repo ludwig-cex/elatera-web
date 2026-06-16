@@ -58,13 +58,8 @@ export function SalesPage({ product }: { product: Product }) {
               </span>
             </a>
 
-            <p className="text-base sm:text-lg leading-relaxed mb-4" style={{ color: "var(--color-ink-soft)" }}>
+            <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
               {product.hero.subheadline}
-            </p>
-
-            {/* Value stack — justifies the premium price in one glance */}
-            <p className="text-sm font-medium mb-5" style={{ color: "var(--color-forest)" }}>
-              Schon ab 0,92 € pro Tag — bis zu 45 % gespart im Vorrats-Bundle.
             </p>
 
             {/* Trust-Quartett — §4 Fortea */}
