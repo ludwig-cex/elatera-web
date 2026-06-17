@@ -268,8 +268,45 @@ export default function CheckoutPage() {
             </div>
           </>
         )}
+
+        <HelpBlock />
       </main>
     </div>
+  );
+}
+
+function HelpBlock() {
+  return (
+    <section className="mt-12 pt-10" style={{ borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+      <div
+        className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-5 rounded-xl p-6"
+        style={{ background: "var(--color-cream)" }}
+      >
+        <div className="w-24 h-24 rounded-full overflow-hidden flex-none" style={{ background: "var(--color-ivory)" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/portraits/jonas-guetermann.png"
+            alt="Jonas Gütermann, approbierter Pharmazeut"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+        <div className="flex-1 min-w-0">
+          <div className="eyebrow mb-1.5">Echte Hilfe von echten Menschen</div>
+          <h2 className="serif text-2xl leading-tight mb-1.5">
+            Fragen vor dem Kauf? Wir sind persönlich für Sie da.
+          </h2>
+          <p className="text-sm text-muted leading-relaxed">
+            Jonas Gütermann, unser approbierter Pharmazeut, und das Kundenservice-Team beantworten
+            Ihre Fragen. Schreiben Sie an{" "}
+            <a href="mailto:kundenservice@nutra-sana.de" className="underline underline-offset-2">
+              kundenservice@nutra-sana.de
+            </a>{" "}
+            — Antwort Mo–Fr innerhalb von 24 Stunden.
+          </p>
+        </div>
+      </div>
+    </section>
   );
 }
 

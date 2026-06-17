@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import {
+  PaymentElement,
+  ExpressCheckoutElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import type { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
 import { readUtm } from "@/lib/utm";
 
 type Item = { product: string; months: number; subscription: boolean };
@@ -56,6 +62,81 @@ export function CheckoutForm({
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasExpress, setHasExpress] = useState(false);
+
+  // Shared finish step for both the express wallets and the card form: create the
+  // manual-capture PaymentIntent server-side and confirm it. Same auth-hold flow
+  // — the webhook releases the authorization, so no money is ever captured.
+  const finishPayment = async (paidEmail: string, shipping: Shipping) => {
+    let clientSecret: string | null = null;
+    try {
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: paidEmail, items, totalCents, shipping, utm: readUtm() }),
+      });
+      const j = await res.json();
+      clientSecret = j?.clientSecret ?? null;
+    } catch {
+      /* handled below */
+    }
+    if (!clientSecret) {
+      setError("Zahlung konnte nicht initialisiert werden. Bitte erneut versuchen.");
+      setBusy(false);
+      return false;
+    }
+    const { error: confirmError } = await stripe!.confirmPayment({
+      elements: elements!,
+      clientSecret,
+      confirmParams: {
+        return_url: `${window.location.origin}/checkout?done=1`,
+        receipt_email: paidEmail,
+      },
+      redirect: "if_required",
+    });
+    if (confirmError) {
+      setError(confirmError.message ?? "Die Zahlung wurde nicht abgeschlossen.");
+      setBusy(false);
+      return false;
+    }
+    onSuccess(paidEmail, shipping);
+    return true;
+  };
+
+  // Express wallets (Apple Pay / Google Pay / PayPal). The wallet supplies email
+  // and billing address; we reuse them for the lead + the manual-capture intent.
+  const onExpressConfirm = async (event: StripeExpressCheckoutElementConfirmEvent) => {
+    if (!stripe || !elements) return;
+    setBusy(true);
+    setError(null);
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      setError(submitError.message ?? "Bitte prüfen Sie Ihre Zahlungsdaten.");
+      setBusy(false);
+      return;
+    }
+    const b = event.billingDetails;
+    const wEmail = (b?.email || email || "").trim();
+    if (!wEmail.includes("@")) {
+      setError("Für die Bestellbestätigung wird eine E-Mail-Adresse benötigt.");
+      setBusy(false);
+      return;
+    }
+    const a = b?.address;
+    const shipping: Shipping = {
+      name: (b?.name || `${vorname} ${nachname}`).trim() || "—",
+      phone: b?.phone || undefined,
+      address: {
+        line1: a?.line1 || "",
+        line2: a?.line2 || undefined,
+        city: a?.city || "",
+        state: a?.state || undefined,
+        postal_code: a?.postal_code || "",
+        country: a?.country || land,
+      },
+    };
+    await finishPayment(wEmail, shipping);
+  };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,6 +222,32 @@ export function CheckoutForm({
 
   return (
     <form onSubmit={onSubmit} className="space-y-8">
+      {/* Express-Wallets (Apple Pay / Google Pay / PayPal) — selber Auth-Hold-Flow */}
+      <div className={hasExpress ? "space-y-4" : ""}>
+        <ExpressCheckoutElement
+          onReady={(e) => setHasExpress(!!e.availablePaymentMethods)}
+          onConfirm={onExpressConfirm}
+          options={{
+            buttonHeight: 48,
+            emailRequired: true,
+            billingAddressRequired: true,
+            paymentMethods: {
+              applePay: "auto",
+              googlePay: "auto",
+              paypal: "auto",
+              link: "auto",
+            },
+          }}
+        />
+        {hasExpress && (
+          <div className="flex items-center gap-3 text-sm text-muted">
+            <span className="flex-1 h-px" style={{ background: "rgba(0,0,0,0.12)" }} />
+            oder mit Karte bezahlen
+            <span className="flex-1 h-px" style={{ background: "rgba(0,0,0,0.12)" }} />
+          </div>
+        )}
+      </div>
+
       {/* Kontakt */}
       <section>
         <h2 className="text-lg font-medium mb-3">Kontakt</h2>
@@ -242,6 +349,8 @@ export function CheckoutForm({
         <PaymentElement
           options={{
             layout: "tabs",
+            // Address comes from our own form above; billing address is passed in
+            // confirmParams so the Payment Element does not ask for it again.
             fields: { billingDetails: { address: "never" } },
           }}
         />
