@@ -9,7 +9,6 @@ import { track } from "@/lib/analytics";
 
 export function BundleSelector({ product }: { product: Product }) {
   const [selected, setSelected] = useState<Bundle>(product.bundles[0]); // 1-month default
-  const [isSubscription, setIsSubscription] = useState(false);
   const { addToCart, isOpen: cartOpen } = useCart();
 
   // Sticky add-to-cart bar: appears once the main CTA scrolls out of view so
@@ -69,7 +68,7 @@ export function BundleSelector({ product }: { product: Product }) {
       variant: product.variant,
       months: selected.months,
       capsules: selected.capsules,
-      subscription: isSubscription,
+      subscription: false,
       value: selected.priceCents / 100,
     });
     addToCart({
@@ -79,7 +78,7 @@ export function BundleSelector({ product }: { product: Product }) {
       months: selected.months,
       capsules: selected.capsules,
       priceCents: selected.priceCents,
-      isSubscription,
+      isSubscription: false,
     });
   };
 
@@ -158,29 +157,6 @@ export function BundleSelector({ product }: { product: Product }) {
         </div>
       </div>
 
-      <label
-        className="flex items-start gap-3 p-3 rounded cursor-pointer transition"
-        style={{
-          background: isSubscription ? product.palette.bg : "transparent",
-          border: "1px solid rgba(0,0,0,0.10)",
-        }}
-      >
-        <input
-          type="checkbox"
-          checked={isSubscription}
-          onChange={(e) => setIsSubscription(e.target.checked)}
-          className="mt-1 w-4 h-4 flex-none"
-          style={{ accentColor: product.palette.badge }}
-        />
-        <div className="text-sm">
-          <div className="font-medium">Im Spar-Abo bestellen</div>
-          <div className="text-xs text-muted mt-1">
-            Automatische Lieferung nach Wunschtermin. Jederzeit pausierbar oder kündbar.
-            Kostenloser Versand inklusive.
-          </div>
-        </div>
-      </label>
-
       <button
         ref={ctaRef}
         type="button"
@@ -227,7 +203,6 @@ export function BundleSelector({ product }: { product: Product }) {
               <div className="text-sm text-muted truncate">
                 {selected.months} {selected.months === 1 ? "Monat" : "Monate"} ·{" "}
                 {formatPrice(selected.priceCents / 100)}
-                {isSubscription ? " · Spar-Abo" : ""}
               </div>
             </div>
             <button
