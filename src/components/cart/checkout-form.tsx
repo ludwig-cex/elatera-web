@@ -19,6 +19,11 @@ type StripeErrLike = {
   payment_method?: { type?: string };
 };
 
+// Payment methods that work with manual-capture (auth-hold) — card-backed only.
+// Everything else (Klarna, Satispay, BNPL, redirect methods) hangs at confirm and
+// is intercepted before confirmPayment.
+const MANUAL_CAPTURE_OK = new Set(["card", "link"]);
+
 type Item = { product: string; months: number; subscription: boolean };
 
 export type Shipping = {
@@ -195,6 +200,15 @@ export function CheckoutForm({
     // we capture the attempt even when Klarna/BNPL hangs and never returns.
     track("payment_submitted", { flow: "card", method: selectedMethod, value: totalCents / 100 });
     captureCheckoutEmail(); // safety net in case onBlur never fired
+
+    // Validation model = manual-capture auth-hold, which only card-backed methods
+    // support. Klarna/Satispay/BNPL would hang at confirmPayment → intercept them
+    // with a friendly "pick another method" instead of a dead spinner.
+    if (!MANUAL_CAPTURE_OK.has(selectedMethod)) {
+      trackPayErr("blocked_method", { code: "incompatible_method", payment_method: { type: selectedMethod } });
+      setError("Ups, ein Fehler ist aufgetreten. Bitte wähle eine andere Zahlungsmethode (z. B. Karte).");
+      return;
+    }
 
     const missing: string[] = [];
     if (!email.includes("@")) missing.push("E-Mail");
