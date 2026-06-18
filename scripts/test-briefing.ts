@@ -37,7 +37,7 @@ const funnel: FunnelDayRow[] = [
   ["Arthrose LP4 %E2%80%93 Ad1 Community", "", 0, 0, 0], // url-encoded dup of Ad1
 ].map(([ad, adIdTag, lp_cta, atc, bought]) => ({
   date: D, source: "fb", campaign: "Mobilisana_test", ad: ad as string, adIdTag: adIdTag as string,
-  product_viewed: 0, lp_cta: lp_cta as number, add_to_cart: atc as number, purchased: bought as number,
+  product_viewed: 0, lp_cta: lp_cta as number, add_to_cart: atc as number, checkout: 0, purchased: bought as number,
 }));
 
 const { rows, unmatchedFunnel } = buildRawRows(meta, funnel);

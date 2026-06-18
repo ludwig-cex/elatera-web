@@ -32,11 +32,12 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       countIf(event = 'product_viewed')          AS product_viewed,
       countIf(event = 'advertorial_cta_click')   AS lp_cta,
       countIf(event = 'add_to_cart')             AS add_to_cart,
+      countIf(event = 'checkout_clicked')        AS checkout,
       countIf(event = 'payment_authorized')      AS purchased
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
-      AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','payment_authorized')
+      AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_authorized')
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
   `.trim();
@@ -61,7 +62,8 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     product_viewed: num(r[5]),
     lp_cta: num(r[6]),
     add_to_cart: num(r[7]),
-    purchased: num(r[8]),
+    checkout: num(r[8]),
+    purchased: num(r[9]),
   }));
 }
 

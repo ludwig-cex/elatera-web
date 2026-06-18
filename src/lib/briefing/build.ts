@@ -80,6 +80,7 @@ export function buildRawRows(
       g.product_viewed += f.product_viewed;
       g.lp_cta += f.lp_cta;
       g.add_to_cart += f.add_to_cart;
+      g.checkout += f.checkout;
       g.purchased += f.purchased;
       if (!g.adIdTag && tag) g.adIdTag = tag;
       // Prefer a human-readable name over a numeric/empty one for display.
@@ -110,12 +111,13 @@ export function buildRawRows(
       spend: round2(m.spend),
       lp_cta: g?.lp_cta ?? 0,
       add_to_cart: g?.add_to_cart ?? 0,
+      checkout: g?.checkout ?? 0,
       purchased: g?.purchased ?? 0,
     };
   });
 
   const unmatchedFunnel = groups.filter(
-    (g) => !g._used && (g.lp_cta || g.add_to_cart || g.purchased)
+    (g) => !g._used && (g.lp_cta || g.add_to_cart || g.checkout || g.purchased)
   );
 
   return { rows, unmatchedFunnel };
@@ -139,6 +141,7 @@ export function aggregate(rows: RawRow[], level: Level): FunnelAgg[] {
     g.spend += r.spend;
     g.lp_cta += r.lp_cta;
     g.add_to_cart += r.add_to_cart;
+    g.checkout += r.checkout;
     g.purchased += r.purchased;
   }
   const out = [...groups.values()];
@@ -149,8 +152,8 @@ export function aggregate(rows: RawRow[], level: Level): FunnelAgg[] {
 function blank(level: Level, key: string): FunnelAgg {
   return {
     level, key,
-    impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, purchased: 0,
-    ctr: 0, cta_rate: 0, atc_rate: 0, buy_rate: 0,
+    impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, checkout: 0, purchased: 0,
+    ctr: 0, cta_rate: 0, atc_rate: 0, co_rate: 0, buy_rate: 0,
     cpm: 0, cpc: 0, cost_per_cta: 0, cost_per_purchase: 0,
   };
 }
@@ -160,7 +163,8 @@ function derive(g: FunnelAgg): void {
   g.ctr = safe(g.clicks, g.impressions);
   g.cta_rate = safe(g.lp_cta, g.clicks);
   g.atc_rate = safe(g.add_to_cart, g.lp_cta);
-  g.buy_rate = safe(g.purchased, g.add_to_cart);
+  g.co_rate = safe(g.checkout, g.add_to_cart);
+  g.buy_rate = safe(g.purchased, g.checkout);
   g.cpm = safe(g.spend, g.impressions) * 1000;
   g.cpc = safe(g.spend, g.clicks);
   g.cost_per_cta = safe(g.spend, g.lp_cta);

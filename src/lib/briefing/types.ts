@@ -27,6 +27,7 @@ export type FunnelDayRow = {
   product_viewed: number;
   lp_cta: number; // advertorial_cta_click
   add_to_cart: number;
+  checkout: number; // checkout_clicked ("auf Bezahlen gedrückt")
   purchased: number; // payment_authorized
 };
 
@@ -42,6 +43,7 @@ export type RawRow = {
   spend: number;
   lp_cta: number;
   add_to_cart: number;
+  checkout: number;
   purchased: number;
 };
 
@@ -54,12 +56,14 @@ export type FunnelAgg = {
   spend: number;
   lp_cta: number;
   add_to_cart: number;
+  checkout: number;
   purchased: number;
   // derived
   ctr: number; // clicks / impressions
   cta_rate: number; // lp_cta / clicks
   atc_rate: number; // add_to_cart / lp_cta
-  buy_rate: number; // purchased / add_to_cart
+  co_rate: number; // checkout / add_to_cart
+  buy_rate: number; // purchased / checkout
   cpm: number; // spend / impressions * 1000
   cpc: number; // spend / clicks
   cost_per_cta: number;

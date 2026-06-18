@@ -92,7 +92,8 @@ function bottleneck(t: FunnelAgg): Reco {
     { name: "Ad→Klick (CTR)", rate: t.ctr, denom: t.impressions, hint: "Creatives/Hooks testen, Zielgruppe schärfen." },
     { name: "Klick→LP-CTA", rate: t.cta_rate, denom: t.clicks, hint: "Message Match Ad↔LP, Ladezeit & Above-the-fold prüfen." },
     { name: "LP-CTA→Warenkorb", rate: t.atc_rate, denom: t.lp_cta, hint: "Angebot/Preis-Anker, Produktklarheit, weniger Reibung im Add-to-Cart." },
-    { name: "Warenkorb→Kauf", rate: t.buy_rate, denom: t.add_to_cart, hint: "Checkout-Reibung, Versand/Trust, Out-of-Stock-Handling." },
+    { name: "Warenkorb→Bezahlen", rate: t.co_rate, denom: t.add_to_cart, hint: "Sticky-CTA & 'Zur Kasse' prominenter, Versand/Trust früh zeigen, Express-Wallets oben." },
+    { name: "Bezahlen→Kauf", rate: t.buy_rate, denom: t.checkout, hint: "Checkout-Reibung: Felder reduzieren, Express-Pay, Formular auf Mobile straffen." },
   ];
   const eligible = steps.filter((s) => s.denom >= MIN_DENOM);
   const pool = eligible.length ? eligible : steps;
