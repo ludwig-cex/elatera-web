@@ -10,6 +10,8 @@ type CartPingBody = {
   products?: string[];
   totalCents?: number;
   utm?: Record<string, string>;
+  stage?: string; // "order" = "Jetzt zahlungspflichtig bestellen" geklickt
+  method?: string; // card | klarna | satispay | ...
 };
 
 export async function POST(request: Request) {
@@ -35,9 +37,15 @@ export async function POST(request: Request) {
   const source = typeof utm.utm_source === "string" ? utm.utm_source.slice(0, 50) : "";
   const adId = typeof utm.utm_content === "string" ? utm.utm_content.slice(0, 50) : "";
 
+  const isOrder = body.stage === "order";
+  const method = typeof body.method === "string" ? body.method.slice(0, 30) : "";
+  const head = isOrder
+    ? `💳 „Jetzt zahlungspflichtig bestellen" geklickt\nMethode: ${method || "—"}`
+    : `🛒 „Zur Kasse" geklickt`;
+
   after(() =>
     notifyTelegram(
-      `🛒 „Zur Kasse" geklickt\n` +
+      `${head}\n` +
         `Produkte: ${products.join(", ")}\n` +
         `Warenkorbwert: ${value}\n` +
         `Quelle: ${source || "direkt"} · Ad: ${adId || "organisch"}`,

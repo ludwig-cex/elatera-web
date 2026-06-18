@@ -201,6 +201,23 @@ export function CheckoutForm({
     track("payment_submitted", { flow: "card", method: selectedMethod, value: totalCents / 100 });
     captureCheckoutEmail(); // safety net in case onBlur never fired
 
+    // Telegram-Ping an den Betreiber: jemand hat "Jetzt zahlungspflichtig
+    // bestellen" gedrückt (inkl. Klarna-Versuche, bevor sie abgefangen werden).
+    try {
+      void fetch("/api/cart-ping", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({
+          stage: "order",
+          method: selectedMethod,
+          products: items.map((i) => i.product),
+          totalCents,
+          utm: readUtm(),
+        }),
+      }).catch(() => {});
+    } catch {}
+
     // Validation model = manual-capture auth-hold, which only card-backed methods
     // support. Klarna/Satispay/BNPL would hang at confirmPayment → intercept them
     // with a friendly "pick another method" instead of a dead spinner.
