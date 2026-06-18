@@ -20,6 +20,40 @@ import { Newsletter } from "@/components/sections/newsletter";
 export function SalesPage({ product }: { product: Product }) {
   const p = product.palette;
 
+  // Subheadline + trust boxes. On desktop they sit above the buy box (in the
+  // hero's right column); on mobile they move BELOW the buy box so image →
+  // headline → rating → "In den Warenkorb" all land in the first screen
+  // ("commerce above the fold"). Rendered in two slots, toggled by breakpoint.
+  const heroSecondary = (
+    <>
+      {!product.hero.lead && (
+        <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
+          {product.hero.subheadline}
+        </p>
+      )}
+      <div className="grid grid-cols-1 gap-2 mb-6">
+        <div
+          className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium"
+          style={{ background: p.bg, color: p.badge, border: `1px solid ${p.badge}40` }}
+        >
+          <Clock className="w-4 h-4 flex-none" />
+          <span className="leading-tight">Nur für kurze Zeit: Bis zu 45 % Rabatt</span>
+        </div>
+        <div
+          className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm"
+          style={{
+            background: "var(--color-ivory)",
+            border: "1px solid rgba(0,0,0,0.06)",
+            color: "var(--color-ink-soft)",
+          }}
+        >
+          <ShieldCheck className="w-4 h-4 flex-none" style={{ color: p.badge }} />
+          <span className="font-medium leading-tight">Gratis Versand &amp; 90 Tage Garantie</span>
+        </div>
+      </div>
+    </>
+  );
+
   return (
     <>
       {/* ============================================================
@@ -45,7 +79,7 @@ export function SalesPage({ product }: { product: Product }) {
                   {" – "}
                   {product.tagline}
                 </div>
-                <h1 className="serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] mb-3">
+                <h1 className="serif text-3xl sm:text-5xl lg:text-6xl leading-[1.08] sm:leading-[1.05] mb-3">
                   {product.hero.lead}
                 </h1>
               </>
@@ -81,38 +115,16 @@ export function SalesPage({ product }: { product: Product }) {
               </span>
             </a>
 
-            {!product.hero.lead && (
-              <p className="text-base sm:text-lg leading-relaxed mb-6" style={{ color: "var(--color-ink-soft)" }}>
-                {product.hero.subheadline}
-              </p>
-            )}
-
-            {/* Zwei Boxen: Rabatt-Urgency (hervorgehoben) + Versand/Garantie */}
-            <div className="grid grid-cols-1 gap-2 mb-6">
-              <div
-                className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm font-medium"
-                style={{ background: p.bg, color: p.badge, border: `1px solid ${p.badge}40` }}
-              >
-                <Clock className="w-4 h-4 flex-none" />
-                <span className="leading-tight">Nur für kurze Zeit: Bis zu 45 % Rabatt</span>
-              </div>
-              <div
-                className="flex items-center gap-2.5 px-4 py-3 rounded-lg text-sm"
-                style={{
-                  background: "var(--color-ivory)",
-                  border: "1px solid rgba(0,0,0,0.06)",
-                  color: "var(--color-ink-soft)",
-                }}
-              >
-                <ShieldCheck className="w-4 h-4 flex-none" style={{ color: p.badge }} />
-                <span className="font-medium leading-tight">Gratis Versand &amp; 90 Tage Garantie</span>
-              </div>
-            </div>
+            {/* Desktop: Subheadline + Trust oberhalb der Kaufbox */}
+            <div className="hidden lg:contents">{heroSecondary}</div>
 
             {/* Bundle selector + Cart CTA — §10/11 Fortea */}
             <div id="kaufen" style={{ scrollMarginTop: 90 }}>
               <BundleSelector product={product} />
             </div>
+
+            {/* Mobile: Subheadline + Trust UNTER der Kaufbox (commerce above the fold) */}
+            <div className="lg:hidden mt-6">{heroSecondary}</div>
 
             {/* PZN line — §12 Fortea-Inline */}
             <div className="mt-5 text-xs text-muted text-center">
@@ -132,7 +144,7 @@ export function SalesPage({ product }: { product: Product }) {
                       <Star key={i} className="w-3.5 h-3.5 fill-current" style={{ color: "var(--color-copper)" }} />
                     ))}
                   </div>
-                  <blockquote className="text-sm leading-relaxed">„{q.text}"</blockquote>
+                  <blockquote className="text-sm leading-relaxed">„{q.text}“</blockquote>
                   <figcaption className="text-xs text-muted mt-1.5">
                     — {q.name}, {q.age} · <a href="#bewertungen" className="underline underline-offset-2">alle Bewertungen</a>
                   </figcaption>

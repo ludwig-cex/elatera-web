@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import posthog from "posthog-js";
 import { Check, ShoppingBag } from "lucide-react";
 import type { Product, Bundle } from "@/lib/products";
 import { formatPrice, formatPricePerDay } from "@/lib/utils";
@@ -8,8 +9,31 @@ import { useCart } from "@/components/cart/cart-context";
 import { track } from "@/lib/analytics";
 
 export function BundleSelector({ product }: { product: Product }) {
-  const [selected, setSelected] = useState<Bundle>(product.bundles[0]); // 1-month default
   const { addToCart, isOpen: cartOpen } = useCart();
+
+  // A/B test (PostHog 50/50): a −10 € discount on the single-month option,
+  // rendered with the same strikethrough + discount badge as the multi-month
+  // bundles. Flag evaluates per session (cookieless); re-read once flags load.
+  const [discountSingle, setDiscountSingle] = useState(false);
+  useEffect(() => {
+    const apply = () => setDiscountSingle(posthog.isFeatureEnabled("single-month-discount") === true);
+    apply();
+    return posthog.onFeatureFlags(apply);
+  }, []);
+  const pricingVariant = discountSingle ? "single_month_-10" : "control";
+
+  const bundles = useMemo<Bundle[]>(
+    () =>
+      discountSingle
+        ? product.bundles.map((b) =>
+            b.months === 1 ? { ...b, priceCents: 3999, rrpCents: 4999, discountPct: 20 } : b,
+          )
+        : product.bundles,
+    [discountSingle, product.bundles],
+  );
+
+  const [selectedMonths, setSelectedMonths] = useState<number>(product.bundles[0].months); // 1-month default
+  const selected = bundles.find((b) => b.months === selectedMonths) ?? bundles[0];
 
   // Sticky add-to-cart bar: appears once the main CTA scrolls out of view so
   // the primary action stays reachable on long product pages. Hidden while the
@@ -50,17 +74,23 @@ export function BundleSelector({ product }: { product: Product }) {
   // late layout shift (hero image loading after the initial anchor jump).
   useEffect(() => {
     if (typeof window === "undefined" || window.location.hash !== "#kaufen") return;
-    const t = setTimeout(() => {
-      document.getElementById("kaufen")?.scrollIntoView({ block: "start" });
-    }, 250);
-    return () => clearTimeout(t);
+    const jump = () => document.getElementById("kaufen")?.scrollIntoView({ block: "start" });
+    // Re-assert after late layout shifts (hero image decode, web fonts) instead
+    // of a single fixed delay: a few passes + on window load so the buy box
+    // actually ends up in view on slow mobile connections.
+    const timers = [120, 400, 900].map((ms) => window.setTimeout(jump, ms));
+    window.addEventListener("load", jump);
+    return () => {
+      timers.forEach(clearTimeout);
+      window.removeEventListener("load", jump);
+    };
   }, []);
 
   const showSticky = (isMobile || scrolledPast) && !cartOpen;
 
   useEffect(() => {
-    track("product_viewed", { product: product.slug, variant: product.variant });
-  }, [product.slug, product.variant]);
+    track("product_viewed", { product: product.slug, variant: product.variant, pricing: pricingVariant });
+  }, [product.slug, product.variant, pricingVariant]);
 
   const handleAddToCart = () => {
     track("add_to_cart", {
@@ -70,6 +100,7 @@ export function BundleSelector({ product }: { product: Product }) {
       capsules: selected.capsules,
       subscription: false,
       value: selected.priceCents / 100,
+      pricing: pricingVariant,
     });
     addToCart({
       productSlug: product.slug,
@@ -94,13 +125,13 @@ export function BundleSelector({ product }: { product: Product }) {
           className="rounded-lg overflow-hidden"
           style={{ border: "1px solid rgba(0,0,0,0.08)" }}
         >
-          {product.bundles.map((b, idx) => {
+          {bundles.map((b, idx) => {
             const isActive = selected.months === b.months;
             return (
               <button
                 key={b.months}
                 type="button"
-                onClick={() => setSelected(b)}
+                onClick={() => setSelectedMonths(b.months)}
                 className="w-full text-left p-4 sm:p-5 flex items-center gap-4 transition-colors"
                 style={{
                   // No dimming of unselected options — they must read as fully
@@ -185,7 +216,7 @@ export function BundleSelector({ product }: { product: Product }) {
         aria-hidden={!showSticky}
       >
         <div className="container-content">
-          <div className="mx-auto max-w-3xl flex items-center gap-3 sm:gap-4 py-2.5">
+          <div className="mx-auto max-w-3xl flex items-center gap-3 sm:gap-4 py-3">
             <div
               className="w-11 h-11 rounded-lg flex-none overflow-hidden relative"
               style={{ background: product.palette.bg }}
@@ -209,12 +240,11 @@ export function BundleSelector({ product }: { product: Product }) {
               type="button"
               onClick={handleAddToCart}
               tabIndex={showSticky ? 0 : -1}
-              className="flex-none py-2.5 px-5 sm:px-7 rounded-lg font-medium text-sm sm:text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2 whitespace-nowrap"
+              className="flex-none py-3 px-6 sm:px-7 rounded-lg font-medium text-sm sm:text-base transition hover:opacity-90 active:scale-[0.99] inline-flex items-center justify-center gap-2 whitespace-nowrap"
               style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
             >
               <ShoppingBag className="w-5 h-5" />
-              <span className="hidden sm:inline">In den Warenkorb</span>
-              <span className="sm:hidden">Warenkorb</span>
+              In den Warenkorb
             </button>
           </div>
         </div>

@@ -29,7 +29,7 @@ export function HeroGallery({ product }: { product: Product }) {
   return (
     <div className="min-w-0 w-full">
       <div
-        className="rounded-2xl mb-3 aspect-[3/2] sm:aspect-[5/4] overflow-hidden relative"
+        className="rounded-2xl mb-3 aspect-[16/10] sm:aspect-[5/4] overflow-hidden relative"
         style={{ background: p.bg }}
       >
         <Image
