@@ -12,7 +12,9 @@ function num(v: unknown): number {
 }
 
 /**
- * Funnel counts per day per ad (utm_content), for [since, until] inclusive.
+ * Funnel as UNIQUE PERSONS per day per ad (utm_content), for [since, until]
+ * inclusive — so multiple attempts by the same person (e.g. trying several
+ * payment methods) count once per day, matching the PostHog funnel insights.
  * "Gekauft" = payment_authorized (Stripe auth-hold), the strongest real
  * purchase-intent signal in the intent-capture storefront.
  */
@@ -29,12 +31,12 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       properties.utm_campaign          AS campaign,
       properties.utm_content           AS ad,
       properties.utm_term              AS ad_id_tag,
-      countIf(event = 'product_viewed')          AS product_viewed,
-      countIf(event = 'advertorial_cta_click')   AS lp_cta,
-      countIf(event = 'add_to_cart')             AS add_to_cart,
-      countIf(event = 'checkout_clicked')        AS checkout,
-      countIf(event = 'payment_submitted')       AS pay_submit,
-      countIf(event = 'payment_authorized')      AS purchased
+      count(DISTINCT if(event = 'product_viewed', person_id, NULL))        AS product_viewed,
+      count(DISTINCT if(event = 'advertorial_cta_click', person_id, NULL)) AS lp_cta,
+      count(DISTINCT if(event = 'add_to_cart', person_id, NULL))           AS add_to_cart,
+      count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
+      count(DISTINCT if(event = 'payment_submitted', person_id, NULL))     AS pay_submit,
+      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
