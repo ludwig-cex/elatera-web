@@ -83,6 +83,7 @@ export function buildRawRows(
       g.checkout += f.checkout;
       g.pay_submit += f.pay_submit;
       g.purchased += f.purchased;
+      g.landings += f.landings;
       if (!g.adIdTag && tag) g.adIdTag = tag;
       // Prefer a human-readable name over a numeric/empty one for display.
       if ((!g.ad || onlyDigits(g.ad)) && f.ad && !onlyDigits(f.ad)) g.ad = f.ad;
@@ -115,6 +116,7 @@ export function buildRawRows(
       checkout: g?.checkout ?? 0,
       pay_submit: g?.pay_submit ?? 0,
       purchased: g?.purchased ?? 0,
+      landings: g?.landings ?? 0,
     };
   });
 

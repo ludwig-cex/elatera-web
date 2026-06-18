@@ -36,11 +36,16 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       count(DISTINCT if(event = 'add_to_cart', person_id, NULL))           AS add_to_cart,
       count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
       count(DISTINCT if(event = 'payment_submitted', person_id, NULL))     AS pay_submit,
-      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased
+      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased,
+      -- On-site "Klicks": fb/ig advertorial landings (Meta-Klick, der wirklich
+      -- ankam). Per Ad via utm_content. WHERE beschränkt $pageview auf das
+      -- Advertorial, daher reicht hier der utm_source-Check.
+      count(DISTINCT if(event = '$pageview' AND properties.utm_source IN ('fb','ig'), person_id, NULL)) AS landings
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
-      AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
+      AND ( event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
+            OR (event = '$pageview' AND properties.$host LIKE '%mein-apothekenrat%') )
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
   `.trim();
@@ -68,6 +73,7 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     checkout: num(r[8]),
     pay_submit: num(r[9]),
     purchased: num(r[10]),
+    landings: num(r[11]),
   }));
 }
 

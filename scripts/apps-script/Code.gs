@@ -112,10 +112,11 @@ function buildDashboard_(ss) {
     var date = "Rohdaten!$A:$A";
     return "=SUMIFS(Rohdaten!$" + col + ":$" + col + S + date + S + '">="&$B$3' + S + date + S + '"<="&$B$4)';
   }
-  // Rohdaten cols: F=Views G=Clicks H=Spend I=LP-CTA J=Warenkorb K=Kasse L=Bestellt M=Kauf
+  // Rohdaten cols: F=Views G=Meta-Clicks H=Spend I=LP-CTA J=WK K=Kasse L=Bestellt M=Kauf N=Landungen
+  // "Klicks" = N (on-site Advertorial-Landungen fb/ig); Meta-Klicks bleiben in Rohdaten Spalte G.
   d.getRange(7, 1).setValue("GESAMT (gewählter Zeitraum)").setFontWeight("bold");
   var funnel = [
-    ["Ad Views (Impressions)", "F"], ["Ad Clicks", "G"], ["LP CTA Clicks", "I"],
+    ["Ad Views (Impressions)", "F"], ["Klicks (on-site, fb/ig)", "N"], ["LP CTA Clicks", "I"],
     ["In den Warenkorb", "J"], ["Zur Kasse", "K"], ["Bestellt (zahlungspfl.)", "L"],
     ["Gekauft", "M"], ["Spend (€)", "H"],
   ];
@@ -142,10 +143,10 @@ function buildDashboard_(ss) {
   // --- Per-Ad Tabelle: Basis via QUERY (A..I), abgeleitete KPIs via ARRAYFORMULA (J..). ---
   d.getRange("A17").setValue("Quoten >100% möglich: CTA zählt Event-Klicks, Attribution ≠ Meta-Klicks.").setFontStyle("italic");
   d.getRange("A18").setValue("Pro Ad (gewählter Zeitraum, nach Spend sortiert)").setFontWeight("bold");
-  var sel = "select D, sum(F), sum(G), sum(I), sum(J), sum(K), sum(L), sum(M), sum(H) ";
+  var sel = "select D, sum(F), sum(N), sum(I), sum(J), sum(K), sum(L), sum(M), sum(H) ";
   var where = "where D is not null and toDate(A) >= date '\"&TEXT($B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT($B$4" + S + "\"yyyy-mm-dd\")&\"' ";
-  var tail = "group by D order by sum(H) desc label D 'Ad'" + ", sum(F) 'Views', sum(G) 'Klicks', sum(I) 'LP-CTA', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(H) 'Spend €'";
-  d.getRange("A19").setFormula("=QUERY(Rohdaten!$A:$M" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  var tail = "group by D order by sum(H) desc label D 'Ad'" + ", sum(F) 'Views', sum(N) 'Klicks', sum(I) 'LP-CTA', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(H) 'Spend €'";
+  d.getRange("A19").setFormula("=QUERY(Rohdaten!$A:$N" + S + "\"" + sel + where + tail + "\"" + S + "1)");
 
   // Base output (ab Zeile 20): A=Ad B=Views C=Klicks D=LP-CTA E=WK F=Kasse G=Bestellt H=Kauf I=Spend
   function ratio(n, dn, mult) {
