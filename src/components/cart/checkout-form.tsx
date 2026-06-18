@@ -9,6 +9,15 @@ import {
 } from "@stripe/react-stripe-js";
 import type { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
 import { readUtm } from "@/lib/utm";
+import { track } from "@/lib/analytics";
+
+type StripeErrLike = {
+  type?: string;
+  code?: string;
+  decline_code?: string;
+  message?: string;
+  payment_method?: { type?: string };
+};
 
 type Item = { product: string; months: number; subscription: boolean };
 
@@ -64,6 +73,20 @@ export function CheckoutForm({
   const [error, setError] = useState<string | null>(null);
   const [hasExpress, setHasExpress] = useState(false);
 
+  // Track every payment failure so Klarna/BNPL hangs, card declines and init
+  // errors become visible in PostHog (stage + Stripe error code/method) instead
+  // of dying silently behind a red message.
+  const trackPayErr = (stage: string, err?: StripeErrLike) =>
+    track("payment_failed", {
+      stage,
+      code: err?.code ?? null,
+      err_type: err?.type ?? null,
+      decline_code: err?.decline_code ?? null,
+      method: err?.payment_method?.type ?? null,
+      message: err?.message?.slice(0, 200) ?? null,
+      value: totalCents / 100,
+    });
+
   // Shared finish step for both the express wallets and the card form: create the
   // manual-capture PaymentIntent server-side and confirm it. Same auth-hold flow
   // — the webhook releases the authorization, so no money is ever captured.
@@ -81,6 +104,7 @@ export function CheckoutForm({
       /* handled below */
     }
     if (!clientSecret) {
+      trackPayErr("init_express");
       setError("Zahlung konnte nicht initialisiert werden. Bitte erneut versuchen.");
       setBusy(false);
       return false;
@@ -95,6 +119,7 @@ export function CheckoutForm({
       redirect: "if_required",
     });
     if (confirmError) {
+      trackPayErr("confirm_express", confirmError);
       setError(confirmError.message ?? "Die Zahlung wurde nicht abgeschlossen.");
       setBusy(false);
       return false;
@@ -111,6 +136,7 @@ export function CheckoutForm({
     setError(null);
     const { error: submitError } = await elements.submit();
     if (submitError) {
+      trackPayErr("submit_express", submitError);
       setError(submitError.message ?? "Bitte prüfen Sie Ihre Zahlungsdaten.");
       setBusy(false);
       return;
@@ -159,6 +185,7 @@ export function CheckoutForm({
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
+      trackPayErr("submit_card", submitError);
       setError(submitError.message ?? "Bitte prüfen Sie Ihre Zahlungsdaten.");
       setBusy(false);
       return;
@@ -187,6 +214,7 @@ export function CheckoutForm({
       /* handled below */
     }
     if (!clientSecret) {
+      trackPayErr("init_card");
       setError("Zahlung konnte nicht initialisiert werden. Bitte erneut versuchen.");
       setBusy(false);
       return;
@@ -212,6 +240,7 @@ export function CheckoutForm({
     });
 
     if (confirmError) {
+      trackPayErr("confirm_card", confirmError);
       setError(confirmError.message ?? "Die Zahlung wurde nicht abgeschlossen.");
       setBusy(false);
       return;
