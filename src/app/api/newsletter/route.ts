@@ -54,7 +54,6 @@ export async function POST(request: Request) {
     return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
   }
   const email = body.email.trim().toLowerCase();
-  const utm = body.utm ?? {};
 
   try {
     // Subscribe with marketing consent + add to the newsletter list. With DOI
@@ -66,6 +65,7 @@ export async function POST(request: Request) {
         data: {
           type: "profile-subscription-bulk-create-job",
           attributes: {
+            custom_source: "nutra-sana newsletter",
             profiles: {
               data: [
                 {
@@ -73,10 +73,6 @@ export async function POST(request: Request) {
                   attributes: {
                     email,
                     subscriptions: { email: { marketing: { consent: "SUBSCRIBED" } } },
-                    properties: {
-                      newsletter_source: "nutra-sana site",
-                      ...(utm.utm_source ? { utm_source: String(utm.utm_source).slice(0, 100) } : {}),
-                    },
                   },
                 },
               ],
@@ -90,7 +86,7 @@ export async function POST(request: Request) {
     if (!res.ok && res.status !== 202 && res.status !== 204) {
       const txt = await res.text().catch(() => "");
       console.error("[newsletter] klaviyo subscribe failed", res.status, txt.slice(0, 300));
-      return Response.json({ ok: false, error: "klaviyo" }, { status: 502 });
+      return Response.json({ ok: false, error: "klaviyo", debug_status: res.status, debug: txt.slice(0, 400) }, { status: 502 });
     }
     return Response.json({ ok: true });
   } catch (err) {
