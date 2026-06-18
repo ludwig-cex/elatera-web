@@ -2,14 +2,27 @@
 
 import { useState } from "react";
 import { Check, Mail } from "lucide-react";
+import { readUtm } from "@/lib/utm";
 
 export function Newsletter() {
   const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [done, setDone] = useState(false);
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email.includes("@")) return;
+    const v = email.trim().toLowerCase();
+    if (!v.includes("@")) return;
+    // Send to Klaviyo (marketing consent + DOI). Fire-and-forget; the form
+    // shows the confirm-your-email message regardless so it never blocks.
+    try {
+      void fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({ email: v, honeypot, utm: readUtm() }),
+      }).catch(() => {});
+    } catch {}
     setDone(true);
   };
 
@@ -34,6 +47,16 @@ export function Newsletter() {
           </div>
         ) : (
           <form onSubmit={onSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <input
+              type="text"
+              name="company"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              aria-hidden="true"
+              style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+            />
             <div className="relative flex-1">
               <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 opacity-50" />
               <input
