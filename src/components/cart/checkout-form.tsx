@@ -72,6 +72,10 @@ export function CheckoutForm({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasExpress, setHasExpress] = useState(false);
+  // Currently selected method in the Payment Element (card, klarna, …). Lets us
+  // see WHICH method people try — incl. Klarna, which can hang without ever
+  // returning an error from confirmPayment.
+  const [selectedMethod, setSelectedMethod] = useState<string>("card");
 
   // Track every payment failure so Klarna/BNPL hangs, card declines and init
   // errors become visible in PostHog (stage + Stripe error code/method) instead
@@ -132,6 +136,7 @@ export function CheckoutForm({
   // and billing address; we reuse them for the lead + the manual-capture intent.
   const onExpressConfirm = async (event: StripeExpressCheckoutElementConfirmEvent) => {
     if (!stripe || !elements) return;
+    track("payment_submitted", { flow: "express", method: "express", value: totalCents / 100 });
     setBusy(true);
     setError(null);
     const { error: submitError } = await elements.submit();
@@ -167,6 +172,10 @@ export function CheckoutForm({
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!stripe || !elements) return;
+
+    // "Jetzt zahlungspflichtig bestellen" pressed — fire BEFORE confirmPayment so
+    // we capture the attempt even when Klarna/BNPL hangs and never returns.
+    track("payment_submitted", { flow: "card", method: selectedMethod, value: totalCents / 100 });
 
     const missing: string[] = [];
     if (!email.includes("@")) missing.push("E-Mail");
@@ -376,6 +385,7 @@ export function CheckoutForm({
       <section>
         <h2 className="text-lg font-medium mb-3">Zahlung</h2>
         <PaymentElement
+          onChange={(e) => setSelectedMethod(e.value.type)}
           options={{
             layout: "tabs",
             // Address comes from our own form above; billing address is passed in
