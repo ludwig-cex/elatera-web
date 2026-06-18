@@ -86,6 +86,7 @@ export function CheckoutForm({
   // kept even when the order is never completed (Klarna hang / abandonment).
   // Goes to a separate Klaviyo list; deduped per email so blur doesn't spam.
   const capturedEmailRef = useRef<string>("");
+  const orderPingedRef = useRef(false); // Telegram-Ping nur beim ersten Bestellen-Klick
   const captureCheckoutEmail = () => {
     const e = email.trim().toLowerCase();
     if (!e.includes("@") || e === capturedEmailRef.current) return;
@@ -201,22 +202,25 @@ export function CheckoutForm({
     track("payment_submitted", { flow: "card", method: selectedMethod, value: totalCents / 100 });
     captureCheckoutEmail(); // safety net in case onBlur never fired
 
-    // Telegram-Ping an den Betreiber: jemand hat "Jetzt zahlungspflichtig
-    // bestellen" gedrückt (inkl. Klarna-Versuche, bevor sie abgefangen werden).
-    try {
-      void fetch("/api/cart-ping", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        keepalive: true,
-        body: JSON.stringify({
-          stage: "order",
-          method: selectedMethod,
-          products: items.map((i) => i.product),
-          totalCents,
-          utm: readUtm(),
-        }),
-      }).catch(() => {});
-    } catch {}
+    // Telegram-Ping an den Betreiber — nur beim ERSTEN Bestellen-Klick pro
+    // Checkout, damit mehrere Versuche (z. B. verschiedene Methoden) nicht spammen.
+    if (!orderPingedRef.current) {
+      orderPingedRef.current = true;
+      try {
+        void fetch("/api/cart-ping", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          keepalive: true,
+          body: JSON.stringify({
+            stage: "order",
+            method: selectedMethod,
+            products: items.map((i) => i.product),
+            totalCents,
+            utm: readUtm(),
+          }),
+        }).catch(() => {});
+      } catch {}
+    }
 
     // Validation model = manual-capture auth-hold, which only card-backed methods
     // support. Klarna/Satispay/BNPL would hang at confirmPayment → intercept them
