@@ -42,8 +42,11 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const days = Math.min(Math.max(parseInt(url.searchParams.get("days") || "7", 10), 1), 90);
   const dry = url.searchParams.get("dry") === "1";
+  // ?includeToday=1 pulls through TODAY (partial) instead of stopping at
+  // yesterday — for a mid-day snapshot. Tomorrow's cron overwrites it (upsert).
+  const includeToday = url.searchParams.get("includeToday") === "1";
 
-  const until = berlinDay(1); // yesterday
+  const until = berlinDay(includeToday ? 0 : 1); // today or yesterday
   const since = berlinDay(days); // N days back (inclusive window of `days`)
   const windowSince = berlinDay(7); // for the 7d aggregates regardless of backfill size
 
