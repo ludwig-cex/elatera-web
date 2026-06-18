@@ -112,67 +112,67 @@ function buildDashboard_(ss) {
     var date = "Rohdaten!$A:$A";
     return "=SUMIFS(Rohdaten!$" + col + ":$" + col + S + date + S + '">="&$B$3' + S + date + S + '"<="&$B$4)';
   }
-  // Rohdaten cols: F=Views G=Clicks H=Spend I=LP-CTA J=Warenkorb K=Bezahlen L=Kauf
+  // Rohdaten cols: F=Views G=Clicks H=Spend I=LP-CTA J=Warenkorb K=Kasse L=Bestellt M=Kauf
   d.getRange(7, 1).setValue("GESAMT (gewählter Zeitraum)").setFontWeight("bold");
   var funnel = [
     ["Ad Views (Impressions)", "F"], ["Ad Clicks", "G"], ["LP CTA Clicks", "I"],
-    ["In den Warenkorb", "J"], ["Bezahlen geklickt", "K"], ["Gekauft", "L"], ["Spend (€)", "H"],
+    ["In den Warenkorb", "J"], ["Zur Kasse", "K"], ["Bestellt (zahlungspfl.)", "L"],
+    ["Gekauft", "M"], ["Spend (€)", "H"],
   ];
   funnel.forEach(function (f, i) {
     d.getRange(8 + i, 1).setValue(f[0]);
     d.getRange(8 + i, 2).setFormula(sumifs(f[1]));
   });
-  d.getRange("B14").setNumberFormat("0.00 €"); // Spend
+  d.getRange("B15").setNumberFormat("0.00 €"); // Spend
 
-  // --- Raten / Kosten gesamt --- (B8 Views,B9 Clicks,B10 CTA,B11 WK,B12 Bezahlen,B13 Kauf,B14 Spend)
+  // --- Raten/Kosten --- B8 Views,B9 Clicks,B10 CTA,B11 WK,B12 Kasse,B13 Bestellt,B14 Kauf,B15 Spend
   function rate(n, dn) { return "=IF(" + dn + "=0" + S + "\"\"" + S + n + "/" + dn + ")"; }
   d.getRange("D7").setValue("Raten / Kosten (gesamt)").setFontWeight("bold");
   var rates = [
     ["CTR", "B9", "B8", "0.00%"], ["Klick→LP-CTA", "B10", "B9", "0.00%"],
-    ["LP-CTA→Warenkorb", "B11", "B10", "0.00%"], ["Warenkorb→Bezahlen", "B12", "B11", "0.00%"],
-    ["Bezahlen→Kauf", "B13", "B12", "0.00%"], ["CPC (€)", "B14", "B9", "0.00 €"],
-    ["Kosten/Kauf (€)", "B14", "B13", "0.00 €"],
+    ["LP-CTA→Warenkorb", "B11", "B10", "0.00%"], ["Warenkorb→Zur Kasse", "B12", "B11", "0.00%"],
+    ["Zur Kasse→Bestellt", "B13", "B12", "0.00%"], ["Bestellt→Kauf", "B14", "B13", "0.00%"],
+    ["CPC (€)", "B15", "B9", "0.00 €"], ["Kosten/Kauf (€)", "B15", "B14", "0.00 €"],
   ];
   rates.forEach(function (r, i) {
     d.getRange(8 + i, 4).setValue(r[0]);
     d.getRange(8 + i, 5).setFormula(rate(r[1], r[2])).setNumberFormat(r[3]);
   });
 
-  // --- Per-Ad Tabelle: Basis via QUERY (A..H), abgeleitete KPIs via ARRAYFORMULA (I..).
-  // toDate(A) so a datetime column compares to a date literal. ---
-  d.getRange("A16").setValue("Quoten >100% möglich: CTA zählt Event-Klicks, Attribution ≠ Meta-Klicks.").setFontStyle("italic");
-  d.getRange("A17").setValue("Pro Ad (gewählter Zeitraum, nach Spend sortiert)").setFontWeight("bold");
-  var sel = "select D, sum(F), sum(G), sum(I), sum(J), sum(K), sum(L), sum(H) ";
+  // --- Per-Ad Tabelle: Basis via QUERY (A..I), abgeleitete KPIs via ARRAYFORMULA (J..). ---
+  d.getRange("A17").setValue("Quoten >100% möglich: CTA zählt Event-Klicks, Attribution ≠ Meta-Klicks.").setFontStyle("italic");
+  d.getRange("A18").setValue("Pro Ad (gewählter Zeitraum, nach Spend sortiert)").setFontWeight("bold");
+  var sel = "select D, sum(F), sum(G), sum(I), sum(J), sum(K), sum(L), sum(M), sum(H) ";
   var where = "where D is not null and toDate(A) >= date '\"&TEXT($B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT($B$4" + S + "\"yyyy-mm-dd\")&\"' ";
-  var tail = "group by D order by sum(H) desc label D 'Ad'" + ", sum(F) 'Views', sum(G) 'Klicks', sum(I) 'LP-CTA', sum(J) 'Warenkorb', sum(K) 'Bezahlen', sum(L) 'Gekauft', sum(H) 'Spend €'";
-  d.getRange("A18").setFormula("=QUERY(Rohdaten!$A:$L" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  var tail = "group by D order by sum(H) desc label D 'Ad'" + ", sum(F) 'Views', sum(G) 'Klicks', sum(I) 'LP-CTA', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(H) 'Spend €'";
+  d.getRange("A19").setFormula("=QUERY(Rohdaten!$A:$M" + S + "\"" + sel + where + tail + "\"" + S + "1)");
 
-  // Base output cols (ab Zeile 19): A=Ad B=Views C=Klicks D=LP-CTA E=Warenkorb F=Bezahlen G=Kauf H=Spend
-  // Derived column: blank when ad is empty OR denominator is 0.
+  // Base output (ab Zeile 20): A=Ad B=Views C=Klicks D=LP-CTA E=WK F=Kasse G=Bestellt H=Kauf I=Spend
   function ratio(n, dn, mult) {
-    return "=ARRAYFORMULA(IF(($A$19:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
+    return "=ARRAYFORMULA(IF(($A$20:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
   }
   var derived = [
-    ["CTR", "$C$19:$C", "$B$19:$B", "", "0.00%"],
-    ["CPM €", "$H$19:$H", "$B$19:$B", "*1000", "0.00 €"],
-    ["CPC €", "$H$19:$H", "$C$19:$C", "", "0.00 €"],
-    ["Klick→CTA", "$D$19:$D", "$C$19:$C", "", "0.00%"],
-    ["CTA→WK", "$E$19:$E", "$D$19:$D", "", "0.00%"],
-    ["WK→Bezahlen", "$F$19:$F", "$E$19:$E", "", "0.00%"],
-    ["Bezahlen→Kauf", "$G$19:$G", "$F$19:$F", "", "0.00%"],
-    ["€/LP-CTA", "$H$19:$H", "$D$19:$D", "", "0.00 €"],
-    ["€/Warenkorb", "$H$19:$H", "$E$19:$E", "", "0.00 €"],
-    ["€/Kauf (CPA)", "$H$19:$H", "$G$19:$G", "", "0.00 €"],
-    ["Spend-Anteil", "$H$19:$H", "$B$14", "", "0.0%"],
+    ["CTR", "$C$20:$C", "$B$20:$B", "", "0.00%"],
+    ["CPM €", "$I$20:$I", "$B$20:$B", "*1000", "0.00 €"],
+    ["CPC €", "$I$20:$I", "$C$20:$C", "", "0.00 €"],
+    ["Klick→CTA", "$D$20:$D", "$C$20:$C", "", "0.00%"],
+    ["CTA→WK", "$E$20:$E", "$D$20:$D", "", "0.00%"],
+    ["WK→Kasse", "$F$20:$F", "$E$20:$E", "", "0.00%"],
+    ["Kasse→Bestellt", "$G$20:$G", "$F$20:$F", "", "0.00%"],
+    ["Bestellt→Kauf", "$H$20:$H", "$G$20:$G", "", "0.00%"],
+    ["€/LP-CTA", "$I$20:$I", "$D$20:$D", "", "0.00 €"],
+    ["€/Warenkorb", "$I$20:$I", "$E$20:$E", "", "0.00 €"],
+    ["€/Kauf (CPA)", "$I$20:$I", "$H$20:$H", "", "0.00 €"],
+    ["Spend-Anteil", "$I$20:$I", "$B$15", "", "0.0%"],
   ];
   derived.forEach(function (c, i) {
-    var ci = 9 + i; // I..
-    d.getRange(18, ci).setValue(c[0]).setFontWeight("bold");
-    d.getRange(19, ci).setFormula(ratio(c[1], c[2], c[3]));
-    d.getRange(19, ci, 3000, 1).setNumberFormat(c[4]);
+    var ci = 10 + i; // J..
+    d.getRange(19, ci).setValue(c[0]).setFontWeight("bold");
+    d.getRange(20, ci).setFormula(ratio(c[1], c[2], c[3]));
+    d.getRange(20, ci, 3000, 1).setNumberFormat(c[4]);
   });
 
-  d.getRange(18, 1, 1, 19).setFontWeight("bold"); // Header-Zeile A18:S18
+  d.getRange(19, 1, 1, 21).setFontWeight("bold"); // Header-Zeile A19:U19
   d.setColumnWidth(1, 240);
   d.setFrozenColumns(1);
 }

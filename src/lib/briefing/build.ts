@@ -81,6 +81,7 @@ export function buildRawRows(
       g.lp_cta += f.lp_cta;
       g.add_to_cart += f.add_to_cart;
       g.checkout += f.checkout;
+      g.pay_submit += f.pay_submit;
       g.purchased += f.purchased;
       if (!g.adIdTag && tag) g.adIdTag = tag;
       // Prefer a human-readable name over a numeric/empty one for display.
@@ -112,12 +113,13 @@ export function buildRawRows(
       lp_cta: g?.lp_cta ?? 0,
       add_to_cart: g?.add_to_cart ?? 0,
       checkout: g?.checkout ?? 0,
+      pay_submit: g?.pay_submit ?? 0,
       purchased: g?.purchased ?? 0,
     };
   });
 
   const unmatchedFunnel = groups.filter(
-    (g) => !g._used && (g.lp_cta || g.add_to_cart || g.checkout || g.purchased)
+    (g) => !g._used && (g.lp_cta || g.add_to_cart || g.checkout || g.pay_submit || g.purchased)
   );
 
   return { rows, unmatchedFunnel };
@@ -142,6 +144,7 @@ export function aggregate(rows: RawRow[], level: Level): FunnelAgg[] {
     g.lp_cta += r.lp_cta;
     g.add_to_cart += r.add_to_cart;
     g.checkout += r.checkout;
+    g.pay_submit += r.pay_submit;
     g.purchased += r.purchased;
   }
   const out = [...groups.values()];
@@ -152,8 +155,8 @@ export function aggregate(rows: RawRow[], level: Level): FunnelAgg[] {
 function blank(level: Level, key: string): FunnelAgg {
   return {
     level, key,
-    impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, checkout: 0, purchased: 0,
-    ctr: 0, cta_rate: 0, atc_rate: 0, co_rate: 0, buy_rate: 0,
+    impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, checkout: 0, pay_submit: 0, purchased: 0,
+    ctr: 0, cta_rate: 0, atc_rate: 0, co_rate: 0, ps_rate: 0, buy_rate: 0,
     cpm: 0, cpc: 0, cost_per_cta: 0, cost_per_purchase: 0,
   };
 }
@@ -164,7 +167,8 @@ function derive(g: FunnelAgg): void {
   g.cta_rate = safe(g.lp_cta, g.clicks);
   g.atc_rate = safe(g.add_to_cart, g.lp_cta);
   g.co_rate = safe(g.checkout, g.add_to_cart);
-  g.buy_rate = safe(g.purchased, g.checkout);
+  g.ps_rate = safe(g.pay_submit, g.checkout);
+  g.buy_rate = safe(g.purchased, g.pay_submit);
   g.cpm = safe(g.spend, g.impressions) * 1000;
   g.cpc = safe(g.spend, g.clicks);
   g.cost_per_cta = safe(g.spend, g.lp_cta);

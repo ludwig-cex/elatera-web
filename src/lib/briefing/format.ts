@@ -11,7 +11,7 @@ function funnelLine(g: FunnelAgg): string {
   return (
     `${int(g.impressions)} Views → ${int(g.clicks)} Klicks (CTR ${pct(g.ctr)}) → ` +
     `${int(g.lp_cta)} LP-CTA → ${int(g.add_to_cart)} Warenkorb → ` +
-    `${int(g.checkout)} Bezahlen-Klick → ${int(g.purchased)} Gekauft`
+    `${int(g.checkout)} Zur Kasse → ${int(g.pay_submit)} Bestellt → ${int(g.purchased)} Gekauft`
   );
 }
 
@@ -52,7 +52,7 @@ export function formatBriefing(args: {
     for (const a of topAds) {
       lines.push(
         `  • ${a.key}: ${eur(a.spend)} | CTR ${pct(a.ctr)} | ` +
-          `${int(a.lp_cta)} CTA | ${int(a.add_to_cart)} WK | ${int(a.checkout)} Bez | ${int(a.purchased)} Kauf`
+          `${int(a.lp_cta)} CTA | ${int(a.add_to_cart)} WK | ${int(a.checkout)} Kasse | ${int(a.pay_submit)} Best | ${int(a.purchased)} Kauf`
       );
     }
     lines.push("");

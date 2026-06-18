@@ -111,8 +111,8 @@ function ensureTotal(g: FunnelAgg | undefined): FunnelAgg {
   return (
     g ?? {
       level: "account", key: "GESAMT",
-      impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, checkout: 0, purchased: 0,
-      ctr: 0, cta_rate: 0, atc_rate: 0, co_rate: 0, buy_rate: 0,
+      impressions: 0, clicks: 0, spend: 0, lp_cta: 0, add_to_cart: 0, checkout: 0, pay_submit: 0, purchased: 0,
+      ctr: 0, cta_rate: 0, atc_rate: 0, co_rate: 0, ps_rate: 0, buy_rate: 0,
       cpm: 0, cpc: 0, cost_per_cta: 0, cost_per_purchase: 0,
     }
   );

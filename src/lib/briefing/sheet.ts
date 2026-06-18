@@ -8,14 +8,14 @@ import type { RawRow } from "./types";
 export const RAW_HEADER = [
   "date", "campaign", "adset", "ad", "source",
   "impressions", "clicks", "spend",
-  "lp_cta", "add_to_cart", "checkout_clicked", "purchased",
+  "lp_cta", "add_to_cart", "checkout_clicked", "payment_submitted", "purchased",
 ] as const;
 
 export function rowToArray(r: RawRow): (string | number)[] {
   return [
     r.date, r.campaign, r.adset, r.ad, r.source,
     r.impressions, r.clicks, r.spend,
-    r.lp_cta, r.add_to_cart, r.checkout, r.purchased,
+    r.lp_cta, r.add_to_cart, r.checkout, r.pay_submit, r.purchased,
   ];
 }
 
