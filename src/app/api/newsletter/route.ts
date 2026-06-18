@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     if (!res.ok && res.status !== 202 && res.status !== 204) {
       const txt = await res.text().catch(() => "");
       console.error("[newsletter] klaviyo subscribe failed", res.status, txt.slice(0, 300));
-      return Response.json({ ok: false, error: "klaviyo", debug_status: res.status, debug: txt.slice(0, 400) }, { status: 502 });
+      return Response.json({ ok: false, error: "klaviyo" }, { status: 502 });
     }
     return Response.json({ ok: true });
   } catch (err) {
