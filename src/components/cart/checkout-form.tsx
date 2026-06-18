@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   PaymentElement,
   ExpressCheckoutElement,
@@ -76,6 +76,24 @@ export function CheckoutForm({
   // see WHICH method people try — incl. Klarna, which can hang without ever
   // returning an error from confirmPayment.
   const [selectedMethod, setSelectedMethod] = useState<string>("card");
+
+  // Capture the Kasse-contact email as soon as it's entered (onBlur) so it's
+  // kept even when the order is never completed (Klarna hang / abandonment).
+  // Goes to a separate Klaviyo list; deduped per email so blur doesn't spam.
+  const capturedEmailRef = useRef<string>("");
+  const captureCheckoutEmail = () => {
+    const e = email.trim().toLowerCase();
+    if (!e.includes("@") || e === capturedEmailRef.current) return;
+    capturedEmailRef.current = e;
+    try {
+      void fetch("/api/intent", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        keepalive: true,
+        body: JSON.stringify({ email: e, source: "checkout_contact", items, totalCents, utm: readUtm() }),
+      }).catch(() => {});
+    } catch {}
+  };
 
   // Track every payment failure so Klarna/BNPL hangs, card declines and init
   // errors become visible in PostHog (stage + Stripe error code/method) instead
@@ -176,6 +194,7 @@ export function CheckoutForm({
     // "Jetzt zahlungspflichtig bestellen" pressed — fire BEFORE confirmPayment so
     // we capture the attempt even when Klarna/BNPL hangs and never returns.
     track("payment_submitted", { flow: "card", method: selectedMethod, value: totalCents / 100 });
+    captureCheckoutEmail(); // safety net in case onBlur never fired
 
     const missing: string[] = [];
     if (!email.includes("@")) missing.push("E-Mail");
@@ -296,6 +315,7 @@ export function CheckoutForm({
           aria-label="E-Mail-Adresse"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onBlur={captureCheckoutEmail}
           placeholder="E-Mail-Adresse"
           className={FIELD}
           style={fieldStyle}

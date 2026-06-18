@@ -27,7 +27,15 @@ type IntentBody = {
   totalCents?: number;
   shipping?: Shipping;
   utm?: Record<string, string>;
+  // "checkout_contact" = email typed into the Kasse contact field, captured on
+  // blur even if the order is never completed (e.g. Klarna hangs). Routed to a
+  // separate list so it's distinguishable from the out-of-stock intent.
+  source?: string;
 };
+
+// Separate list for raw checkout-contact captures. Falls back to the main
+// intent list if not configured, so an email is never lost.
+const CHECKOUT_LIST_ID = process.env.KLAVIYO_CHECKOUT_LIST_ID || KLAVIYO_LIST_ID;
 
 // Klaviyo standard "first_name"/"last_name" from a single full-name string.
 function splitName(name?: string): { first_name?: string; last_name?: string } {
@@ -90,6 +98,8 @@ export async function POST(request: Request) {
     return Response.json({ ok: false, error: "invalid_email" }, { status: 400 });
   }
   const email = body.email.trim().toLowerCase();
+  const isCheckoutContact = body.source === "checkout_contact";
+  const listId = isCheckoutContact ? CHECKOUT_LIST_ID : KLAVIYO_LIST_ID;
 
   const utm = body.utm ?? {};
   const ship = body.shipping;
@@ -101,7 +111,7 @@ export async function POST(request: Request) {
     : null;
 
   const properties: Record<string, unknown> = {
-    intent_source: "nutra-sana cart out-of-stock",
+    intent_source: isCheckoutContact ? "nutra-sana checkout contact" : "nutra-sana cart out-of-stock",
     cart_products: (body.items ?? []).map((i) => i.product).join(","),
     cart_items: body.items?.length ?? 0,
     cart_value_eur:
@@ -175,7 +185,7 @@ export async function POST(request: Request) {
     // 2) Add profile to the pre-launch intent list (no marketing consent /
     // no DOI — purely collecting interest for now).
     const listRes = await withTimeout(
-      `${KLAVIYO_BASE}/lists/${KLAVIYO_LIST_ID}/relationships/profiles/`,
+      `${KLAVIYO_BASE}/lists/${listId}/relationships/profiles/`,
       {
         method: "POST",
         headers: klaviyoHeaders(key),
@@ -198,8 +208,9 @@ export async function POST(request: Request) {
         ? `${(body.totalCents / 100).toFixed(2).replace(".", ",")} €`
         : "—";
     const adId = utm.utm_content || "organisch";
-    after(() =>
-      notifyTelegram(
+    if (!isCheckoutContact)
+      after(() =>
+        notifyTelegram(
         `🎉 Neuer Intent auf nutra-sana.de\n` +
           `Produkte: ${products}\n` +
           `Warenkorbwert: ${value}\n` +
