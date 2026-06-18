@@ -2,6 +2,7 @@
 // (CTA / add-to-cart / purchased) into one raw row per day per ad, then provide
 // helpers to aggregate any slice (period × level) with derived funnel rates.
 import type { FunnelAgg, FunnelDayRow, Level, MetaDayRow, RawRow } from "./types";
+import type { LandingDay } from "./posthog";
 
 // Ad names travel Meta -> URL -> PostHog and pick up URL-encoding and case
 // drift on the way (e.g. "Arthrose LP4 – Ad1" becomes "Arthrose%20LP4%20%E2%80%93%20Ad1").
@@ -41,8 +42,17 @@ const onlyDigits = (s: string) => /^\d{6,}$/.test(s);
  */
 export function buildRawRows(
   meta: MetaDayRow[],
-  funnel: FunnelDayRow[]
+  funnel: FunnelDayRow[],
+  landings: LandingDay[] = []
 ): { rows: RawRow[]; unmatchedFunnel: FunnelGroup[] } {
+  // Advertorial landings keyed by date|normalised-ad (summed across url-encoded
+  // duplicates), looked up per Meta ad row — independent of the funnel join.
+  const landingsByKey = new Map<string, number>();
+  for (const l of landings) {
+    const k = `${l.date}|${normName(l.ad)}`;
+    landingsByKey.set(k, (landingsByKey.get(k) ?? 0) + l.landings);
+  }
+
   const groups: FunnelGroup[] = [];
   const byKey = new Map<string, FunnelGroup>(); // many keys -> one group
 
@@ -83,7 +93,6 @@ export function buildRawRows(
       g.checkout += f.checkout;
       g.pay_submit += f.pay_submit;
       g.purchased += f.purchased;
-      g.landings += f.landings;
       if (!g.adIdTag && tag) g.adIdTag = tag;
       // Prefer a human-readable name over a numeric/empty one for display.
       if ((!g.ad || onlyDigits(g.ad)) && f.ad && !onlyDigits(f.ad)) g.ad = f.ad;
@@ -116,7 +125,7 @@ export function buildRawRows(
       checkout: g?.checkout ?? 0,
       pay_submit: g?.pay_submit ?? 0,
       purchased: g?.purchased ?? 0,
-      landings: g?.landings ?? 0,
+      landings: landingsByKey.get(`${m.date}|${normName(m.ad)}`) ?? 0,
     };
   });
 

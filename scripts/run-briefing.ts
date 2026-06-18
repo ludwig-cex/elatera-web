@@ -3,7 +3,7 @@
 // the briefing. Usage: npx tsx scripts/run-briefing.ts [days]   (default 14)
 import { readFileSync } from "node:fs";
 import { fetchMetaDays } from "../src/lib/briefing/meta";
-import { fetchFunnelDays } from "../src/lib/briefing/posthog";
+import { fetchFunnelDays, fetchLandings } from "../src/lib/briefing/posthog";
 import { buildRawRows, aggregate } from "../src/lib/briefing/build";
 import { pushRows } from "../src/lib/briefing/sheet";
 import { ruleSignals } from "../src/lib/briefing/recommend";
@@ -29,10 +29,12 @@ const windowSince = berlinDay(7);
 
 (async () => {
   console.log(`Zeitraum: ${since} … ${until} (${days} Tage)\n`);
-  const [meta, funnel] = await Promise.all([fetchMetaDays(since, until), fetchFunnelDays(since, until)]);
-  console.log(`Meta-Zeilen: ${meta.length} · PostHog-Zeilen: ${funnel.length}`);
+  const [meta, funnel, landings] = await Promise.all([
+    fetchMetaDays(since, until), fetchFunnelDays(since, until), fetchLandings(since, until),
+  ]);
+  console.log(`Meta-Zeilen: ${meta.length} · PostHog-Zeilen: ${funnel.length} · Landungen-Zeilen: ${landings.length}`);
 
-  const { rows, unmatchedFunnel } = buildRawRows(meta, funnel);
+  const { rows, unmatchedFunnel } = buildRawRows(meta, funnel, landings);
   const u = unmatchedFunnel.reduce(
     (a, g) => ({ cta: a.cta + g.lp_cta, wk: a.wk + g.add_to_cart, kauf: a.kauf + g.purchased }),
     { cta: 0, wk: 0, kauf: 0 }

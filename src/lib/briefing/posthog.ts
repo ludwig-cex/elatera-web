@@ -36,16 +36,11 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       count(DISTINCT if(event = 'add_to_cart', person_id, NULL))           AS add_to_cart,
       count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
       count(DISTINCT if(event = 'payment_submitted', person_id, NULL))     AS pay_submit,
-      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased,
-      -- On-site "Klicks": fb/ig advertorial landings (Meta-Klick, der wirklich
-      -- ankam). Per Ad via utm_content. WHERE beschränkt $pageview auf das
-      -- Advertorial, daher reicht hier der utm_source-Check.
-      count(DISTINCT if(event = '$pageview' AND properties.utm_source IN ('fb','ig'), person_id, NULL)) AS landings
+      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
-      AND ( event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
-            OR (event = '$pageview' AND properties.$host LIKE '%mein-apothekenrat%') )
+      AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
   `.trim();
@@ -73,7 +68,41 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     checkout: num(r[8]),
     pay_submit: num(r[9]),
     purchased: num(r[10]),
-    landings: num(r[11]),
+  }));
+}
+
+// Advertorial landings = fb/ig $pageview on the advertorial, per day per ad
+// (utm_content). Kept as a SEPARATE, simple query (grouped only by day + ad) so
+// it can't fragment across source/campaign/term groups like the funnel join did.
+// This is the on-site "Klick" (the Meta click that actually arrived).
+export type LandingDay = { date: string; ad: string; landings: number };
+
+export async function fetchLandings(since: string, until: string): Promise<LandingDay[]> {
+  const key = process.env.POSTHOG_PERSONAL_API_KEY;
+  if (!key) throw new Error("POSTHOG_PERSONAL_API_KEY not configured");
+  const untilExclusive = addDays(until, 1);
+  const hogql = `
+    SELECT toString(toDate(timestamp)) AS day, properties.utm_content AS ad,
+           count(DISTINCT person_id) AS landings
+    FROM events
+    WHERE timestamp >= toDateTime('${since} 00:00:00')
+      AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
+      AND event = '$pageview'
+      AND properties.$host LIKE '%mein-apothekenrat%'
+      AND properties.utm_source IN ('fb','ig')
+    GROUP BY day, ad
+  `.trim();
+  const res = await fetch(`${HOST}/api/projects/${PROJECT}/query/`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ query: { kind: "HogQLQuery", query: hogql } }),
+  });
+  if (!res.ok) throw new Error(`PostHog landings ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const json = (await res.json()) as { results?: unknown[][] };
+  return (json.results ?? []).map((r): LandingDay => ({
+    date: String(r[0] ?? ""),
+    ad: String(r[1] ?? ""),
+    landings: num(r[2]),
   }));
 }
 

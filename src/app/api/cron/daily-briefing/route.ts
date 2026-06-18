@@ -1,7 +1,7 @@
 import { after } from "next/server";
 import { notifyTelegram } from "@/lib/notify";
 import { fetchMetaDays } from "@/lib/briefing/meta";
-import { fetchFunnelDays } from "@/lib/briefing/posthog";
+import { fetchFunnelDays, fetchLandings } from "@/lib/briefing/posthog";
 import { buildRawRows, aggregate } from "@/lib/briefing/build";
 import { pushRows } from "@/lib/briefing/sheet";
 import { ruleSignals, claudeNarrative } from "@/lib/briefing/recommend";
@@ -51,12 +51,13 @@ export async function GET(request: Request) {
   const windowSince = berlinDay(7); // for the 7d aggregates regardless of backfill size
 
   try {
-    const [meta, funnel] = await Promise.all([
+    const [meta, funnel, landings] = await Promise.all([
       fetchMetaDays(since, until),
       fetchFunnelDays(since, until),
+      fetchLandings(since, until),
     ]);
 
-    const { rows, unmatchedFunnel } = buildRawRows(meta, funnel);
+    const { rows, unmatchedFunnel } = buildRawRows(meta, funnel, landings);
 
     // Write everything we fetched to the sheet (idempotent upsert by date).
     const sheet = await pushRows(rows);

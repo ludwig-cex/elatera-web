@@ -30,7 +30,6 @@ export type FunnelDayRow = {
   checkout: number; // checkout_clicked ("Zur Kasse")
   pay_submit: number; // payment_submitted ("Jetzt zahlungspflichtig bestellen")
   purchased: number; // payment_authorized
-  landings: number; // fb/ig advertorial pageviews (on-site "Klicks")
 };
 
 // The unified per-day-per-ad raw row that gets written to the "Rohdaten" sheet.
