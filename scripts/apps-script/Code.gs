@@ -104,8 +104,10 @@ function ensureRaw_(ss, header) {
 // (re)create the Dashboard with locale-correct formulas. Needs no redeploy.
 function rebuildDashboard() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var existing = ss.getSheetByName(DASH_SHEET);
-  if (existing) ss.deleteSheet(existing);
+  ["Dashboard", "Detail"].forEach(function (n) {
+    var s = ss.getSheetByName(n);
+    if (s) ss.deleteSheet(s);
+  });
   buildDashboard_(ss);
 }
 
@@ -122,6 +124,7 @@ function buildDashboard_(ss) {
   // semicolon list separator, so: non-"en_*" locale ⇒ ';'.
   var S = /^en/.test(String(ss.getSpreadsheetLocale())) ? "," : ";";
   var EUR = "0.00 €", PCT = "0.00%", XX = '0.00"×"';
+  buildDetail_(ss, S, EUR, PCT, XX); // Datenquelle für ④ liegt auf eigenem Tab "Detail"
 
   // Rohdaten-Spalten: F=Impr G=Link-Klicks H=Spend I=LP-CTA J=WK K=Kasse
   //   L=Bestellt M=Kauf N=Landung O=Reach P=Alle-Klicks Q=Meta-LPV R=Produktansicht S=Umsatz
@@ -146,10 +149,10 @@ function buildDashboard_(ss) {
   // ===== ① SCORECARD (Zeile 6 Titel, 7 Labels, 8 Werte) — referenziert den Funnel unten =====
   d.getRange("A6").setValue("① Scorecard").setFontWeight("bold");
   var score = [
-    ["Spend", "=B21", EUR], ["Impressions", "=B12", "#,##0"],
-    ["Link-CTR", div("B16", "B12"), PCT], ["CPC", div("B21", "B16"), EUR],
-    ["Landungen", "=E12", "#,##0"], ["Bestellt", "=E20", "#,##0"],
-    ["CAC", div("B21", "E21"), EUR], ["ROAS", div("E22", "B21"), XX],
+    ["Spend", "=B17", EUR], ["Impressions", "=B12", "#,##0"],
+    ["Link-CTR", div("B15", "B12"), PCT], ["CPC", div("B17", "B15"), EUR],
+    ["Landungen", "=E12", "#,##0"], ["Bestellt", "=E17", "#,##0"],
+    ["CAC", div("B17", "E18"), EUR], ["ROAS", div("E19", "B17"), XX],
   ];
   score.forEach(function (s, i) {
     d.getRange(7, 1 + i).setValue(s[0]).setFontColor("#666666");
@@ -161,40 +164,35 @@ function buildDashboard_(ss) {
   d.getRange("A11").setValue("META — Lieferung (misst die Anzeige)").setFontWeight("bold").setFontColor("#185FA5");
   d.getRange("D11").setValue("POSTHOG — Website (misst die Seite)").setFontWeight("bold").setFontColor("#0F6E56");
 
-  // Meta-Seite (Label A, Wert B)
+  // Meta-Seite (Label A, Wert B) — nur Mengen; Raten stehen oben in der Scorecard.
   lbl("A12", "Impressions");           d.getRange("B12").setFormula(sumifs("F")).setNumberFormat("#,##0");
   lbl("A13", "Reach (Personen)");      d.getRange("B13").setFormula(sumifs("O")).setNumberFormat("#,##0");
-  lbl("A14", "Frequency");             d.getRange("B14").setFormula(div("B12", "B13")).setNumberFormat(XX);
-  lbl("A15", "Alle Klicks");           d.getRange("B15").setFormula(sumifs("P")).setNumberFormat("#,##0");
-  lbl("A16", "Link-Klicks");           d.getRange("B16").setFormula(sumifs("G")).setNumberFormat("#,##0");
-  lbl("A17", "  · CTR (Link)");        d.getRange("B17").setFormula(div("B16", "B12")).setNumberFormat(PCT);
-  lbl("A18", "  · CPC");               d.getRange("B18").setFormula(div("B21", "B16")).setNumberFormat(EUR);
-  lbl("A19", "Angekommen — Meta-LPV"); d.getRange("B19").setFormula(sumifs("Q")).setNumberFormat("#,##0");
-  note("A20", "  mit Pixel → eher zu niedrig");
-  lbl("A21", "Spend €");               d.getRange("B21").setFormula(sumifs("H")).setNumberFormat(EUR);
+  lbl("A14", "Alle Klicks");           d.getRange("B14").setFormula(sumifs("P")).setNumberFormat("#,##0");
+  lbl("A15", "Link-Klicks");           d.getRange("B15").setFormula(sumifs("G")).setNumberFormat("#,##0");
+  lbl("A16", "Angekommen — Meta-LPV"); d.getRange("B16").setFormula(sumifs("Q")).setNumberFormat("#,##0");
+  lbl("A17", "Spend €");               d.getRange("B17").setFormula(sumifs("H")).setNumberFormat(EUR);
 
   // PostHog-Seite (Label D, Wert E)
   lbl("D12", "Angekommen — Landung");  d.getRange("E12").setFormula(sumifs("N")).setNumberFormat("#,##0");
-  note("D13", "  pixel-less / cookieless → eher zu hoch");
-  lbl("D14", "CTA → Shop");            d.getRange("E14").setFormula(sumifs("I")).setNumberFormat("#,##0");
-  lbl("D15", "  · Rate (CTA/Landung)"); d.getRange("E15").setFormula(div("E14", "E12")).setNumberFormat(PCT);
-  lbl("D16", "Produktansicht (Shop)"); d.getRange("E16").setFormula(sumifs("R")).setNumberFormat("#,##0");
-  lbl("D17", "Warenkorb");             d.getRange("E17").setFormula(sumifs("J")).setNumberFormat("#,##0");
-  lbl("D18", "  · Produkt→Warenkorb"); d.getRange("E18").setFormula(div("E17", "E16")).setNumberFormat(PCT);
-  lbl("D19", "Zur Kasse");             d.getRange("E19").setFormula(sumifs("K")).setNumberFormat("#,##0");
-  lbl("D20", "Bestellt (zahlungspfl.)"); d.getRange("E20").setFormula(sumifs("L")).setNumberFormat("#,##0");
-  lbl("D21", "Gekauft");               d.getRange("E21").setFormula(sumifs("M")).setNumberFormat("#,##0");
-  lbl("D22", "Umsatz €");              d.getRange("E22").setFormula(sumifs("S")).setNumberFormat(EUR);
-  lbl("D23", "  · ROAS");              d.getRange("E23").setFormula(div("E22", "B21")).setNumberFormat(XX);
+  lbl("D13", "CTA → Shop");            d.getRange("E13").setFormula(sumifs("I")).setNumberFormat("#,##0");
+  lbl("D14", "Produktansicht (Shop)"); d.getRange("E14").setFormula(sumifs("R")).setNumberFormat("#,##0");
+  lbl("D15", "Warenkorb");             d.getRange("E15").setFormula(sumifs("J")).setNumberFormat("#,##0");
+  lbl("D16", "Zur Kasse");             d.getRange("E16").setFormula(sumifs("K")).setNumberFormat("#,##0");
+  lbl("D17", "Bestellt (zahlungspfl.)"); d.getRange("E17").setFormula(sumifs("L")).setNumberFormat("#,##0");
+  lbl("D18", "Gekauft");               d.getRange("E18").setFormula(sumifs("M")).setNumberFormat("#,##0");
+  lbl("D19", "Umsatz €");              d.getRange("E19").setFormula(sumifs("S")).setNumberFormat(EUR);
+  note("A20", "Angekommen: Meta-LPV mit Pixel (eher zu niedrig) · PostHog-Landung pixel-less (eher zu hoch) — Differenz = Mess-Methode, kein Fehler.");
 
-  // ===== ③ LEGENDE =====
-  d.getRange("A25").setValue("③ Legende").setFontWeight("bold");
-  note("A26", "Link-Klick (Meta): Klick, der wirklich zur Seite führt (ohne Likes/Profil). Basis für CTR & CPC.");
-  note("A27", "Meta-LPV: Metas eigene Zählung „Seite geladen\" — braucht Pixel, daher eher zu niedrig.");
-  note("A28", "Landung: Person, die laut PostHog aufs Advertorial kam (fb/ig). Cookieless, daher eher zu hoch.");
-  note("A29", "CTA: Klick vom Advertorial in den Shop.   ·   CAC = Spend ÷ Käufe   ·   ROAS = Umsatz ÷ Spend.");
-  note("A30", "Meta misst die Anzeige, PostHog die Website — sie stimmen nie exakt überein. Beide nebeneinander zeigt, wo Leute abspringen.");
+  // ===== ③ LEGENDE (einklappbar — [−]/[+] am linken Rand, Zeilen 23–27) =====
+  d.getRange("A22").setValue("③ Legende").setFontWeight("bold");
+  note("A23", "Link-Klick (Meta): Klick, der wirklich zur Seite führt (ohne Likes/Profil). Basis für CTR & CPC.");
+  note("A24", "Meta-LPV: Metas eigene Zählung „Seite geladen\" — braucht Pixel, daher eher zu niedrig.");
+  note("A25", "Landung: Person, die laut PostHog aufs Advertorial kam (fb/ig). Cookieless, daher eher zu hoch.");
+  note("A26", "CTA: Klick vom Advertorial in den Shop.   ·   CAC = Spend ÷ Käufe   ·   ROAS = Umsatz ÷ Spend.");
+  note("A27", "Meta misst die Anzeige, PostHog die Website — sie stimmen nie exakt überein. Beide nebeneinander zeigt, wo Leute abspringen.");
+  try { d.getRange("23:27").shiftRowGroupDepth(1); d.getRowGroup(23, 1).collapse(); } catch (e) {}
 
+  // ===== ④ ALLE ADS NEBENEINANDER — transponierter Vergleich (Quelle: Tab „Detail") =====
   var rules = [];
   function heatRow(row, greenHigh) { // höher (oder bei false: niedriger) = besser → grün
     var lo = greenHigh ? "#F7C1C1" : "#C0DD97", hi = greenHigh ? "#C0DD97" : "#F7C1C1";
@@ -202,75 +200,81 @@ function buildDashboard_(ss) {
       .setGradientMinpoint(lo).setGradientMaxpoint(hi)
       .setRanges([d.getRange(row, 2, 1, 14)]).build());
   }
-  function heatCol(col) {
-    rules.push(SpreadsheetApp.newConditionalFormatRule()
-      .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
-      .setRanges([d.getRange(col + "50:" + col + "3000")]).build());
-  }
-
-  // ===== ④ ALLE ADS NEBENEINANDER — transponierter Vergleich (gespeist aus ⑤) =====
-  d.getRange("A32").setValue("④ Alle Ads nebeneinander (nach Spend sortiert)").setFontWeight("bold");
-  d.getRange("A33").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
+  d.getRange("A29").setValue("④ Alle Ads nebeneinander (Spend > 2 €, nach Spend sortiert)").setFontWeight("bold");
+  d.getRange("A30").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
   var cmpLabels = [
     "Spend €", "Frequency", "CTR (Link)", "CPC €", "Landungen",
     "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "CAC €", "ROAS",
   ];
-  cmpLabels.forEach(function (t, i) { d.getRange(34 + i, 1).setValue(t).setFontColor("#666666"); });
-  // Detail-Daten liegen ab Zeile 50. Kuratierte Auswahl, dann transponiert:
+  cmpLabels.forEach(function (t, i) { d.getRange(31 + i, 1).setValue(t).setFontColor("#666666"); });
+  // Kuratierte Auswahl aus dem Detail-Tab (Daten ab Zeile 2), nur Ads mit Spend > 2 €:
   //   Col1=Ad Col2=Spend Col16=Freq Col18=CTR Col19=CPC Col7=Landung
   //   Col22=CTA-Rate Col10=Produktansicht Col23=Produkt→WK Col11=Warenkorb Col25=CAC Col26=ROAS
-  d.getRange("B33").setFormula(
-    "=TRANSPOSE(QUERY($A$50:$Z$90" + S +
-    "\"select Col1,Col2,Col16,Col18,Col19,Col7,Col22,Col10,Col23,Col11,Col25,Col26 where Col1 is not null order by Col2 desc\"" + S + "0))");
-  d.getRange("B33:O33").setFontWeight("bold").setWrap(true); // Ad-Namen als Spaltenköpfe
+  d.getRange("B30").setFormula(
+    "=TRANSPOSE(QUERY(Detail!$A$2:$Z$120" + S +
+    "\"select Col1,Col2,Col16,Col18,Col19,Col7,Col22,Col10,Col23,Col11,Col25,Col26 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
+  d.getRange("B30:O30").setFontWeight("bold").setWrap(true); // Ad-Namen als Spaltenköpfe
   var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", EUR, XX];
-  cmpFmt.forEach(function (f, i) { d.getRange(34 + i, 2, 1, 14).setNumberFormat(f); });
-  heatRow(36, true);   // CTR (Link)
-  heatRow(37, false);  // CPC — niedriger = besser
-  heatRow(39, true);   // CTA-Rate
-  heatRow(41, true);   // Produkt→WK
-
-  // ===== ⑤ DETAIL — alle Kennzahlen je Ad (Drill-down) =====
-  d.getRange("A47").setValue("⑤ Detail — alle Kennzahlen je Ad (Drill-down)").setFontWeight("bold");
-  d.getRange("B48").setValue("Mengen — Personen & Beträge").setFontWeight("bold").setFontColor("#185FA5");
-  d.getRange("P48").setValue("Kennzahlen — Quoten & Kosten").setFontWeight("bold").setFontColor("#993C1D");
-  var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S) ";
-  var where = "where D is not null and toDate(A) >= date '\"&TEXT($B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT($B$4" + S + "\"yyyy-mm-dd\")&\"' ";
-  var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €'";
-  d.getRange("A49").setFormula("=QUERY(Rohdaten!$A:$S" + S + "\"" + sel + where + tail + "\"" + S + "1)");
-  // Output: Header Zeile 49, Daten ab 50. A=Ad B=Spend C=Impr D=Reach E=AlleKlk
-  //   F=LinkKlk G=Landung H=LPV I=CTA J=Prod K=WK L=Kasse M=Bestellt N=Kauf O=Umsatz
-  d.getRange("B50:B").setNumberFormat(EUR);
-  d.getRange("O50:O").setNumberFormat(EUR);
-  function ratio(n, dn, mult) {
-    return "=ARRAYFORMULA(IF(($A$50:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
-  }
-  var derived = [
-    ["Frequency", "$C$50:$C", "$D$50:$D", "", XX],
-    ["CPM €", "$B$50:$B", "$C$50:$C", "*1000", EUR],
-    ["CTR (Link)", "$F$50:$F", "$C$50:$C", "", PCT],
-    ["CPC €", "$B$50:$B", "$F$50:$F", "", EUR],
-    ["Landerate", "$G$50:$G", "$F$50:$F", "", PCT],
-    ["€/Landung", "$B$50:$B", "$G$50:$G", "", EUR],
-    ["CTA-Rate", "$I$50:$I", "$G$50:$G", "", PCT],
-    ["Produkt→WK", "$K$50:$K", "$J$50:$J", "", PCT],
-    ["Kasse-Rate", "$L$50:$L", "$K$50:$K", "", PCT],
-    ["CAC €", "$B$50:$B", "$N$50:$N", "", EUR],
-    ["ROAS", "$O$50:$O", "$B$50:$B", "", XX],
-  ];
-  derived.forEach(function (c, i) {
-    var ci = 16 + i; // P..
-    d.getRange(49, ci).setValue(c[0]).setFontWeight("bold");
-    d.getRange(50, ci).setFormula(ratio(c[1], c[2], c[3]));
-    d.getRange(50, ci, 3000, 1).setNumberFormat(c[4]);
-  });
-  d.getRange(49, 1, 1, 26).setFontWeight("bold"); // Header A49:Z49
-  ["R", "T", "V", "W"].forEach(heatCol); // Detail-Heatmap auf Quoten
-
+  cmpFmt.forEach(function (f, i) { d.getRange(31 + i, 2, 1, 14).setNumberFormat(f); });
+  heatRow(33, true);   // CTR (Link)
+  heatRow(34, false);  // CPC — niedriger = besser
+  heatRow(36, true);   // CTA-Rate
+  heatRow(38, true);   // Produkt→WK
   d.setConditionalFormatRules(rules);
+
+  d.getRange("A43").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
   d.setColumnWidth(1, 230);
   d.setColumnWidth(4, 180);
   d.setFrozenColumns(1);
+}
+
+// Eigener Tab „Detail": pro Ad eine Zeile, alle Kennzahlen — Datenquelle für den
+// ④ Vergleich. Zeitraum kommt aus Dashboard!B3/B4.
+function buildDetail_(ss, S, EUR, PCT, XX) {
+  var existing = ss.getSheetByName("Detail");
+  if (existing) ss.deleteSheet(existing);
+  var t = ss.insertSheet("Detail");
+  var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S) ";
+  var where = "where D is not null and toDate(A) >= date '\"&TEXT(Dashboard!$B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT(Dashboard!$B$4" + S + "\"yyyy-mm-dd\")&\"' ";
+  var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €'";
+  t.getRange("A1").setFormula("=QUERY(Rohdaten!$A:$S" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  // Header Zeile 1, Daten ab 2. A=Ad B=Spend C=Impr D=Reach E=AlleKlk F=LinkKlk
+  //   G=Landung H=LPV I=CTA J=Prod K=WK L=Kasse M=Bestellt N=Kauf O=Umsatz
+  t.getRange("B2:B").setNumberFormat(EUR);
+  t.getRange("O2:O").setNumberFormat(EUR);
+  function ratio(n, dn, mult) {
+    return "=ARRAYFORMULA(IF(($A$2:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
+  }
+  var derived = [
+    ["Frequency", "$C$2:$C", "$D$2:$D", "", XX],
+    ["CPM €", "$B$2:$B", "$C$2:$C", "*1000", EUR],
+    ["CTR (Link)", "$F$2:$F", "$C$2:$C", "", PCT],
+    ["CPC €", "$B$2:$B", "$F$2:$F", "", EUR],
+    ["Landerate", "$G$2:$G", "$F$2:$F", "", PCT],
+    ["€/Landung", "$B$2:$B", "$G$2:$G", "", EUR],
+    ["CTA-Rate", "$I$2:$I", "$G$2:$G", "", PCT],
+    ["Produkt→WK", "$K$2:$K", "$J$2:$J", "", PCT],
+    ["Kasse-Rate", "$L$2:$L", "$K$2:$K", "", PCT],
+    ["CAC €", "$B$2:$B", "$N$2:$N", "", EUR],
+    ["ROAS", "$O$2:$O", "$B$2:$B", "", XX],
+  ];
+  var rules = [];
+  derived.forEach(function (c, i) {
+    var ci = 16 + i; // P..
+    t.getRange(1, ci).setValue(c[0]).setFontWeight("bold");
+    t.getRange(2, ci).setFormula(ratio(c[1], c[2], c[3]));
+    t.getRange(2, ci, 3000, 1).setNumberFormat(c[4]);
+  });
+  ["R", "T", "V", "W"].forEach(function (col) {
+    rules.push(SpreadsheetApp.newConditionalFormatRule()
+      .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
+      .setRanges([t.getRange(col + "2:" + col + "3000")]).build());
+  });
+  t.setConditionalFormatRules(rules);
+  t.getRange(1, 1, 1, 26).setFontWeight("bold");
+  t.setColumnWidth(1, 230);
+  t.setFrozenRows(1);
+  t.setFrozenColumns(1);
 }
 
 // ---- helpers ----
