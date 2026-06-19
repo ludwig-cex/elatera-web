@@ -94,7 +94,8 @@ export async function GET(request: Request) {
       unmatchedNote,
     });
 
-    if (!dry) after(() => notifyTelegram(message));
+    // Telegram-Versand abgeschaltet: die tägliche Auswertung kommt jetzt als Bild
+    // über /api/cron/daily-message. Dieser Cron pflegt nur noch die Rohdaten.
 
     return Response.json({
       ok: true,

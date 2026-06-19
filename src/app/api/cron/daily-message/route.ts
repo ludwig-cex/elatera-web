@@ -1,17 +1,18 @@
-import { notifyTelegram } from "@/lib/notify";
+import { notifyTelegram, notifyTelegramPhoto } from "@/lib/notify";
 import { fetchMetaDays } from "@/lib/briefing/meta";
 import { fetchFunnelDays, fetchLandings } from "@/lib/briefing/posthog";
 import { buildRawRows } from "@/lib/briefing/build";
-import { buildComparison, formatDailyMessage, addDays } from "@/lib/briefing/daily";
+import { buildComparison, formatDailyMessage, addDays, weekdayLabel } from "@/lib/briefing/daily";
+import { renderDailyImage } from "@/lib/briefing/daily-image";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
-// Daily 1/2/3 Telegram review: yesterday vs the day before + week-to-date vs the
-// same weekday span last week, plus a Claude-written learnings/iteration story.
+// Daily Telegram review as a PNG (forwardable to WhatsApp): yesterday vs the day
+// before + week-to-date vs the same weekday span last week.
 //   - GET with `Authorization: Bearer <CRON_SECRET>`.
 //   - `?stichtag=YYYY-MM-DD` overrides the reference day (default = yesterday).
-//   - `?dry=1` returns the message as JSON without sending to Telegram.
+//   - `?img=1` returns the PNG directly (for viewing). `?dry=1` skips sending.
 
 function berlinDay(offsetDays: number): string {
   const now = new Date();
@@ -45,11 +46,26 @@ export async function GET(request: Request) {
     ]);
     const { rows } = buildRawRows(meta, funnel, landings);
     const comparison = buildComparison(rows, stichtag);
-    const message = formatDailyMessage(comparison, process.env.BRIEFING_DASHBOARD_LINK);
 
-    if (!dry) await notifyTelegram(message, { parseMode: "HTML" });
+    // ?img=1 → return the PNG directly (for viewing/testing).
+    if (url.searchParams.get("img") === "1") return renderDailyImage(comparison);
 
-    return Response.json({ ok: true, stichtag, sent: !dry, preview: message });
+    const link = process.env.BRIEFING_DASHBOARD_LINK;
+    const caption = `📊 <b>Ads-Auswertung — ${weekdayLabel(stichtag)}</b>${link ? `\n📄 ${link}` : ""}`;
+
+    let mode = "photo";
+    if (!dry) {
+      try {
+        const png = await renderDailyImage(comparison).arrayBuffer();
+        await notifyTelegramPhoto(png, caption);
+      } catch (imgErr) {
+        // Bild-Rendering gescheitert → Text-Fallback, damit nie nichts ankommt.
+        mode = "text-fallback";
+        console.error("[daily-message] image failed", (imgErr as Error)?.message);
+        await notifyTelegram(formatDailyMessage(comparison, link), { parseMode: "HTML" });
+      }
+    }
+    return Response.json({ ok: true, stichtag, sent: !dry, mode });
   } catch (err) {
     const msg = (err as Error)?.message ?? "unknown";
     return Response.json({ ok: false, error: msg }, { status: 500 });

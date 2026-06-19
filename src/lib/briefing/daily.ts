@@ -83,25 +83,40 @@ const WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 const dm = (s: string) => `${s.slice(8, 10)}.${s.slice(5, 7)}.`;
 const wdLabel = (s: string) => `${WD[parse(s).getUTCDay()]} ${dm(s)}`;
 
-// One cur-vs-prev funnel table (HTML <pre> body, monospace) — used for Tag & Woche.
-export function funnelTable(cur: DailyAgg, prev: DailyAgg): string {
+// One cur-vs-prev funnel row: label, formatted value, delta, and a tone for
+// coloring (1 = good/green, -1 = bad/red, 0 = neutral). Shared by text & image.
+export type Cell = { label: string; value: string; delta: string; tone: -1 | 0 | 1 };
+const toneOf = (diff: number, dir: number): -1 | 0 | 1 => (diff === 0 || dir === 0 ? 0 : Math.sign(diff) * dir > 0 ? 1 : -1);
+
+export function tableCells(cur: DailyAgg, prev: DailyAgg): Cell[] {
   const rc = rates(cur), rp = rates(prev);
-  const rows: [string, string, string][] = [
-    ["Impressions", de(cur.impressions), dPctCount(cur.impressions, prev.impressions)],
-    ["Link-Klicks", de(cur.clicks), dPctCount(cur.clicks, prev.clicks)],
-    ["  CTR", pct(rc.ctr), dPP(rc.ctr, rp.ctr)],
-    ["Landungen", de(cur.landings), dPctCount(cur.landings, prev.landings)],
-    ["CTA → Shop", de(cur.lp_cta), dPctCount(cur.lp_cta, prev.lp_cta)],
-    ["  CTA-Rate", pct(rc.cta), dPP(rc.cta, rp.cta)],
-    ["Produktansicht", de(cur.product_view), dPctCount(cur.product_view, prev.product_view)],
-    ["Warenkorb", de(cur.add_to_cart), dPctCount(cur.add_to_cart, prev.add_to_cart)],
-    ["Bestellt", de(cur.pay_submit), dPctCount(cur.pay_submit, prev.pay_submit)],
-    ["Gekauft", de(cur.purchased), dPctCount(cur.purchased, prev.purchased)],
-    ["Spend", eur(cur.spend), dEur(cur.spend, prev.spend)],
-    ["  CPC", eur(rc.cpc), dEur(rc.cpc, rp.cpc)],
+  const cnt = (label: string, c: number, p: number, dir = 1): Cell => ({ label, value: de(c), delta: dPctCount(c, p), tone: toneOf(c - p, dir) });
+  const rt = (label: string, c: number, p: number): Cell => ({ label, value: pct(c), delta: dPP(c, p), tone: toneOf(c - p, 1) });
+  const er = (label: string, c: number, p: number, dir: number): Cell => ({ label, value: eur(c), delta: dEur(c, p), tone: toneOf(c - p, dir) });
+  return [
+    cnt("Impressions", cur.impressions, prev.impressions),
+    cnt("Link-Klicks", cur.clicks, prev.clicks),
+    rt("  CTR", rc.ctr, rp.ctr),
+    cnt("Landungen", cur.landings, prev.landings),
+    cnt("CTA → Shop", cur.lp_cta, prev.lp_cta),
+    rt("  CTA-Rate", rc.cta, rp.cta),
+    cnt("Produktansicht", cur.product_view, prev.product_view),
+    cnt("Warenkorb", cur.add_to_cart, prev.add_to_cart),
+    cnt("Bestellt", cur.pay_submit, prev.pay_submit),
+    cnt("Gekauft", cur.purchased, prev.purchased),
+    er("Spend", cur.spend, prev.spend, 0),
+    er("  CPC", rc.cpc, rp.cpc, -1),
   ];
-  return rows.map(([l, v, d]) => `${pad(l, 15)}${padL(v, 9)}  ${d}`).join("\n");
 }
+
+// Text variant (HTML <pre> body, monospace) — used for Tag & Woche.
+export function funnelTable(cur: DailyAgg, prev: DailyAgg): string {
+  return tableCells(cur, prev).map((c) => `${pad(c.label, 15)}${padL(c.value, 9)}  ${c.delta}`).join("\n");
+}
+
+// Date label dd.mm. — exported for the image renderer.
+export const dmLabel = (s: string) => dm(s);
+export const weekdayLabel = (s: string) => wdLabel(s);
 
 // Full Telegram message (HTML parse_mode): ① Tag-Tabelle + ② Wochen-Tabelle.
 export function formatDailyMessage(c: Comparison, dashboardLink?: string): string {
