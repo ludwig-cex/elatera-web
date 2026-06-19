@@ -88,6 +88,7 @@ export function buildRawRows(
       groups.push(g);
     } else {
       g.product_viewed += f.product_viewed;
+      g.product_viewed_direct += f.product_viewed_direct;
       g.lp_cta += f.lp_cta;
       g.add_to_cart += f.add_to_cart;
       g.checkout += f.checkout;
@@ -131,6 +132,7 @@ export function buildRawRows(
       meta_lpv: m.metaLpv,
       product_view: g?.product_viewed ?? 0,
       revenue: round2(m.revenue),
+      product_view_direct: g?.product_viewed_direct ?? 0,
     };
   });
 

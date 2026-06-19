@@ -129,6 +129,7 @@ function buildDashboard_(ss) {
   var S = /^en/.test(String(ss.getSpreadsheetLocale())) ? "," : ";";
   var EUR = "0.00 €", PCT = "0.00%", XX = '0.00"×"';
   buildDetail_(ss, S, EUR, PCT, XX); // Datenquelle für ④ liegt auf eigenem Tab "Detail"
+  buildTagesauswertung_(ss, S, EUR, PCT); // Tab: Tag- & Wochen-Vergleich
 
   // Rohdaten-Spalten: F=Impr G=Link-Klicks H=Spend I=LP-CTA J=WK K=Kasse
   //   L=Bestellt M=Kauf N=Landung O=Reach P=Alle-Klicks Q=Meta-LPV R=Produktansicht S=Umsatz
@@ -168,24 +169,41 @@ function buildDashboard_(ss) {
   d.getRange("A11").setValue("META — Lieferung (misst die Anzeige)").setFontWeight("bold").setFontColor("#185FA5");
   d.getRange("D11").setValue("POSTHOG — Website (misst die Seite)").setFontWeight("bold").setFontColor("#0F6E56");
 
-  // Meta-Seite (Label A, Wert B) — nur Mengen; Raten stehen oben in der Scorecard.
+  // Meta-Seite: Label A · Wert B · Quote C (Schritt-Conversion).
+  d.getRange("C11").setValue("Quote").setFontWeight("bold").setFontColor("#888780");
   lbl("A12", "Impressions");           d.getRange("B12").setFormula(sumifs("F")).setNumberFormat("#,##0");
   lbl("A13", "Reach (Personen)");      d.getRange("B13").setFormula(sumifs("O")).setNumberFormat("#,##0");
+  d.getRange("C13").setFormula(div("B12", "B13")).setNumberFormat(XX);   // Frequency
   lbl("A14", "Alle Klicks");           d.getRange("B14").setFormula(sumifs("P")).setNumberFormat("#,##0");
   lbl("A15", "Link-Klicks");           d.getRange("B15").setFormula(sumifs("G")).setNumberFormat("#,##0");
+  d.getRange("C15").setFormula(div("B15", "B12")).setNumberFormat(PCT);  // CTR (vs Impr)
   lbl("A16", "Angekommen — Meta-LPV"); d.getRange("B16").setFormula(sumifs("Q")).setNumberFormat("#,##0");
+  d.getRange("C16").setFormula(div("B16", "B15")).setNumberFormat(PCT);  // Klick→Seite
   lbl("A17", "Spend €");               d.getRange("B17").setFormula(sumifs("H")).setNumberFormat(EUR);
+  d.getRange("C17").setFormula(div("B17", "B15")).setNumberFormat(EUR);  // CPC
 
-  // PostHog-Seite (Label D, Wert E)
+  // PostHog-Seite: Label D · Wert E · Quote F (Schritt-Conversion vom Schritt davor).
+  d.getRange("F11").setValue("Quote").setFontWeight("bold").setFontColor("#888780");
   lbl("D12", "Angekommen — Landung");  d.getRange("E12").setFormula(sumifs("N")).setNumberFormat("#,##0");
   lbl("D13", "CTA → Shop");            d.getRange("E13").setFormula(sumifs("I")).setNumberFormat("#,##0");
+  d.getRange("F13").setFormula(div("E13", "E12")).setNumberFormat(PCT);  // CTA/Landung
   lbl("D14", "Produktansicht (Shop)"); d.getRange("E14").setFormula(sumifs("R")).setNumberFormat("#,##0");
+  d.getRange("F14").setFormula(div("E14", "E13")).setNumberFormat(PCT);
   lbl("D15", "Warenkorb");             d.getRange("E15").setFormula(sumifs("J")).setNumberFormat("#,##0");
+  d.getRange("F15").setFormula(div("E15", "E14")).setNumberFormat(PCT);  // Produkt→WK
   lbl("D16", "Zur Kasse");             d.getRange("E16").setFormula(sumifs("K")).setNumberFormat("#,##0");
+  d.getRange("F16").setFormula(div("E16", "E15")).setNumberFormat(PCT);
   lbl("D17", "Bestellt (zahlungspfl.)"); d.getRange("E17").setFormula(sumifs("L")).setNumberFormat("#,##0");
+  d.getRange("F17").setFormula(div("E17", "E16")).setNumberFormat(PCT);
   lbl("D18", "Gekauft");               d.getRange("E18").setFormula(sumifs("M")).setNumberFormat("#,##0");
+  d.getRange("F18").setFormula(div("E18", "E17")).setNumberFormat(PCT);
   lbl("D19", "Umsatz €");              d.getRange("E19").setFormula(sumifs("S")).setNumberFormat(EUR);
+  d.getRange("F19").setFormula(div("E19", "B17")).setNumberFormat(XX);   // ROAS
   note("A20", "Angekommen: Meta-LPV mit Pixel (eher zu niedrig) · PostHog-Landung pixel-less (eher zu hoch) — Differenz = Mess-Methode, kein Fehler.");
+  d.getRange("A21").setFormula(
+    "=\"Produktansicht zählt nur den Advertorial-Pfad · direkt zum Shop (separate Ads, nicht im Funnel): \"&TEXT(SUMIFS(Rohdaten!$T:$T" +
+    S + "Rohdaten!$A:$A" + S + "\">=\"&$B$3" + S + "Rohdaten!$A:$A" + S + "\"<=\"&$B$4)" + S + "\"0\")&\" Personen\""
+  ).setFontStyle("italic").setFontColor("#666666");
 
   // ===== ③ LEGENDE (einklappbar — [−]/[+] am linken Rand, Zeilen 23–27) =====
   d.getRange("A22").setValue("③ Legende").setFontWeight("bold");
@@ -253,6 +271,17 @@ function buildDashboard_(ss) {
   });
 
   d.getRange("A51").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
+
+  // ---- Optik: Gitterlinien aus, Sektionen abgesetzt, Karten/Block-Rahmen ----
+  d.setHiddenGridlines(true);
+  var GREY = "#D3D1C7", BAND = "#EEEDF0", CARD = "#F7F6F2", SOLID = SpreadsheetApp.BorderStyle.SOLID;
+  [6, 10, 22, 29, 44].forEach(function (r) { d.getRange(r, 1, 1, 15).setBackground(BAND); });
+  d.getRange("A7:H8").setBackground(CARD).setBorder(true, true, true, true, true, false, GREY, SOLID);
+  d.getRange("A11:C17").setBorder(true, true, true, true, false, false, "#85B7EB", SOLID); // Meta-Block
+  d.getRange("D11:F19").setBorder(true, true, true, true, false, false, "#5DCAA5", SOLID); // PostHog-Block
+  d.getRange("A30:O30").setBorder(null, null, true, null, null, null, GREY, SpreadsheetApp.BorderStyle.SOLID_MEDIUM); // ④ Kopf
+  d.getRange("A45:O45").setBorder(null, null, true, null, null, null, GREY, SOLID); // ⑤ Kopf
+
   d.setColumnWidth(1, 230);
   d.setColumnWidth(4, 180);
   d.setFrozenColumns(1);
@@ -302,6 +331,85 @@ function buildDetail_(ss, S, EUR, PCT, XX) {
   t.getRange(1, 1, 1, 26).setFontWeight("bold");
   t.setColumnWidth(1, 230);
   t.setFrozenRows(1);
+  t.setFrozenColumns(1);
+}
+
+// Tab "Tagesauswertung": Tag vs Vortag UND Woche-bis-Stichtag vs Vorwoche
+// (gleiche Wochentags-Spanne). Stichtag = TODAY()-1 (letzter voller Tag), frei
+// änderbar. Datenquelle der täglichen Telegram-Auswertung.
+function buildTagesauswertung_(ss, S, EUR, PCT) {
+  var t = freshSheet_(ss, "Tagesauswertung", 1);
+  var INT = "#,##0";
+  t.getRange("A1").setValue("📅 Tagesauswertung — Tag & Woche im Vergleich").setFontWeight("bold").setFontSize(14);
+  t.getRange("A3").setValue("Stichtag (letzter voller Tag)").setFontWeight("bold");
+  t.getRange("B3").setFormula("=TODAY()-1").setNumberFormat("yyyy-mm-dd");
+  t.getRange("D3").setValue("Wochenstart (Mo)").setFontColor("#666666");
+  t.getRange("E3").setFormula("=$B$3-(WEEKDAY($B$3" + S + "2)-1)").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A4").setValue("Vortag · Woche-bis-Stichtag · Vorwoche rechnen sich relativ zum Stichtag. Nur Paid (utm fb/ig).").setFontStyle("italic").setFontColor("#666666");
+
+  // dir: 1 = höher besser (grün bei Δ>0), -1 = niedriger besser, 0 = neutral.
+  var metrics = [
+    { l: "Impressions", k: "count", c: "F", f: INT, dir: 1 },
+    { l: "Link-Klicks", k: "count", c: "G", f: INT, dir: 1 },
+    { l: "CTR (Link)", k: "rate", n: "G", d: "F", f: PCT, dir: 1 },
+    { l: "Landungen", k: "count", c: "N", f: INT, dir: 1 },
+    { l: "CTA → Shop", k: "count", c: "I", f: INT, dir: 1 },
+    { l: "CTA-Rate", k: "rate", n: "I", d: "N", f: PCT, dir: 1 },
+    { l: "Produktansicht", k: "count", c: "R", f: INT, dir: 1 },
+    { l: "Warenkorb", k: "count", c: "J", f: INT, dir: 1 },
+    { l: "Zur Kasse", k: "count", c: "K", f: INT, dir: 1 },
+    { l: "Zahlungspfl. bestellt", k: "count", c: "L", f: INT, dir: 1 },
+    { l: "Gekauft", k: "count", c: "M", f: INT, dir: 1 },
+    { l: "Spend €", k: "count", c: "H", f: EUR, dir: 0 },
+    { l: "CPC €", k: "rate", n: "H", d: "G", f: EUR, dir: -1 },
+    { l: "CAC € (/Best.)", k: "rate", n: "H", d: "L", f: EUR, dir: -1 },
+  ];
+  function single(dayExpr) { return "Rohdaten!$A:$A" + S + dayExpr; }
+  function range(a, b) { return "Rohdaten!$A:$A" + S + '">="&' + a + S + "Rohdaten!$A:$A" + S + '"<="&' + b; }
+  function val(m, dExpr) {
+    if (m.k === "count") return "=SUMIFS(Rohdaten!$" + m.c + ":$" + m.c + S + dExpr + ")";
+    var den = "SUMIFS(Rohdaten!$" + m.d + ":$" + m.d + S + dExpr + ")";
+    var num = "SUMIFS(Rohdaten!$" + m.n + ":$" + m.n + S + dExpr + ")";
+    return "=IF(" + den + "=0" + S + "\"\"" + S + num + "/" + den + ")";
+  }
+
+  var rules = [];
+  function block(startRow, title, prevLabel, curLabel, prevExpr, curExpr) {
+    t.getRange(startRow, 1).setValue(title).setFontWeight("bold");
+    var hr = startRow + 1;
+    t.getRange(hr, 1).setValue("Kennzahl").setFontWeight("bold");
+    t.getRange(hr, 2).setFormula(prevLabel).setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(hr, 3).setFormula(curLabel).setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(hr, 4).setValue("Δ").setFontWeight("bold").setHorizontalAlignment("right");
+    metrics.forEach(function (m, i) {
+      var r = hr + 1 + i;
+      t.getRange(r, 1).setValue(m.l).setFontColor("#666666");
+      t.getRange(r, 2).setFormula(val(m, prevExpr)).setNumberFormat(m.f);
+      t.getRange(r, 3).setFormula(val(m, curExpr)).setNumberFormat(m.f);
+      t.getRange(r, 4).setFormula("=IF(OR($B" + r + "=\"\"" + S + "$C" + r + "=\"\")" + S + "\"\"" + S + "$C" + r + "-$B" + r + ")").setNumberFormat(m.f);
+      if (m.dir !== 0) {
+        var pos = m.dir === 1 ? "#1D9E75" : "#E24B4A", neg = m.dir === 1 ? "#E24B4A" : "#1D9E75";
+        rules.push(SpreadsheetApp.newConditionalFormatRule().whenNumberGreaterThan(0).setFontColor(pos).setRanges([t.getRange(r, 4)]).build());
+        rules.push(SpreadsheetApp.newConditionalFormatRule().whenNumberLessThan(0).setFontColor(neg).setRanges([t.getRange(r, 4)]).build());
+      }
+    });
+  }
+
+  block(6, "① Tag — Stichtag vs. Vortag",
+    "=\"Vortag \"&TEXT($B$3-1" + S + "\"dd.mm.\")",
+    "=\"Stichtag \"&TEXT($B$3" + S + "\"dd.mm.\")",
+    single("$B$3-1"), single("$B$3"));
+
+  block(23, "② Woche bis Stichtag vs. Vorwoche (gleiche Spanne)",
+    "=\"Vorwoche \"&TEXT($E$3-7" + S + "\"dd.mm\")&\"–\"&TEXT($B$3-7" + S + "\"dd.mm.\")",
+    "=\"Diese Woche \"&TEXT($E$3" + S + "\"dd.mm\")&\"–\"&TEXT($B$3" + S + "\"dd.mm.\")",
+    range("$E$3-7", "$B$3-7"), range("$E$3", "$B$3"));
+
+  t.setConditionalFormatRules(rules);
+  t.setColumnWidth(1, 180);
+  t.setColumnWidth(2, 150);
+  t.setColumnWidth(3, 150);
+  t.setColumnWidth(4, 90);
   t.setFrozenColumns(1);
 }
 

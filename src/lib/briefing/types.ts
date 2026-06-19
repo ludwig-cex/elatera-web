@@ -28,7 +28,8 @@ export type FunnelDayRow = {
   campaign: string; // utm_campaign (= LP variant, e.g. Mobilisana_test-lp3)
   ad: string; // utm_content (= Meta ad name)
   adIdTag: string; // utm_term (= Meta ad id, the stable join key; "" for legacy rows)
-  product_viewed: number;
+  product_viewed: number; // ADVERTORIAL-PATH only (person did advertorial_cta_click)
+  product_viewed_direct: number; // direct-to-shop (no CTA) — shown separately
   lp_cta: number; // advertorial_cta_click
   add_to_cart: number;
   checkout: number; // checkout_clicked ("Zur Kasse")
@@ -56,8 +57,9 @@ export type RawRow = {
   reach: number; // Meta unique reach
   all_clicks: number; // Meta total clicks (vs. link clicks in `clicks`)
   meta_lpv: number; // Meta landing_page_view (pixel-based "arrived")
-  product_view: number; // PostHog shop product_viewed (fb/ig), the shop-funnel entry
+  product_view: number; // PostHog shop product_viewed, ADVERTORIAL-PATH only
   revenue: number; // EUR purchase value (for ROAS); 0 while validating
+  product_view_direct: number; // direct-to-shop product views (no advertorial CTA)
 };
 
 // Aggregated funnel for a set of raw rows (a period × level group).

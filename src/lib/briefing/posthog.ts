@@ -24,14 +24,26 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
 
   // until is inclusive -> query strictly less than the day after.
   const untilExclusive = addDays(until, 1);
+  // Shop-Produktansichten nur auf dem ADVERTORIAL-PFAD zählen (Personen mit einem
+  // advertorial_cta_click), sonst chained der Funnel nicht: Direkt-zu-Shop-Ads
+  // erzeugen product_viewed ohne vorherige Landung/CTA. Die Direkten werden
+  // separat (product_viewed_direct) ausgewiesen. add_to_cart abwärts sind faktisch
+  // 100% Advertorial-Pfad — bleiben unrestringiert, damit nie eine Conversion fehlt.
   const hogql = `
+    WITH cta_persons AS (
+      SELECT DISTINCT person_id FROM events
+      WHERE event = 'advertorial_cta_click'
+        AND timestamp >= toDateTime('${since} 00:00:00')
+        AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
+    )
     SELECT
       toString(toDate(timestamp))      AS day,
       properties.utm_source            AS source,
       properties.utm_campaign          AS campaign,
       properties.utm_content           AS ad,
       properties.utm_term              AS ad_id_tag,
-      count(DISTINCT if(event = 'product_viewed', person_id, NULL))        AS product_viewed,
+      count(DISTINCT if(event = 'product_viewed' AND person_id IN (SELECT person_id FROM cta_persons), person_id, NULL))     AS product_viewed,
+      count(DISTINCT if(event = 'product_viewed' AND person_id NOT IN (SELECT person_id FROM cta_persons), person_id, NULL)) AS product_viewed_direct,
       count(DISTINCT if(event = 'advertorial_cta_click', person_id, NULL)) AS lp_cta,
       count(DISTINCT if(event = 'add_to_cart', person_id, NULL))           AS add_to_cart,
       count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
@@ -71,11 +83,12 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     ad: String(r[3] ?? ""),
     adIdTag: String(r[4] ?? ""),
     product_viewed: num(r[5]),
-    lp_cta: num(r[6]),
-    add_to_cart: num(r[7]),
-    checkout: num(r[8]),
-    pay_submit: num(r[9]),
-    purchased: num(r[10]),
+    product_viewed_direct: num(r[6]),
+    lp_cta: num(r[7]),
+    add_to_cart: num(r[8]),
+    checkout: num(r[9]),
+    pay_submit: num(r[10]),
+    purchased: num(r[11]),
   }));
 }
 
