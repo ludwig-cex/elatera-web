@@ -83,11 +83,10 @@ const WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 const dm = (s: string) => `${s.slice(8, 10)}.${s.slice(5, 7)}.`;
 const wdLabel = (s: string) => `${WD[parse(s).getUTCDay()]} ${dm(s)}`;
 
-// Build the deterministic ① funnel block (HTML <pre>, monospace) + week line.
-export function formatFunnelBlock(c: Comparison): string {
-  const cur = c.dayCur, prev = c.dayPrev, rc = rates(cur), rp = rates(prev);
-  type Row = [string, string, string];
-  const rows: Row[] = [
+// One cur-vs-prev funnel table (HTML <pre> body, monospace) — used for Tag & Woche.
+export function funnelTable(cur: DailyAgg, prev: DailyAgg): string {
+  const rc = rates(cur), rp = rates(prev);
+  const rows: [string, string, string][] = [
     ["Impressions", de(cur.impressions), dPctCount(cur.impressions, prev.impressions)],
     ["Link-Klicks", de(cur.clicks), dPctCount(cur.clicks, prev.clicks)],
     ["  CTR", pct(rc.ctr), dPP(rc.ctr, rp.ctr)],
@@ -101,31 +100,16 @@ export function formatFunnelBlock(c: Comparison): string {
     ["Spend", eur(cur.spend), dEur(cur.spend, prev.spend)],
     ["  CPC", eur(rc.cpc), dEur(rc.cpc, rp.cpc)],
   ];
-  const body = rows.map(([l, v, d]) => `${pad(l, 15)}${padL(v, 9)}  ${d}`).join("\n");
-
-  const wc = c.weekCur, wp = c.weekPrev;
-  const week =
-    `Spend ${eur(wc.spend)} (${dPctCount(wc.spend, wp.spend)}) · ` +
-    `Klicks ${de(wc.clicks)} (${dPctCount(wc.clicks, wp.clicks)}) · ` +
-    `Landung ${de(wc.landings)} (${dPctCount(wc.landings, wp.landings)}) · ` +
-    `Bestellt ${de(wc.pay_submit)} (${dPctCount(wc.pay_submit, wp.pay_submit)}) · ` +
-    `Gekauft ${de(wc.purchased)} (${dPctCount(wc.purchased, wp.purchased)})`;
-
-  return (
-    `<b>① Tag — ${wdLabel(c.stichtag)} vs. ${wdLabel(c.vortag)}</b>\n` +
-    `<pre>${body}</pre>\n` +
-    `📅 <b>Woche bis ${dm(c.stichtag)} vs. Vorwoche</b> (${dm(c.weekStart)}–${dm(c.stichtag)} vs. ${dm(c.prevWeekStart)}–${dm(c.prevWeekEnd)}):\n` +
-    week
-  );
+  return rows.map(([l, v, d]) => `${pad(l, 15)}${padL(v, 9)}  ${d}`).join("\n");
 }
 
-const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-// Assemble the full Telegram message (HTML parse_mode).
-export function formatDailyMessage(c: Comparison, story: string | null, dashboardLink?: string): string {
-  const parts = [`📊 <b>Ads-Auswertung — ${wdLabel(c.stichtag)}</b>`, formatFunnelBlock(c)];
-  if (story) parts.push(esc(story));
-  else parts.push("② Learnings / ③ Iteration: (kein Narrativ — ANTHROPIC_API_KEY fehlt)");
+// Full Telegram message (HTML parse_mode): ① Tag-Tabelle + ② Wochen-Tabelle.
+export function formatDailyMessage(c: Comparison, dashboardLink?: string): string {
+  const parts = [
+    `📊 <b>Ads-Auswertung — ${wdLabel(c.stichtag)}</b>`,
+    `<b>① Tag — ${wdLabel(c.stichtag)} vs. ${wdLabel(c.vortag)}</b>\n<pre>${funnelTable(c.dayCur, c.dayPrev)}</pre>`,
+    `<b>② Woche — ${dm(c.weekStart)}–${dm(c.stichtag)} vs. Vorwoche ${dm(c.prevWeekStart)}–${dm(c.prevWeekEnd)}</b>\n<pre>${funnelTable(c.weekCur, c.weekPrev)}</pre>`,
+  ];
   if (dashboardLink) parts.push(`📄 ${dashboardLink}`);
   return parts.join("\n\n");
 }
