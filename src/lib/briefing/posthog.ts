@@ -43,12 +43,20 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
+    LIMIT 100000
   `.trim();
+  // NB: HogQL applies a DEFAULT LIMIT of 100 when none is given. With ORDER BY day
+  // ascending that silently drops the most recent days once there are >100 groups —
+  // i.e. today's conversions vanish. The explicit high LIMIT prevents that.
 
   const res = await fetch(`${HOST}/api/projects/${PROJECT}/query/`, {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ query: { kind: "HogQLQuery", query: hogql } }),
+    // force_blocking = recompute, never serve a stale cached result. Without this
+    // PostHog's query cache can return an older snapshot that misses conversions
+    // captured since the last run (e.g. a fresh payment_submitted), so the daily
+    // briefing would silently undercount.
+    body: JSON.stringify({ query: { kind: "HogQLQuery", query: hogql }, refresh: "force_blocking" }),
   });
   if (!res.ok) {
     const body = await res.text();
@@ -91,11 +99,12 @@ export async function fetchLandings(since: string, until: string): Promise<Landi
       AND properties.$host LIKE '%mein-apothekenrat%'
       AND properties.utm_source IN ('fb','ig')
     GROUP BY day, ad
+    LIMIT 100000
   `.trim();
   const res = await fetch(`${HOST}/api/projects/${PROJECT}/query/`, {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ query: { kind: "HogQLQuery", query: hogql } }),
+    body: JSON.stringify({ query: { kind: "HogQLQuery", query: hogql }, refresh: "force_blocking" }),
   });
   if (!res.ok) throw new Error(`PostHog landings ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const json = (await res.json()) as { results?: unknown[][] };
