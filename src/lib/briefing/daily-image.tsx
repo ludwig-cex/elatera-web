@@ -38,6 +38,6 @@ export function renderDailyImage(c: Comparison): ImageResponse {
         <Section title={`Woche — ${D(c.weekStart)}-${D(c.stichtag)} vs. Vorwoche ${D(c.prevWeekStart)}-${D(c.prevWeekEnd)}`} cells={tableCells(c.weekCur, c.weekPrev)} />
       </div>
     ),
-    { width: 720, height: 920 }
+    { width: 720, height: 1120 }
   );
 }
