@@ -103,12 +103,16 @@ function ensureRaw_(ss, header) {
 // Run this once from the Apps Script editor (Ausführen ▸ rebuildDashboard) to
 // (re)create the Dashboard with locale-correct formulas. Needs no redeploy.
 function rebuildDashboard() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  ["Dashboard", "Detail"].forEach(function (n) {
-    var s = ss.getSheetByName(n);
-    if (s) ss.deleteSheet(s);
-  });
-  buildDashboard_(ss);
+  buildDashboard_(SpreadsheetApp.getActiveSpreadsheet());
+}
+
+// Delete a sheet if it exists, then (re)create it. flush() forces the delete to
+// commit before the insert — without it, deleting the active sheet and inserting
+// the same name back-to-back can throw "Service Spreadsheets failed".
+function freshSheet_(ss, name, index) {
+  var s = ss.getSheetByName(name);
+  if (s) { ss.deleteSheet(s); SpreadsheetApp.flush(); }
+  return index == null ? ss.insertSheet(name) : ss.insertSheet(name, index);
 }
 
 function ensureDashboard_(ss) {
@@ -117,7 +121,7 @@ function ensureDashboard_(ss) {
 }
 
 function buildDashboard_(ss) {
-  var d = ss.insertSheet(DASH_SHEET, 0);
+  var d = freshSheet_(ss, DASH_SHEET, 0);
 
   // CRITICAL: setFormula() does NOT convert argument separators to the sheet's
   // locale. A de_DE sheet needs ';' (English locales use ','). Comma decimals →
@@ -152,7 +156,7 @@ function buildDashboard_(ss) {
     ["Spend", "=B17", EUR], ["Impressions", "=B12", "#,##0"],
     ["Link-CTR", div("B15", "B12"), PCT], ["CPC", div("B17", "B15"), EUR],
     ["Landungen", "=E12", "#,##0"], ["Bestellt", "=E17", "#,##0"],
-    ["CAC", div("B17", "E18"), EUR], ["ROAS", div("E19", "B17"), XX],
+    ["CAC (/Bestellt)", div("B17", "E17"), EUR], ["ROAS", div("E19", "B17"), XX],
   ];
   score.forEach(function (s, i) {
     d.getRange(7, 1 + i).setValue(s[0]).setFontColor("#666666");
@@ -188,7 +192,7 @@ function buildDashboard_(ss) {
   note("A23", "Link-Klick (Meta): Klick, der wirklich zur Seite führt (ohne Likes/Profil). Basis für CTR & CPC.");
   note("A24", "Meta-LPV: Metas eigene Zählung „Seite geladen\" — braucht Pixel, daher eher zu niedrig.");
   note("A25", "Landung: Person, die laut PostHog aufs Advertorial kam (fb/ig). Cookieless, daher eher zu hoch.");
-  note("A26", "CTA: Klick vom Advertorial in den Shop.   ·   CAC = Spend ÷ Käufe   ·   ROAS = Umsatz ÷ Spend.");
+  note("A26", "CTA: Klick vom Advertorial in den Shop.   ·   CAC = Spend ÷ Zahlungspfl. Bestellt   ·   ROAS = Umsatz ÷ Spend.");
   note("A27", "Meta misst die Anzeige, PostHog die Website — sie stimmen nie exakt überein. Beide nebeneinander zeigt, wo Leute abspringen.");
   try { d.getRange("23:27").shiftRowGroupDepth(1); d.getRowGroup(23, 1).collapse(); } catch (e) {}
 
@@ -204,17 +208,17 @@ function buildDashboard_(ss) {
   d.getRange("A30").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
   var cmpLabels = [
     "Spend €", "Frequency", "CTR (Link)", "CPC €", "Landungen",
-    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "CAC €", "ROAS",
+    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "Zahlungspfl. bestellt", "CAC € (/Best.)", "ROAS",
   ];
   cmpLabels.forEach(function (t, i) { d.getRange(31 + i, 1).setValue(t).setFontColor("#666666"); });
   // Kuratierte Auswahl aus dem Detail-Tab (Daten ab Zeile 2), nur Ads mit Spend > 2 €:
-  //   Col1=Ad Col2=Spend Col16=Freq Col18=CTR Col19=CPC Col7=Landung
-  //   Col22=CTA-Rate Col10=Produktansicht Col23=Produkt→WK Col11=Warenkorb Col25=CAC Col26=ROAS
+  //   Col1=Ad Col2=Spend Col16=Freq Col18=CTR Col19=CPC Col7=Landung Col22=CTA-Rate
+  //   Col10=Produktansicht Col23=Produkt→WK Col11=Warenkorb Col13=Bestellt Col25=CAC Col26=ROAS
   d.getRange("B30").setFormula(
     "=TRANSPOSE(QUERY(Detail!$A$2:$Z$120" + S +
-    "\"select Col1,Col2,Col16,Col18,Col19,Col7,Col22,Col10,Col23,Col11,Col25,Col26 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
+    "\"select Col1,Col2,Col16,Col18,Col19,Col7,Col22,Col10,Col23,Col11,Col13,Col25,Col26 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
   d.getRange("B30:O30").setFontWeight("bold").setWrap(true); // Ad-Namen als Spaltenköpfe
-  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", EUR, XX];
+  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", "#,##0", EUR, XX];
   cmpFmt.forEach(function (f, i) { d.getRange(31 + i, 2, 1, 14).setNumberFormat(f); });
   heatRow(33, true);   // CTR (Link)
   heatRow(34, false);  // CPC — niedriger = besser
@@ -222,7 +226,33 @@ function buildDashboard_(ss) {
   heatRow(38, true);   // Produkt→WK
   d.setConditionalFormatRules(rules);
 
-  d.getRange("A43").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
+  // ===== ⑤ CPC-VERLAUF je Ad — Abnutzung über die Zeit (gleiche Ad-Spalten wie ④) =====
+  d.getRange("A44").setValue("⑤ CPC-Verlauf je Ad — wie nutzt sich der Klickpreis ab?").setFontWeight("bold");
+  d.getRange("B45").setFormula("=B30"); // Ad-Namen aus ④ spiegeln
+  d.getRange("B45").copyTo(d.getRange("C45:O45"), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
+  d.getRange("B45:O45").setFontWeight("bold").setWrap(true);
+  function cpc(dateCrit) { // CPC = Spend / Link-Klicks für Ad (B$30) + Datumskriterium
+    var base = "Rohdaten!$D:$D" + S + "B$30" + S + dateCrit;
+    var g = "SUMIFS(Rohdaten!$G:$G" + S + base + ")";
+    var h = "SUMIFS(Rohdaten!$H:$H" + S + base + ")";
+    return "=IF(" + g + "=0" + S + "\"\"" + S + h + "/" + g + ")";
+  }
+  var dCol = "Rohdaten!$A:$A";
+  var cpcRows = [
+    ["CPC Zeitraum", dCol + S + '">="&$B$3' + S + dCol + S + '"<="&$B$4'],
+    ["CPC Stichtag (Bis)", dCol + S + "$B$4"],
+    ["CPC −3 Tage", dCol + S + "$B$4-3"],
+    ["CPC −7 Tage", dCol + S + "$B$4-7"],
+  ];
+  cpcRows.forEach(function (r, i) {
+    var row = 46 + i;
+    d.getRange(row, 1).setValue(r[0]).setFontColor("#666666");
+    d.getRange(row, 2).setFormula(cpc(r[1]));
+    d.getRange(row, 2).copyTo(d.getRange(row, 3, 1, 13), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
+    d.getRange(row, 2, 1, 14).setNumberFormat(EUR);
+  });
+
+  d.getRange("A51").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
   d.setColumnWidth(1, 230);
   d.setColumnWidth(4, 180);
   d.setFrozenColumns(1);
@@ -231,9 +261,7 @@ function buildDashboard_(ss) {
 // Eigener Tab „Detail": pro Ad eine Zeile, alle Kennzahlen — Datenquelle für den
 // ④ Vergleich. Zeitraum kommt aus Dashboard!B3/B4.
 function buildDetail_(ss, S, EUR, PCT, XX) {
-  var existing = ss.getSheetByName("Detail");
-  if (existing) ss.deleteSheet(existing);
-  var t = ss.insertSheet("Detail");
+  var t = freshSheet_(ss, "Detail", null);
   var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S) ";
   var where = "where D is not null and toDate(A) >= date '\"&TEXT(Dashboard!$B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT(Dashboard!$B$4" + S + "\"yyyy-mm-dd\")&\"' ";
   var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €'";
@@ -255,7 +283,7 @@ function buildDetail_(ss, S, EUR, PCT, XX) {
     ["CTA-Rate", "$I$2:$I", "$G$2:$G", "", PCT],
     ["Produkt→WK", "$K$2:$K", "$J$2:$J", "", PCT],
     ["Kasse-Rate", "$L$2:$L", "$K$2:$K", "", PCT],
-    ["CAC €", "$B$2:$B", "$N$2:$N", "", EUR],
+    ["CAC € (/Bestellt)", "$B$2:$B", "$M$2:$M", "", EUR],
     ["ROAS", "$O$2:$O", "$B$2:$B", "", XX],
   ];
   var rules = [];
