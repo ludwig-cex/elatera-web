@@ -25,6 +25,7 @@ function num(v: unknown): number {
   return 0;
 }
 
+type Action = { action_type?: string; value?: string };
 type InsightRow = {
   date_start?: string;
   ad_id?: string;
@@ -35,7 +36,22 @@ type InsightRow = {
   clicks?: string;
   inline_link_clicks?: string;
   spend?: string;
+  reach?: string;
+  actions?: Action[];
+  action_values?: Action[];
 };
+
+// Pull a single value out of Meta's actions / action_values arrays by type,
+// trying each candidate type in order (Meta names purchases differently across
+// objectives: "purchase", "omni_purchase", "offsite_conversion.fb_pixel_*").
+function pick(arr: Action[] | undefined, types: string[]): number {
+  if (!Array.isArray(arr)) return 0;
+  for (const t of types) {
+    const hit = arr.find((a) => a.action_type === t);
+    if (hit) return num(hit.value);
+  }
+  return 0;
+}
 
 /**
  * Daily ad-level insights for [since, until] (inclusive, YYYY-MM-DD).
@@ -58,6 +74,9 @@ export async function fetchMetaDays(since: string, until: string): Promise<MetaD
       "clicks",
       "inline_link_clicks",
       "spend",
+      "reach",
+      "actions",
+      "action_values",
     ].join(","),
     limit: "500",
     access_token: t,
@@ -86,6 +105,10 @@ export async function fetchMetaDays(since: string, until: string): Promise<MetaD
         // funnel actually depends on. Fall back to clicks if missing.
         clicks: num(r.inline_link_clicks ?? r.clicks),
         spend: num(r.spend),
+        reach: num(r.reach),
+        allClicks: num(r.clicks),
+        metaLpv: pick(r.actions, ["landing_page_view"]),
+        revenue: pick(r.action_values, ["omni_purchase", "purchase"]),
       });
     }
     url = json.paging?.next ?? null;

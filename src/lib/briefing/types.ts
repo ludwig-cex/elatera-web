@@ -15,6 +15,10 @@ export type MetaDayRow = {
   impressions: number;
   clicks: number; // inline_link_clicks (the click that actually leaves to the LP)
   spend: number; // EUR
+  reach: number; // unique people reached (impressions / reach = frequency)
+  allClicks: number; // total clicks incl. likes/profile/expand (the `clicks` field)
+  metaLpv: number; // Meta's own landing_page_view action (pixel-based "arrived")
+  revenue: number; // purchase value from the Meta pixel (for ROAS); 0 in validation
 };
 
 // PostHog funnel counts for one day, keyed by the ad name carried in utm_content.
@@ -48,6 +52,12 @@ export type RawRow = {
   pay_submit: number;
   purchased: number;
   landings: number;
+  // enrichment for the two-world dashboard (Meta delivery + ROAS + shop funnel)
+  reach: number; // Meta unique reach
+  all_clicks: number; // Meta total clicks (vs. link clicks in `clicks`)
+  meta_lpv: number; // Meta landing_page_view (pixel-based "arrived")
+  product_view: number; // PostHog shop product_viewed (fb/ig), the shop-funnel entry
+  revenue: number; // EUR purchase value (for ROAS); 0 while validating
 };
 
 // Aggregated funnel for a set of raw rows (a period × level group).

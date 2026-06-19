@@ -126,6 +126,11 @@ export function buildRawRows(
       pay_submit: g?.pay_submit ?? 0,
       purchased: g?.purchased ?? 0,
       landings: landingsByKey.get(`${m.date}|${normName(m.ad)}`) ?? 0,
+      reach: m.reach,
+      all_clicks: m.allClicks,
+      meta_lpv: m.metaLpv,
+      product_view: g?.product_viewed ?? 0,
+      revenue: round2(m.revenue),
     };
   });
 

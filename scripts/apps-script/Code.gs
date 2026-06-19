@@ -19,7 +19,12 @@ var RAW_SHEET = "Rohdaten";
 var DASH_SHEET = "Dashboard";
 
 function doPost(e) {
+  // Serialise concurrent POSTs. Without this, two overlapping requests (e.g. a
+  // manual backfill racing the cron) each delete-then-append and the rows end up
+  // duplicated. The lock makes the read-delete-append cycle atomic.
+  var lock = LockService.getScriptLock();
   try {
+    lock.waitLock(30000);
     var body = JSON.parse(e.postData.contents);
     var expected = PropertiesService.getScriptProperties().getProperty("SHEET_SECRET");
     if (!expected || body.secret !== expected) {
@@ -35,33 +40,51 @@ function doPost(e) {
     if (rows.length === 0) return json_({ ok: true, written: 0 });
 
     var tz = ss.getSpreadsheetTimeZone();
+    var width = header.length || rows[0].length;
 
     // Dates present in this payload (col 0 = "YYYY-MM-DD" string).
     var incomingDates = {};
     rows.forEach(function (r) { incomingDates[String(r[0])] = true; });
 
-    // Delete existing rows whose date is in this payload (idempotent upsert).
+    // Idempotent upsert WITHOUT deleteRow: read existing rows, drop the ones whose
+    // date is in this payload, then rewrite kept + fresh in one block. deleteRow
+    // throws "cannot delete all non-frozen rows" when a backfill covers every
+    // existing date; rewriting sidesteps that and is atomic under the lock.
     var last = sheet.getLastRow();
+    var lastCol = Math.max(width, sheet.getLastColumn());
+    var kept = [];
     if (last > 1) {
-      var dateCol = sheet.getRange(2, 1, last - 1, 1).getValues();
-      for (var i = dateCol.length - 1; i >= 0; i--) {
-        var key = toYmd_(dateCol[i][0], tz);
-        if (incomingDates[key]) sheet.deleteRow(i + 2);
+      var existing = sheet.getRange(2, 1, last - 1, lastCol).getValues();
+      for (var i = 0; i < existing.length; i++) {
+        if (!incomingDates[toYmd_(existing[i][0], tz)]) kept.push(existing[i]);
       }
     }
 
-    // Append, storing col A as a real Date so the Dashboard QUERY/SUMIFS work.
-    var values = rows.map(function (r) {
+    // Fresh rows: store col A as a real Date so the Dashboard QUERY/SUMIFS work.
+    var fresh = rows.map(function (r) {
       var out = r.slice();
       out[0] = ymdToDate_(String(r[0]));
       return out;
     });
-    sheet.getRange(sheet.getLastRow() + 1, 1, values.length, values[0].length).setValues(values);
-    sheet.getRange(2, 1, sheet.getLastRow() - 1, 1).setNumberFormat("yyyy-mm-dd");
 
-    return json_({ ok: true, written: values.length, dates: Object.keys(incomingDates).length });
+    // Normalise every row to the current header width (handles added columns).
+    var all = kept.concat(fresh).map(function (row) {
+      var r = row.slice(0, width);
+      while (r.length < width) r.push("");
+      return r;
+    });
+
+    if (last > 1) sheet.getRange(2, 1, last - 1, lastCol).clearContent();
+    if (all.length) {
+      sheet.getRange(2, 1, all.length, width).setValues(all);
+      sheet.getRange(2, 1, all.length, 1).setNumberFormat("yyyy-mm-dd");
+    }
+
+    return json_({ ok: true, written: fresh.length, kept: kept.length, dates: Object.keys(incomingDates).length });
   } catch (err) {
     return json_({ ok: false, error: String(err) });
+  } finally {
+    lock.releaseLock();
   }
 }
 
@@ -98,83 +121,129 @@ function buildDashboard_(ss) {
   // locale. A de_DE sheet needs ';' (English locales use ','). Comma decimals →
   // semicolon list separator, so: non-"en_*" locale ⇒ ';'.
   var S = /^en/.test(String(ss.getSpreadsheetLocale())) ? "," : ";";
+  var EUR = "0.00 €", PCT = "0.00%", XX = '0.00"×"';
 
-  d.getRange("A1").setValue("📊 Ads-Funnel Dashboard").setFontWeight("bold").setFontSize(14);
+  // Rohdaten-Spalten: F=Impr G=Link-Klicks H=Spend I=LP-CTA J=WK K=Kasse
+  //   L=Bestellt M=Kauf N=Landung O=Reach P=Alle-Klicks Q=Meta-LPV R=Produktansicht S=Umsatz
+  function sumifs(col) {
+    var date = "Rohdaten!$A:$A";
+    return "=SUMIFS(Rohdaten!$" + col + ":$" + col + S + date + S + '">="&$B$3' + S + date + S + '"<="&$B$4)';
+  }
+  function div(numCell, denCell, mult) { // ratio of two already-computed cells
+    return "=IF(" + denCell + "=0" + S + "\"\"" + S + numCell + "/" + denCell + (mult || "") + ")";
+  }
+  function lbl(a1, text) { d.getRange(a1).setValue(text); }
+  function note(a1, text) { d.getRange(a1).setValue(text).setFontStyle("italic").setFontColor("#666666"); }
+
+  d.getRange("A1").setValue("📊 Ads-Funnel Dashboard — Meta ↔ PostHog").setFontWeight("bold").setFontSize(14);
   d.getRange("A3").setValue("Von").setFontWeight("bold");
   d.getRange("A4").setValue("Bis").setFontWeight("bold");
   d.getRange("B3").setFormula("=TODAY()-7");
   d.getRange("B4").setFormula("=TODAY()-1");
   d.getRange("B3:B4").setNumberFormat("yyyy-mm-dd");
-  d.getRange("C3").setValue("◀ Zeitraum frei wählbar — alles unten rechnet sich live neu.");
+  d.getRange("C3").setValue("◀ Zeitraum frei wählbar. Nur Paid (utm fb/ig); ohne utm = eigene Tests, nicht enthalten.").setFontStyle("italic");
 
-  // --- Gesamt-Funnel block ---  SUMIFS(sumCol; dateCol; ">="&B3; dateCol; "<="&B4)
-  function sumifs(col) {
-    var date = "Rohdaten!$A:$A";
-    return "=SUMIFS(Rohdaten!$" + col + ":$" + col + S + date + S + '">="&$B$3' + S + date + S + '"<="&$B$4)';
-  }
-  // Rohdaten cols: F=Views G=Meta-Clicks H=Spend I=LP-CTA J=WK K=Kasse L=Bestellt M=Kauf N=Landungen
-  // "Klicks" = N (on-site Advertorial-Landungen fb/ig); Meta-Klicks bleiben in Rohdaten Spalte G.
-  d.getRange(7, 1).setValue("GESAMT (gewählter Zeitraum)").setFontWeight("bold");
-  var funnel = [
-    ["Ad Views (Impressions)", "F"], ["Klicks (on-site, fb/ig)", "N"], ["LP CTA Clicks", "I"],
-    ["In den Warenkorb", "J"], ["Zur Kasse", "K"], ["Bestellt (zahlungspfl.)", "L"],
-    ["Gekauft", "M"], ["Spend (€)", "H"],
+  // ===== ① SCORECARD (Zeile 6 Titel, 7 Labels, 8 Werte) — referenziert den Funnel unten =====
+  d.getRange("A6").setValue("① Scorecard").setFontWeight("bold");
+  var score = [
+    ["Spend", "=B21", EUR], ["Impressions", "=B12", "#,##0"],
+    ["Link-CTR", div("B16", "B12"), PCT], ["CPC", div("B21", "B16"), EUR],
+    ["Landungen", "=E12", "#,##0"], ["Bestellt", "=E20", "#,##0"],
+    ["CAC", div("B21", "E21"), EUR], ["ROAS", div("E22", "B21"), XX],
   ];
-  funnel.forEach(function (f, i) {
-    d.getRange(8 + i, 1).setValue(f[0]);
-    d.getRange(8 + i, 2).setFormula(sumifs(f[1]));
-  });
-  d.getRange("B15").setNumberFormat("0.00 €"); // Spend
-
-  // --- Raten/Kosten --- B8 Views,B9 Clicks,B10 CTA,B11 WK,B12 Kasse,B13 Bestellt,B14 Kauf,B15 Spend
-  function rate(n, dn) { return "=IF(" + dn + "=0" + S + "\"\"" + S + n + "/" + dn + ")"; }
-  d.getRange("D7").setValue("Raten / Kosten (gesamt)").setFontWeight("bold");
-  var rates = [
-    ["CTR", "B9", "B8", "0.00%"], ["Klick→LP-CTA", "B10", "B9", "0.00%"],
-    ["LP-CTA→Warenkorb", "B11", "B10", "0.00%"], ["Warenkorb→Zur Kasse", "B12", "B11", "0.00%"],
-    ["Zur Kasse→Bestellt", "B13", "B12", "0.00%"], ["Bestellt→Kauf", "B14", "B13", "0.00%"],
-    ["CPC (€)", "B15", "B9", "0.00 €"], ["Kosten/Kauf (€)", "B15", "B14", "0.00 €"],
-  ];
-  rates.forEach(function (r, i) {
-    d.getRange(8 + i, 4).setValue(r[0]);
-    d.getRange(8 + i, 5).setFormula(rate(r[1], r[2])).setNumberFormat(r[3]);
+  score.forEach(function (s, i) {
+    d.getRange(7, 1 + i).setValue(s[0]).setFontColor("#666666");
+    d.getRange(8, 1 + i).setFormula(s[1]).setNumberFormat(s[2]).setFontSize(13).setFontWeight("bold");
   });
 
-  // --- Per-Ad Tabelle: Basis via QUERY (A..I), abgeleitete KPIs via ARRAYFORMULA (J..). ---
-  d.getRange("A17").setValue("Quoten >100% möglich: CTA zählt Event-Klicks, Attribution ≠ Meta-Klicks.").setFontStyle("italic");
-  d.getRange("A18").setValue("Pro Ad (gewählter Zeitraum, nach Spend sortiert)").setFontWeight("bold");
-  var sel = "select D, sum(F), sum(N), sum(I), sum(J), sum(K), sum(L), sum(M), sum(H) ";
+  // ===== ② ZWEI-WELTEN-FUNNEL =====
+  d.getRange("A10").setValue("② Zwei-Welten-Funnel").setFontWeight("bold");
+  d.getRange("A11").setValue("META — Lieferung (misst die Anzeige)").setFontWeight("bold").setFontColor("#185FA5");
+  d.getRange("D11").setValue("POSTHOG — Website (misst die Seite)").setFontWeight("bold").setFontColor("#0F6E56");
+
+  // Meta-Seite (Label A, Wert B)
+  lbl("A12", "Impressions");           d.getRange("B12").setFormula(sumifs("F")).setNumberFormat("#,##0");
+  lbl("A13", "Reach (Personen)");      d.getRange("B13").setFormula(sumifs("O")).setNumberFormat("#,##0");
+  lbl("A14", "Frequency");             d.getRange("B14").setFormula(div("B12", "B13")).setNumberFormat(XX);
+  lbl("A15", "Alle Klicks");           d.getRange("B15").setFormula(sumifs("P")).setNumberFormat("#,##0");
+  lbl("A16", "Link-Klicks");           d.getRange("B16").setFormula(sumifs("G")).setNumberFormat("#,##0");
+  lbl("A17", "  · CTR (Link)");        d.getRange("B17").setFormula(div("B16", "B12")).setNumberFormat(PCT);
+  lbl("A18", "  · CPC");               d.getRange("B18").setFormula(div("B21", "B16")).setNumberFormat(EUR);
+  lbl("A19", "Angekommen — Meta-LPV"); d.getRange("B19").setFormula(sumifs("Q")).setNumberFormat("#,##0");
+  note("A20", "  mit Pixel → eher zu niedrig");
+  lbl("A21", "Spend €");               d.getRange("B21").setFormula(sumifs("H")).setNumberFormat(EUR);
+
+  // PostHog-Seite (Label D, Wert E)
+  lbl("D12", "Angekommen — Landung");  d.getRange("E12").setFormula(sumifs("N")).setNumberFormat("#,##0");
+  note("D13", "  pixel-less / cookieless → eher zu hoch");
+  lbl("D14", "CTA → Shop");            d.getRange("E14").setFormula(sumifs("I")).setNumberFormat("#,##0");
+  lbl("D15", "  · Rate (CTA/Landung)"); d.getRange("E15").setFormula(div("E14", "E12")).setNumberFormat(PCT);
+  lbl("D16", "Produktansicht (Shop)"); d.getRange("E16").setFormula(sumifs("R")).setNumberFormat("#,##0");
+  lbl("D17", "Warenkorb");             d.getRange("E17").setFormula(sumifs("J")).setNumberFormat("#,##0");
+  lbl("D18", "  · Produkt→Warenkorb"); d.getRange("E18").setFormula(div("E17", "E16")).setNumberFormat(PCT);
+  lbl("D19", "Zur Kasse");             d.getRange("E19").setFormula(sumifs("K")).setNumberFormat("#,##0");
+  lbl("D20", "Bestellt (zahlungspfl.)"); d.getRange("E20").setFormula(sumifs("L")).setNumberFormat("#,##0");
+  lbl("D21", "Gekauft");               d.getRange("E21").setFormula(sumifs("M")).setNumberFormat("#,##0");
+  lbl("D22", "Umsatz €");              d.getRange("E22").setFormula(sumifs("S")).setNumberFormat(EUR);
+  lbl("D23", "  · ROAS");              d.getRange("E23").setFormula(div("E22", "B21")).setNumberFormat(XX);
+
+  // ===== ③ LEGENDE =====
+  d.getRange("A25").setValue("③ Legende").setFontWeight("bold");
+  note("A26", "Link-Klick (Meta): Klick, der wirklich zur Seite führt (ohne Likes/Profil). Basis für CTR & CPC.");
+  note("A27", "Meta-LPV: Metas eigene Zählung „Seite geladen\" — braucht Pixel, daher eher zu niedrig.");
+  note("A28", "Landung: Person, die laut PostHog aufs Advertorial kam (fb/ig). Cookieless, daher eher zu hoch.");
+  note("A29", "CTA: Klick vom Advertorial in den Shop.   ·   CAC = Spend ÷ Käufe   ·   ROAS = Umsatz ÷ Spend.");
+  note("A30", "Meta misst die Anzeige, PostHog die Website — sie stimmen nie exakt überein. Beide nebeneinander zeigt, wo Leute abspringen.");
+
+  // ===== ④ PRO AD — Mengen (QUERY) + Kennzahlen (ARRAYFORMULA) =====
+  d.getRange("A32").setValue("④ Pro Ad (gewählter Zeitraum, nach Spend sortiert)").setFontWeight("bold");
+  d.getRange("B33").setValue("Mengen — Personen & Beträge").setFontWeight("bold").setFontColor("#185FA5");
+  d.getRange("P33").setValue("Kennzahlen — Quoten & Kosten").setFontWeight("bold").setFontColor("#993C1D");
+
+  var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S) ";
   var where = "where D is not null and toDate(A) >= date '\"&TEXT($B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT($B$4" + S + "\"yyyy-mm-dd\")&\"' ";
-  var tail = "group by D order by sum(H) desc label D 'Ad'" + ", sum(F) 'Views', sum(N) 'Klicks', sum(I) 'LP-CTA', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(H) 'Spend €'";
-  d.getRange("A19").setFormula("=QUERY(Rohdaten!$A:$N" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €'";
+  d.getRange("A34").setFormula("=QUERY(Rohdaten!$A:$S" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  // Mengen-Output ab Zeile 35: A=Ad B=Spend C=Impr D=Reach E=AlleKlk F=LinkKlk
+  //   G=Landung H=LPV I=CTA J=Prod K=WK L=Kasse M=Bestellt N=Kauf O=Umsatz
+  d.getRange("B35:B").setNumberFormat(EUR);  // Spend
+  d.getRange("O35:O").setNumberFormat(EUR);  // Umsatz
 
-  // Base output (ab Zeile 20): A=Ad B=Views C=Klicks D=LP-CTA E=WK F=Kasse G=Bestellt H=Kauf I=Spend
   function ratio(n, dn, mult) {
-    return "=ARRAYFORMULA(IF(($A$20:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
+    return "=ARRAYFORMULA(IF(($A$35:$A=\"\")+(" + dn + "=0)" + S + "\"\"" + S + n + "/" + dn + (mult || "") + "))";
   }
   var derived = [
-    ["CTR", "$C$20:$C", "$B$20:$B", "", "0.00%"],
-    ["CPM €", "$I$20:$I", "$B$20:$B", "*1000", "0.00 €"],
-    ["CPC €", "$I$20:$I", "$C$20:$C", "", "0.00 €"],
-    ["Klick→CTA", "$D$20:$D", "$C$20:$C", "", "0.00%"],
-    ["CTA→WK", "$E$20:$E", "$D$20:$D", "", "0.00%"],
-    ["WK→Kasse", "$F$20:$F", "$E$20:$E", "", "0.00%"],
-    ["Kasse→Bestellt", "$G$20:$G", "$F$20:$F", "", "0.00%"],
-    ["Bestellt→Kauf", "$H$20:$H", "$G$20:$G", "", "0.00%"],
-    ["€/LP-CTA", "$I$20:$I", "$D$20:$D", "", "0.00 €"],
-    ["€/Warenkorb", "$I$20:$I", "$E$20:$E", "", "0.00 €"],
-    ["€/Kauf (CPA)", "$I$20:$I", "$H$20:$H", "", "0.00 €"],
-    ["Spend-Anteil", "$I$20:$I", "$B$15", "", "0.0%"],
+    ["Frequency", "$C$35:$C", "$D$35:$D", "", XX],
+    ["CPM €", "$B$35:$B", "$C$35:$C", "*1000", EUR],
+    ["CTR (Link)", "$F$35:$F", "$C$35:$C", "", PCT],
+    ["CPC €", "$B$35:$B", "$F$35:$F", "", EUR],
+    ["Landerate", "$G$35:$G", "$F$35:$F", "", PCT],
+    ["€/Landung", "$B$35:$B", "$G$35:$G", "", EUR],
+    ["CTA-Rate", "$I$35:$I", "$G$35:$G", "", PCT],
+    ["Produkt→WK", "$K$35:$K", "$J$35:$J", "", PCT],
+    ["Kasse-Rate", "$L$35:$L", "$K$35:$K", "", PCT],
+    ["CAC €", "$B$35:$B", "$N$35:$N", "", EUR],
+    ["ROAS", "$O$35:$O", "$B$35:$B", "", XX],
   ];
   derived.forEach(function (c, i) {
-    var ci = 10 + i; // J..
-    d.getRange(19, ci).setValue(c[0]).setFontWeight("bold");
-    d.getRange(20, ci).setFormula(ratio(c[1], c[2], c[3]));
-    d.getRange(20, ci, 3000, 1).setNumberFormat(c[4]);
+    var ci = 16 + i; // P..
+    d.getRange(34, ci).setValue(c[0]).setFontWeight("bold");
+    d.getRange(35, ci).setFormula(ratio(c[1], c[2], c[3]));
+    d.getRange(35, ci, 3000, 1).setNumberFormat(c[4]);
   });
+  d.getRange(34, 1, 1, 26).setFontWeight("bold"); // Header A34:Z34
 
-  d.getRange(19, 1, 1, 21).setFontWeight("bold"); // Header-Zeile A19:U19
-  d.setColumnWidth(1, 240);
+  // Heatmap auf den wichtigsten Quoten (höher = besser → rot→grün).
+  var rules = [];
+  ["R", "T", "V", "W"].forEach(function (col) {
+    rules.push(SpreadsheetApp.newConditionalFormatRule()
+      .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
+      .setRanges([d.getRange(col + "35:" + col + "3000")]).build());
+  });
+  d.setConditionalFormatRules(rules);
+
+  d.setColumnWidth(1, 230);
+  d.setColumnWidth(4, 200);
   d.setFrozenColumns(1);
 }
 

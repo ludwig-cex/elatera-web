@@ -23,7 +23,8 @@ function berlinDay(offset: number): string {
 }
 
 const days = Math.min(Math.max(parseInt(process.argv[2] || "14", 10), 1), 90);
-const until = berlinDay(1);
+// INCLUDE_TODAY=1 pulls through today (partial) instead of stopping at yesterday.
+const until = process.env.INCLUDE_TODAY ? berlinDay(0) : berlinDay(1);
 const since = berlinDay(days);
 const windowSince = berlinDay(7);
 

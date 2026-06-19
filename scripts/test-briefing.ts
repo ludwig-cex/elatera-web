@@ -22,6 +22,7 @@ const meta: MetaDayRow[] = [
 ].map(([ad, adId, impressions, clicks, spend]) => ({
   date: D, adId: adId as string, campaign: "Mobilisana_test", adset: "",
   ad: ad as string, impressions: impressions as number, clicks: clicks as number, spend: spend as number,
+  reach: 0, allClicks: 0, metaLpv: 0, revenue: 0,
 }));
 
 // PostHog 7d funnel rows: [utm_content, utm_term, lp_cta, atc, bought].
