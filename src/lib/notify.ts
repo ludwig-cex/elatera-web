@@ -1,18 +1,23 @@
 // Server-only: Telegram-Push an den Betreiber-Chat.
 // No-op, solange TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID nicht gesetzt sind.
 
-export async function notifyTelegram(text: string) {
+export async function notifyTelegram(text: string, opts?: { parseMode?: "HTML" | "MarkdownV2" }) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
   if (!token || !chatId) return;
 
   const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 4000);
+  const t = setTimeout(() => ctrl.abort(), 6000);
   try {
     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ chat_id: chatId, text }),
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        ...(opts?.parseMode ? { parse_mode: opts.parseMode } : {}),
+        disable_web_page_preview: true,
+      }),
       signal: ctrl.signal,
     });
   } catch (err) {

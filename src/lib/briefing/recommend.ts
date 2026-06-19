@@ -3,6 +3,8 @@
 // ANTHROPIC_API_KEY is set, additionally asks Claude for a sharper narrative
 // (new-ad ideas, LP A/B tests) grounded in the same numbers.
 import type { FunnelAgg } from "./types";
+import type { Comparison } from "./daily";
+import { rates } from "./daily";
 
 export type Reco = { tag: string; text: string };
 
@@ -133,6 +135,51 @@ export async function claudeNarrative(
         messages: [
           { role: "user", content: `Daten (${context.period}):\n${JSON.stringify(context, null, 0)}` },
         ],
+      }),
+    });
+    if (!res.ok) return null;
+    const json = (await res.json()) as { content?: { text?: string }[] };
+    return json.content?.[0]?.text?.trim() ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Daily 1/2/3 story for the Telegram review: Claude writes ② Learnings/Hypothesen
+ * and ③ Nächste Iteration, grounded on the day/week comparison. Budget advice is
+ * forced to the ad-set level (we steer budget per Anzeigengruppe, not per ad).
+ * Returns null if ANTHROPIC_API_KEY is unset or the call fails.
+ */
+export async function claudeDailyStory(c: Comparison): Promise<string | null> {
+  const key = process.env.ANTHROPIC_API_KEY;
+  if (!key) return null;
+  const compact = {
+    stichtag: c.stichtag,
+    tag: { ...c.dayCur, ...rates(c.dayCur) },
+    vortag: { ...c.dayPrev, ...rates(c.dayPrev) },
+    woche_bis_stichtag: { ...c.weekCur, ...rates(c.weekCur) },
+    vorwoche_gleiche_spanne: { ...c.weekPrev, ...rates(c.weekPrev) },
+  };
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-opus-4-8",
+        max_tokens: 600,
+        system:
+          "Du bist Performance-Marketing-Analyst für nutra-sana (deutsche NEM-Marke, Gelenke). " +
+          "Wir iterieren day-to-day am Funnel: Meta-Ad → Advertorial → CTA → Shop → Kauf. " +
+          "Produktansicht/Warenkorb zählen nur den Advertorial-Pfad. Schreibe NUR zwei Abschnitte, " +
+          "auf Deutsch, knapp, je 2-3 Bullets mit '• ':\n" +
+          "② LEARNINGS / HYPOTHESEN — was die Zahlen bedeuten, woran es liegt (Tag + Wochentrend).\n" +
+          "③ NÄCHSTE ITERATION — konkrete nächste Schritte am Funnel.\n" +
+          "REGELN: Budget wird auf ANZEIGENGRUPPEN-Ebene gesteuert, nicht pro Ad (aktuell alle Ads in 1 Gruppe) — " +
+          "'Budget hoch/runter' nur als Ad-Set bzw. 'in eigene Anzeigengruppe abspalten'; 'pausieren' geht pro Ad. " +
+          "Tagesquoten unten im Funnel (Warenkorb/Bestellt/Gekauft) sind bei kleinen Zahlen rauschig — vorsichtig deuten. " +
+          "Keine Floskeln, keine Einleitung, direkt die Bullets. Gib die Abschnitte als '② …' und '③ …' aus.",
+        messages: [{ role: "user", content: `Zahlen (Personen je Stufe + Quoten):\n${JSON.stringify(compact)}` }],
       }),
     });
     if (!res.ok) return null;
