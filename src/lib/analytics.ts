@@ -26,15 +26,18 @@ const OUTBRAIN_EVENTS: Record<string, string> = {
 };
 
 // Same funnel mapped to Meta (Facebook) standard event names so the pixel
-// can optimize toward them. payment_submitted ("jetzt kostenpflichtig bezahlen")
-// = AddPaymentInfo, das tiefste echte Intent-Signal im Validierungs-Modell
-// (Wert kommt aus props.value). intent_email_submitted = Lead (E-Mail-Capture).
+// can optimize toward them. payment_submitted ("Jetzt zahlungspflichtig
+// bestellen"-Klick) = Lead — das ist die Conversion, auf die die Meta-
+// Kampagnen (OUTCOME_LEADS) optimieren; der Bestell-Klick ist das stärkste
+// echte Intent-Signal im Validierungs-Modell (Wert kommt aus props.value).
+// intent_email_submitted = CompleteRegistration (E-Mail-Capture als eigenes
+// Signal, belegt aber nicht mehr das "Lead"-Event).
 const META_EVENTS: Record<string, string> = {
   product_viewed: "ViewContent",
   add_to_cart: "AddToCart",
   checkout_clicked: "InitiateCheckout",
-  payment_submitted: "AddPaymentInfo",
-  intent_email_submitted: "Lead",
+  payment_submitted: "Lead",
+  intent_email_submitted: "CompleteRegistration",
 };
 
 // Single call site for product/cart funnel events. Fans out to PostHog
