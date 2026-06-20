@@ -26,12 +26,14 @@ const OUTBRAIN_EVENTS: Record<string, string> = {
 };
 
 // Same funnel mapped to Meta (Facebook) standard event names so the pixel
-// can optimize toward them. intent_email_submitted is the real conversion
-// in this pre-launch model (the email/intent capture = Lead).
+// can optimize toward them. payment_submitted ("jetzt kostenpflichtig bezahlen")
+// = AddPaymentInfo, das tiefste echte Intent-Signal im Validierungs-Modell
+// (Wert kommt aus props.value). intent_email_submitted = Lead (E-Mail-Capture).
 const META_EVENTS: Record<string, string> = {
   product_viewed: "ViewContent",
   add_to_cart: "AddToCart",
   checkout_clicked: "InitiateCheckout",
+  payment_submitted: "AddPaymentInfo",
   intent_email_submitted: "Lead",
 };
 
