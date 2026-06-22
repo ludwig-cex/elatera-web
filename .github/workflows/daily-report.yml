@@ -1,0 +1,25 @@
+name: Daily Ads Report
+
+# Zuverlässiger Trigger für die täglichen Endpoints (Vercel-Hobby-Crons sind
+# unzuverlässig). Braucht das Repo-Secret CRON_SECRET (= CRON_SECRET aus Vercel).
+on:
+  schedule:
+    - cron: "0 5 * * *"   # 7:00 Berlin — Daten ins Sheet (daily-briefing)
+    - cron: "15 5 * * *"  # 7:15 Berlin — Bild-Auswertung (daily-message)
+  workflow_dispatch: {}    # manueller Knopf in GitHub → Actions
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Daten aktualisieren (daily-briefing)
+        if: github.event.schedule == '0 5 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -fsS -m 90 "https://www.nutra-sana.de/api/cron/daily-briefing" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" | head -c 600 || exit 1
+
+      - name: Auswertung senden (daily-message)
+        if: github.event.schedule == '15 5 * * *' || github.event_name == 'workflow_dispatch'
+        run: |
+          curl -fsS -m 90 "https://www.nutra-sana.de/api/cron/daily-message" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" | head -c 600 || exit 1
