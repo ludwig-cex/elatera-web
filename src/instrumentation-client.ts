@@ -44,6 +44,29 @@ function stripIdentityParams() {
   }
 }
 
+// Internes Test-Flag: Aufruf mit ?internal=1 markiert diesen Browser dauerhaft
+// (localStorage) als internen Traffic → alle Events tragen die Super-Property
+// is_internal=true und lassen sich in PostHog sauber rausfiltern oder separat
+// ansehen. ?internal=0 hebt es wieder auf. Der Param wird aus der URL entfernt,
+// damit er nicht in $current_url o. Ä. landet.
+function applyInternalFlag() {
+  try {
+    const u = new URL(window.location.href);
+    const param = u.searchParams.get("internal");
+    if (param === "1") localStorage.setItem("shv_internal", "1");
+    if (param === "0") localStorage.removeItem("shv_internal");
+    if (u.searchParams.has("internal")) {
+      u.searchParams.delete("internal");
+      window.history.replaceState(window.history.state, "", u.toString());
+    }
+    if (localStorage.getItem("shv_internal") === "1") {
+      posthog.register({ is_internal: true });
+    }
+  } catch {
+    // ignore
+  }
+}
+
 if (key) {
   try {
     posthog.init(key, {
@@ -58,6 +81,7 @@ if (key) {
     });
     // Clean the URL before the first capture so $current_url stays free of ph_did.
     stripIdentityParams();
+    applyInternalFlag();
     posthog.capture("$pageview");
   } catch {
     // Never let analytics init break the app.
