@@ -3,10 +3,16 @@ import { loadTaboola, taboola } from "@/lib/taboola";
 import { loadOutbrain, outbrain } from "@/lib/outbrain";
 import { loadMeta, meta } from "@/lib/meta";
 
-// Cookieless / anonymous analytics (DSGVO-conscious, pre-launch stage):
-// - persistence: "memory" → no cookies, no localStorage, no device identifier
-// - person_profiles: "never" → purely aggregate event analytics, no person profiles
-// EU ingestion keeps data in the EU.
+// Analytics mit Personen-Profilen für echte Attribution (bewusste Entscheidung,
+// Risiken bekannt — pre-launch):
+// - persistence: "localStorage" → kein HTTP-Cookie, aber persistenter Identifier
+//   pro Origin → Cross-Session-Wiedererkennung + First-Touch-Attribution
+//   ($initial_referrer / $initial_utm_source bleiben am Profil hängen).
+// - person_profiles: "always" → jeder Besucher bekommt ein Profil, damit auch
+//   organischer/Direkt-Traffic einer Quelle zugeordnet werden kann.
+// EU-Ingestion hält die Daten in der EU.
+// HINWEIS: localStorage ist DSGVO-rechtlich einwilligungspflichtig wie ein
+// Cookie — ein Consent-Mechanismus sollte das begleiten.
 const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
 const host = process.env.NEXT_PUBLIC_POSTHOG_HOST || "https://eu.i.posthog.com";
 
@@ -43,8 +49,8 @@ if (key) {
     posthog.init(key, {
       api_host: host,
       ui_host: "https://eu.posthog.com",
-      persistence: "memory",
-      person_profiles: "never",
+      persistence: "localStorage",
+      person_profiles: "always",
       capture_pageview: false, // captured manually below + on route changes
       capture_pageleave: true,
       autocapture: true,
