@@ -7,6 +7,7 @@ import { TopBar } from "@/components/site/top-bar";
 import { CookieBanner } from "@/components/site/cookie-banner";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
+import { CartDeepLink } from "@/components/cart/cart-deep-link";
 import { ProductsMenuProvider } from "@/components/site/products-menu-context";
 import { ProductsDrawer } from "@/components/site/products-drawer";
 import { ProductsShift } from "@/components/site/products-shift";
@@ -104,6 +105,7 @@ export default function RootLayout({
               </ChromeGate>
             </ProductsShift>
             <CartDrawer />
+            <CartDeepLink />
             <CookieBanner />
           </ProductsMenuProvider>
         </CartProvider>

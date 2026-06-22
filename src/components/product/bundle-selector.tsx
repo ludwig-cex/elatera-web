@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo, useRef } from "react";
-import posthog from "posthog-js";
+import { useState, useEffect, useRef } from "react";
 import { Check, ShoppingBag } from "lucide-react";
-import type { Product, Bundle } from "@/lib/products";
+import type { Product } from "@/lib/products";
 import { formatPrice, formatPricePerDay } from "@/lib/utils";
 import { useCart } from "@/components/cart/cart-context";
 import { track } from "@/lib/analytics";
@@ -11,26 +10,10 @@ import { track } from "@/lib/analytics";
 export function BundleSelector({ product }: { product: Product }) {
   const { addToCart, isOpen: cartOpen } = useCart();
 
-  // A/B test (PostHog 50/50): a −10 € discount on the single-month option,
-  // rendered with the same strikethrough + discount badge as the multi-month
-  // bundles. Flag evaluates per session (cookieless); re-read once flags load.
-  const [discountSingle, setDiscountSingle] = useState(false);
-  useEffect(() => {
-    const apply = () => setDiscountSingle(posthog.isFeatureEnabled("single-month-discount") === true);
-    apply();
-    return posthog.onFeatureFlags(apply);
-  }, []);
-  const pricingVariant = discountSingle ? "single_month_-10" : "control";
-
-  const bundles = useMemo<Bundle[]>(
-    () =>
-      discountSingle
-        ? product.bundles.map((b) =>
-            b.months === 1 ? { ...b, priceCents: 3999, rrpCents: 4999, discountPct: 20 } : b,
-          )
-        : product.bundles,
-    [discountSingle, product.bundles],
-  );
+  // Rabatt-Test ("single-month-discount", −10 € auf das 1-Monats-Paket)
+  // entfernt — Preise sind wieder durchgehend regulär.
+  const pricingVariant = "control";
+  const bundles = product.bundles;
 
   const [selectedMonths, setSelectedMonths] = useState<number>(product.bundles[0].months); // 1-month default
   const selected = bundles.find((b) => b.months === selectedMonths) ?? bundles[0];
