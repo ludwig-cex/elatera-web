@@ -114,7 +114,7 @@ export default function CheckoutPage() {
         ) : (
           <>
             <Link
-              href="/"
+              href="/products/mobilisana"
               className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-ink mb-6"
             >
               <ArrowLeft className="w-4 h-4" /> Weiter einkaufen
@@ -322,7 +322,7 @@ function EmptyCart() {
       <p className="serif text-2xl mb-2">Ihr Warenkorb ist leer</p>
       <p className="text-muted mb-6">Entdecken Sie unsere Produktlinie und finden Sie das Passende.</p>
       <Link
-        href="/#produkte"
+        href="/products/mobilisana"
         className="inline-block py-3 px-6 rounded-lg font-medium"
         style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
       >

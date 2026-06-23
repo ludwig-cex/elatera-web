@@ -30,10 +30,12 @@ export function proxy(request: NextRequest) {
   const slug = nextUrl.pathname.split("/")[2]; // /products/<slug>
   if (!slug) return NextResponse.next();
 
-  // Direct-to-Cart: auf die Startseite mit ?addtocart=… umleiten und alle
-  // bestehenden Params (utm, fbclid, ph_did, internal, …) mitnehmen.
+  // Direct-to-Cart: Cart-Drawer über der PRODUKTSEITE öffnen (Hintergrund bleibt
+  // /products/<slug>, z. B. Mobilisana) — NICHT über der Startseite. So sieht der
+  // Nutzer beim Öffnen UND beim Schließen des Warenkorbs das richtige Produkt.
+  // Alle Params (utm, fbclid, ph_did, internal, …) bleiben erhalten; das
+  // ?addtocart oben verhindert eine erneute Umleitung.
   const target = nextUrl.clone();
-  target.pathname = "/";
   target.searchParams.set("addtocart", slug);
   target.searchParams.set("months", "1");
   return NextResponse.redirect(target);
