@@ -35,6 +35,7 @@ export type FunnelDayRow = {
   checkout: number; // checkout_clicked ("Zur Kasse")
   pay_submit: number; // payment_submitted ("Jetzt zahlungspflichtig bestellen")
   purchased: number; // payment_authorized
+  direct_cart: number; // direct_cart_entry — Auto-Warenkorb (?addtocart=), Teilmenge von add_to_cart; zählt auch als product_viewed
 };
 
 // The unified per-day-per-ad raw row that gets written to the "Rohdaten" sheet.
@@ -57,9 +58,10 @@ export type RawRow = {
   reach: number; // Meta unique reach
   all_clicks: number; // Meta total clicks (vs. link clicks in `clicks`)
   meta_lpv: number; // Meta landing_page_view (pixel-based "arrived")
-  product_view: number; // PostHog shop product_viewed, ADVERTORIAL-PATH only
+  product_view: number; // PostHog shop product_viewed, ADVERTORIAL-PATH only (inkl. Auto-Warenkorb)
   revenue: number; // EUR purchase value (for ROAS); 0 while validating
   product_view_direct: number; // direct-to-shop product views (no advertorial CTA)
+  direct_cart: number; // Auto-Warenkorb (?addtocart=) — Teilmenge von add_to_cart
 };
 
 // Aggregated funnel for a set of raw rows (a period × level group).

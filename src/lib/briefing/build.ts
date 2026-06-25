@@ -94,6 +94,7 @@ export function buildRawRows(
       g.checkout += f.checkout;
       g.pay_submit += f.pay_submit;
       g.purchased += f.purchased;
+      g.direct_cart += f.direct_cart;
       if (!g.adIdTag && tag) g.adIdTag = tag;
       // Prefer a human-readable name over a numeric/empty one for display.
       if ((!g.ad || onlyDigits(g.ad)) && f.ad && !onlyDigits(f.ad)) g.ad = f.ad;
@@ -133,6 +134,7 @@ export function buildRawRows(
       product_view: g?.product_viewed ?? 0,
       revenue: round2(m.revenue),
       product_view_direct: g?.product_viewed_direct ?? 0,
+      direct_cart: g?.direct_cart ?? 0,
     };
   });
 

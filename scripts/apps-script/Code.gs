@@ -130,6 +130,7 @@ function buildDashboard_(ss) {
   var EUR = "0.00 €", PCT = "0.00%", XX = '0.00"×"';
   buildDetail_(ss, S, EUR, PCT, XX); // Datenquelle für ④ liegt auf eigenem Tab "Detail"
   buildTagesauswertung_(ss, S, EUR, PCT); // Tab: Tag- & Wochen-Vergleich
+  buildAdAnalyse_(ss, S, EUR, PCT); // Tab: Ads spaltenweise, harte Zahlen + Quoten über mehrere Zeiträume
 
   // Rohdaten-Spalten: F=Impr G=Link-Klicks H=Spend I=LP-CTA J=WK K=Kasse
   //   L=Bestellt M=Kauf N=Landung O=Reach P=Alle-Klicks Q=Meta-LPV R=Produktansicht S=Umsatz
@@ -226,17 +227,18 @@ function buildDashboard_(ss) {
   d.getRange("A30").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
   var cmpLabels = [
     "Spend €", "Frequency", "CTR (Link)", "CPC €", "Landungen",
-    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "Zahlungspfl. bestellt", "CAC € (/Best.)", "ROAS",
+    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "davon Auto-WK", "Zahlungspfl. bestellt", "CAC € (/Best.)", "ROAS",
   ];
   cmpLabels.forEach(function (t, i) { d.getRange(31 + i, 1).setValue(t).setFontColor("#666666"); });
-  // Kuratierte Auswahl aus dem Detail-Tab (Daten ab Zeile 2), nur Ads mit Spend > 2 €:
-  //   Col1=Ad Col2=Spend Col16=Freq Col18=CTR Col19=CPC Col7=Landung Col22=CTA-Rate
-  //   Col10=Produktansicht Col23=Produkt→WK Col11=Warenkorb Col13=Bestellt Col25=CAC Col26=ROAS
+  // Kuratierte Auswahl aus dem Detail-Tab (Daten ab Zeile 2), nur Ads mit Spend > 2 €.
+  // Detail-Spalten (abgeleitete je +1 verschoben durch neue Auto-WK-Basis-Spalte P=Col16):
+  //   Col1=Ad Col2=Spend Col17=Freq Col19=CTR Col20=CPC Col7=Landung Col23=CTA-Rate
+  //   Col10=Produktansicht Col24=Produkt→WK Col11=Warenkorb Col16=Auto-WK Col13=Bestellt Col26=CAC Col27=ROAS
   d.getRange("B30").setFormula(
-    "=TRANSPOSE(QUERY(Detail!$A$2:$Z$120" + S +
-    "\"select Col1,Col2,Col16,Col18,Col19,Col7,Col22,Col10,Col23,Col11,Col13,Col25,Col26 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
+    "=TRANSPOSE(QUERY(Detail!$A$2:$AA$120" + S +
+    "\"select Col1,Col2,Col17,Col19,Col20,Col7,Col23,Col10,Col24,Col11,Col16,Col13,Col26,Col27 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
   d.getRange("B30:O30").setFontWeight("bold").setWrap(true); // Ad-Namen als Spaltenköpfe
-  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", "#,##0", EUR, XX];
+  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", "#,##0", "#,##0", EUR, XX];
   cmpFmt.forEach(function (f, i) { d.getRange(31 + i, 2, 1, 14).setNumberFormat(f); });
   heatRow(33, true);   // CTR (Link)
   heatRow(34, false);  // CPC — niedriger = besser
@@ -291,12 +293,12 @@ function buildDashboard_(ss) {
 // ④ Vergleich. Zeitraum kommt aus Dashboard!B3/B4.
 function buildDetail_(ss, S, EUR, PCT, XX) {
   var t = freshSheet_(ss, "Detail", null);
-  var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S) ";
+  var sel = "select D, sum(H), sum(F), sum(O), sum(P), sum(G), sum(N), sum(Q), sum(I), sum(R), sum(J), sum(K), sum(L), sum(M), sum(S), sum(U) ";
   var where = "where D is not null and toDate(A) >= date '\"&TEXT(Dashboard!$B$3" + S + "\"yyyy-mm-dd\")&\"' and toDate(A) <= date '\"&TEXT(Dashboard!$B$4" + S + "\"yyyy-mm-dd\")&\"' ";
-  var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €'";
-  t.getRange("A1").setFormula("=QUERY(Rohdaten!$A:$S" + S + "\"" + sel + where + tail + "\"" + S + "1)");
+  var tail = "group by D order by sum(H) desc label D 'Ad', sum(H) 'Spend €', sum(F) 'Impr', sum(O) 'Reach', sum(P) 'Alle Klk', sum(G) 'Link-Klk', sum(N) 'Landung', sum(Q) 'Meta-LPV', sum(I) 'CTA', sum(R) 'Produktans.', sum(J) 'Warenkorb', sum(K) 'Kasse', sum(L) 'Bestellt', sum(M) 'Gekauft', sum(S) 'Umsatz €', sum(U) 'Auto-WK'";
+  t.getRange("A1").setFormula("=QUERY(Rohdaten!$A:$U" + S + "\"" + sel + where + tail + "\"" + S + "1)");
   // Header Zeile 1, Daten ab 2. A=Ad B=Spend C=Impr D=Reach E=AlleKlk F=LinkKlk
-  //   G=Landung H=LPV I=CTA J=Prod K=WK L=Kasse M=Bestellt N=Kauf O=Umsatz
+  //   G=Landung H=LPV I=CTA J=Prod K=WK L=Kasse M=Bestellt N=Kauf O=Umsatz P=Auto-WK
   t.getRange("B2:B").setNumberFormat(EUR);
   t.getRange("O2:O").setNumberFormat(EUR);
   function ratio(n, dn, mult) {
@@ -317,18 +319,18 @@ function buildDetail_(ss, S, EUR, PCT, XX) {
   ];
   var rules = [];
   derived.forEach(function (c, i) {
-    var ci = 16 + i; // P..
+    var ci = 17 + i; // Q.. (P = Auto-WK aus der QUERY)
     t.getRange(1, ci).setValue(c[0]).setFontWeight("bold");
     t.getRange(2, ci).setFormula(ratio(c[1], c[2], c[3]));
     t.getRange(2, ci, 3000, 1).setNumberFormat(c[4]);
   });
-  ["R", "T", "V", "W"].forEach(function (col) {
+  ["S", "U", "W", "X"].forEach(function (col) { // CTR, Landerate, CTA-Rate, Produkt→WK (je +1 verschoben)
     rules.push(SpreadsheetApp.newConditionalFormatRule()
       .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
       .setRanges([t.getRange(col + "2:" + col + "3000")]).build());
   });
   t.setConditionalFormatRules(rules);
-  t.getRange(1, 1, 1, 26).setFontWeight("bold");
+  t.getRange(1, 1, 1, 27).setFontWeight("bold");
   t.setColumnWidth(1, 230);
   t.setFrozenRows(1);
   t.setFrozenColumns(1);
@@ -411,6 +413,86 @@ function buildTagesauswertung_(ss, S, EUR, PCT) {
   t.setColumnWidth(3, 150);
   t.setColumnWidth(4, 90);
   t.setFrozenColumns(1);
+}
+
+// Tab "Ad-Analyse": Ads SPALTENWEISE, je Kern-Quote über drei Zeitfenster
+// (frei wählbarer Zeitraum · letzte 3 Tage · letzte 7 Tage, relativ zum Stichtag).
+// So sieht man pro Ad die Entwicklung von CTR / CTA-Rate / Produktrate / Warenkorb.
+function buildAdAnalyse_(ss, S, EUR, PCT) {
+  var INT = "#,##0";
+  var t = freshSheet_(ss, "Ad-Analyse", 2);
+  t.getRange("A1").setValue("📊 Ad-Analyse — harte Zahlen + Quoten über mehrere Zeiträume").setFontWeight("bold").setFontSize(14);
+  t.getRange("A3").setValue("Stichtag (für 3/7 Tage)").setFontWeight("bold");
+  t.getRange("B3").setFormula("=TODAY()-1").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A4").setValue("Zeitraum Von").setFontWeight("bold");
+  t.getRange("B4").setFormula("=TODAY()-7").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A5").setValue("Zeitraum Bis").setFontWeight("bold");
+  t.getRange("B5").setFormula("=$B$3").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A6").setValue("Ads = Spalten · je Kennzahl: gewählter Zeitraum · letzte 3 Tage · letzte 7 Tage (relativ zum Stichtag). Heatmap: grün = besser.").setFontStyle("italic").setFontColor("#666666");
+
+  // Ad-Namen als Spaltenköpfe — aus dem Detail-Tab (nach Spend sortiert).
+  t.getRange("A8").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
+  t.getRange("B8").setFormula("=TRANSPOSE(Detail!$A$2:$A$13)");
+  t.getRange("B8:M8").setFontWeight("bold").setWrap(true);
+
+  var windows = [
+    ["Zeitraum", "$B$4", "$B$5"],
+    ["3 Tage", "$B$3-2", "$B$3"],
+    ["7 Tage", "$B$3-6", "$B$3"],
+  ];
+  // Funnel-Reihenfolge: harte Zahlen + Quote an ihrer Stufe. Rohdaten-Spalten:
+  //   F=Impr G=Link-Klicks H=Spend I=CTA J=Warenkorb N=Landung R=Produktansicht
+  // kind: "int" | "eur" | "rate"(num/den).
+  var metrics = [
+    { l: "Spend €", k: "eur", c: "H" },
+    { l: "Impressions", k: "int", c: "F" },
+    { l: "Link-Klicks", k: "int", c: "G" },
+    { l: "CTR", k: "rate", n: "G", d: "F" },
+    { l: "Landungen", k: "int", c: "N" },
+    { l: "CTA → Shop", k: "int", c: "I" },
+    { l: "CTA-Rate", k: "rate", n: "I", d: "N" },
+    { l: "Produktansicht", k: "int", c: "R" },
+    { l: "Produktrate", k: "rate", n: "R", d: "I" },
+    { l: "Warenkorb", k: "int", c: "J" },
+    { l: "davon Auto-WK", k: "int", c: "U" },
+    { l: "Warenkorb-Rate", k: "rate", n: "J", d: "R" },
+  ];
+  function sumifs(col, from, to) {
+    return "SUMIFS(Rohdaten!$" + col + ":$" + col + S + "Rohdaten!$D:$D" + S + "B$8" + S +
+      "Rohdaten!$A:$A" + S + '">="&' + from + S + "Rohdaten!$A:$A" + S + '"<="&' + to + ")";
+  }
+  function val(m, from, to) {
+    if (m.k === "rate") {
+      var d = sumifs(m.d, from, to);
+      return "=IF((B$8=\"\")+(" + d + "=0)" + S + "\"\"" + S + sumifs(m.n, from, to) + "/" + d + ")";
+    }
+    return "=IF(B$8=\"\"" + S + "\"\"" + S + sumifs(m.c, from, to) + ")";
+  }
+
+  var rules = [];
+  var row = 9;
+  metrics.forEach(function (m) {
+    var fmt = m.k === "eur" ? EUR : m.k === "rate" ? PCT : INT;
+    windows.forEach(function (w, wi) {
+      var r = row++;
+      t.getRange(r, 1).setValue(m.l + " · " + w[0])
+        .setFontColor(wi === 0 ? "#000000" : "#888780")
+        .setFontWeight(m.k === "rate" ? "normal" : "bold");
+      t.getRange(r, 2).setFormula(val(m, w[1], w[2]));
+      t.getRange(r, 2).copyTo(t.getRange(r, 3, 1, 11), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
+      t.getRange(r, 2, 1, 12).setNumberFormat(fmt);
+      rules.push(SpreadsheetApp.newConditionalFormatRule()
+        .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
+        .setRanges([t.getRange(r, 2, 1, 12)]).build());
+    });
+    t.getRange(row, 1).setValue(""); // Trennzeile zwischen Kennzahl-Blöcken
+    row++;
+  });
+  t.setConditionalFormatRules(rules);
+  t.setHiddenGridlines(true);
+  t.setColumnWidth(1, 165);
+  t.setFrozenColumns(1);
+  t.setFrozenRows(8);
 }
 
 // ---- helpers ----

@@ -29,6 +29,12 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
   // erzeugen product_viewed ohne vorherige Landung/CTA. Die Direkten werden
   // separat (product_viewed_direct) ausgewiesen. add_to_cart abwärts sind faktisch
   // 100% Advertorial-Pfad — bleiben unrestringiert, damit nie eine Conversion fehlt.
+  // Direct-Cart-Test (?addtocart=): die Person wird OHNE Produktseiten-Ansicht direkt
+  // in den Warenkorb gelegt → ohne Korrektur stünde 0 Produktansicht bei 1 Warenkorb
+  // (Funnel nicht monoton). Daher zählt ein 'direct_cart_entry' ebenfalls als
+  // Produktansicht (die Person wurde ja auf die Produktseite geleitet). Zusätzlich
+  // wird die Auto-Warenkorb-Zahl separat ausgewiesen (direct_cart), damit die
+  // Produkt→WK-Rate nicht mit den von uns reingelegten Carts verwechselt wird.
   const hogql = `
     WITH cta_persons AS (
       SELECT DISTINCT person_id FROM events
@@ -42,17 +48,18 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       properties.utm_campaign          AS campaign,
       properties.utm_content           AS ad,
       properties.utm_term              AS ad_id_tag,
-      count(DISTINCT if(event = 'product_viewed' AND person_id IN (SELECT person_id FROM cta_persons), person_id, NULL))     AS product_viewed,
-      count(DISTINCT if(event = 'product_viewed' AND person_id NOT IN (SELECT person_id FROM cta_persons), person_id, NULL)) AS product_viewed_direct,
+      count(DISTINCT if((event = 'product_viewed' OR event = 'direct_cart_entry') AND person_id IN (SELECT person_id FROM cta_persons), person_id, NULL))     AS product_viewed,
+      count(DISTINCT if((event = 'product_viewed' OR event = 'direct_cart_entry') AND person_id NOT IN (SELECT person_id FROM cta_persons), person_id, NULL)) AS product_viewed_direct,
       count(DISTINCT if(event = 'advertorial_cta_click', person_id, NULL)) AS lp_cta,
       count(DISTINCT if(event = 'add_to_cart', person_id, NULL))           AS add_to_cart,
       count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
       count(DISTINCT if(event = 'payment_submitted', person_id, NULL))     AS pay_submit,
-      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased
+      count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased,
+      count(DISTINCT if(event = 'direct_cart_entry', person_id, NULL))     AS direct_cart
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
-      AND event IN ('product_viewed','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
+      AND event IN ('product_viewed','direct_cart_entry','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
     LIMIT 100000
@@ -89,6 +96,7 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     checkout: num(r[9]),
     pay_submit: num(r[10]),
     purchased: num(r[11]),
+    direct_cart: num(r[12]),
   }));
 }
 
