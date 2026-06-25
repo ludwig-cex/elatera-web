@@ -3,9 +3,12 @@ name: Daily Ads Report
 # Zuverlässiger Trigger für die täglichen Endpoints (Vercel-Hobby-Crons sind
 # unzuverlässig). Braucht das Repo-Secret CRON_SECRET (= CRON_SECRET aus Vercel).
 on:
+  # GitHub-Actions-Cron läuft erfahrungsgemäß ~3,5 h zu spät (beobachtet: geplant
+  # 05:xx UTC, gefeuert ~08:30 UTC). Daher die Plan-Zeit entsprechend VORZIEHEN,
+  # damit die verspätete Auslieferung morgens ~07:00/07:15 Berlin landet.
   schedule:
-    - cron: "0 5 * * *"   # 7:00 Berlin — Daten ins Sheet (daily-briefing)
-    - cron: "15 5 * * *"  # 7:15 Berlin — Bild-Auswertung (daily-message)
+    - cron: "30 1 * * *"   # Ziel ~07:00 Berlin — Daten ins Sheet (daily-briefing)
+    - cron: "45 1 * * *"   # Ziel ~07:15 Berlin — Bild-Auswertung (daily-message)
   workflow_dispatch: {}    # manueller Knopf in GitHub → Actions
 
 jobs:
@@ -13,13 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Daten aktualisieren (daily-briefing)
-        if: github.event.schedule == '0 5 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '30 1 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           curl -fsS -m 90 "https://www.nutra-sana.de/api/cron/daily-briefing" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" | head -c 600 || exit 1
 
       - name: Auswertung senden (daily-message)
-        if: github.event.schedule == '15 5 * * *' || github.event_name == 'workflow_dispatch'
+        if: github.event.schedule == '45 1 * * *' || github.event_name == 'workflow_dispatch'
         run: |
           curl -fsS -m 90 "https://www.nutra-sana.de/api/cron/daily-message" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" | head -c 600 || exit 1
