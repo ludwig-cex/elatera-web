@@ -501,24 +501,12 @@ function buildAdAnalyse_(ss, S, EUR, PCT) {
 function buildCostPerStep_(ss, S, EUR, PCT) {
   var INT = "#,##0";
   var t = freshSheet_(ss, "Cost-per-Step", 3);
-  t.getRange("A1").setValue("💸 Cost-per-Step — Funnel über den gewählten Zeitraum").setFontWeight("bold").setFontSize(14);
+  t.getRange("A1").setValue("💸 Cost-per-Step — Funnel mit Kosten je Stufe").setFontWeight("bold").setFontSize(14);
   t.getRange("A3").setValue("Von").setFontWeight("bold");
   t.getRange("B3").setFormula("=MIN(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
   t.getRange("A4").setValue("Bis").setFontWeight("bold");
   t.getRange("B4").setFormula("=MAX(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
-  t.getRange("C3").setValue("◀ Standard = gesamte Laufzeit; Zeitraum frei wählbar. Nur Paid (utm fb/ig).").setFontStyle("italic").setFontColor("#666666");
-
-  function sumifs(col) {
-    var dc = "Rohdaten!$A:$A";
-    return "SUMIFS(Rohdaten!$" + col + ":$" + col + S + dc + S + '">="&$B$3' + S + dc + S + '"<="&$B$4)';
-  }
-  t.getRange("D4").setValue("Gesamt-Spend").setFontColor("#666666");
-  t.getRange("E4").setFormula("=" + sumifs("H")).setNumberFormat(EUR).setFontWeight("bold");
-
-  t.getRange("A6").setValue("Step").setFontWeight("bold");
-  t.getRange("B6").setValue("Anzahl").setFontWeight("bold").setHorizontalAlignment("right");
-  t.getRange("C6").setValue("Cost/Step").setFontWeight("bold").setHorizontalAlignment("right");
-  t.getRange("D6").setValue("Quote z. Vorstep").setFontWeight("bold").setHorizontalAlignment("right");
+  t.getRange("C3").setValue("◀ 1. Block = gesamte Laufzeit (Von/Bis frei wählbar). Darunter: letzte 3 und 7 Tage ab „Bis\". Nur Paid (utm fb/ig).").setFontStyle("italic").setFontColor("#666666");
 
   // Funnel-Reihenfolge: [Label, Rohdaten-Spalte] — F=Impr G=Link-Klick N=Landung
   //   I=CTA R=Produktansicht J=Warenkorb K=Kasse L=Bestellt M=Gekauft, Spend=H
@@ -526,37 +514,58 @@ function buildCostPerStep_(ss, S, EUR, PCT) {
     ["Impression", "F"], ["Link-Klick", "G"], ["Landung (Advertorial)", "N"], ["CTA → Shop", "I"],
     ["Produktansicht", "R"], ["Warenkorb", "J"], ["Zur Kasse", "K"], ["Zahlungspfl. bestellt", "L"], ["Gekauft", "M"]
   ];
-  steps.forEach(function (s, i) {
-    var r = 7 + i;
-    t.getRange(r, 1).setValue(s[0]).setFontColor("#333333");
-    t.getRange(r, 2).setFormula("=" + sumifs(s[1])).setNumberFormat(INT);
-    if (s[0] === "Impression") {
-      t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + "$E$4/$B" + r + "*1000)").setNumberFormat('0.00" €/1k"');
-    } else {
-      t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + "$E$4/$B" + r + ")").setNumberFormat(EUR);
-    }
-    if (i === 0) {
-      t.getRange(r, 4).setValue("–").setFontColor("#999999");
-    } else {
-      t.getRange(r, 4).setFormula("=IF($B" + (r - 1) + "=0" + S + "\"\"" + S + "$B" + r + "/$B" + (r - 1) + ")").setNumberFormat(PCT);
-    }
-  });
-  t.getRange("B7:D15").setHorizontalAlignment("right");
+  function sumifs(col, fromE, toE) {
+    var dc = "Rohdaten!$A:$A";
+    return "SUMIFS(Rohdaten!$" + col + ":$" + col + S + dc + S + '">="&' + fromE + S + dc + S + '"<="&' + toE + ")";
+  }
+  var rules = [];
 
-  // Heatmap auf Cost/Step ab Link-Klick (teurer = roter); Impression-CPM ausgenommen.
-  t.setConditionalFormatRules([SpreadsheetApp.newConditionalFormatRule()
-    .setGradientMinpoint("#C0DD97").setGradientMaxpoint("#F7C1C1")
-    .setRanges([t.getRange("C8:C15")]).build()]);
+  // Ein Funnel-Block ab Zeile `start` für den Datumsbereich [fromE, toE].
+  // Liefert die nächste freie Zeile (1 Titel + 1 Header + 9 Steps = 11 Zeilen).
+  function block(start, label, fromE, toE) {
+    var spendF = sumifs("H", fromE, toE);
+    t.getRange(start, 1).setValue(label).setFontWeight("bold").setFontColor("#15562d").setFontSize(12);
+    t.getRange(start, 3).setValue("Spend").setFontColor("#888888").setHorizontalAlignment("right");
+    t.getRange(start, 4).setFormula("=" + spendF).setNumberFormat(EUR).setFontWeight("bold").setHorizontalAlignment("right");
+    var hr = start + 1;
+    t.getRange(hr, 1).setValue("Step").setFontWeight("bold");
+    t.getRange(hr, 2).setValue("Anzahl").setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(hr, 3).setValue("Cost/Step").setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(hr, 4).setValue("Quote z. Vorstep").setFontWeight("bold").setHorizontalAlignment("right");
+    steps.forEach(function (s, i) {
+      var r = hr + 1 + i;
+      t.getRange(r, 1).setValue(s[0]).setFontColor("#333333");
+      t.getRange(r, 2).setFormula("=" + sumifs(s[1], fromE, toE)).setNumberFormat(INT);
+      if (s[0] === "Impression") {
+        t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + spendF + "/$B" + r + "*1000)").setNumberFormat('0.00" €/1k"');
+      } else {
+        t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + spendF + "/$B" + r + ")").setNumberFormat(EUR);
+      }
+      if (i === 0) t.getRange(r, 4).setValue("–").setFontColor("#999999").setHorizontalAlignment("right");
+      else t.getRange(r, 4).setFormula("=IF($B" + (r - 1) + "=0" + S + "\"\"" + S + "$B" + r + "/$B" + (r - 1) + ")").setNumberFormat(PCT);
+    });
+    t.getRange(hr + 1, 2, 9, 3).setHorizontalAlignment("right");
+    rules.push(SpreadsheetApp.newConditionalFormatRule()
+      .setGradientMinpoint("#C0DD97").setGradientMaxpoint("#F7C1C1")
+      .setRanges([t.getRange(hr + 2, 3, 8, 1)]).build());
+    return start + 11;
+  }
 
-  t.getRange("A17:D19").merge();
-  t.getRange("A17").setValue("Cost/Step = Gesamt-Spend ÷ Anzahl auf dieser Stufe (Impression als CPM je 1.000). Quoten über 100 % bei Landung/Produktansicht sind ein Mess-Artefakt: Meta-Klicks und PostHog-Personen werden unterschiedlich gezählt, und Produktansicht enthält auch Direkt-zu-Shop und Auto-Warenkorb.").setFontStyle("italic").setFontColor("#666666").setVerticalAlignment("top").setWrap(true);
+  var next = block(6, "Gesamte Laufzeit (Von–Bis)", "$B$3", "$B$4");
+  next = block(next + 1, "Letzte 3 Tage (ab Bis−2)", "$B$4-2", "$B$4");
+  next = block(next + 1, "Letzte 7 Tage (ab Bis−6)", "$B$4-6", "$B$4");
+  t.setConditionalFormatRules(rules);
+
+  var noteRow = next + 1;
+  t.getRange(noteRow, 1, 3, 4).merge();
+  t.getRange(noteRow, 1).setValue("Cost/Step = Spend des jeweiligen Zeitraums ÷ Anzahl auf dieser Stufe (Impression als CPM je 1.000). Quoten über 100 % bei Landung/Produktansicht sind ein Mess-Artefakt: Meta-Klicks und PostHog-Personen werden unterschiedlich gezählt, und Produktansicht enthält auch Direkt-zu-Shop und Auto-Warenkorb.").setFontStyle("italic").setFontColor("#666666").setVerticalAlignment("top").setWrap(true);
 
   t.setHiddenGridlines(true);
   t.setColumnWidth(1, 210);
   t.setColumnWidth(2, 90);
   t.setColumnWidth(3, 130);
   t.setColumnWidth(4, 140);
-  t.setFrozenRows(6);
+  t.setFrozenRows(1);
 }
 
 // ---- helpers ----
