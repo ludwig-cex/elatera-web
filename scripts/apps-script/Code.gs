@@ -131,6 +131,7 @@ function buildDashboard_(ss) {
   buildDetail_(ss, S, EUR, PCT, XX); // Datenquelle für ④ liegt auf eigenem Tab "Detail"
   buildTagesauswertung_(ss, S, EUR, PCT); // Tab: Tag- & Wochen-Vergleich
   buildAdAnalyse_(ss, S, EUR, PCT); // Tab: Ads spaltenweise, harte Zahlen + Quoten über mehrere Zeiträume
+  buildCostPerStep_(ss, S, EUR, PCT); // Tab: Funnel mit Kosten pro Stufe über den Zeitraum
 
   // Rohdaten-Spalten: F=Impr G=Link-Klicks H=Spend I=LP-CTA J=WK K=Kasse
   //   L=Bestellt M=Kauf N=Landung O=Reach P=Alle-Klicks Q=Meta-LPV R=Produktansicht S=Umsatz
@@ -493,6 +494,69 @@ function buildAdAnalyse_(ss, S, EUR, PCT) {
   t.setColumnWidth(1, 165);
   t.setFrozenColumns(1);
   t.setFrozenRows(8);
+}
+
+// Tab „Cost-per-Step": Funnel über den gewählten Zeitraum mit Kosten je Stufe
+// (Gesamt-Spend ÷ Anzahl auf der Stufe). Standard-Zeitraum = gesamte Laufzeit.
+function buildCostPerStep_(ss, S, EUR, PCT) {
+  var INT = "#,##0";
+  var t = freshSheet_(ss, "Cost-per-Step", 3);
+  t.getRange("A1").setValue("💸 Cost-per-Step — Funnel über den gewählten Zeitraum").setFontWeight("bold").setFontSize(14);
+  t.getRange("A3").setValue("Von").setFontWeight("bold");
+  t.getRange("B3").setFormula("=MIN(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A4").setValue("Bis").setFontWeight("bold");
+  t.getRange("B4").setFormula("=MAX(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
+  t.getRange("C3").setValue("◀ Standard = gesamte Laufzeit; Zeitraum frei wählbar. Nur Paid (utm fb/ig).").setFontStyle("italic").setFontColor("#666666");
+
+  function sumifs(col) {
+    var dc = "Rohdaten!$A:$A";
+    return "SUMIFS(Rohdaten!$" + col + ":$" + col + S + dc + S + '">="&$B$3' + S + dc + S + '"<="&$B$4)';
+  }
+  t.getRange("D4").setValue("Gesamt-Spend").setFontColor("#666666");
+  t.getRange("E4").setFormula("=" + sumifs("H")).setNumberFormat(EUR).setFontWeight("bold");
+
+  t.getRange("A6").setValue("Step").setFontWeight("bold");
+  t.getRange("B6").setValue("Anzahl").setFontWeight("bold").setHorizontalAlignment("right");
+  t.getRange("C6").setValue("Cost/Step").setFontWeight("bold").setHorizontalAlignment("right");
+  t.getRange("D6").setValue("Quote z. Vorstep").setFontWeight("bold").setHorizontalAlignment("right");
+
+  // Funnel-Reihenfolge: [Label, Rohdaten-Spalte] — F=Impr G=Link-Klick N=Landung
+  //   I=CTA R=Produktansicht J=Warenkorb K=Kasse L=Bestellt M=Gekauft, Spend=H
+  var steps = [
+    ["Impression", "F"], ["Link-Klick", "G"], ["Landung (Advertorial)", "N"], ["CTA → Shop", "I"],
+    ["Produktansicht", "R"], ["Warenkorb", "J"], ["Zur Kasse", "K"], ["Zahlungspfl. bestellt", "L"], ["Gekauft", "M"]
+  ];
+  steps.forEach(function (s, i) {
+    var r = 7 + i;
+    t.getRange(r, 1).setValue(s[0]).setFontColor("#333333");
+    t.getRange(r, 2).setFormula("=" + sumifs(s[1])).setNumberFormat(INT);
+    if (s[0] === "Impression") {
+      t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + "$E$4/$B" + r + "*1000)").setNumberFormat('0.00" €/1k"');
+    } else {
+      t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + "$E$4/$B" + r + ")").setNumberFormat(EUR);
+    }
+    if (i === 0) {
+      t.getRange(r, 4).setValue("–").setFontColor("#999999");
+    } else {
+      t.getRange(r, 4).setFormula("=IF($B" + (r - 1) + "=0" + S + "\"\"" + S + "$B" + r + "/$B" + (r - 1) + ")").setNumberFormat(PCT);
+    }
+  });
+  t.getRange("B7:D15").setHorizontalAlignment("right");
+
+  // Heatmap auf Cost/Step ab Link-Klick (teurer = roter); Impression-CPM ausgenommen.
+  t.setConditionalFormatRules([SpreadsheetApp.newConditionalFormatRule()
+    .setGradientMinpoint("#C0DD97").setGradientMaxpoint("#F7C1C1")
+    .setRanges([t.getRange("C8:C15")]).build()]);
+
+  t.getRange("A17:D19").merge();
+  t.getRange("A17").setValue("Cost/Step = Gesamt-Spend ÷ Anzahl auf dieser Stufe (Impression als CPM je 1.000). Quoten über 100 % bei Landung/Produktansicht sind ein Mess-Artefakt: Meta-Klicks und PostHog-Personen werden unterschiedlich gezählt, und Produktansicht enthält auch Direkt-zu-Shop und Auto-Warenkorb.").setFontStyle("italic").setFontColor("#666666").setVerticalAlignment("top").setWrap(true);
+
+  t.setHiddenGridlines(true);
+  t.setColumnWidth(1, 210);
+  t.setColumnWidth(2, 90);
+  t.setColumnWidth(3, 130);
+  t.setColumnWidth(4, 140);
+  t.setFrozenRows(6);
 }
 
 // ---- helpers ----
