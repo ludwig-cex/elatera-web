@@ -36,6 +36,9 @@ export type FunnelDayRow = {
   pay_submit: number; // payment_submitted ("Jetzt zahlungspflichtig bestellen")
   purchased: number; // payment_authorized
   direct_cart: number; // direct_cart_entry — Auto-Warenkorb (?addtocart=), Teilmenge von add_to_cart; zählt auch als product_viewed
+  order_click: number; // Bestell-Klick INKL. retro: payment_submitted ODER Autocapture-Klick auf „zahlungspflichtig bestellen" (durchgehend ab Launch)
+  checkout_seeded: number; // checkout_clicked der Seed-Kohorte (direct_cart_entry-Personen)
+  order_click_seeded: number; // order_click der Seed-Kohorte
 };
 
 // The unified per-day-per-ad raw row that gets written to the "Rohdaten" sheet.
@@ -62,6 +65,9 @@ export type RawRow = {
   revenue: number; // EUR purchase value (for ROAS); 0 while validating
   product_view_direct: number; // direct-to-shop product views (no advertorial CTA)
   direct_cart: number; // Auto-Warenkorb (?addtocart=) — Teilmenge von add_to_cart
+  order_click: number; // Bestell-Klick inkl. retro (payment_submitted ODER Autocapture-Button), durchgehend ab Launch
+  checkout_seeded: number; // Kasse der Seed-Kohorte (Teilmenge von checkout)
+  order_click_seeded: number; // Bestell-Klick der Seed-Kohorte (Teilmenge von order_click)
 };
 
 // Aggregated funnel for a set of raw rows (a period × level group).

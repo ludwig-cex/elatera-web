@@ -496,76 +496,146 @@ function buildAdAnalyse_(ss, S, EUR, PCT) {
   t.setFrozenRows(8);
 }
 
-// Tab „Cost-per-Step": Funnel über den gewählten Zeitraum mit Kosten je Stufe
-// (Gesamt-Spend ÷ Anzahl auf der Stufe). Standard-Zeitraum = gesamte Laufzeit.
+// Tab „Cost-per-Step": Funnel mit Kosten je Stufe — drei Zeitfenster NEBENEINANDER
+// (Gesamt · letzte 7 Tage · letzte 3 Tage). Endpunkt = Bestell-Klick
+// („Jetzt zahlungspflichtig bestellen" = payment_submitted); die Stripe-Autorisierung
+// danach ist bewusst nicht enthalten. Warenkorb ist in „selbst gewählt" (add_to_cart −
+// Auto-WK) und „von uns" (Auto-WK / direct_cart, ?addtocart=) aufgeteilt. Nur Paid:
+// die Rohdaten enthalten ausschließlich den fb/ig-Anzeigenaccount.
 function buildCostPerStep_(ss, S, EUR, PCT) {
-  var INT = "#,##0";
+  var INT = "#,##0", CPM = '0.00" €/1k"';
   var t = freshSheet_(ss, "Cost-per-Step", 3);
-  t.getRange("A1").setValue("💸 Cost-per-Step — Funnel mit Kosten je Stufe").setFontWeight("bold").setFontSize(14);
-  t.getRange("A3").setValue("Von").setFontWeight("bold");
-  t.getRange("B3").setFormula("=MIN(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
-  t.getRange("A4").setValue("Bis").setFontWeight("bold");
-  t.getRange("B4").setFormula("=MAX(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
-  t.getRange("C3").setValue("◀ 1. Block = gesamte Laufzeit (Von/Bis frei wählbar). Darunter: letzte 3 und 7 Tage ab „Bis\". Nur Paid (utm fb/ig).").setFontStyle("italic").setFontColor("#666666");
 
-  // Funnel-Reihenfolge: [Label, Rohdaten-Spalte] — F=Impr G=Link-Klick N=Landung
-  //   I=CTA R=Produktansicht J=Warenkorb K=Kasse L=Bestellt M=Gekauft, Spend=H
-  var steps = [
-    ["Impression", "F"], ["Link-Klick", "G"], ["Landung (Advertorial)", "N"], ["CTA → Shop", "I"],
-    ["Produktansicht", "R"], ["Warenkorb", "J"], ["Zur Kasse", "K"], ["Zahlungspfl. bestellt", "L"], ["Gekauft", "M"]
-  ];
+  function colL(n) { var s = ""; while (n > 0) { var m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = (n - m - 1) / 26; } return s; }
   function sumifs(col, fromE, toE) {
     var dc = "Rohdaten!$A:$A";
     return "SUMIFS(Rohdaten!$" + col + ":$" + col + S + dc + S + '">="&' + fromE + S + dc + S + '"<="&' + toE + ")";
   }
-  var rules = [];
 
-  // Ein Funnel-Block ab Zeile `start` für den Datumsbereich [fromE, toE].
-  // Liefert die nächste freie Zeile (1 Titel + 1 Header + 9 Steps = 11 Zeilen).
-  function block(start, label, fromE, toE) {
-    var spendF = sumifs("H", fromE, toE);
-    t.getRange(start, 1).setValue(label).setFontWeight("bold").setFontColor("#15562d").setFontSize(12);
-    t.getRange(start, 3).setValue("Spend").setFontColor("#888888").setHorizontalAlignment("right");
-    t.getRange(start, 4).setFormula("=" + spendF).setNumberFormat(EUR).setFontWeight("bold").setHorizontalAlignment("right");
-    var hr = start + 1;
-    t.getRange(hr, 1).setValue("Step").setFontWeight("bold");
-    t.getRange(hr, 2).setValue("Anzahl").setFontWeight("bold").setHorizontalAlignment("right");
-    t.getRange(hr, 3).setValue("Cost/Step").setFontWeight("bold").setHorizontalAlignment("right");
-    t.getRange(hr, 4).setValue("Quote z. Vorstep").setFontWeight("bold").setHorizontalAlignment("right");
+  t.getRange("A1").setValue("💸 Cost-per-Step — Funnel & Kosten je Stufe (Gesamt · 7 Tage · 3 Tage)").setFontWeight("bold").setFontSize(14);
+  t.getRange("A3").setValue("Von").setFontWeight("bold");
+  t.getRange("B3").setFormula("=MIN(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
+  t.getRange("A4").setValue("Bis").setFontWeight("bold");
+  t.getRange("B4").setFormula("=MAX(Rohdaten!$A$2:$A)").setNumberFormat("yyyy-mm-dd");
+  t.getRange("C3").setValue("◀ „Gesamt\" = Von/Bis frei wählbar; 7/3 Tage zählen ab „Bis\" zurück. Nur Paid — Rohdaten enthält nur den fb/ig-Anzeigenaccount.").setFontStyle("italic").setFontColor("#666666");
+
+  // Drei Zeitfenster, je 3 Spalten: Anzahl · €/Step · →Quote. base = Spalte „Anzahl".
+  var groups = [
+    { title: "GESAMT (Von–Bis)", base: 2, from: "$B$3",   to: "$B$4" },
+    { title: "Letzte 7 Tage",    base: 5, from: "$B$4-6", to: "$B$4" },
+    { title: "Letzte 3 Tage",    base: 8, from: "$B$4-2", to: "$B$4" },
+  ];
+
+  // Funnel-Stufen. Rohdaten-Spalten: F=Impr G=Link-Klick N=Landung I=CTA R=Produktansicht
+  //   J=Warenkorb(gesamt) U=Auto-WK(von uns) K=Kasse W=Kasse-seeded V=Bestell-Klick(inkl.retro)
+  //   X=Bestell-Klick-seeded. selbst = gesamt − seeded (J−U, K−W, V−X).
+  // „den" = Stufen-Index, gegen den die →Quote (Stufe ÷ Vorstufe) rechnet; der Cart-Split
+  // wird kohorten-rein durchgezogen (selbst-Stufe ÷ selbst-Vorstufe, von-uns ÷ von-uns).
+  var R0 = 9;
+  var steps = [
+    { l: "Impression",                    col: "F", cpm: true },
+    { l: "Link-Klick",                    col: "G", den: 0 },
+    { l: "Landung (Advertorial)",         col: "N", den: 1 },
+    { l: "CTA → Shop",                    col: "I", den: 2 },
+    { l: "Produktansicht",                col: "R", den: 3 },
+    { l: "Warenkorb gesamt",              col: "J", den: 4 },
+    { l: "   ╴ selbst gewählt",           sub: true, minus: ["J", "U"], den: 4 },
+    { l: "   ╴ von uns (Auto-WK)",        sub: true, col: "U", seedEntry: true },
+    { l: "Zur Kasse gesamt",              col: "K", den: 5 },
+    { l: "   ╴ selbst",                   sub: true, minus: ["K", "W"], den: 6 },
+    { l: "   ╴ von uns",                  sub: true, col: "W", den: 7 },
+    { l: "Bestell-Klick (inkl. retro)",   col: "V", den: 8, endpoint: true },
+    { l: "   ╴ selbst",                   sub: true, minus: ["V", "X"], den: 9, endpoint: true },
+    { l: "   ╴ von uns",                  sub: true, col: "X", den: 10, endpoint: true },
+  ];
+
+  // Kopf je Zeitfenster (Zeile 6 Titel, 7 Spend, 8 Unterspalten).
+  t.getRange("A6").setValue("Stufe ↓ / Zeitraum →").setFontWeight("bold");
+  t.getRange("A8").setValue("Stufe").setFontWeight("bold");
+  groups.forEach(function (g) {
+    var c = g.base;
+    t.getRange(6, c, 1, 3).merge().setValue(g.title).setFontWeight("bold").setFontColor("#15562d").setFontSize(12).setHorizontalAlignment("center");
+    t.getRange(7, c, 1, 3).merge();
+    t.getRange(7, c).setFormula("=\"Spend  \"&TEXT(" + sumifs("H", g.from, g.to) + S + "\"#,##0.00 €\")").setHorizontalAlignment("center").setFontColor("#555555");
+    t.getRange(8, c).setValue("Anzahl").setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(8, c + 1).setValue("€/Step").setFontWeight("bold").setHorizontalAlignment("right");
+    t.getRange(8, c + 2).setValue("→Quote").setFontWeight("bold").setHorizontalAlignment("right");
+  });
+
+  // Stufen-Zeilen je Zeitfenster.
+  groups.forEach(function (g) {
+    var c = g.base, cL = colL(c), spendF = sumifs("H", g.from, g.to);
     steps.forEach(function (s, i) {
-      var r = hr + 1 + i;
-      t.getRange(r, 1).setValue(s[0]).setFontColor("#333333");
-      t.getRange(r, 2).setFormula("=" + sumifs(s[1], fromE, toE)).setNumberFormat(INT);
-      if (s[0] === "Impression") {
-        t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + spendF + "/$B" + r + "*1000)").setNumberFormat('0.00" €/1k"');
-      } else {
-        t.getRange(r, 3).setFormula("=IF($B" + r + "=0" + S + "\"\"" + S + spendF + "/$B" + r + ")").setNumberFormat(EUR);
+      var r = R0 + i;
+      if (c === 2) t.getRange(r, 1).setValue(s.l)
+        .setFontColor(s.sub ? "#888780" : "#333333")
+        .setFontWeight(s.endpoint && !s.sub ? "bold" : "normal");
+      var anz = s.minus ? sumifs(s.minus[0], g.from, g.to) + "-" + sumifs(s.minus[1], g.from, g.to) : sumifs(s.col, g.from, g.to);
+      var anzCell = cL + r;
+      t.getRange(r, c).setFormula("=" + anz).setNumberFormat(INT);
+      // €/Step nur auf den Gesamt-Stufen — bei Sub-Zeilen wäre Spend ÷ Teilmenge irreführend.
+      if (!s.sub) {
+        var costF = s.cpm
+          ? "=IF(" + anzCell + "=0" + S + "\"\"" + S + spendF + "/" + anzCell + "*1000)"
+          : "=IF(" + anzCell + "=0" + S + "\"\"" + S + spendF + "/" + anzCell + ")";
+        t.getRange(r, c + 1).setFormula(costF).setNumberFormat(s.cpm ? CPM : EUR);
       }
-      if (i === 0) t.getRange(r, 4).setValue("–").setFontColor("#999999").setHorizontalAlignment("right");
-      else t.getRange(r, 4).setFormula("=IF($B" + (r - 1) + "=0" + S + "\"\"" + S + "$B" + r + "/$B" + (r - 1) + ")").setNumberFormat(PCT);
+      var q = t.getRange(r, c + 2);
+      if (i === 0 || s.seedEntry) {
+        q.setValue(s.seedEntry ? "geseedet" : "–").setFontColor(s.seedEntry ? "#9a7b0a" : "#999999")
+          .setFontStyle(s.seedEntry ? "italic" : "normal").setHorizontalAlignment("right");
+      } else {
+        var den = cL + (R0 + s.den);
+        q.setFormula("=IF(" + den + "=0" + S + "\"\"" + S + anzCell + "/" + den + ")").setNumberFormat(PCT);
+      }
     });
-    t.getRange(hr + 1, 2, 9, 3).setHorizontalAlignment("right");
-    rules.push(SpreadsheetApp.newConditionalFormatRule()
-      .setGradientMinpoint("#C0DD97").setGradientMaxpoint("#F7C1C1")
-      .setRanges([t.getRange(hr + 2, 3, 8, 1)]).build());
-    return start + 11;
-  }
+  });
 
-  var next = block(6, "Gesamte Laufzeit (Von–Bis)", "$B$3", "$B$4");
-  next = block(next + 1, "Letzte 3 Tage (ab Bis−2)", "$B$4-2", "$B$4");
-  next = block(next + 1, "Letzte 7 Tage (ab Bis−6)", "$B$4-6", "$B$4");
-  t.setConditionalFormatRules(rules);
+  // Durchstich-Quoten & Endkosten (referenzieren die Funnel-Zellen je Zeitfenster).
+  var kr = R0 + steps.length + 1;
+  t.getRange(kr, 1).setValue("Durchstich-Quoten & Endkosten — bestellen die geseedeten Körbe wirklich?").setFontWeight("bold");
+  var rProd = R0 + 4, rWkSelf = R0 + 6, rWkSeed = R0 + 7, rOrdSelf = R0 + 12, rOrdSeed = R0 + 13, rEnd = R0 + 11;
+  var kpis = [
+    { l: "Bestell-Klick ÷ Produktansicht (gesamt)", num: rEnd,     den: rProd,   fmt: PCT },
+    { l: "Warenkorb → Bestell-Klick · SELBST",      num: rOrdSelf, den: rWkSelf, fmt: PCT },
+    { l: "Warenkorb → Bestell-Klick · VON UNS",     num: rOrdSeed, den: rWkSeed, fmt: PCT },
+    { l: "CAC — Spend ÷ Bestell-Klick",             cac: true,                   fmt: EUR },
+  ];
+  kpis.forEach(function (k, j) {
+    var r = kr + 1 + j;
+    t.getRange(r, 1).setValue(k.l).setFontColor("#333333").setFontWeight(k.cac ? "bold" : "normal");
+    groups.forEach(function (g) {
+      var c = g.base, cL = colL(c);
+      var f = k.cac
+        ? "=IF(" + cL + rEnd + "=0" + S + "\"\"" + S + sumifs("H", g.from, g.to) + "/" + cL + rEnd + ")"
+        : "=IF(" + cL + k.den + "=0" + S + "\"\"" + S + cL + k.num + "/" + cL + k.den + ")";
+      t.getRange(r, c, 1, 3).merge();
+      t.getRange(r, c).setFormula(f).setNumberFormat(k.fmt).setHorizontalAlignment("right").setFontWeight(k.cac ? "bold" : "normal");
+    });
+  });
 
-  var noteRow = next + 1;
-  t.getRange(noteRow, 1, 3, 4).merge();
-  t.getRange(noteRow, 1).setValue("Cost/Step = Spend des jeweiligen Zeitraums ÷ Anzahl auf dieser Stufe (Impression als CPM je 1.000). Quoten über 100 % bei Landung/Produktansicht sind ein Mess-Artefakt: Meta-Klicks und PostHog-Personen werden unterschiedlich gezählt, und Produktansicht enthält auch Direkt-zu-Shop und Auto-Warenkorb.").setFontStyle("italic").setFontColor("#666666").setVerticalAlignment("top").setWrap(true);
-
+  // Optik: Endpunkt grün, Sub-Zeilen abgesetzt, Blöcke gerahmt.
   t.setHiddenGridlines(true);
-  t.setColumnWidth(1, 210);
-  t.setColumnWidth(2, 90);
-  t.setColumnWidth(3, 130);
-  t.setColumnWidth(4, 140);
-  t.setFrozenRows(1);
+  var GREY = "#D3D1C7", SOLID = SpreadsheetApp.BorderStyle.SOLID, SAND = "#FAF7EE";
+  [R0 + 6, R0 + 9, R0 + 12].forEach(function (rr) { t.getRange(rr, 1, 2, 10).setBackground(SAND); }); // selbst / von-uns
+  t.getRange(rEnd, 1, 1, 10).setBackground("#E1F5EE"); // Endpunkt (Bestell-Klick gesamt)
+  var lastRow = R0 + steps.length - 1;
+  groups.forEach(function (g) { t.getRange(6, g.base, lastRow - 6 + 1, 3).setBorder(true, true, true, true, false, false, GREY, SOLID); });
+  t.getRange(8, 1, 1, 10).setBorder(null, null, true, null, null, null, GREY, SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+
+  var noteRow = kr + kpis.length + 2;
+  t.getRange(noteRow, 2, 5, 9).merge();
+  t.getRange(noteRow, 2).setValue(
+    "€/Step = Spend des Zeitfensters ÷ Anzahl auf der Stufe (Impression als CPM je 1.000), nur auf den Gesamt-Stufen. →Quote = Stufe ÷ Vorstufe; bei selbst/von-uns kohorten-rein (selbst ÷ selbst, von-uns ÷ von-uns). " +
+    "„von uns\" = Auto-Warenkorb (?addtocart=, direct_cart) — von uns vorbefüllt; „selbst\" = Gesamt − von uns (gilt für Warenkorb, Kasse, Bestell-Klick). " +
+    "Endpunkt = Bestell-Klick „Jetzt zahlungspflichtig bestellen\" INKL. RETRO: ab 18.06.2026 das explizite Event payment_submitted, davor aus PostHog-Autocapture rekonstruiert (Klick auf den Bestell-Button) — daher bis zum Launch durchgehend auswertbar. " +
+    "Autocapture kann den Klick leicht überzählen (Mehrfachklicks), ist für den Zeitraum vor dem expliziten Tracking aber die beste verfügbare Rekonstruktion."
+  ).setFontStyle("italic").setFontColor("#666666").setVerticalAlignment("top").setWrap(true);
+
+  t.setColumnWidth(1, 235);
+  [2, 5, 8].forEach(function (c) { t.setColumnWidth(c, 82); t.setColumnWidth(c + 1, 96); t.setColumnWidth(c + 2, 78); });
+  t.setFrozenRows(8);
+  t.setFrozenColumns(1);
 }
 
 // ---- helpers ----

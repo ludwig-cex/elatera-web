@@ -35,10 +35,29 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
   // Produktansicht (die Person wurde ja auf die Produktseite geleitet). Zusätzlich
   // wird die Auto-Warenkorb-Zahl separat ausgewiesen (direct_cart), damit die
   // Produkt→WK-Rate nicht mit den von uns reingelegten Carts verwechselt wird.
+  //
+  // RETRO-Bestell-Klick (order_click): das explizite Event 'payment_submitted' gibt es
+  // erst ab 18.06.2026; davor wurde der Button „Jetzt zahlungspflichtig bestellen" NICHT
+  // getrackt. PostHog-Autocapture hat den Klick aber von Anfang an als $autocapture
+  // mitgeschnitten (elements_chain enthält den Button-Text). order_click vereinigt beide
+  // → ein bis zum Launch durchgehend auswertbarer Bestell-Klick. Für ≥18.06. zählt eine
+  // Person mit beidem dank DISTINCT nur einmal.
+  //
+  // SEED-Kohorte (seed_persons): Personen mit direct_cart_entry (?addtocart=, von uns
+  // vorbefüllter Warenkorb). checkout_seeded / order_click_seeded ziehen den Cart-Split
+  // bis zur Kasse und zum Bestell-Klick durch (selbst = gesamt − seeded).
+  const orderClick =
+    "event = 'payment_submitted' OR (event = '$autocapture' AND elements_chain ILIKE '%zahlungspflichtig%')";
   const hogql = `
     WITH cta_persons AS (
       SELECT DISTINCT person_id FROM events
       WHERE event = 'advertorial_cta_click'
+        AND timestamp >= toDateTime('${since} 00:00:00')
+        AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
+    ),
+    seed_persons AS (
+      SELECT DISTINCT person_id FROM events
+      WHERE event = 'direct_cart_entry'
         AND timestamp >= toDateTime('${since} 00:00:00')
         AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
     )
@@ -55,11 +74,15 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
       count(DISTINCT if(event = 'checkout_clicked', person_id, NULL))      AS checkout,
       count(DISTINCT if(event = 'payment_submitted', person_id, NULL))     AS pay_submit,
       count(DISTINCT if(event = 'payment_authorized', person_id, NULL))    AS purchased,
-      count(DISTINCT if(event = 'direct_cart_entry', person_id, NULL))     AS direct_cart
+      count(DISTINCT if(event = 'direct_cart_entry', person_id, NULL))     AS direct_cart,
+      count(DISTINCT if(${orderClick}, person_id, NULL))                   AS order_click,
+      count(DISTINCT if(event = 'checkout_clicked' AND person_id IN (SELECT person_id FROM seed_persons), person_id, NULL)) AS checkout_seeded,
+      count(DISTINCT if((${orderClick}) AND person_id IN (SELECT person_id FROM seed_persons), person_id, NULL))            AS order_click_seeded
     FROM events
     WHERE timestamp >= toDateTime('${since} 00:00:00')
       AND timestamp <  toDateTime('${untilExclusive} 00:00:00')
-      AND event IN ('product_viewed','direct_cart_entry','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized')
+      AND event IN ('product_viewed','direct_cart_entry','advertorial_cta_click','add_to_cart','checkout_clicked','payment_submitted','payment_authorized','$autocapture')
+      AND (event != '$autocapture' OR elements_chain ILIKE '%zahlungspflichtig%')
     GROUP BY day, source, campaign, ad, ad_id_tag
     ORDER BY day
     LIMIT 100000
@@ -97,6 +120,9 @@ export async function fetchFunnelDays(since: string, until: string): Promise<Fun
     pay_submit: num(r[10]),
     purchased: num(r[11]),
     direct_cart: num(r[12]),
+    order_click: num(r[13]),
+    checkout_seeded: num(r[14]),
+    order_click_seeded: num(r[15]),
   }));
 }
 

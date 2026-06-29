@@ -39,6 +39,7 @@ const funnel: FunnelDayRow[] = [
 ].map(([ad, adIdTag, lp_cta, atc, bought]) => ({
   date: D, source: "fb", campaign: "Mobilisana_test", ad: ad as string, adIdTag: adIdTag as string,
   product_viewed: 0, product_viewed_direct: 0, lp_cta: lp_cta as number, add_to_cart: atc as number, checkout: 0, pay_submit: 0, purchased: bought as number, direct_cart: 0,
+  order_click: 0, checkout_seeded: 0, order_click_seeded: 0,
 }));
 
 const { rows, unmatchedFunnel } = buildRawRows(meta, funnel);

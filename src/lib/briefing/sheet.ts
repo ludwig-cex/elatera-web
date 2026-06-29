@@ -12,6 +12,7 @@ export const RAW_HEADER = [
   "advertorial_landings",
   "reach", "all_clicks", "meta_lpv", "product_view", "revenue",
   "product_view_direct", "direct_cart",
+  "order_click", "checkout_seeded", "order_click_seeded",
 ] as const;
 
 export function rowToArray(r: RawRow): (string | number)[] {
@@ -22,6 +23,7 @@ export function rowToArray(r: RawRow): (string | number)[] {
     r.landings,
     r.reach, r.all_clicks, r.meta_lpv, r.product_view, r.revenue,
     r.product_view_direct, r.direct_cart,
+    r.order_click, r.checkout_seeded, r.order_click_seeded,
   ];
 }
 
