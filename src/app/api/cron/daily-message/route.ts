@@ -54,18 +54,25 @@ export async function GET(request: Request) {
     const caption = `📊 <b>Ads-Auswertung — ${weekdayLabel(stichtag)}</b>${link ? `\n📄 ${link}` : ""}`;
 
     let mode = "photo";
+    let send: { ok: boolean; error?: string } = { ok: false, error: "dry-run" };
     if (!dry) {
       try {
         const png = await renderDailyImage(comparison).arrayBuffer();
-        await notifyTelegramPhoto(png, caption);
+        send = await notifyTelegramPhoto(png, caption);
+        if (!send.ok) {
+          // Foto von Telegram abgelehnt (z. B. Chat-ID) → Text-Fallback versuchen.
+          mode = "text-fallback";
+          send = await notifyTelegram(formatDailyMessage(comparison, link), { parseMode: "HTML" });
+        }
       } catch (imgErr) {
         // Bild-Rendering gescheitert → Text-Fallback, damit nie nichts ankommt.
         mode = "text-fallback";
         console.error("[daily-message] image failed", (imgErr as Error)?.message);
-        await notifyTelegram(formatDailyMessage(comparison, link), { parseMode: "HTML" });
+        send = await notifyTelegram(formatDailyMessage(comparison, link), { parseMode: "HTML" });
       }
     }
-    return Response.json({ ok: true, stichtag, sent: !dry, mode });
+    // sent spiegelt jetzt die ECHTE Telegram-Zustellung; telegram.error nennt den Grund.
+    return Response.json({ ok: true, stichtag, sent: !dry && send.ok, mode, telegram: send });
   } catch (err) {
     const msg = (err as Error)?.message ?? "unknown";
     return Response.json({ ok: false, error: msg }, { status: 500 });
