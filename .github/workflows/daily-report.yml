@@ -3,12 +3,9 @@ name: Daily Ads Report
 # Zuverlässiger Trigger für die täglichen Endpoints (Vercel-Hobby-Crons sind
 # unzuverlässig). Braucht das Repo-Secret CRON_SECRET (= CRON_SECRET aus Vercel).
 on:
-  # GitHub-Actions-Cron läuft erfahrungsgemäß ~3,5 h zu spät (beobachtet: geplant
-  # 05:xx UTC, gefeuert ~08:30 UTC). Daher die Plan-Zeit entsprechend VORZIEHEN,
-  # damit die verspätete Auslieferung morgens ~07:00/07:15 Berlin landet.
-  schedule:
-    - cron: "30 1 * * *"   # Ziel ~07:00 Berlin — Daten ins Sheet (daily-briefing)
-    - cron: "45 1 * * *"   # Ziel ~07:15 Berlin — Bild-Auswertung (daily-message)
+  # Zeitgesteuerter Lauf läuft jetzt über VERCEL-CRON (vercel.json: 05:00/06:00 UTC
+  # = 07:00/08:00 Berlin). Diese Action bleibt nur als MANUELLER Fallback-Knopf,
+  # damit die Auswertung nicht doppelt feuert.
   workflow_dispatch: {}    # manueller Knopf in GitHub → Actions
 
 jobs:
