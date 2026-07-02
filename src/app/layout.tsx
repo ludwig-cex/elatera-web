@@ -4,7 +4,8 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { TopBar } from "@/components/site/top-bar";
-import { CookieBanner } from "@/components/site/cookie-banner";
+// Cookie-Banner vorübergehend deaktiviert (02.07.2026) — siehe unten im JSX.
+// import { CookieBanner } from "@/components/site/cookie-banner";
 import { CartProvider } from "@/components/cart/cart-context";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { CartDeepLink } from "@/components/cart/cart-deep-link";
@@ -106,7 +107,12 @@ export default function RootLayout({
             </ProductsShift>
             <CartDrawer />
             <CartDeepLink />
-            <CookieBanner />
+            {/* Cookie-Banner vorübergehend deaktiviert (02.07.2026): der blockierende
+                Consent-Gate (fixed, im Mobile ganzer Screen) senkt das Engagement.
+                Tracking (PostHog/Meta) ist NICHT an Consent gekoppelt und läuft
+                unverändert weiter. Rechtliches Risiko bewusst in Kauf genommen.
+                Zum Reaktivieren einfach wieder <CookieBanner /> rendern. */}
+            {/* <CookieBanner /> */}
           </ProductsMenuProvider>
         </CartProvider>
         <Analytics />

@@ -1,44 +1,16 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Serverseitiger 50/50-Test (Next 16 "proxy", früher middleware): Funnel-Einstiege
-// auf eine Produktseite werden zur Hälfte auf den Direct-to-Cart-Flow umgeleitet
-// (Paket liegt sofort im Warenkorb, CartDeepLink flaggt entry_test=direct-cart-1m),
-// die andere Hälfte sieht ganz normal die Produktseite. So muss kein Link in der
-// App/den Ads geändert werden.
+// Direct-to-Cart-Test BEENDET (02.07.2026): Die serverseitige 50/50-Umleitung von
+// Kampagnen-Traffic in den Auto-Warenkorb-Flow brachte keinen zusätzlichen
+// Bestell-Klick (nur mechanisch mehr add_to_cart). Alle Besucher landen jetzt
+// wieder ganz normal auf der Produktseite.
 //
-// Wichtig: gesplittet wird NUR bezahlter/Kampagnen-Traffic (utm/Click-ID vorhanden).
-// Organische bzw. direkte Produktseiten-Besuche bleiben unangetastet. Self-contained,
-// keine geteilten Module (läuft am Edge).
-
-const CLICK_IDS = ["utm_source", "fbclid", "gclid", "tblci", "ob_clid", "dicbo", "msclkid"];
-
-export function proxy(request: NextRequest) {
-  const { nextUrl } = request;
-  const sp = nextUrl.searchParams;
-
-  // Schon umgeleitet/verarbeitet → nichts tun (kein Loop, kein Re-Roll).
-  if (sp.has("addtocart")) return NextResponse.next();
-
-  // Nur Kampagnen-/Ad-Traffic splitten.
-  const isCampaign = CLICK_IDS.some((k) => sp.has(k));
-  if (!isCampaign) return NextResponse.next();
-
-  // 50/50: Kontrolle bekommt die normale Produktseite.
-  if (Math.random() < 0.5) return NextResponse.next();
-
-  const slug = nextUrl.pathname.split("/")[2]; // /products/<slug>
-  if (!slug) return NextResponse.next();
-
-  // Direct-to-Cart: Cart-Drawer über der PRODUKTSEITE öffnen (Hintergrund bleibt
-  // /products/<slug>, z. B. Mobilisana) — NICHT über der Startseite. So sieht der
-  // Nutzer beim Öffnen UND beim Schließen des Warenkorbs das richtige Produkt.
-  // Alle Params (utm, fbclid, ph_did, internal, …) bleiben erhalten; das
-  // ?addtocart oben verhindert eine erneute Umleitung.
-  const target = nextUrl.clone();
-  target.searchParams.set("addtocart", slug);
-  target.searchParams.set("months", "1");
-  return NextResponse.redirect(target);
+// Datei bleibt als reiner Pass-through erhalten, damit der Test bei Bedarf schnell
+// reaktiviert werden kann (History im Git). CartDeepLink verarbeitet ?addtocart
+// weiterhin, wird aber nicht mehr von hier aus gesetzt.
+export function proxy(_request: NextRequest) {
+  return NextResponse.next();
 }
 
 export const config = {
