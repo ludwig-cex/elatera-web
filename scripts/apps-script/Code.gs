@@ -159,7 +159,7 @@ function buildDashboard_(ss) {
     ["Spend", "=B17", EUR], ["Impressions", "=B12", "#,##0"],
     ["Link-CTR", div("B15", "B12"), PCT], ["CPC", div("B17", "B15"), EUR],
     ["Landungen", "=E12", "#,##0"], ["Bestellt", "=E17", "#,##0"],
-    ["CAC (/Bestellt)", div("B17", "E17"), EUR], ["ROAS", div("E19", "B17"), XX],
+    ["CAC (/Bestellt)", div("B17", "E17"), EUR], ["CAC (/Zur Kasse)", div("B17", "E16"), EUR], ["ROAS", div("E19", "B17"), XX],
   ];
   score.forEach(function (s, i) {
     d.getRange(7, 1 + i).setValue(s[0]).setFontColor("#666666");
@@ -201,6 +201,11 @@ function buildDashboard_(ss) {
   d.getRange("F18").setFormula(div("E18", "E17")).setNumberFormat(PCT);
   lbl("D19", "Umsatz €");              d.getRange("E19").setFormula(sumifs("S")).setNumberFormat(EUR);
   d.getRange("F19").setFormula(div("E19", "B17")).setNumberFormat(XX);   // ROAS
+  // CAC je Prozessschritt (Spend ÷ Anzahl auf der Stufe = Cost-per-Step) — Spalte G neben der Quote.
+  d.getRange("G11").setValue("CAC €").setFontWeight("bold").setFontColor("#888780");
+  ["E12", "E13", "E14", "E15", "E16", "E17", "E18"].forEach(function (cell, i) {
+    d.getRange(12 + i, 7).setFormula(div("B17", cell)).setNumberFormat(EUR);
+  });
   note("A20", "Angekommen: Meta-LPV mit Pixel (eher zu niedrig) · PostHog-Landung pixel-less (eher zu hoch) — Differenz = Mess-Methode, kein Fehler.");
   d.getRange("A21").setFormula(
     "=\"Produktansicht zählt nur den Advertorial-Pfad · direkt zum Shop (separate Ads, nicht im Funnel): \"&TEXT(SUMIFS(Rohdaten!$T:$T" +
@@ -228,18 +233,18 @@ function buildDashboard_(ss) {
   d.getRange("A30").setValue("Kennzahl ↓ / Ad →").setFontWeight("bold");
   var cmpLabels = [
     "Spend €", "Frequency", "CTR (Link)", "CPC €", "Landungen",
-    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "davon Auto-WK", "Zahlungspfl. bestellt", "CAC € (/Best.)", "ROAS",
+    "CTA-Rate", "Produktansicht", "Produkt→WK", "Warenkörbe", "davon selbst", "davon Auto-WK", "Zur Kasse", "Zahlungspfl. bestellt", "CAC € (/Best.)", "ROAS",
   ];
   cmpLabels.forEach(function (t, i) { d.getRange(31 + i, 1).setValue(t).setFontColor("#666666"); });
   // Kuratierte Auswahl aus dem Detail-Tab (Daten ab Zeile 2), nur Ads mit Spend > 2 €.
-  // Detail-Spalten (abgeleitete je +1 verschoben durch neue Auto-WK-Basis-Spalte P=Col16):
-  //   Col1=Ad Col2=Spend Col17=Freq Col19=CTR Col20=CPC Col7=Landung Col23=CTA-Rate
-  //   Col10=Produktansicht Col24=Produkt→WK Col11=Warenkorb Col16=Auto-WK Col13=Bestellt Col26=CAC Col27=ROAS
+  // Detail-Spalten: Col1=Ad Col2=Spend Col17=Freq Col19=CTR Col20=CPC Col7=Landung Col23=CTA-Rate
+  //   Col10=Produktansicht Col24=Produkt→WK Col11=Warenkorb Col28=WK-selbst Col16=Auto-WK
+  //   Col12=Kasse Col13=Bestellt Col26=CAC Col27=ROAS
   d.getRange("B30").setFormula(
-    "=TRANSPOSE(QUERY(Detail!$A$2:$AA$120" + S +
-    "\"select Col1,Col2,Col17,Col19,Col20,Col7,Col23,Col10,Col24,Col11,Col16,Col13,Col26,Col27 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
+    "=TRANSPOSE(QUERY(Detail!$A$2:$AB$120" + S +
+    "\"select Col1,Col2,Col17,Col19,Col20,Col7,Col23,Col10,Col24,Col11,Col28,Col16,Col12,Col13,Col26,Col27 where Col1 is not null and Col2 > 2 order by Col2 desc\"" + S + "0))");
   d.getRange("B30:O30").setFontWeight("bold").setWrap(true); // Ad-Namen als Spaltenköpfe
-  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", "#,##0", "#,##0", EUR, XX];
+  var cmpFmt = [EUR, XX, PCT, EUR, "#,##0", PCT, "#,##0", PCT, "#,##0", "#,##0", "#,##0", "#,##0", "#,##0", EUR, XX];
   cmpFmt.forEach(function (f, i) { d.getRange(31 + i, 2, 1, 14).setNumberFormat(f); });
   heatRow(33, true);   // CTR (Link)
   heatRow(34, false);  // CPC — niedriger = besser
@@ -248,10 +253,10 @@ function buildDashboard_(ss) {
   d.setConditionalFormatRules(rules);
 
   // ===== ⑤ CPC-VERLAUF je Ad — Abnutzung über die Zeit (gleiche Ad-Spalten wie ④) =====
-  d.getRange("A44").setValue("⑤ CPC-Verlauf je Ad — wie nutzt sich der Klickpreis ab?").setFontWeight("bold");
-  d.getRange("B45").setFormula("=B30"); // Ad-Namen aus ④ spiegeln
-  d.getRange("B45").copyTo(d.getRange("C45:O45"), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
-  d.getRange("B45:O45").setFontWeight("bold").setWrap(true);
+  d.getRange("A48").setValue("⑤ CPC-Verlauf je Ad — wie nutzt sich der Klickpreis ab?").setFontWeight("bold");
+  d.getRange("B49").setFormula("=B30"); // Ad-Namen aus ④ spiegeln
+  d.getRange("B49").copyTo(d.getRange("C49:O49"), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
+  d.getRange("B49:O49").setFontWeight("bold").setWrap(true);
   function cpc(dateCrit) { // CPC = Spend / Link-Klicks für Ad (B$30) + Datumskriterium
     var base = "Rohdaten!$D:$D" + S + "B$30" + S + dateCrit;
     var g = "SUMIFS(Rohdaten!$G:$G" + S + base + ")";
@@ -266,24 +271,24 @@ function buildDashboard_(ss) {
     ["CPC −7 Tage", dCol + S + "$B$4-7"],
   ];
   cpcRows.forEach(function (r, i) {
-    var row = 46 + i;
+    var row = 50 + i;
     d.getRange(row, 1).setValue(r[0]).setFontColor("#666666");
     d.getRange(row, 2).setFormula(cpc(r[1]));
     d.getRange(row, 2).copyTo(d.getRange(row, 3, 1, 13), SpreadsheetApp.CopyPasteType.PASTE_FORMULA, false);
     d.getRange(row, 2, 1, 14).setNumberFormat(EUR);
   });
 
-  d.getRange("A51").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
+  d.getRange("A56").setValue("Vollständige Tabelle (alle Ads, alle Kennzahlen): Tab „Detail" + String.fromCharCode(8221) + " unten.").setFontStyle("italic").setFontColor("#666666");
 
   // ---- Optik: Gitterlinien aus, Sektionen abgesetzt, Karten/Block-Rahmen ----
   d.setHiddenGridlines(true);
   var GREY = "#D3D1C7", BAND = "#EEEDF0", CARD = "#F7F6F2", SOLID = SpreadsheetApp.BorderStyle.SOLID;
-  [6, 10, 22, 29, 44].forEach(function (r) { d.getRange(r, 1, 1, 15).setBackground(BAND); });
-  d.getRange("A7:H8").setBackground(CARD).setBorder(true, true, true, true, true, false, GREY, SOLID);
+  [6, 10, 22, 29, 48].forEach(function (r) { d.getRange(r, 1, 1, 15).setBackground(BAND); });
+  d.getRange("A7:I8").setBackground(CARD).setBorder(true, true, true, true, true, false, GREY, SOLID);
   d.getRange("A11:C17").setBorder(true, true, true, true, false, false, "#85B7EB", SOLID); // Meta-Block
-  d.getRange("D11:F19").setBorder(true, true, true, true, false, false, "#5DCAA5", SOLID); // PostHog-Block
+  d.getRange("D11:G19").setBorder(true, true, true, true, false, false, "#5DCAA5", SOLID); // PostHog-Block
   d.getRange("A30:O30").setBorder(null, null, true, null, null, null, GREY, SpreadsheetApp.BorderStyle.SOLID_MEDIUM); // ④ Kopf
-  d.getRange("A45:O45").setBorder(null, null, true, null, null, null, GREY, SOLID); // ⑤ Kopf
+  d.getRange("A49:O49").setBorder(null, null, true, null, null, null, GREY, SOLID); // ⑤ Kopf
 
   d.setColumnWidth(1, 230);
   d.setColumnWidth(4, 180);
@@ -325,13 +330,17 @@ function buildDetail_(ss, S, EUR, PCT, XX) {
     t.getRange(2, ci).setFormula(ratio(c[1], c[2], c[3]));
     t.getRange(2, ci, 3000, 1).setNumberFormat(c[4]);
   });
+  // WK selbst = Warenkorb − Auto-WK (K − P), Basis für „davon selbst" im ④ Vergleich (Col28 = AB).
+  t.getRange(1, 28).setValue("WK selbst").setFontWeight("bold");
+  t.getRange(2, 28).setFormula("=ARRAYFORMULA(IF($A$2:$A=\"\"" + S + "\"\"" + S + "$K$2:$K-$P$2:$P))");
+  t.getRange(2, 28, 3000, 1).setNumberFormat("#,##0");
   ["S", "U", "W", "X"].forEach(function (col) { // CTR, Landerate, CTA-Rate, Produkt→WK (je +1 verschoben)
     rules.push(SpreadsheetApp.newConditionalFormatRule()
       .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
       .setRanges([t.getRange(col + "2:" + col + "3000")]).build());
   });
   t.setConditionalFormatRules(rules);
-  t.getRange(1, 1, 1, 27).setFontWeight("bold");
+  t.getRange(1, 1, 1, 28).setFontWeight("bold");
   t.setColumnWidth(1, 230);
   t.setFrozenRows(1);
   t.setFrozenColumns(1);
@@ -635,6 +644,80 @@ function buildCostPerStep_(ss, S, EUR, PCT) {
   t.setColumnWidth(1, 235);
   [2, 5, 8].forEach(function (c) { t.setColumnWidth(c, 82); t.setColumnWidth(c + 1, 96); t.setColumnWidth(c + 2, 78); });
   t.setFrozenRows(8);
+  t.setFrozenColumns(1);
+}
+
+// Tab „LP-Vergleich": pro Apothekenrat-LP die Aufrufe/Besucher und wie viele davon
+// zum Shop weiterklickten (advertorial_cta_click). Zieht DIREKT aus PostHog per
+// UrlFetchApp — unabhängig vom Vercel-Briefing. Manuell ausführen: rebuildLpVergleich.
+// Voraussetzung: Script-Property POSTHOG_KEY = <PostHog Personal API Key>
+//   (Projekteinstellungen ▸ Skripteigenschaften). Fenster über Tage-Konstante unten.
+function rebuildLpVergleich() {
+  buildLpVergleich_(SpreadsheetApp.getActiveSpreadsheet());
+}
+
+function buildLpVergleich_(ss) {
+  var KEY = PropertiesService.getScriptProperties().getProperty("POSTHOG_KEY");
+  if (!KEY) throw new Error("Script-Property POSTHOG_KEY fehlt (PostHog Personal API Key eintragen).");
+  var HOST = "https://eu.i.posthog.com", PROJECT = "182794", DAYS = 90;
+
+  // Nur Paid (fb/ig): „paid"-CTE = Personen mit fb/ig-Landung; „weiter" = deren
+  // advertorial_cta_click (kohorten-rein, da der Klick-Event evtl. kein utm trägt).
+  var hql =
+    "WITH paid AS (SELECT DISTINCT person_id FROM events " +
+    "WHERE event='$pageview' AND properties.$host LIKE '%mein-apothekenrat%' " +
+    "AND properties.utm_source IN ('fb','ig') AND timestamp > now() - INTERVAL " + DAYS + " DAY) " +
+    "SELECT properties.$pathname AS pfad, extractURLParameter(properties.$current_url, 'lp') AS lp, " +
+    "count(DISTINCT if(event='$pageview' AND properties.utm_source IN ('fb','ig'), person_id, NULL)) AS besucher, " +
+    "countIf(event='$pageview' AND properties.utm_source IN ('fb','ig')) AS aufrufe, " +
+    "count(DISTINCT if(event='advertorial_cta_click' AND person_id IN (SELECT person_id FROM paid), person_id, NULL)) AS weiter " +
+    "FROM events WHERE properties.$host LIKE '%mein-apothekenrat%' " +
+    "AND event IN ('$pageview','advertorial_cta_click') " +
+    "AND timestamp > now() - INTERVAL " + DAYS + " DAY " +
+    "AND properties.$pathname LIKE '/ratgeber/%' " +
+    "GROUP BY pfad, lp HAVING besucher > 0 ORDER BY besucher DESC LIMIT 200";
+
+  var res = UrlFetchApp.fetch(HOST + "/api/projects/" + PROJECT + "/query/", {
+    method: "post",
+    contentType: "application/json",
+    headers: { Authorization: "Bearer " + KEY },
+    payload: JSON.stringify({ query: { kind: "HogQLQuery", query: hql }, refresh: "blocking" }),
+    muteHttpExceptions: true,
+  });
+  var body = res.getContentText();
+  if (res.getResponseCode() >= 300) throw new Error("PostHog " + res.getResponseCode() + ": " + body.slice(0, 300));
+  var rows = (JSON.parse(body).results || []);
+
+  var out = [["LP (Pfad · Variante)", "Besucher", "Aufrufe", "Weitergeschickt", "CTA-Quote"]];
+  rows.forEach(function (r) {
+    var pfad = String(r[0] || ""), lp = r[1] ? " · lp" + r[1] : "";
+    var label = pfad.replace("/ratgeber/", "") + lp;
+    var bes = Number(r[2] || 0), auf = Number(r[3] || 0), wei = Number(r[4] || 0);
+    out.push([label, bes, auf, wei, bes ? wei / bes : 0]);
+  });
+
+  var t = freshSheet_(ss, "LP-Vergleich", null);
+  t.getRange("A1").setValue("🔎 LP-Vergleich — Aufrufe & Weiterklick-Quote zum Shop (letzte " + DAYS + " Tage · alle Quellen)")
+    .setFontWeight("bold").setFontSize(14);
+  t.getRange("A2").setValue("„Weitergeschickt\" = advertorial_cta_click (Klick vom Advertorial in den Shop). CTA-Quote = Weitergeschickt ÷ Besucher. Aktualisieren: Ausführen ▸ rebuildLpVergleich.")
+    .setFontStyle("italic").setFontColor("#666666");
+
+  var top = 4;
+  t.getRange(top, 1, out.length, 5).setValues(out);
+  t.getRange(top, 1, 1, 5).setFontWeight("bold").setBorder(null, null, true, null, null, null, "#888880", SpreadsheetApp.BorderStyle.SOLID_MEDIUM);
+  if (out.length > 1) {
+    t.getRange(top + 1, 2, out.length - 1, 3).setNumberFormat("#,##0");
+    t.getRange(top + 1, 5, out.length - 1, 1).setNumberFormat("0.0%");
+    t.setConditionalFormatRules([
+      SpreadsheetApp.newConditionalFormatRule()
+        .setGradientMinpoint("#F7C1C1").setGradientMaxpoint("#C0DD97")
+        .setRanges([t.getRange(top + 1, 5, out.length - 1, 1)]).build(),
+    ]);
+  }
+  t.setHiddenGridlines(true);
+  t.setColumnWidth(1, 400);
+  [2, 3, 4, 5].forEach(function (c) { t.setColumnWidth(c, 110); });
+  t.setFrozenRows(top);
   t.setFrozenColumns(1);
 }
 
