@@ -23,6 +23,8 @@ import { schlafhygiene60 } from "@/content/ratgeber/spokes/schlafhygiene-ab-60";
 import { frueherAufwachen } from "@/content/ratgeber/spokes/frueher-aufwachen-im-alter";
 // Spokes — Gedächtnis (Mentisana)
 import { gehirnjogging } from "@/content/ratgeber/spokes/gehirnjogging-uebungen";
+import { gehirnjoggingAb60 } from "@/content/ratgeber/spokes/gehirnjogging-ab-60";
+import { gehirnjoggingAufgaben } from "@/content/ratgeber/spokes/gehirnjogging-aufgaben";
 import { zinkKognition } from "@/content/ratgeber/spokes/zink-kognitive-funktion";
 import { ernaehrungGehirn } from "@/content/ratgeber/spokes/ernaehrung-fuers-gehirn";
 import { konzentration } from "@/content/ratgeber/spokes/konzentration-im-alltag";
@@ -83,6 +85,8 @@ const SPOKES: Article[] = [
   frueherAufwachen,
   // Gedächtnis
   gehirnjogging,
+  gehirnjoggingAb60,
+  gehirnjoggingAufgaben,
   zinkKognition,
   ernaehrungGehirn,
   konzentration,
