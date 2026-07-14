@@ -9,6 +9,7 @@ export const ernaehrungGelenke: Article = {
   metaDescription:
     "Gelenkfreundlich essen ab 55: welche Lebensmittel den Teller füllen, entzündungsarme Kost, Gewicht und welche Nährstoffe Knochen und Knorpel tragen.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/ernaehrung-fuer-die-gelenke.png",
   intro: [
     "Wer die Beweglichkeit seiner Gelenke unterstützen möchte, denkt zuerst an Bewegung. Doch auch der tägliche Teller spielt eine größere Rolle, als viele vermuten. Knochen, Knorpel und die führende Muskulatur sind auf eine gute Versorgung mit Bausteinen angewiesen, und die kommt zu einem großen Teil aus dem, was Sie essen.",
     "Dieser Beitrag zeigt Ihnen, welche Lebensmittel eine gelenkfreundliche Ernährung ab 55 ausmachen, warum eine entzündungsarme Kost sinnvoll ist und welche Mikronährstoffe Knochen und Knorpel tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für den Alltag.",

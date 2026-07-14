@@ -9,6 +9,7 @@ export const knorpelVitaminC: Article = {
   metaDescription:
     "Wie Knorpel und Kollagen die Gelenke tragen und welche Rolle Vitamin C bei der normalen Kollagenbildung spielt. Pharmazeutisch erklärt, mit den geprüften EFSA-Aussagen.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/knorpel-kollagen-vitamin-c.png",
   intro: [
     "Wenn von beweglichen Gelenken die Rede ist, denken viele zuerst an Muskeln und Knochen. Tatsächlich trägt eine weniger sichtbare Schicht einen großen Teil der täglichen Belastung, der Gelenkknorpel. Er besteht zu einem wesentlichen Anteil aus Kollagen, einem Strukturprotein, das dem Bindegewebe Form und Festigkeit gibt.",
     "Dieser Beitrag erklärt, woraus Knorpel aufgebaut ist, welche Rolle Kollagen dabei spielt und welche Mikronährstoffe an der normalen Kollagenbildung und am Erhalt der Knochen beteiligt sind. Die genannten Aussagen beziehen sich auf die Nährstoffe selbst und sind von der Europäischen Behörde für Lebensmittelsicherheit geprüft. Dieser Text ersetzt kein ärztliches Gespräch.",

@@ -9,6 +9,7 @@ export const uebungenSteifeKnie: Article = {
   metaDescription:
     "Steife Knie ab 55? Sanfte Übungen, die die Beweglichkeit unterstützen, plus die Rolle von Vitamin C, D, Magnesium und Zink für Knochen und Muskeln. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/uebungen-bei-steifen-knien.png",
   intro: [
     "Viele Menschen kennen das Gefühl, dass die Knie morgens erst einmal in Gang kommen müssen. Nach längerem Sitzen, beim ersten Schritt aus dem Sessel oder auf der Treppe fühlt sich das Gelenk steif und unwillig an. Mit den Jahren tritt das häufiger auf, und oft entsteht der Reflex, das Knie lieber zu schonen.",
     "Genau dieser Reflex ist jedoch selten der beste Weg. Sanfte, regelmäßige Bewegung gehört zu den wirksamsten Mitteln, um die Beweglichkeit der Knie zu erhalten. Dieser Ratgeber zeigt Ihnen ruhige Übungen für den Alltag und erklärt, welche Nährstoffe Knochen, Knorpel und Muskeln tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -9,6 +9,7 @@ export const vitaminDGelenke: Article = {
   metaDescription:
     "Warum die Vitamin-D-Versorgung im Winter oft knapp wird und welche Rolle der Nährstoff für normale Knochen und eine normale Muskelfunktion spielt. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/vitamin-d-gelenke-winter.png",
   intro: [
     "Wenn die Tage kürzer werden und die Sonne tief steht, verbringen viele Menschen mehr Zeit in geschlossenen Räumen. Gerade ab der Lebensmitte fällt dann oft auf, dass sich der Körper morgens steifer anfühlt und die ersten Bewegungen mehr Zeit brauchen. Ein häufiger Begleiter dieser Jahreszeit ist eine knappere Versorgung mit Vitamin D, das der Körper überwiegend selbst über die Haut bildet, wenn ausreichend Sonnenlicht auf sie trifft.",
     "Dieser Ratgeber erklärt, warum die Vitamin-D-Versorgung in den dunklen Monaten häufig zurückgeht, welche Rolle der Nährstoff für die Erhaltung normaler Knochen und einer normalen Muskelfunktion spielt und was Sie im Alltag dafür tun können. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage, um Ihre eigene Versorgung im Blick zu behalten.",

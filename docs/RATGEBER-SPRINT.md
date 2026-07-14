@@ -34,7 +34,11 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
    POST https://api.indexnow.org/indexnow mit host `ratgeber.nutra-sana.de`,
    keyLocation `https://ratgeber.nutra-sana.de/e41818661eb08a16903b2db77472ebc9.txt`
    und der neuen URL.
-9. Diese Datei aktualisieren (Backlog/Erledigt/Log).
+9. **Bestands-Bebilderung**: Zusätzlich pro Lauf 2 ALTE Artikel ohne eigenes
+   heroImage aussuchen (grep -L heroImage src/content/ratgeber/spokes/*.ts)
+   und individuelle Hero-Bilder nachrüsten (gleicher Stil), damit die
+   Übersicht keine doppelten Fallback-Bilder zeigt.
+10. Diese Datei aktualisieren (Backlog/Erledigt/Log).
 
 ## Kadenz
 
