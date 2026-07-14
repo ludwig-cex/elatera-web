@@ -24,6 +24,7 @@ export type Article = {
   updated: string; // ISO date, e.g. "2026-06-15"
   heroImage?: string; // optional, unter /public, z. B. "/ratgeber-img/gehirnjogging-ab-60.png"
   exercises?: Exercise[]; // optionale Mitmach-Uebungen, erscheinen nach den Sections
+  relatedSlugs?: string[]; // interne Verlinkung: 2-3 verwandte Artikel ("Lesen Sie auch")
   intro: string[]; // lead paragraphs
   sections: ArticleSection[];
   faq: ArticleFaq[];

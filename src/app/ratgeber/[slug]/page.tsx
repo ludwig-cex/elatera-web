@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ARTICLES, getArticle, getSpokes } from "@/lib/ratgeber";
+import { ARTICLES, getArticle, getSpokes, ARTICLE_BY_SLUG } from "@/lib/ratgeber";
 import { PRODUCTS } from "@/lib/products";
 import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
 import { ExerciseWidget } from "@/components/ratgeber/exercise-widget";
@@ -273,6 +273,43 @@ export default async function RatgeberArticlePage({
               </a>
             </div>
           </aside>
+
+          {/* Interne Verlinkung: Lesen Sie auch */}
+          {article.relatedSlugs && article.relatedSlugs.length > 0 && (
+            <section className="mt-12">
+              <h2 className="serif text-2xl sm:text-3xl leading-tight mb-5">Lesen Sie auch</h2>
+              <div className="grid sm:grid-cols-2 gap-4">
+                {article.relatedSlugs.map((slug) => {
+                  const rel = ARTICLE_BY_SLUG[slug];
+                  if (!rel) return null;
+                  return (
+                    <Link
+                      key={slug}
+                      href={`/ratgeber/${rel.slug}`}
+                      className="group block rounded-2xl overflow-hidden transition hover:opacity-95"
+                      style={{ background: "#fff", border: "1px solid rgba(12,43,99,0.14)" }}
+                    >
+                      <div className="overflow-hidden" style={{ aspectRatio: "16 / 9", background: "var(--color-cream)" }}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={rel.heroImage ?? `/ratgeber-img/thema-${rel.productSlug}.png`}
+                          alt={rel.title}
+                          className="w-full h-full object-cover transition-transform group-hover:scale-[1.03]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="p-4">
+                        <div className="text-xs uppercase tracking-widest text-muted mb-1">{rel.eyebrow}</div>
+                        <div className="serif text-lg leading-tight group-hover:underline underline-offset-4">
+                          {rel.title}
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </section>
+          )}
 
           {/* FAQ */}
           {article.faq.length > 0 && (

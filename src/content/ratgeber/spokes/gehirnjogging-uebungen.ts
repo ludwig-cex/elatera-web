@@ -10,6 +10,7 @@ export const gehirnjogging: Article = {
     "Welche Gehirnjogging-Übungen ab 55 das Gedächtnis fordern: Neues lernen, Rätsel, Bewegung und soziale Kontakte. Alltagstauglich und pharmazeutisch erklärt.",
   updated: "2026-06-15",
   heroImage: "/ratgeber-img/gehirnjogging-uebungen.png",
+  relatedSlugs: ["gehirnjogging-ab-60", "gehirnjogging-aufgaben", "ernaehrung-fuers-gehirn"],
   intro: [
     "Das Gehirn bleibt ein Leben lang lernfähig. Auch jenseits der sechzig knüpft es neue Verbindungen, wenn es regelmäßig gefordert wird. Genau hier setzt Gehirnjogging an. Gemeint ist kein starres Trainingsprogramm, sondern die bewusste Entscheidung, den Kopf im Alltag immer wieder vor kleine, neue Aufgaben zu stellen.",
     "Dieser Ratgeber zeigt Ihnen konkrete Übungen und Gewohnheiten, die sich ohne Aufwand in den Tag einbauen lassen. Er erklärt, warum gerade Abwechslung wichtig ist, und ordnet ein, welche Rolle einzelne Mikronährstoffe für die kognitive Funktion spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für ein waches Gedächtnis.",

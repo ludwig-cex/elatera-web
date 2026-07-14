@@ -23,6 +23,10 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
    - **Mitmach-Übungen**: wo das Thema es hergibt (Übungen/Aufgaben/Training)
      1–3 `exercises` setzen (Typen memory/quiz/reveal, siehe `_types.ts` und
      Beispiele in gehirnjogging-ab-60.ts). Interaktiv schlägt beschreibend.
+   - **Interne Verlinkung (PFLICHT)**: `relatedSlugs` mit 2–3 verwandten
+     Artikeln setzen ("Lesen Sie auch"-Karten). Bei bestehenden Artikeln des
+     Clusters GEGENVERLINKEN (dort relatedSlugs ergänzen), damit ein echtes
+     Netz entsteht statt Einbahnstraßen.
 3. **Hero-Bild generieren** (Higgsfield GPT Image 2, 16:9, warme fotorealistische
    Senioren-Szene passend zum Thema, kein Text im Bild) → nach
    `public/ratgeber-img/<slug>.png`, im Artikel als `heroImage` setzen.
@@ -62,6 +66,8 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
 - [ ] zahlenraetsel-senioren — „Zahlenrätsel für Senioren: 15 Aufgaben von leicht bis knifflig"
 - [ ] fingeruebungen-gehirn — „Fingerübungen fürs Gehirn: Feinmotorik als Gedächtnistraining"
 - [ ] ernaehrung-konzentration — „Essen für den klaren Kopf: Der Wochenplan" (Abgrenzung zu ernaehrung-fuers-gehirn beachten!)
+- [ ] META gedaechtnis-guide — „Der große Gedächtnis-Guide ab 60: Alle Übungen, Aufgaben und Methoden im Überblick" (Meta-/Hub-Artikel: kurze Einordnung + verlinkt ALLE Gehirnjogging-Artikel via relatedSlugs und im Text; nach ~6 Cluster-Artikeln schreiben)
+- [ ] META schlaf-guide — „Besser schlafen ab 60: Der komplette Überblick" (Meta-Artikel für das Schlaf-Cluster, sobald 3+ Schlaf-Artikel existieren)
 
 ## Erledigt
 
