@@ -23,6 +23,11 @@ export type Article = {
   metaDescription: string; // ~150-160 chars
   updated: string; // ISO date, e.g. "2026-06-15"
   heroImage?: string; // optional, unter /public, z. B. "/ratgeber-img/gehirnjogging-ab-60.png"
+  // "Das Wichtigste in Kürze": 3-5 direkt zitierfähige Antwortsätze, die die
+  // Kernfragen des Artikels beantworten. Werden als Box unter dem Hero
+  // gerendert und sind der Block, den KI-Suchmaschinen (Copilot, ChatGPT,
+  // Perplexity, AI Overviews) bevorzugt in Antworten übernehmen.
+  keyFacts?: string[];
   exercises?: Exercise[]; // optionale Mitmach-Uebungen, erscheinen nach den Sections
   relatedSlugs?: string[]; // interne Verlinkung: 2-3 verwandte Artikel ("Lesen Sie auch")
   intro: string[]; // lead paragraphs

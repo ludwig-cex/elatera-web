@@ -9,6 +9,13 @@ export const aufwaermenVorBewegung: Article = {
   metaDescription:
     "Warum Aufwärmen ab 55 für Sehnen und Bänder wichtig ist: was dabei im Körper passiert, eine einfache Routine und die Rolle von Mangan, Vitamin C und Vitamin D.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Schon wenige Minuten ruhiger Bewegung erhöhen die Durchblutung in Muskeln, Sehnen und Bändern und machen das Gewebe nachgiebiger.",
+    "Für die meisten Alltagsaktivitäten genügen fünf bis zehn Minuten Aufwärmen mit lockerem Gehen und ruhigem Durchbewegen der großen Gelenke.",
+    "Mit den Jahren nimmt der Wassergehalt im Bindegewebe ab, weshalb Sehnen und Bänder länger brauchen, um nachgiebig zu werden, und das Aufwärmen an Bedeutung gewinnt.",
+    "Sehnen und Bänder passen sich langsamer an Belastung an als Muskeln, deshalb sollte die Belastung nach dem Aufwärmen nur in kleinen Schritten gesteigert werden.",
+    "Mangan trägt zu einer normalen Bindegewebsbildung bei, Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion von Knorpel und Knochen bei, und Vitamin D und Zink tragen zur Erhaltung normaler Knochen bei.",
+  ],
   intro: [
     "Wer mit den Jahren aktiv bleibt, kennt das Bedürfnis, vor dem Spaziergang, der Gartenarbeit oder der Gymnastikstunde erst einmal in Schwung zu kommen. Sehnen und Bänder, die Strukturen, die Muskeln mit Knochen verbinden und die Gelenke führen, brauchen einen Moment, bis sie auf Betriebstemperatur sind. Mit dem Alter wird dieser Übergang spürbarer und das Aufwärmen damit wichtiger.",
     "Dieser Ratgeber erklärt, was beim Aufwärmen im Körper geschieht, zeigt eine einfache Routine für den Alltag und beschreibt, wie Sie die Belastung danach behutsam steigern. Außerdem ordnet er ein, welche Nährstoffe Bindegewebe, Knorpel und Knochen tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

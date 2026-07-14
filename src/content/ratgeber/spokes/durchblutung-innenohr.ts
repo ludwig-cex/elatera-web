@@ -9,6 +9,13 @@ export const durchblutungInnenohr: Article = {
   metaDescription:
     "Wie wird das Innenohr mit Blut versorgt und was verändert sich mit den Jahren? Pharmazeutisch erklärt: Hintergründe zur Durchblutung, Forschung zu Ginkgo und eine gefäßfreundliche Lebensweise.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Innenohr wird über sehr feine Endgefäße versorgt und ist auf eine stetige, gleichmäßige Durchblutung angewiesen, weil es dort kaum Ausweichwege gibt.",
+    "Die Sinneszellen der Hörschnecke haben einen vergleichsweise hohen Energie- und Sauerstoffbedarf, den die Durchblutung fortlaufend decken muss.",
+    "Studien zu Ginkgo, etwa von Reisser und Weidauer (2001), zeigen das Forschungsinteresse, belegen aber keine Wirkung eines bestimmten Produkts auf die Durchblutung des Innenohrs oder das Hören.",
+    "Ginkgo kann mit blutverdünnenden Arzneimitteln wechselwirken, weshalb vor der Einnahme ginkgohaltiger Präparate Rücksprache mit Arzt oder Apotheker wichtig ist.",
+    "Regelmäßige Bewegung, eine ausgewogene Ernährung, ausreichend Schlaf und der Verzicht auf das Rauchen begünstigen die Durchblutung allgemein.",
+  ],
   intro: [
     "Das Innenohr gehört zu den am feinsten gebauten Bereichen des Körpers. In der Hörschnecke arbeiten winzige Sinneszellen, die Schall in Nervensignale übersetzen. Damit dieser Apparat zuverlässig arbeitet, braucht er eine gleichmäßige Versorgung mit Sauerstoff und Nährstoffen, und die hängt eng mit der Durchblutung zusammen.",
     "Mit den Jahren verändern sich die Gefäße im gesamten Körper, und das Innenohr bildet keine Ausnahme. Dieser Ratgeber erklärt sachlich, wie die Versorgung des Innenohrs grundsätzlich funktioniert, was die Forschung zu einzelnen Pflanzenstoffen wie Ginkgo betrachtet hat und welche Lebensweise eine gute Durchblutung allgemein begünstigt. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -8,6 +8,13 @@ export const mentisana: Article = {
   metaDescription:
     "Warum das Gedächtnis ab 55 anders arbeitet und was die geistige Klarheit unterstützt: Alltag, Ernährung und die Rolle von Zink, Vitamin B6 und B12. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Gelegentliche Wortfindungspausen gehören für die meisten Menschen zum normalen Älterwerden und haben nichts mit nachlassender Klugheit zu tun.",
+    "Geistige Aktivität, regelmäßige körperliche Bewegung, ausreichender Schlaf und lebendige soziale Kontakte gehören zu den am besten untersuchten Gewohnheiten für ein waches Gehirn.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zur normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei.",
+    "Gerade Vitamin B12 ist im höheren Alter häufiger knapp, weil die Aufnahme über die Nahrung mit den Jahren nachlassen kann.",
+    "Verschlechtern sich Gedächtnis oder Orientierung innerhalb kurzer Zeit deutlich oder beeinträchtigen sie den Alltag, gehört das ärztlich abgeklärt, denn Nahrungsergänzungsmittel ersetzen keine Behandlung.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass ihnen Namen seltener sofort einfallen oder dass sie sich beim Lesen stärker konzentrieren müssen als früher. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses, der nichts mit nachlassender Klugheit zu tun hat.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren bei Gedächtnis und Denken verändert, welche Gewohnheiten die geistige Klarheit im Alltag unterstützen und welche Rolle einzelne Mikronährstoffe dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

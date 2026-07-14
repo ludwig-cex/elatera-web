@@ -9,6 +9,14 @@ export const konzentration: Article = {
   metaDescription:
     "Wie Sie ab 55 konzentriert durch den Tag kommen: Pausen, Single-Tasking, Schlaf, Bewegung und Trinken im Alltag verankern. Pharmazeutisch erklärt, alltagsnah.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Konzentration lässt sich im Alltag am besten mit kurzen Pausen halten: Nach etwa 45 Minuten konzentrierter Arbeit helfen ein paar Minuten Aufstehen oder Umhergehen, damit der Kopf aufnahmefähig bleibt.",
+    "Eine Sache nach der anderen zu erledigen schont die Aufmerksamkeit, denn jeder Aufgabenwechsel kostet Energie; viele Menschen sind zudem am Vormittag besonders aufnahmefähig.",
+    "Ausreichender Schlaf, regelmäßige moderate Bewegung und genug Trinken sind die körperlichen Grundlagen eines klaren Kopfes; gerade ältere Menschen verspüren weniger Durst und trinken leicht zu wenig.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei.",
+    "Ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt weder eine ausgewogene Ernährung noch eine ärztliche Behandlung.",
+  ],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-ab-60", "schlafhygiene-ab-60"],
   intro: [
     "Viele Menschen kennen das Gefühl, dass die Gedanken im Lauf des Tages abschweifen, dass ein Gespräch oder ein Buchkapitel mehr Mühe kostet als früher oder dass die Aufmerksamkeit am Nachmittag nachlässt. Das ist verbreitet und hängt oft weniger mit dem Alter selbst zusammen als mit der Art, wie wir unseren Tag gestalten.",
     "Dieser Ratgeber zeigt Ihnen, mit welchen einfachen Gewohnheiten Sie Ihre Konzentration im Alltag besser halten können. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte und alltagsnahe Grundlage, um mit klarerem Kopf durch den Tag zu gehen.",

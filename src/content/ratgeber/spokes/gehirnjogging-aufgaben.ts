@@ -9,8 +9,15 @@ export const gehirnjoggingAufgaben: Article = {
   metaDescription:
     "12 Gehirnjogging-Aufgaben mit Lösungen: Wortaufgaben, Zahlenrätsel, Merk- und Logikaufgaben für Erwachsene ab 60. Direkt im Kopf lösbar, ohne Stift und Heft.",
   updated: "2026-07-14",
+  keyFacts: [
+    "Zwölf Gehirnjogging-Aufgaben aus den vier Bereichen Sprache, Zahlen, Merkfähigkeit und Logik lassen sich komplett im Kopf lösen, ganz ohne Stift und Papier.",
+    "Zwei bis drei Aufgaben täglich sind wirksamer als alle zwölf einmal im Monat, denn das Gehirn profitiert von Regelmäßigkeit und Abwechslung.",
+    "Der Trainingseffekt entsteht im Moment des Überlegens, nicht beim Lesen der Lösung; auch misslungene Versuche sind Teil des Reizes.",
+    "Klassiker wie das Rückwärtszählen von 100 in Siebenerschritten oder das Merken von sechs Begriffen fordern Aufmerksamkeit und Kurzzeitgedächtnis.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei.",
+  ],
   heroImage: "/ratgeber-img/gehirnjogging-aufgaben.png",
-  relatedSlugs: ["gehirnjogging-ab-60", "gehirnjogging-uebungen", "zink-kognitive-funktion"],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-ab-60", "gehirnjogging-uebungen", "zink-kognitive-funktion"],
   intro: [
     "Sie möchten nicht über Gehirnjogging lesen, sondern gleich loslegen? Dann sind Sie hier richtig. Auf dieser Seite finden Sie zwölf Aufgaben aus vier Bereichen: Sprache, Zahlen, Merkfähigkeit und Logik. Alle lassen sich im Kopf lösen, ganz ohne Stift und Papier, und zu jeder Aufgabe steht die Lösung direkt darunter.",
     "Ein Tipp, bevor Sie beginnen: Decken Sie die Lösung mit der Hand ab oder scrollen Sie erst weiter, wenn Sie eine eigene Antwort haben. Der Trainingseffekt entsteht im Moment des Überlegens, nicht beim Lesen der Lösung. Und wenn eine Aufgabe nicht auf Anhieb gelingt, ist das kein Rückschlag, sondern genau der Reiz, den der Kopf braucht.",

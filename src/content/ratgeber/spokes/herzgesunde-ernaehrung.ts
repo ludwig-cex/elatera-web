@@ -9,6 +9,13 @@ export const herzgesundeErnaehrung: Article = {
   metaDescription:
     "Herzgesunde Ernährung ab 55: mediterrane Kost mit Gemüse, Fisch und hochwertigen Ölen, wenig Salz, plus die Rolle von Vitamin B1, C, Selen und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Als herzgesund bewährt hat sich die mediterrane Kost mit reichlich Gemüse, Hülsenfrüchten, Obst, Vollkorn und Nüssen sowie hochwertigen Pflanzenölen wie nativem Olivenöl.",
+    "Fettreicher Seefisch wie Lachs, Makrele oder Hering steht in der mediterranen Küche häufig zweimal pro Woche auf dem Tisch, während rotes Fleisch und Wurstwaren in den Hintergrund treten.",
+    "Wer mit frischen Kräutern, Knoblauch und Zitrone statt mit viel Salz würzt, isst geschmacklich abwechslungsreicher und zugleich maßvoller.",
+    "Vitamin B1 trägt zu einer normalen Herzfunktion bei, Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion der Blutgefäße bei, und Selen und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen.",
+    "Ein Nahrungsergänzungsmittel ersetzt weder eine ausgewogene Ernährung noch eine ärztliche Behandlung; wer Herz- oder Kreislaufmedikamente einnimmt, hält vor der Einnahme bitte Rücksprache mit Arzt oder Apotheker.",
+  ],
   intro: [
     "Mit den Jahren rückt die Frage stärker in den Vordergrund, wie sich das tägliche Essen auf das eigene Wohlbefinden auswirkt. Viele Menschen ab der Lebensmitte möchten ihre Ernährung bewusster gestalten und fragen sich, was eigentlich eine herzgesunde Kost ausmacht und welche Lebensmittel regelmäßig auf den Teller gehören.",
     "Dieser Ratgeber ordnet ein, welche Ernährungsweise sich rund um Herz und Gefäße bewährt hat, welche Mikronährstoffe dabei eine Rolle spielen und wie sich das Ganze im Alltag umsetzen lässt. Er ist fachlich gehalten und ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für Ihre eigenen Entscheidungen.",

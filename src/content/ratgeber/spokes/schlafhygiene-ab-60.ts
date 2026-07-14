@@ -9,6 +9,13 @@ export const schlafhygiene60: Article = {
   metaDescription:
     "Schlafhygiene ab 60: feste Zeiten, ruhige Schlafumgebung, Licht und Bildschirme, Koffein und Alkohol. Praktische Tipps für eine entspannte Abendroutine.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Eine kühle Raumtemperatur von etwa 16 bis 18 Grad, Dunkelheit und Ruhe im Schlafzimmer unterstützen den Körper beim Wechsel in den Ruhemodus.",
+    "Feste Zubettgeh- und Aufstehzeiten, auch am Wochenende, geben dem inneren Rhythmus ab 60 einen verlässlichen Halt.",
+    "Helles Tageslicht am Vormittag hilft dem Körper, Tag und Nacht zu unterscheiden; die letzte Stunde vor dem Schlafengehen bleibt am besten bildschirmfrei.",
+    "Koffein ab dem frühen Nachmittag, Alkohol am Abend und schwere späte Mahlzeiten erschweren das Ein- und Durchschlafen häufig.",
+    "Melatonin trägt dazu bei, die Einschlafzeit zu verkürzen, wenn kurz vor dem Schlafengehen 1 Milligramm eingenommen wird; anhaltende Schlafprobleme gehören ärztlich abgeklärt.",
+  ],
   intro: [
     "Mit den Jahren verändert sich der Schlaf. Viele Menschen über 60 schlafen leichter, wachen nachts häufiger auf oder liegen abends länger wach, als sie es früher gewohnt waren. Das ist verbreitet und meist Teil eines natürlichen Wandels, der mit dem Alter einhergeht.",
     "Vieles davon lässt sich mit den eigenen Gewohnheiten beeinflussen. Unter dem Begriff Schlafhygiene fasst man die Bedingungen und Abläufe zusammen, die einen ruhigen Schlaf begünstigen. Dieser Ratgeber zeigt Ihnen alltagsnahe Schritte für die Schlafumgebung, feste Zeiten und eine entspannte Abendroutine. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -9,6 +9,13 @@ export const gehoerSchuetzenLaerm: Article = {
   metaDescription:
     "Wie Lärm das Gehör belastet und wie Sie Ihre Ohren ab 55 im Alltag schützen: Gehörschutz, Pausen, regelmäßige Hörtests. Pharmazeutisch erklärt für ein bewusstes Hören.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Die feinen Sinneszellen im Innenohr erholen sich nur eingeschränkt, weshalb ein achtsamer Umgang mit Lärm über die Jahre eine große Rolle spielt.",
+    "Für die Belastung des Gehörs zählen Lautstärke und Dauer zusammen: Müssen Sie die Stimme heben, um sich auf Armlänge verständlich zu machen, ist die Umgebung bereits recht laut.",
+    "Bei lauten Tätigkeiten in Haushalt und Garten nehmen weiche Schaumstoffstöpsel oder ein Kapselgehörschutz der Lautstärke spürbar die Schärfe, ohne dass Sie nichts mehr hören.",
+    "Ab etwa der zweiten Lebenshälfte ist ein regelmäßiger Hörtest beim Hals-Nasen-Ohren-Arzt oder beim qualifizierten Hörakustiker ein sinnvoller Teil der Vorsorge.",
+    "Veränderungen beim Hören oder ein anhaltendes Ohrgeräusch sollten ärztlich abgeklärt werden, ein Nahrungsergänzungsmittel ist dafür kein Ersatz.",
+  ],
   intro: [
     "Das Gehör begleitet uns ein Leben lang und arbeitet still im Hintergrund, ohne dass wir es bemerken. Erst wenn das Verstehen in geselliger Runde schwerer fällt oder das Fernsehen lauter gedreht wird, rückt das Hören ins Bewusstsein. Vieles davon gehört zum natürlichen Älterwerden, doch ein Teil der Belastung für unsere Ohren ist hausgemacht und lässt sich im Alltag gut beeinflussen.",
     "Dieser Ratgeber erklärt, wie Lärm das empfindliche Innenohr beansprucht, welche Lärmquellen im Alltag oft unterschätzt werden und wie Sie Ihren Ohren mit einfachen Gewohnheiten Ruhe gönnen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage, um bewusster mit Ihrem Gehör umzugehen.",

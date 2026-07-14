@@ -9,6 +9,13 @@ export const cranberryHarnwege: Article = {
   metaDescription:
     "Cranberry und die Harnwege: Herkunft der roten Beere, was Studien neutral untersucht haben und wie Sie die Befunde einordnen. Pharmazeutisch und sachlich erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Die Cranberry (Vaccinium macrocarpon) stammt aus den Moorlandschaften Nordamerikas und wird dort seit Jahrhunderten als Lebensmittel geschätzt.",
+    "Eine Cochrane-Übersichtsarbeit von Jepson und Kollegen (2012) hat die Studien zur Cranberry methodisch ausgewertet, solche Arbeiten zeigen das Forschungsinteresse, belegen aber keine Wirkung eines konkreten Endprodukts.",
+    "Eine vorbeugende oder behandelnde Wirkung von Cranberry auf Beschwerden der Harnwege ist nicht belegt und darf einem Nahrungsergänzungsmittel nicht zugeschrieben werden.",
+    "Ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt weder eine ausgewogene Ernährung noch eine ärztliche Behandlung.",
+    "Anzeichen eines Infekts wie Brennen beim Wasserlassen, häufiger Harndrang, Fieber oder Blut im Urin gehören ärztlich abgeklärt.",
+  ],
   intro: [
     "Rund um die Cranberry, die kleine rote Beere aus Nordamerika, ranken sich viele Geschichten. Sie taucht in Kochbüchern ebenso auf wie in Gesprächen über die Harnwege, und gerade ab der Lebensmitte fragen sich viele Menschen, was an dem traditionellen Ruf dieser Frucht tatsächlich dran ist. Zwischen Überlieferung und nüchterner Forschung liegt oft ein gutes Stück Weg.",
     "Dieser Ratgeber ordnet ein, woher die Cranberry stammt, was wissenschaftliche Übersichtsarbeiten zu ihr neutral betrachtet haben und wie Sie solche Befunde für sich richtig einschätzen. Er macht keine Versprechen und ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine sachliche Grundlage, um die vielen Aussagen rund um die Beere besser zu beurteilen.",

@@ -27,6 +27,21 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
      Artikeln setzen ("Lesen Sie auch"-Karten). Bei bestehenden Artikeln des
      Clusters GEGENVERLINKEN (dort relatedSlugs ergänzen), damit ein echtes
      Netz entsteht statt Einbahnstraßen.
+   - **keyFacts (PFLICHT, seit 14.07.)**: 3–5 Sätze "Das Wichtigste in Kürze"
+     als `keyFacts`-Array. Jeder Satz für sich allein zitierfähig (das ist der
+     Block, den Copilot/ChatGPT/Perplexity übernehmen), konkret mit Zahlen/
+     Nährstoffnamen, EFSA-konform, keine Gedankenstriche.
+   - **Answer-First (PFLICHT)**: Die ersten 1–2 Sätze unter jeder H2 geben die
+     direkte, vollständige Antwort auf die Frage der Überschrift (40–60
+     Wörter), Details danach. Kein Anteasern ("dazu später mehr"). LLM-Retrieval
+     arbeitet passage-basiert; jeder Abschnitt muss ohne Kontext funktionieren.
+   - **Bing-Exact-Match**: Das Ziel-Keyword wörtlich in Title, H1 und erstem
+     Absatz (Bing gewichtet Exact-Match stärker als Google und füttert
+     Copilot UND ChatGPT-Suche = unser nachweislich konvertierender Kanal).
+   - **Zahlen + benannte Quellen**: Wo möglich quantifizieren (Mengen, Minuten,
+     Referenzwerte) und Institutionen nennen (EFSA, DGE). Statistiken und
+     Quellenangaben sind laut Princeton-GEO-Paper der stärkste einzelne
+     Zitierhebel (+37–115 % AI-Sichtbarkeit).
 3. **Hero-Bild generieren** (Higgsfield GPT Image 2, 16:9, warme fotorealistische
    Senioren-Szene passend zum Thema, kein Text im Bild) → nach
    `public/ratgeber-img/<slug>.png`, im Artikel als `heroImage` setzen.
@@ -43,6 +58,53 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
    und individuelle Hero-Bilder nachrüsten (gleicher Stil), damit die
    Übersicht keine doppelten Fallback-Bilder zeigt.
 10. Diese Datei aktualisieren (Backlog/Erledigt/Log).
+
+## GEO-Wissensstand (Recherche 14.07.2026)
+
+Kurzfassung der Evidenz, damit wir Aufwand richtig priorisieren:
+
+- **Stärkster Hebel:** Statistiken, Studienzitate und Quellenangaben IM TEXT
+  (+37–115 % AI-Sichtbarkeit, Princeton-GEO-Paper arxiv 2311.09735). Schlägt
+  jede technische Optimierung.
+- **Schema ist KEIN Zitierhebel** (Ahrefs-Studie 2026: kein signifikanter
+  Effekt; AI-Retrieval liest sichtbares HTML, nicht JSON-LD). Unser Setup
+  (Article+MedicalWebPage, reviewedBy/lastReviewed, Person, FAQPage) ist
+  ausreichend — kein weiteres Schema-Investment.
+- **FAQPage-Rich-Results hat Google 05/2026 abgeschafft** — Markup bleibt
+  trotzdem drin (Seitenverständnis), wichtig ist nur: FAQ-Antworten stehen
+  sichtbar im DOM (unsere <details>-Akkordeons erfüllen das).
+- **llms.txt: pflegen, nicht ausbauen** (97 % aller llms.txt bekommen null
+  AI-Requests; nur Anthropic/Perplexity nutzen sie fallweise). Unsere ist
+  seit 14.07. eine dynamische Route (src/app/llms.txt/route.ts) und
+  aktualisiert sich selbst — nichts mehr zu tun. Kein llms-full.txt bauen.
+- **Copilot = Bing-Index, ChatGPT-Suche ebenfalls.** Nicht in Bing indexiert
+  heißt unsichtbar in beiden. IndexNow nach jedem Artikel ist Pflicht,
+  Bing-WMT-Abdeckung regelmäßig prüfen.
+- **Earned Media schlägt Owned Content** (92 % der AI-Overview-Zitate kommen
+  von Drittseiten-Erwähnungen). Mittelfristig: Erwähnungen/Verlinkungen
+  aufbauen (Gastbeiträge, Verzeichnisse, Fachpresse).
+- **NetDoktor-Muster übernommen:** "Das Wichtigste in Kürze"-Box (keyFacts),
+  sichtbare Autor/Prüf-Zeile, Autorenseite (/ratgeber/autor/jonas-guetermann),
+  feste Artikelstruktur, aggressive interne Verlinkung.
+
+## Keyword-Expansion (wöchentlicher Prozess, ab KW 30)
+
+Ziel: systematisch neue Suchanfragen abgreifen und daraus Backlog erzeugen,
+statt Themen zu raten.
+
+1. **Query-Mining:** GSC + Bing WMT Performance-Report der Subdomain ziehen.
+   Filter: hohe Impressionen + niedrige CTR bzw. Position 8–30 = validierte
+   Nachfrage ohne passende Antwort.
+2. **PAA-Baum:** Zur Kern-Query die People-Also-Ask-Fragen expandieren und
+   den Fragenbaum notieren (Google + Bing).
+3. **AI-Prompt-Mining:** Zielfragen direkt in Copilot/ChatGPT/Perplexity
+   stellen; Folgefragen-Vorschläge und zitierte Konkurrenten dokumentieren.
+   Zusätzlich LLM fragen: "Welche 30 Fragen stellen 65-Jährige zu <Thema>?"
+4. **Clustern + Entscheiden:** Neue Fragen gegen bestehende Slugs abgleichen.
+   Ein Intent-Cluster = ein neuer Spoke (primäre Frage als H1, verwandte als
+   H2/FAQ). Einzelfragen ohne eigenes Volumen = FAQ-Ergänzung in bestehendem
+   Artikel (dort auch keyFacts prüfen).
+5. **Backlog aktualisieren** (unten) und Cluster-Hubs gegenverlinken.
 
 ## Kadenz
 
@@ -66,11 +128,13 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
 - [ ] zahlenraetsel-senioren — „Zahlenrätsel für Senioren: 15 Aufgaben von leicht bis knifflig"
 - [ ] fingeruebungen-gehirn — „Fingerübungen fürs Gehirn: Feinmotorik als Gedächtnistraining"
 - [ ] ernaehrung-konzentration — „Essen für den klaren Kopf: Der Wochenplan" (Abgrenzung zu ernaehrung-fuers-gehirn beachten!)
-- [ ] META gedaechtnis-guide — „Der große Gedächtnis-Guide ab 60: Alle Übungen, Aufgaben und Methoden im Überblick" (Meta-/Hub-Artikel: kurze Einordnung + verlinkt ALLE Gehirnjogging-Artikel via relatedSlugs und im Text; nach ~6 Cluster-Artikeln schreiben)
 - [ ] META schlaf-guide — „Besser schlafen ab 60: Der komplette Überblick" (Meta-Artikel für das Schlaf-Cluster, sobald 3+ Schlaf-Artikel existieren)
+- [ ] RETROFIT Answer-First — Bestandsartikel schrittweise auf Answer-First-Absätze unter jeder H2 umschreiben (2 Artikel pro Sprint-Lauf mitziehen)
+- [ ] RETROFIT Quellenverzeichnis — nummerierte Quellen-Komponente (PubMed/EFSA-Links) für Artikel, stärkster GEO-Hebel laut Evidenz; braucht saubere Quellen-Recherche pro Artikel
 
 ## Erledigt
 
+- [x] 14.07. META gedaechtnis-guide — „Der große Gedächtnis-Guide ab 60" (Hub-Artikel, verlinkt alle 6 Gedächtnis-Artikel via relatedSlugs)
 - [x] 14.07. gehirnjogging-ab-60 — „Gehirnjogging ab 60: 6 Übungen für jeden Tag" (+ Hero-Bild)
 - [x] 14.07. gehirnjogging-aufgaben — „12 Aufgaben mit Lösungen" (+ Hero-Bild)
 - [x] (Bestand) gehirnjogging-uebungen — rankender Ursprungs-Artikel (+ Hero-Bild nachgerüstet)

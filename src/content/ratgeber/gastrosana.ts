@@ -8,6 +8,13 @@ export const gastrosana: Article = {
   metaDescription:
     "Warum die Verdauung ab 55 träger wird und was hilft: Ballaststoffe, Trinken, Essrhythmus, Bewegung und die Rolle von Vitamin A, C und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Mit dem Alter bildet der Körper oft weniger Magensäure und Verdauungssäfte, die Schleimhäute erneuern sich langsamer und der Darm arbeitet gemächlicher.",
+    "Ballaststoffe aus Vollkorn, Hülsenfrüchten, Gemüse und Obst geben dem Darm Struktur und wirken am besten zusammen mit eineinhalb bis zwei Litern Wasser oder ungesüßtem Tee über den Tag verteilt.",
+    "Mehrere kleinere Mahlzeiten in Ruhe und gut gekaut entlasten den Magen mehr als wenige große, und ein Spaziergang nach dem Essen bringt die Verdauung sanft in Schwung.",
+    "Vitamin A trägt zur Erhaltung normaler Schleimhäute bei, Zink trägt zu einem normalen Säure-Basen-Stoffwechsel bei, und Vitamin C und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen.",
+    "Blut im Stuhl, anhaltendes Erbrechen, Schluckbeschwerden oder ungewollter Gewichtsverlust gehören in jedem Fall ärztlich abgeklärt, denn Nahrungsergänzungsmittel ersetzen keine Behandlung.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass der Bauch nach dem Essen anders reagiert als früher. Mahlzeiten liegen schwerer im Magen, die Verdauung läuft langsamer und ein voller Teller fühlt sich nicht mehr selbstverständlich an. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren an Magen und Verdauung verändert, welche Maßnahmen im Alltag das Wohlbefinden im Bauch unterstützen und welche Rolle einzelne Mikronährstoffe dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

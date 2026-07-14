@@ -9,6 +9,13 @@ export const richtigTrinkenBlase: Article = {
   metaDescription:
     "Bei empfindlicher Blase ab 55 richtig trinken: warum genug Flüssigkeit wichtig bleibt, was und wann Sie trinken sollten und welche Getränke die Blase reizen. Erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Auch bei empfindlicher Blase bleibt ausreichendes Trinken wichtig, denn zu wenig Flüssigkeit macht den Urin konzentrierter, und konzentrierter Urin reizt die Blasenschleimhaut häufig mehr.",
+    "Als grobe Orientierung gelten für gesunde Erwachsene etwa eineinhalb bis zwei Liter am Tag, am besten als stilles Wasser oder ungesüßte Kräuter- und Früchtetees.",
+    "Wer nachts häufig zur Toilette muss, kann den Schwerpunkt des Trinkens auf den Vormittag und frühen Nachmittag legen und in den letzten ein bis zwei Stunden vor dem Schlafengehen zurückhaltender trinken.",
+    "Koffeinhaltige Getränke wie Kaffee und schwarzer Tee, Alkohol sowie stark kohlensäurehaltige und sehr zuckerreiche Limonaden werden von einer empfindlichen Blase oft weniger gut vertragen.",
+    "Brennen beim Wasserlassen, Blut im Urin, Fieber oder anhaltende Blasenbeschwerden sollten ärztlich abgeklärt werden.",
+  ],
   intro: [
     "Wer eine empfindliche Blase hat, neigt schnell dazu, weniger zu trinken, um seltener zur Toilette zu müssen. Der Gedanke ist verständlich, führt aber oft in die falsche Richtung. Gerade ab der Lebensmitte lohnt es sich, das eigene Trinkverhalten ruhig und sachlich zu betrachten.",
     "Dieser Ratgeber erklärt, warum eine ausreichende Flüssigkeitszufuhr auch bei Blasenthemen wichtig bleibt, wie Sie Menge und Zeitpunkt im Alltag sinnvoll verteilen und welche Getränke die Blase eher reizen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für den Alltag.",

@@ -9,6 +9,14 @@ export const zinkKognition: Article = {
   metaDescription:
     "Welche Aufgaben Zink im Körper hat und was die geprüfte EFSA-Aussage zur normalen kognitiven Funktion bedeutet. Mit guten Zinkquellen, pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Zink ist ein essenzielles Spurenelement, das der Körper weder selbst herstellen noch in nennenswertem Umfang speichern kann; es muss regelmäßig über die Nahrung zugeführt werden.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei; diese Aussage ist von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gilt für den Nährstoff selbst.",
+    "Die geprüfte Aussage bedeutet nicht, dass Zink das Gedächtnis verbessert oder die Konzentration steigert; solche Wirkversprechen sind nicht zulässig.",
+    "Gute Zinkquellen sind Fleisch, Käse, Eier und Meeresfrüchte sowie pflanzlich Vollkornprodukte, Hülsenfrüchte, Nüsse und Kürbiskerne.",
+    "Zink sollte nicht dauerhaft hochdosiert ohne fachlichen Rat eingenommen werden, denn eine über längere Zeit zu hohe Zufuhr kann die Aufnahme von Kupfer beeinträchtigen.",
+  ],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-uebungen", "ernaehrung-fuers-gehirn"],
   intro: [
     "Zink gehört zu den Spurenelementen, die der Körper nur in kleinen Mengen braucht, ohne die jedoch zahlreiche Abläufe nicht funktionieren. Es ist an hunderten Vorgängen beteiligt und muss regelmäßig über die Nahrung zugeführt werden, denn der Körper kann es nicht in nennenswertem Umfang speichern.",
     "Dieser Beitrag erklärt, welche Aufgaben Zink im Körper übernimmt, was die geprüfte Aussage zur normalen kognitiven Funktion genau bedeutet und über welche Lebensmittel sich der Bedarf decken lässt. Die genannten Aussagen beziehen sich auf den Nährstoff selbst und sind von der Europäischen Behörde für Lebensmittelsicherheit geprüft. Dieser Text ersetzt kein ärztliches Gespräch.",

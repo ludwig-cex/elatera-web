@@ -9,6 +9,13 @@ export const weissdornPflanzenkunde: Article = {
   metaDescription:
     "Weißdorn im Porträt: Herkunft, lange Tradition und was die Forschung zum Extrakt neutral betrachtet hat. Pharmazeutisch und sachlich erklärt, ohne Heilversprechen.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Weißdorn, botanisch Crataegus, ist ein heimisches Rosengewächs aus Europa, Nordafrika und Westasien; traditionell verwendet werden die Blätter mit Blüten sowie die Früchte.",
+    "Pittler und Kollegen (2008) haben Weißdorn-Extrakt in einer Cochrane-Übersichtsarbeit evaluiert; solche Arbeiten zu einzelnen Extrakten sind kein Wirknachweis für ein konkretes Endprodukt.",
+    "Eine lange Tradition erklärt die Bekanntheit einer Pflanze, sagt für sich genommen aber nichts über eine konkrete Wirkung aus.",
+    "Für Herz und Gefäße gelten geprüfte Nährstoff-Aussagen: Vitamin B1 trägt zu einer normalen Herzfunktion bei, und Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion der Blutgefäße bei.",
+    "Bei Herzbeschwerden oder der Einnahme von Herz-Kreislauf-Medikamenten halten Sie vor der Einnahme eines Nahrungsergänzungsmittels bitte ärztliche Rücksprache.",
+  ],
   intro: [
     "Kaum eine heimische Pflanze ist so eng mit der Vorstellung von Herz und Vitalität verbunden wie der Weißdorn. Seine weißen Blüten im Frühjahr und die roten Früchte im Herbst sind vielen Menschen aus Hecken, Gärten und alten Hausapotheken vertraut. Über Generationen hinweg wurde er gesammelt, getrocknet und weitergegeben.",
     "Dieser Ratgeber stellt den Weißdorn als Pflanze vor: woher er stammt, wie er traditionell verwendet wurde und was die Forschung zu seinem Extrakt bislang sachlich betrachtet hat. Es geht um Pflanzenkunde und Einordnung, nicht um Heilversprechen. Bei Herzbeschwerden ist immer das ärztliche Gespräch der richtige Weg.",

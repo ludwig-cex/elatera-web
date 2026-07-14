@@ -9,6 +9,13 @@ export const uebungenSteifeKnie: Article = {
   metaDescription:
     "Steife Knie ab 55? Sanfte Übungen, die die Beweglichkeit unterstützen, plus die Rolle von Vitamin C, D, Magnesium und Zink für Knochen und Muskeln. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Steife Knie am Morgen entstehen häufig dadurch, dass der Knorpel über die Gelenkflüssigkeit versorgt wird und diese sich erst bei regelmäßiger Bewegung gut verteilt.",
+    "Vier sanfte Übungen bewähren sich bei steifen Knien im Alter: Pendeln im Sitzen mit etwa zwanzig Schwüngen je Bein, Beinstrecken im Sitzen mit zehn Wiederholungen je Seite, der Zehenstand an der Stuhllehne und kleine Kniebeugen im Stand.",
+    "Tägliche kurze Übungseinheiten wirken besser als seltene lange, ergänzt durch gelenkschonende Bewegungsformen wie Schwimmen, Radfahren oder zügiges Gehen.",
+    "Vitamin C trägt zu einer normalen Kollagenbildung für die normale Funktion von Knorpel und Knochen bei, Vitamin D, Magnesium und Zink tragen zur Erhaltung normaler Knochen bei.",
+    "Bei akuten, starken oder plötzlichen Kniebeschwerden gehört das Gelenk ärztlich abgeklärt, ein Nahrungsergänzungsmittel ersetzt keine ärztliche Behandlung.",
+  ],
   heroImage: "/ratgeber-img/uebungen-bei-steifen-knien.png",
   intro: [
     "Viele Menschen kennen das Gefühl, dass die Knie morgens erst einmal in Gang kommen müssen. Nach längerem Sitzen, beim ersten Schritt aus dem Sessel oder auf der Treppe fühlt sich das Gelenk steif und unwillig an. Mit den Jahren tritt das häufiger auf, und oft entsteht der Reflex, das Knie lieber zu schonen.",

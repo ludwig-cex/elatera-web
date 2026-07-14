@@ -8,6 +8,13 @@ export const somnisana: Article = {
   metaDescription:
     "Warum sich der Schlaf ab 55 verändert und was hilft: Schlafhygiene, Tagesrhythmus, Ernährung und die Rolle von Melatonin und Magnesium. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Mit dem Alter verschiebt sich der innere Schlafrhythmus oft nach vorne, der Anteil des tiefen Schlafs nimmt ab und die körpereigene Melatoninbildung lässt nach.",
+    "Melatonin trägt zur Verkürzung der Einschlafzeit bei, wenn kurz vor dem Schlafengehen 1 mg eingenommen wird, und auf genau diese Menge und diesen Zeitpunkt kommt es an.",
+    "Magnesium trägt zur normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei, Vitamin B6 unterstützt ebenfalls die normale Funktion des Nervensystems.",
+    "Feste Schlafenszeiten, Tageslicht am Morgen und ein kühles, dunkles Schlafzimmer gehören zu den wirksamsten Gewohnheiten für einen ruhigeren Abend.",
+    "Halten Schlafprobleme über mehrere Wochen an oder treten Atemaussetzer beim Schnarchen auf, gehört das ärztlich abgeklärt, denn Nahrungsergänzungsmittel sind keine Behandlung von Schlafstörungen.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass der Schlaf nicht mehr so selbstverständlich ist wie früher. Das Einschlafen dauert länger, die Nacht wird leichter und unterbrochener, und morgens stellt sich nicht immer das Gefühl ein, wirklich ausgeruht zu sein. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren im Schlaf verändert, welche Gewohnheiten den Abend nachweislich ruhiger machen und welche Rolle einzelne Mikronährstoffe und Melatonin dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

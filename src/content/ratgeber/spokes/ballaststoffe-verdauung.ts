@@ -9,6 +9,13 @@ export const ballaststoffeVerdauung: Article = {
   metaDescription:
     "Ballaststoffe ab 55: was sie sind, welche Lebensmittel gute Quellen liefern und wie Sie die Menge langsam steigern und genug trinken. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Für Erwachsene gelten rund 30 Gramm Ballaststoffe am Tag als Orientierung; viele Menschen erreichen diese Menge im Alltag nicht ganz.",
+    "Lösliche Ballaststoffe aus Hafer, Hülsenfrüchten und Obst quellen mit Wasser auf, unlösliche aus Vollkorn und Gemüse geben dem Speisebrei Volumen; beide Arten ergänzen sich.",
+    "Die ergiebigsten Quellen sind Vollkornprodukte, Hülsenfrüchte wie Linsen und Bohnen, Gemüse, Obst mit Schale sowie Nüsse und Samen.",
+    "Steigern Sie die Ballaststoffmenge über mehrere Wochen schrittweise und trinken Sie dazu rund eineinhalb bis zwei Liter am Tag, sofern ärztlich nichts anderes besprochen ist.",
+    "Wenn Sie über längere Zeit Veränderungen Ihrer Verdauung bemerken, lassen Sie diese bitte ärztlich abklären.",
+  ],
   intro: [
     "Über die Verdauung spricht man selten, dabei begleitet sie uns jeden Tag. Mit den Jahren bemerken viele Menschen, dass der Bauch empfindlicher reagiert und dass die gewohnte Kost nicht mehr immer leicht von der Hand geht. Eine ausreichende Versorgung mit Ballaststoffen gehört zu den einfachsten und am besten untersuchten Bausteinen einer ausgewogenen Ernährung.",
     "Dieser Ratgeber erklärt in Ruhe, was Ballaststoffe sind, welche Lebensmittel gute Quellen liefern und worauf es ankommt, wenn Sie die tägliche Menge erhöhen möchten. Er versteht sich als allgemeine Ernährungsinformation und ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für den Alltag.",

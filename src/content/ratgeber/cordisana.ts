@@ -8,6 +8,13 @@ export const cordisana: Article = {
   metaDescription:
     "Was sich ab 55 an Herz und Gefäßen verändert und was unterstützt: Bewegung, Ernährung, Blutdruck im Blick und die Rolle von Vitamin B1, C, Selen und Zink.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Herz schlägt im Ruhezustand rund 60- bis 80-mal pro Minute, und mit den Jahren verlieren Herzwand und Blutgefäße auf natürliche Weise etwas an Elastizität.",
+    "Regelmäßige Bewegung, eine Kost mit viel Gemüse, Fisch und hochwertigen Ölen sowie der Verzicht auf das Rauchen gehören zu den wirkungsvollsten Entscheidungen für Herz und Gefäße.",
+    "Vitamin B1, auch Thiamin genannt, trägt zu einer normalen Herzfunktion bei, Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion der Blutgefäße bei.",
+    "Selen und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen.",
+    "Wer Medikamente für Herz oder Kreislauf einnimmt, hält vor der Einnahme einer Ergänzung Rücksprache mit der Ärztin oder dem Arzt, und bei plötzlichen heftigen Brustschmerzen gilt sofort der Notruf 112.",
+  ],
   intro: [
     "Das Herz leistet ein Leben lang stille Schwerstarbeit. Es schlägt im Ruhezustand rund 60- bis 80-mal pro Minute, ohne dass wir es bemerken. Mit den Jahren verändert sich der Körper, und viele Menschen ab der Lebensmitte fragen sich, wie sie Herz und Gefäße auf lange Sicht gut begleiten können.",
     "Dieser Ratgeber erklärt, was im Herz-Kreislauf-System mit dem Alter geschieht, welche Alltagsgewohnheiten die größte Wirkung haben und welche Rolle einzelne Mikronährstoffe spielen. Er ist sachlich gemeint und ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -9,6 +9,13 @@ export const ingwerGinkgo: Article = {
   metaDescription:
     "Ingwer und Ginkgo im Porträt: Herkunft, Tradition und was die Forschung zu beiden Pflanzen neutral untersucht hat. Pharmazeutisch eingeordnet für Menschen ab 55.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Ingwer stammt aus dem tropischen Asien; genutzt wird traditionell der Wurzelstock, dessen würzig-scharfer Geschmack von den enthaltenen Gingerolen kommt.",
+    "Ginkgo biloba gilt als eine der ältesten Baumarten der Welt; verwendet werden traditionell die fächerförmigen Blätter, aus denen standardisierte Extrakte gewonnen werden.",
+    "Eine lange Tradition beschreibt nur, wie eine Pflanze über die Zeit verwendet wurde, und ist für sich genommen kein Beleg für eine bestimmte Wirkung.",
+    "Studien zu einzelnen Pflanzenextrakten lassen sich nicht auf ein zusammengesetztes Endprodukt übertragen und sind kein Wirknachweis für ein bestimmtes Präparat.",
+    "Inhaltsstoffe von Ginkgo können mit blutverdünnenden Mitteln in Wechselwirkung treten; wer gerinnungshemmende Arzneimittel einnimmt oder vor einer Operation steht, hält vorher bitte Rücksprache mit Arzt oder Apotheker.",
+  ],
   intro: [
     "Wer sich mit pflanzlichen Klassikern aus der Apothekenkultur beschäftigt, stößt früher oder später auf zwei Namen, die seit Generationen besprochen werden: Ingwer und Ginkgo. Beide Pflanzen haben eine lange Geschichte und werden in unterschiedlichen Traditionen genutzt. Dieser Ratgeber stellt sie sachlich vor.",
     "Es geht hier ausdrücklich um Pflanzenkunde und nicht um Heilversprechen. Sie erfahren, woher Ingwer und Ginkgo stammen, in welchen Traditionen sie verwendet werden und was die Forschung neutral an ihnen untersucht hat. Dieser Text ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für die eigene Einordnung.",

@@ -9,6 +9,13 @@ export const zinkNormaleFunktion: Article = {
   metaDescription:
     "Was Zink ist, welche von der EFSA geprüfte Aufgabe es im Körper hat und welche Lebensmittel gute Zinkquellen sind. Pharmazeutisch erklärt, für Menschen ab 55.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Zink ist ein essenzielles Spurenelement, das der Körper nicht selbst bilden und kaum speichern kann, weshalb eine regelmäßige Zufuhr über die Ernährung wichtig ist.",
+    "Der von der Europäischen Behörde für Lebensmittelsicherheit geprüfte Claim lautet: Vitamin C und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen.",
+    "Gute Zinkquellen sind Fleisch, Käse, Eier und Meeresfrüchte sowie Vollkornprodukte, Haferflocken, Hülsenfrüchte, Nüsse und Kürbiskerne.",
+    "Einweichen, Keimen oder Säuern von Hülsenfrüchten und Getreide, etwa bei Sauerteigbrot, begünstigt die Zinkaufnahme aus pflanzlicher Kost.",
+    "Beim Spurenelement Zink ist mehr nicht besser: Dauerhaft hohe Zufuhren über Nahrungsergänzungsmittel gehören nur nach fachlichem Rat eingenommen, da zu viel Zink die Aufnahme anderer Spurenelemente beeinträchtigen kann.",
+  ],
   intro: [
     "Zink zählt zu den Spurenelementen, von denen der Körper nur kleine Mengen braucht, die aber an vielen Stellen mitwirken. Anders als Fette oder Kohlenhydrate liefert Zink keine Energie. Es ist vielmehr ein stiller Helfer im Hintergrund, der in zahlreichen Abläufen des Stoffwechsels gebraucht wird. Gerade weil der Körper Zink nicht selbst herstellen und kaum speichern kann, ist die regelmäßige Zufuhr über die Ernährung wichtig.",
     "Dieser Ratgeber erklärt sachlich, was Zink ist, welche von der Europäischen Behörde für Lebensmittelsicherheit geprüfte Aufgabe ihm zugeschrieben wird und über welche Lebensmittel Sie es gut aufnehmen. Er versteht sich als fundierte Einordnung und ersetzt kein ärztliches Gespräch.",

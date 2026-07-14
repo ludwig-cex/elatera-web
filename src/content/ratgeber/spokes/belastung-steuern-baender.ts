@@ -9,6 +9,13 @@ export const belastungSteuernBaender: Article = {
   metaDescription:
     "Empfindliche Bänder ab 55? Wie Sie Belastung richtig dosieren, Zeichen von Überlastung erkennen und Pausen einplanen, plus die Rolle von Mangan, Vitamin C und D. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Sehnen und Bänder passen sich langsamer an Belastung an als Muskeln und brauchen deshalb eine schrittweise Steigerung statt sprunghafter Anforderungen.",
+    "Entscheidend ist nicht das Vermeiden von Belastung, sondern ihre richtige Dosierung, denn ruhendes Bindegewebe wird eher weniger belastbar.",
+    "Frühe Zeichen einer Überlastung sind ein ziehendes oder spannendes Gefühl rund um ein Gelenk, eine ungewohnte Steifigkeit am Folgetag oder ein druckempfindlicher Bereich.",
+    "Mangan trägt zu einer normalen Bindegewebsbildung bei, Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion von Knorpel und Knochen bei, und Vitamin D und Zink tragen zur Erhaltung normaler Knochen bei.",
+    "Deutliche Schwellung, Überwärmung, Rötung, plötzlich einschießender Schmerz oder Beschwerden über mehrere Wochen gehören ärztlich abgeklärt.",
+  ],
   intro: [
     "Sehnen und Bänder verbinden Muskeln mit Knochen und führen unsere Gelenke durch jede Bewegung. Mit den Jahren reagiert dieses Bindegewebe empfindlicher auf Belastung: Es wird etwas weniger elastisch, und es braucht nach einer Anstrengung länger, um sich wieder zu erholen. Wer das spürt, neigt schnell zu einem von zwei Wegen, die beide nicht ideal sind, nämlich entweder zur völligen Schonung oder zum Durchhalten trotz Beschwerden.",
     "Der bessere Weg liegt dazwischen und heißt: die Belastung bewusst steuern. Dieser Ratgeber zeigt Ihnen, warum die richtige Dosierung gerade bei empfindlichen Bändern entscheidend ist, an welchen Zeichen Sie eine Überlastung früh erkennen und wie Sie Pausen und Regeneration sinnvoll einplanen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

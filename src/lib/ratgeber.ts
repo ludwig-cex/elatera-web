@@ -22,6 +22,7 @@ import { melatoninEinschlafzeit } from "@/content/ratgeber/spokes/melatonin-eins
 import { schlafhygiene60 } from "@/content/ratgeber/spokes/schlafhygiene-ab-60";
 import { frueherAufwachen } from "@/content/ratgeber/spokes/frueher-aufwachen-im-alter";
 // Spokes — Gedächtnis (Mentisana)
+import { gedaechtnisGuide } from "@/content/ratgeber/spokes/gedaechtnis-guide";
 import { gehirnjogging } from "@/content/ratgeber/spokes/gehirnjogging-uebungen";
 import { gehirnjoggingAb60 } from "@/content/ratgeber/spokes/gehirnjogging-ab-60";
 import { gehirnjoggingAufgaben } from "@/content/ratgeber/spokes/gehirnjogging-aufgaben";
@@ -84,6 +85,7 @@ const SPOKES: Article[] = [
   schlafhygiene60,
   frueherAufwachen,
   // Gedächtnis
+  gedaechtnisGuide,
   gehirnjogging,
   gehirnjoggingAb60,
   gehirnjoggingAufgaben,

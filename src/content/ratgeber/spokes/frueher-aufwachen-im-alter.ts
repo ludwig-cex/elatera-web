@@ -9,6 +9,13 @@ export const frueherAufwachen: Article = {
   metaDescription:
     "Warum viele Menschen ab 55 morgens früher wach werden: wie sich der Schlafrhythmus natürlich verschiebt, was im Alltag hilft und wann ein Arztbesuch sinnvoll ist.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Mit den Jahren verschiebt sich die innere Uhr bei vielen Menschen nach vorne: Man wird abends früher müde und morgens früher wach, Fachleute sprechen von einer Vorverlagerung des Schlaffensters.",
+    "Frühes Aufwachen im Alter ist meist keine Störung, sondern eine verbreitete Begleiterscheinung des Älterwerdens, denn die tiefen Schlafphasen nehmen ab und der Schlaf wird leichter.",
+    "Helles Tageslicht am Morgen, gedämpftes Licht am Abend und feste Zeiten für Aufstehen, Mahlzeiten und Zubettgehen stabilisieren den Schlaf-Wach-Rhythmus.",
+    "Magnesium und Vitamin B6 tragen zur normalen Funktion des Nervensystems bei, Magnesium zudem zu einer normalen psychischen Funktion.",
+    "Ärztlich abklären lassen sollten Sie frühes Erwachen, wenn anhaltende Erschöpfung am Tag, lautes Schnarchen mit Atemaussetzern oder gedrückte Stimmung hinzukommen.",
+  ],
   intro: [
     "Viele Menschen bemerken mit den Jahren, dass sie morgens früher wach werden als gewohnt. Schon vor Sonnenaufgang ist man hellwach, obwohl der Wecker noch lange nicht klingelt. Wer früher problemlos bis acht geschlafen hat, sitzt nun um halb sechs am Küchentisch. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Wandels.",
     "Dieser Ratgeber erklärt, warum sich der Schlaf mit dem Alter verschiebt, was im Alltag dabei hilft, einen ruhigen Rhythmus zu finden, und wann frühes Aufwachen ärztlich abgeklärt werden sollte. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

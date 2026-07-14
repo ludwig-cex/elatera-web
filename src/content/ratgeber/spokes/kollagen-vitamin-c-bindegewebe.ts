@@ -9,6 +9,13 @@ export const kollagenVitaminCBindegewebe: Article = {
   metaDescription:
     "Kollagen und Vitamin C fürs Bindegewebe ab 55: Was Kollagen im Körper ist, wie Vitamin C zur normalen Kollagenbildung beiträgt und gute Quellen. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Kollagen ist das häufigste Eiweiß im menschlichen Körper und gibt Sehnen, Bändern, Knorpel, Knochen und Haut Form, Zugfestigkeit und Elastizität.",
+    "Mit zunehmendem Alter verlangsamt sich die körpereigene Kollagenneubildung, und das Bindegewebe verliert allmählich an Spannkraft.",
+    "Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion von Knorpel und Knochen bei, es ist aber kein Mittel, um Sehnen, Bänder oder Knorpel zu heilen oder zu reparieren.",
+    "Gute Vitamin-C-Quellen sind Paprika, Brokkoli, Grünkohl, Beerenobst, Zitrusfrüchte und Kiwi, während eiweißreiche Lebensmittel die Aminosäure-Bausteine für die Kollagenbildung liefern.",
+    "Ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt weder eine ausgewogene Ernährung noch eine ärztliche Behandlung.",
+  ],
   intro: [
     "Sehnen, Bänder und die Haut, das Gerüst, das den Körper zusammenhält und beweglich macht, bestehen zu einem großen Teil aus Kollagen. Mit den Jahren bildet der Körper dieses Strukturprotein langsamer, und viele Menschen fragen sich, wie sie ihr Bindegewebe von innen unterstützen können. Häufig fällt dabei der Begriff Vitamin C.",
     "Dieser Ratgeber erklärt sachlich, was Kollagen im Bindegewebe ist, welche genau umrissene Rolle Vitamin C bei der körpereigenen Kollagenbildung spielt und über welche Lebensmittel Sie beide gut aufnehmen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

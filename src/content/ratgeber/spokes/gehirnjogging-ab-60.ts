@@ -9,8 +9,15 @@ export const gehirnjoggingAb60: Article = {
   metaDescription:
     "6 alltagstaugliche Gehirnjogging-Übungen ab 60: ohne App, ohne Rätselheft, direkt in den Tag eingebaut. Mit Anleitung, Steigerungen und pharmazeutischer Einordnung.",
   updated: "2026-07-14",
+  keyFacts: [
+    "Wirksames Gehirnjogging ab 60 braucht weder App noch Rätselheft: Sechs Alltagsübungen wie die Einkaufsliste im Kopf, Kopfrechnen an der Kasse oder das Rückwärts-Tagebuch am Abend genügen.",
+    "Zehn bis fünfzehn Minuten Übung pro Tag, verteilt auf vorhandene Alltagsmomente, sind wirksamer als eine lange Einheit einmal pro Woche.",
+    "Der Trainingsreiz entsteht durch Ungewohntes: Sobald eine Übung mühelos gelingt, sollte sie gesteigert werden, etwa durch längere Merklisten oder centgenaues Rechnen.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei.",
+    "Ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt weder das geistige Training noch eine ausgewogene Ernährung oder ein ärztliches Gespräch.",
+  ],
   heroImage: "/ratgeber-img/gehirnjogging-ab-60.png",
-  relatedSlugs: ["gehirnjogging-aufgaben", "gehirnjogging-uebungen", "konzentration-im-alltag"],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-aufgaben", "gehirnjogging-uebungen", "konzentration-im-alltag"],
   intro: [
     "Für wirksames Gehirnjogging brauchen Sie weder eine App noch ein Rätselheft. Die besten Übungen verstecken sich in Momenten, die Sie ohnehin erleben: beim Einkaufen, beim Zähneputzen, auf dem Spaziergang, am Abendbrottisch. Entscheidend ist nur, diese Momente bewusst zu nutzen, statt sie im Autopiloten verstreichen zu lassen.",
     "Dieser Ratgeber stellt Ihnen sechs Übungen vor, die sich ab 60 besonders bewährt haben. Jede dauert nur wenige Minuten, braucht keinerlei Material und lässt sich steigern, sobald sie leichtfällt. Am Ende ordnen wir ein, welche Rolle Ernährung und einzelne Mikronährstoffe für die geistige Frische spielen.",

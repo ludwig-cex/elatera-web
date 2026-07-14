@@ -54,20 +54,33 @@ export default async function RatgeberArticlePage({
   const pillar = article.pillarSlug ? getArticle(article.pillarSlug) : undefined;
   const spokes = article.pillarSlug ? [] : getSpokes(article.slug);
 
+  // Multi-Typ Article + MedicalWebPage: lastReviewed/reviewedBy machen die
+  // fachliche Pruefung fuer YMYL maschinenlesbar (Bing/Google/KI-Suchen).
   const articleLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": ["Article", "MedicalWebPage"],
     headline: article.title,
     description: article.metaDescription,
     image: [`${SITE}/products/${article.productSlug}/solo.png`],
     datePublished: article.updated,
     dateModified: article.updated,
+    lastReviewed: article.updated,
+    reviewedBy: {
+      "@type": "Person",
+      name: AUTHOR,
+      jobTitle: AUTHOR_TITLE,
+      url: "https://ratgeber.nutra-sana.de/ratgeber/autor/jonas-guetermann",
+    },
     inLanguage: "de-DE",
     author: {
       "@type": "Person",
       name: AUTHOR,
       jobTitle: AUTHOR_TITLE,
+      url: "https://ratgeber.nutra-sana.de/ratgeber/autor/jonas-guetermann",
     },
+    ...(article.keyFacts && article.keyFacts.length > 0
+      ? { abstract: article.keyFacts.join(" ") }
+      : {}),
     publisher: { "@id": `${SITE}/#organization` },
     mainEntityOfPage: `${SITE}/ratgeber/${article.slug}`,
   };
@@ -116,9 +129,13 @@ export default async function RatgeberArticlePage({
             {article.title}
           </h1>
           <div className="flex items-center gap-2 text-sm text-muted mb-8">
-            <span className="font-medium" style={{ color: "var(--color-ink-soft)" }}>
+            <Link
+              href="/ratgeber/autor/jonas-guetermann"
+              className="font-medium hover:underline underline-offset-4"
+              style={{ color: "var(--color-ink-soft)" }}
+            >
               {AUTHOR}
-            </span>
+            </Link>
             <span aria-hidden>·</span>
             <span>{AUTHOR_TITLE}</span>
             <span aria-hidden>·</span>
@@ -136,6 +153,33 @@ export default async function RatgeberArticlePage({
                 loading="eager"
               />
             </div>
+          )}
+
+          {/* Das Wichtigste in Kürze: zitierfähiger Antwortblock für KI-Suchen */}
+          {article.keyFacts && article.keyFacts.length > 0 && (
+            <section
+              className="mb-10 rounded-2xl p-6 sm:p-7"
+              style={{ background: "var(--color-cream)", border: "1px solid rgba(12,43,99,0.14)" }}
+            >
+              <h2
+                className="text-xs uppercase tracking-widest font-semibold mb-4"
+                style={{ color: "var(--color-navy)" }}
+              >
+                Das Wichtigste in Kürze
+              </h2>
+              <ul className="space-y-3">
+                {article.keyFacts.map((fact, i) => (
+                  <li key={i} className="flex gap-3 leading-relaxed">
+                    <span
+                      aria-hidden
+                      className="flex-none mt-[7px] w-2 h-2 rounded-full"
+                      style={{ background: "var(--color-indigo)" }}
+                    />
+                    <span style={{ color: "var(--color-ink)" }}>{fact}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
           )}
 
           {/* Intro */}

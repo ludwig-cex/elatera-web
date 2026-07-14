@@ -72,9 +72,12 @@ export const metadata: Metadata = {
   },
   // Meta (Facebook) Business domain verification for nutra-sana.de. Required
   // before Aggregated Event Measurement event ranking can be configured.
+  // msvalidate.01 = Bing Webmaster Tools site verification for
+  // ratgeber.nutra-sana.de (eigene Site neben der Shopify-Hauptdomain).
   verification: {
     other: {
       "facebook-domain-verification": "zi88sdhgfmrl7iltslyx1plpuqpu1w",
+      "msvalidate.01": "73C529A4B7DEF94D4156B31E259CD663",
     },
   },
 };

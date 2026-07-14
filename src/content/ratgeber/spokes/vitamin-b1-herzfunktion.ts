@@ -9,6 +9,13 @@ export const vitaminB1Herzfunktion: Article = {
   metaDescription:
     "Vitamin B1 (Thiamin) trägt zu einer normalen Herzfunktion bei. Was der Nährstoff leistet, der genaue EFSA-Rahmen und gute Quellen, pharmazeutisch erklärt für 55+.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Vitamin B1 trägt zu einer normalen Herzfunktion bei; diese Aussage ist von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gilt für den Nährstoff selbst, nicht für ein bestimmtes Produkt.",
+    "Thiamin ist wasserlöslich, und der Körper legt kaum Vorräte an; eine regelmäßige Zufuhr über die Nahrung ist deshalb wichtiger als gelegentlich große Mengen.",
+    "Gute Quellen für Vitamin B1 sind Vollkornprodukte, Hülsenfrüchte, Haferflocken, Sonnenblumenkerne und mageres Schweinefleisch.",
+    "Vitamin B1 behandelt keine Herzerkrankung, beugt keiner Herzschwäche vor und beeinflusst keinen Blutdruck; ein Nahrungsergänzungsmittel ist kein Arzneimittel.",
+    "Wenn Sie Medikamente für das Herz einnehmen, halten Sie vor einer Ergänzung bitte Rücksprache mit Arzt oder Apotheker.",
+  ],
   intro: [
     "Vitamin B1, auch Thiamin genannt, gehört zu den wasserlöslichen B-Vitaminen und wird vom Körper für viele alltägliche Abläufe benötigt. Im Zusammenhang mit dem Herzen taucht es immer wieder auf, weil es zu einer normalen Herzfunktion beiträgt. Was genau das bedeutet und was es ausdrücklich nicht bedeutet, ist für Menschen ab 55 eine sinnvolle Grundlage.",
     "Dieser Ratgeber erklärt sachlich, was Vitamin B1 ist, in welchem genau abgesteckten Rahmen die Aussage zur Herzfunktion gilt und welche weiteren Nährstoffe für Herz und Gefäße eine Rolle spielen. Er ersetzt kein ärztliches Gespräch, sondern ordnet die Begriffe ein, die Ihnen auf Etiketten und in Beratungen begegnen.",

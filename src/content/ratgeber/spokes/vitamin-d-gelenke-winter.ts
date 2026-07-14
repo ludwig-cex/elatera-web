@@ -9,6 +9,13 @@ export const vitaminDGelenke: Article = {
   metaDescription:
     "Warum die Vitamin-D-Versorgung im Winter oft knapp wird und welche Rolle der Nährstoff für normale Knochen und eine normale Muskelfunktion spielt. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Der Körper bildet den größten Teil seines Vitamin D selbst über die Haut, wenn UV-B-Strahlung der Sonne auf sie trifft.",
+    "Zwischen Oktober und März steht die Sonne in unseren Breiten so tief, dass die UV-B-Strahlung für die Vitamin-D-Bildung der Haut meist nicht ausreicht.",
+    "Mit zunehmendem Alter lässt die Fähigkeit der Haut nach, Vitamin D zu bilden, weshalb die Versorgung bei Menschen über 55 im Winter häufig knapper ist.",
+    "Vitamin D trägt zur Erhaltung normaler Knochen und einer normalen Muskelfunktion bei; auch Magnesium und Zink tragen zur Erhaltung normaler Knochen bei.",
+    "Statt auf eigene Faust hochdosiert zu ergänzen, lassen Sie Ihren Vitamin-D-Status besser ärztlich über den Blutwert überprüfen.",
+  ],
   heroImage: "/ratgeber-img/vitamin-d-gelenke-winter.png",
   intro: [
     "Wenn die Tage kürzer werden und die Sonne tief steht, verbringen viele Menschen mehr Zeit in geschlossenen Räumen. Gerade ab der Lebensmitte fällt dann oft auf, dass sich der Körper morgens steifer anfühlt und die ersten Bewegungen mehr Zeit brauchen. Ein häufiger Begleiter dieser Jahreszeit ist eine knappere Versorgung mit Vitamin D, das der Körper überwiegend selbst über die Haut bildet, wenn ausreichend Sonnenlicht auf sie trifft.",

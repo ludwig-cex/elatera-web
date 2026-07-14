@@ -8,6 +8,13 @@ export const tendisana: Article = {
   metaDescription:
     "Warum Sehnen und Bänder ab 55 weniger elastisch werden und was hilft: Bewegung, Dehnung, Aufwärmen und die Rolle von Vitamin C, Mangan, Vitamin D und Zink.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Sehnen und Bänder bestehen zu einem großen Teil aus Kollagen, und mit dem Alter nimmt der Wassergehalt im Bindegewebe ab, sodass die Fasern steifer werden.",
+    "Regelmäßige, maßvolle Bewegung mit langsamer Steigerung über Wochen gehört zu den wichtigsten Stützen des Bindegewebes, weil sich Sehnen und Bänder an Belastung anpassen.",
+    "Ein paar Minuten Aufwärmen vor der Belastung und ruhiges Dehnen ohne Wippen bereiten das Bindegewebe vor und erhalten die Beweglichkeit.",
+    "Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion von Knorpel und Knochen bei, Mangan trägt zu einer normalen Bindegewebsbildung bei, und Vitamin D und Zink tragen zur Erhaltung normaler Knochen bei.",
+    "Ein plötzliches Reißen, ein schlagartiger heftiger Schmerz oder eine starke Schwellung gehören ärztlich abgeklärt, denn Nahrungsergänzungsmittel ersetzen keine Behandlung von Verletzungen.",
+  ],
   intro: [
     "Sehnen und Bänder arbeiten still im Hintergrund. Sie verbinden Muskeln mit Knochen und führen unsere Gelenke, ohne dass wir sie bewusst wahrnehmen. Erst wenn eine Bewegung weniger geschmeidig gelingt oder sich nach dem Sport etwas strapaziert anfühlt, rücken sie in den Blick. Das ist mit den Jahren verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was im Bindegewebe mit der Zeit passiert, welche Alltagsgewohnheiten die Beweglichkeit unterstützen und welche Rolle einzelne Mikronährstoffe dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -9,6 +9,13 @@ export const bewegungFuersHerz: Article = {
   metaDescription:
     "Wie sanfte Bewegung das Herz-Kreislauf-System ab 60 unterstützt: passende Bewegungsformen, langsam beginnen und die Rolle von Vitamin B1, C, Selen und Zink. Erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Herz ist ein Muskel und bleibt durch regelmäßige, moderate Bewegung in Form; Beständigkeit zählt dabei mehr als Intensität.",
+    "Gut geeignete Bewegungsformen ab 60 sind zügiges Gehen, Schwimmen, Wassergymnastik und Radfahren sowie sanfte Programme wie Gymnastik, Tai-Chi oder Yoga für Senioren.",
+    "Ein guter Einstieg ist ein Spaziergang von zehn bis fünfzehn Minuten; solange Sie sich dabei noch unterhalten können, stimmt das Tempo.",
+    "Vor dem Start in ein neues Training sprechen Sie bitte mit Ihrer Ärztin oder Ihrem Arzt, besonders wenn Sie Herz-Medikamente einnehmen oder Vorerkrankungen haben.",
+    "Treten während der Bewegung Brustschmerzen, plötzliche Atemnot oder Schwindel auf, brechen Sie sofort ab und wählen im Zweifel den Notruf 112.",
+  ],
   intro: [
     "Mit den Jahren verändert sich, wie sich Bewegung anfühlt. Ein Spaziergang, eine Runde im Garten oder die Treppe in den ersten Stock kosten ab 60 oft etwas mehr Atem als früher. Viele Menschen werden dadurch vorsichtiger und bewegen sich weniger. Dabei gehört regelmäßige, gut dosierte Bewegung zu den verlässlichsten Begleitern eines aktiven Lebens in dieser Altersgruppe.",
     "Dieser Ratgeber erklärt, warum dem Herz-Kreislauf-System Bewegung guttut, welche Bewegungsformen sich im höheren Alter besonders eignen und wie Sie ruhig und sicher beginnen. Ergänzend gehen wir darauf ein, welche Nährstoffe Herz und Gefäße tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

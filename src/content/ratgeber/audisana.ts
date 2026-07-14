@@ -8,6 +8,13 @@ export const audisana: Article = {
   metaDescription:
     "Warum sich das Hören ab 55 verändert und was hilft: Lärmschutz, Durchblutung, regelmäßige Hörtests und die Rolle von B-Vitaminen, Magnesium und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Die feinen Haarsinneszellen im Innenohr bilden sich im Laufe des Lebens nicht neu, weshalb mit den Jahren vor allem hohe Töne oft als Erstes leiser werden.",
+    "Konsequenter Gehörschutz bei lauten Arbeiten, Konzerten oder im Verkehr gehört zu den wichtigsten Maßnahmen, weil einmal verlorene Haarsinneszellen nicht zurückkehren.",
+    "Magnesium sowie die Vitamine B1, B6 und B12 tragen zu einer normalen Funktion des Nervensystems bei, über das die Hörsignale zum Gehirn gelangen.",
+    "Vitamin C und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen, und Zink unterstützt zudem eine normale kognitive Funktion.",
+    "Ein regelmäßiger Hörtest etwa ab dem 55. Lebensjahr hilft, Veränderungen früh einzuordnen, und ein plötzlicher Hörverlust gehört rasch in fachärztliche Hände.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass sie in geselliger Runde genauer hinhören müssen oder leise Töne weniger deutlich wahrnehmen als früher. Ein Gespräch im Restaurant, das Klingeln an der Tür oder die Stimme der Enkel am Telefon fühlen sich anders an als mit vierzig. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren am Gehör und an den Ohren verändert, welche Maßnahmen das Hörvermögen im Alltag unterstützen und welche Rolle einzelne Mikronährstoffe dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

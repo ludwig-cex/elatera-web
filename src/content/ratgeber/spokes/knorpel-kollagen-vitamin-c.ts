@@ -9,6 +9,13 @@ export const knorpelVitaminC: Article = {
   metaDescription:
     "Wie Knorpel und Kollagen die Gelenke tragen und welche Rolle Vitamin C bei der normalen Kollagenbildung spielt. Pharmazeutisch erklärt, mit den geprüften EFSA-Aussagen.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Gelenkknorpel ist eine elastische Schicht über den Knochenenden, deren festen Rahmen das Strukturprotein Kollagen bildet.",
+    "Knorpel hat keine eigenen Blutgefäße und wird über die Gelenkflüssigkeit versorgt, die bei Bewegung in das Gewebe hinein und wieder heraus gepresst wird.",
+    "Vitamin C trägt zur normalen Kollagenbildung für die normale Funktion von Knorpel und Knochen bei; diese Aussage ist von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gilt für den Nährstoff selbst.",
+    "Vitamin D, Magnesium und Zink tragen jeweils zur Erhaltung normaler Knochen bei, Magnesium zusätzlich zur Erhaltung einer normalen Muskelfunktion.",
+    "Diese Aussagen sind keine Heilversprechen: Ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt weder eine ausgewogene Ernährung noch eine ärztliche Behandlung.",
+  ],
   heroImage: "/ratgeber-img/knorpel-kollagen-vitamin-c.png",
   intro: [
     "Wenn von beweglichen Gelenken die Rede ist, denken viele zuerst an Muskeln und Knochen. Tatsächlich trägt eine weniger sichtbare Schicht einen großen Teil der täglichen Belastung, der Gelenkknorpel. Er besteht zu einem wesentlichen Anteil aus Kollagen, einem Strukturprotein, das dem Bindegewebe Form und Festigkeit gibt.",

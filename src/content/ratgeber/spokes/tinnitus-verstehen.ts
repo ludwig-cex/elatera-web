@@ -9,6 +9,13 @@ export const tinnitusVerstehen: Article = {
   metaDescription:
     "Tinnitus ab 55: Was Ohrgeräusche sind, welche Auslöser infrage kommen und wie Betroffene im Alltag damit umgehen. Wann ein Besuch beim HNO-Arzt nötig ist.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Tinnitus bezeichnet Ohrgeräusche wie Pfeifen, Rauschen oder Klingeln ohne äußere Schallquelle und ist keine eigenständige Krankheit, sondern ein Symptom mit sehr unterschiedlichen Hintergründen.",
+    "Ohrgeräusche sind weit verbreitet und in den meisten Fällen kein Zeichen einer ernsten Erkrankung.",
+    "Als mögliche Faktoren werden unter anderem Lärmbelastung, ein Pfropf aus Ohrenschmalz, natürliche Hörveränderungen im Alter, Stress sowie Nebenwirkungen einzelner Medikamente besprochen.",
+    "Viele Betroffene empfinden eine leise Geräuschkulisse, Entspannung, regelmäßige Bewegung und einen guten Schlafrhythmus als hilfreich, um gelassener mit Ohrgeräuschen umzugehen.",
+    "Ein plötzlicher Hörverlust oder ein akut auftretender Tinnitus gilt als ärztlicher Notfall und gehört umgehend in die Hände eines HNO-Arztes.",
+  ],
   intro: [
     "Ein feines Pfeifen, ein Rauschen oder ein leises Klingeln im Ohr, das niemand sonst hört: Solche Ohrgeräusche, in der Fachsprache Tinnitus genannt, kennen viele Menschen. Manchmal tauchen sie nur kurz auf und verschwinden wieder, manchmal begleiten sie den Alltag über längere Zeit. Gerade in der zweiten Lebenshälfte berichten Betroffene häufiger davon.",
     "Dieser Ratgeber erklärt in Ruhe und ohne Dramatik, was Tinnitus eigentlich ist, welche Auslöser allgemein eine Rolle spielen können und wie sich der Alltag mit Ohrgeräuschen gestalten lässt. Er liefert Ihnen Orientierung, ersetzt aber kein ärztliches Gespräch. Bei plötzlichem Hörverlust oder akut auftretenden Ohrgeräuschen ist immer eine zügige ärztliche Abklärung wichtig.",

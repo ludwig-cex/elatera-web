@@ -8,6 +8,13 @@ export const urisana: Article = {
   metaDescription:
     "Warum sich Blase und Harnwege ab 55 verändern und was unterstützt: Trinkverhalten, Beckenboden, Hygiene und die Rolle von Vitamin A, Zink und Selen. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Mit dem Alter verliert die Blasenwand etwas an Elastizität und fasst tendenziell weniger Flüssigkeit, weshalb sich der Harndrang häufiger und manchmal dringlicher meldet.",
+    "Wer aus Sorge vor Toilettengängen zu wenig trinkt, erreicht oft das Gegenteil, denn konzentrierter Urin reizt die Blase eher.",
+    "Regelmäßige Beckenbodenübungen stärken die Muskulatur, die Blase und Harnröhre führt, und lassen sich diskret in den Alltag einbauen.",
+    "Vitamin A trägt zur Erhaltung normaler Schleimhäute bei, Zink und Selen tragen dazu bei, die Zellen vor oxidativem Stress zu schützen, und gemeinsam unterstützen sie eine normale Funktion des Immunsystems.",
+    "Blut im Urin, Fieber, Flankenschmerzen oder starkes Brennen beim Wasserlassen gehören ärztlich abgeklärt, denn Nahrungsergänzungsmittel ersetzen keine Behandlung von Erkrankungen der Harnwege.",
+  ],
   intro: [
     "Mit den Jahren rückt die Blase für viele Menschen stärker ins Bewusstsein. Der Gang zur Toilette wird häufiger, meldet sich nachts oder kündigt sich plötzlicher an als früher. Das ist verbreitet und gehört bei vielen zu den natürlichen Veränderungen der Lebensmitte.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren an Blase und Harnwegen verändert, welche Gewohnheiten das Wohlbefinden im Alltag unterstützen und welche Rolle einzelne Mikronährstoffe für die Schleimhäute spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte und diskrete Grundlage.",

@@ -9,6 +9,13 @@ export const schwindelBeimAufstehen: Article = {
   metaDescription:
     "Schwindel beim Aufstehen ab 55? Was dabei im Kreislauf passiert, ruhige Alltagstipps zum Aufstehen und Trinken und wann Sie ärztlich abklären sollten. Erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Beim Aufstehen sackt ein Teil des Blutes der Schwerkraft folgend in die Beine, sodass dem Kopf für einen kurzen Moment etwas weniger Blut zur Verfügung steht; normalerweise gleicht der Körper das innerhalb von Sekunden aus.",
+    "Mit den Jahren läuft dieser Kreislaufausgleich oft etwas langsamer ab, weshalb der kurze Moment der Unsicherheit deutlicher wahrgenommen wird.",
+    "Sanfte Alltagshilfen sind das Aufstehen in ruhigen Schritten über die Bettkante, das Aktivieren der Beinmuskeln vor dem Aufstehen und ausreichendes Trinken über den Tag.",
+    "Magnesium sowie die Vitamine B6 und B12 tragen zu einer normalen Funktion des Nervensystems bei; ein Nahrungsergänzungsmittel ist kein Arzneimittel und keine Therapie von Schwindel.",
+    "Wiederkehrenden oder anhaltenden Schwindel lassen Sie bitte immer ärztlich abklären, bei Begleitzeichen wie Bewusstlosigkeit, Sehstörungen oder Schwäche in Armen oder Beinen zeitnah.",
+  ],
   intro: [
     "Viele Menschen kennen den Moment, in dem nach dem Aufstehen aus Bett, Sessel oder Hocke kurz alles leicht und unsicher wirkt. Für ein paar Sekunden fühlt sich der Kopf etwas leer an, manchmal flimmert es vor den Augen, bis sich der Eindruck wieder beruhigt. Mit den Jahren tritt das häufiger auf, und oft verunsichert es im Alltag mehr, als es eigentlich müsste.",
     "Dieser Ratgeber erklärt ruhig und sachlich, was beim Aufstehen im Kreislauf passiert, wie Sie den Wechsel vom Liegen oder Sitzen zum Stehen im Alltag sanfter gestalten und woran Sie erkennen, dass eine ärztliche Abklärung sinnvoll ist. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -8,6 +8,13 @@ export const vertisana: Article = {
   metaDescription:
     "Warum das Gleichgewicht ab 55 unsicherer wird und was hilft: Bewegung, Sehkraft, Flüssigkeit und die Rolle von Magnesium, Vitamin B6 und B12. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Gleichgewicht entsteht aus dem Zusammenspiel von Innenohr, Augen und feinen Sensoren in Muskeln und Gelenken, und mit dem Alter arbeiten diese Systeme oft langsamer.",
+    "Regelmäßiges Gleichgewichtstraining wie das Stehen auf einem Bein oder sanftes Tai-Chi fordert die haltenden Systeme, wobei Beständigkeit wichtiger ist als Intensität.",
+    "Magnesium sowie Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems bei, auf dessen zuverlässige Reizweiterleitung der Gleichgewichtssinn angewiesen ist.",
+    "Ausreichendes Trinken, gute Beleuchtung, festes Schuhwerk und das Entfernen von Stolperfallen nehmen dem Alltag viel Unsicherheit.",
+    "Tritt Schwindel plötzlich und heftig auf oder geht er mit Sprach-, Seh- oder Gefühlsstörungen einher, gehört er umgehend ärztlich abgeklärt.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass sie sich beim Aufstehen kurz festhalten möchten oder dass ein schneller Lagewechsel ein flaues Gefühl auslöst. Auch das Stehen auf einem Bein oder das Gehen im Dunkeln fühlt sich anders an als mit vierzig. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was sich mit den Jahren im Gleichgewichtssinn verändert, welche Maßnahmen die Standsicherheit unterstützen und welche Rolle einzelne Mikronährstoffe für das Nervensystem spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

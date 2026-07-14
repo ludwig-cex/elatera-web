@@ -9,8 +9,15 @@ export const gehirnjogging: Article = {
   metaDescription:
     "Welche Gehirnjogging-Übungen ab 55 das Gedächtnis fordern: Neues lernen, Rätsel, Bewegung und soziale Kontakte. Alltagstauglich und pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Gehirn bleibt ein Leben lang lernfähig und knüpft auch jenseits der sechzig neue Verbindungen, wenn es regelmäßig gefordert wird.",
+    "Neues zu lernen ist der stärkste Trainingsreiz für den Kopf; schon zwanzig Minuten am Tag genügen, wenn sie regelmäßig stattfinden.",
+    "Bei Rätseln und Denkspielen zählt die Abwechslung: Wer bewusst zwischen Worträtseln, Zahlenspielen und räumlichen Aufgaben wechselt, spricht verschiedene Denkbereiche an.",
+    "Regelmäßige Bewegung und gepflegter sozialer Austausch gehören zu den wirkungsvollsten Gewohnheiten für einen wachen Kopf.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei.",
+  ],
   heroImage: "/ratgeber-img/gehirnjogging-uebungen.png",
-  relatedSlugs: ["gehirnjogging-ab-60", "gehirnjogging-aufgaben", "ernaehrung-fuers-gehirn"],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-ab-60", "gehirnjogging-aufgaben", "ernaehrung-fuers-gehirn"],
   intro: [
     "Das Gehirn bleibt ein Leben lang lernfähig. Auch jenseits der sechzig knüpft es neue Verbindungen, wenn es regelmäßig gefordert wird. Genau hier setzt Gehirnjogging an. Gemeint ist kein starres Trainingsprogramm, sondern die bewusste Entscheidung, den Kopf im Alltag immer wieder vor kleine, neue Aufgaben zu stellen.",
     "Dieser Ratgeber zeigt Ihnen konkrete Übungen und Gewohnheiten, die sich ohne Aufwand in den Tag einbauen lassen. Er erklärt, warum gerade Abwechslung wichtig ist, und ordnet ein, welche Rolle einzelne Mikronährstoffe für die kognitive Funktion spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für ein waches Gedächtnis.",

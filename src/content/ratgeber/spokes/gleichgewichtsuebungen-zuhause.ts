@@ -9,6 +9,13 @@ export const gleichgewichtsuebungenZuhause: Article = {
   metaDescription:
     "Einfache Gleichgewichtsübungen für zu Hause ab 55: sichere Schritte für mehr Standfestigkeit, Tipps zur Sturzvermeidung und die Rolle von B-Vitaminen und Magnesium.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Das Gleichgewicht lässt sich zu Hause ohne Geräte trainieren: Bewährt haben sich die Gewichtsverlagerung an der Küchenzeile, der Einbeinstand mit Sicherung und der Gang auf einer gedachten Linie.",
+    "Kurze tägliche Einheiten bringen mehr als seltenes langes Üben, denn das Nervensystem lernt vor allem durch regelmäßige Wiederholung.",
+    "Üben Sie immer in der Nähe einer festen Stütze und nie bei akutem Schwindel oder großer Müdigkeit; feste Haltegriffe, gute Beleuchtung und rutschfeste Teppiche machen das Zuhause zusätzlich sicherer.",
+    "Vitamin B6, Vitamin B12 und Magnesium tragen zu einer normalen Funktion des Nervensystems bei; Magnesium und Vitamin B6 tragen zudem zur Verringerung von Müdigkeit und Ermüdung bei.",
+    "Bei häufigem Schwindel oder wiederholten Stürzen lassen Sie die Ursache bitte ärztlich abklären, bevor Sie das Training ausbauen.",
+  ],
   intro: [
     "Mit den Jahren bemerken viele Menschen, dass das Stehen auf einem Bein, das Drehen in der Küche oder der Gang über eine unebene Schwelle weniger selbstverständlich wird als früher. Das Gleichgewicht ist kein fester Zustand, sondern ein Zusammenspiel aus Augen, Innenohr, Muskeln und einem geübten Nervensystem. Wie jede Fähigkeit lässt es sich trainieren, und genau dafür braucht es weder Geräte noch ein Studio.",
     "Dieser Ratgeber zeigt Ihnen ruhige, sichere Gleichgewichtsübungen für die eigenen vier Wände, erklärt, wie Sie dabei Stürze vermeiden, und ordnet ein, welche Mikronährstoffe das Nervensystem und die Muskelfunktion tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für den Alltag.",

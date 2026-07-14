@@ -9,6 +9,13 @@ export const bVitamineNervensystem: Article = {
   metaDescription:
     "B6 und B12 ab 55: Was die Vitamine sind, der geprüfte EFSA-Claim zur normalen Funktion des Nervensystems, gute Quellen und wann eine Ergänzung sinnvoll ist.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems bei; diese Aussagen sind von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gelten für die Nährstoffe selbst.",
+    "Beide Vitamine sind wasserlöslich, werden vom Körper kaum gespeichert und müssen deshalb regelmäßig über die Nahrung aufgenommen werden.",
+    "Vitamin B12 kommt fast ausschließlich in tierischen Lebensmitteln wie Fisch, Fleisch, Eiern und Milchprodukten vor; Vitamin B6 steckt in Vollkorn, Hülsenfrüchten, Nüssen, Bananen und Fisch.",
+    "Mit den Jahren kann die Aufnahme von Vitamin B12 über den Magen-Darm-Trakt nachlassen, weshalb die B12-Versorgung bei Menschen ab 55 stärker in den Blick rückt.",
+    "Lassen Sie Ihren Vitamin-B12-Status vor einer dauerhaften Ergänzung ärztlich über eine Blutuntersuchung prüfen; ein Nahrungsergänzungsmittel ist kein Arzneimittel und ersetzt keine ausgewogene Ernährung.",
+  ],
   intro: [
     "Das Nervensystem arbeitet rund um die Uhr, ohne dass wir es bewusst wahrnehmen. Es leitet Reize weiter, koordiniert Bewegungen und verbindet das Gehirn mit dem ganzen Körper. Damit dieses feine Zusammenspiel funktioniert, ist der Körper auf eine gute Versorgung mit bestimmten Nährstoffen angewiesen. Zu den bekanntesten gehören die Vitamine B6 und B12.",
     "Dieser Ratgeber erklärt, was diese beiden B-Vitamine sind, welche geprüfte Aussage die Europäische Behörde für Lebensmittelsicherheit ihnen mit Blick auf das Nervensystem zuschreibt und aus welchen Quellen Sie sie im Alltag aufnehmen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage, gerade ab der Lebensmitte.",

@@ -8,6 +8,13 @@ export const mobilisana: Article = {
   metaDescription:
     "Warum Gelenke ab 55 steifer werden und was hilft: Bewegung, Gewicht, Ernährung und die Rolle von Vitamin C, D, Magnesium und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Mit dem Alter nimmt der Wassergehalt im Gelenkknorpel ab, wodurch er dünner und weniger nachgiebig wird und Gelenke morgens länger brauchen, bis sie geschmeidig sind.",
+    "Regelmäßige gelenkschonende Bewegung wie Schwimmen, Radfahren und zügiges Gehen sowie ein gesundes Körpergewicht gehören zu den wirksamsten Stützen für bewegliche Gelenke.",
+    "Vitamin C trägt zu einer normalen Kollagenbildung für die normale Funktion von Knorpel und Knochen bei, während Vitamin D, Magnesium und Zink zur Erhaltung normaler Knochen beitragen.",
+    "Vitamin D und Magnesium tragen zur Erhaltung einer normalen Muskelfunktion bei, was wichtig ist, weil kräftige Muskeln das Gelenk führen und ihm Last abnehmen.",
+    "Wenn ein Gelenk stark anschwillt, heiß wird oder Schmerzen über mehrere Wochen anhalten, gehört das ärztlich abgeklärt, denn Nahrungsergänzungsmittel ersetzen keine Behandlung.",
+  ],
   intro: [
     "Viele Menschen bemerken ab der Lebensmitte, dass die Gelenke morgens länger brauchen, bis sie geschmeidig sind. Treppen, Gartenarbeit oder ein längerer Spaziergang fühlen sich anders an als mit vierzig. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Prozesses.",
     "Dieser Ratgeber erklärt, was in den Gelenken mit den Jahren passiert, welche Maßnahmen nachweislich die Beweglichkeit unterstützen und welche Rolle einzelne Mikronährstoffe dabei spielen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

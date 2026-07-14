@@ -9,6 +9,13 @@ export const blaehbauchNachDemEssen: Article = {
   metaDescription:
     "Völlegefühl und Blähbauch nach dem Essen ab 55? Warum es dazu kommt, sanfte Alltagstipps zum langsamen Essen und kleinen Portionen sowie blähende Lebensmittel im Blick. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Völlegefühl und Blähbauch nach dem Essen entstehen meist durch schnelles Essen, große Portionen, mitgeschluckte Luft und natürliche Gase, die beim Zersetzen mancher Nahrungsbestandteile im Darm entstehen.",
+    "Langsames Essen mit gründlichem Kauen und mehrere kleinere Mahlzeiten über den Tag verteilt entlasten den Magen spürbar.",
+    "Ein ruhiger Spaziergang von zehn bis fünfzehn Minuten nach dem Essen bringt die Verdauung sanft in Gang.",
+    "Eher blähend wirken Hülsenfrüchte, verschiedene Kohlsorten, Zwiebeln, Lauch und kohlensäurehaltige Getränke; ein kleines Ernährungstagebuch hilft, die persönlichen Auslöser zu erkennen.",
+    "Anhaltende, starke oder sich verändernde Beschwerden lassen Sie bitte ärztlich abklären.",
+  ],
   intro: [
     "Ein gutes Essen, und kurz darauf liegt der Bauch schwer und gespannt im Gürtel. Viele Menschen kennen das Gefühl, dass sich nach der Mahlzeit ein Druck im Oberbauch breitmacht oder sich der Bauch sichtbar wölbt. Mit den Jahren tritt das bei manchen häufiger auf, oft ohne dass eine ernste Ursache dahintersteckt.",
     "Dieser Ratgeber erklärt ruhig, warum es nach dem Essen zu Völlegefühl und einem geblähten Bauch kommen kann, und zeigt Ihnen sanfte Hilfen für den Alltag. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage, um Ihr Bauchgefühl mit kleinen Schritten zu begleiten.",

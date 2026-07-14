@@ -9,6 +9,13 @@ export const darmfloraErnaehrung: Article = {
   metaDescription:
     "Wie die Darmflora arbeitet und was die Ernährung dazu beiträgt: ballaststoffreiche und fermentierte Lebensmittel, Vielfalt auf dem Teller, dazu die Rolle von Vitamin A und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Die Darmflora ist die Gemeinschaft aus Billionen Mikroorganismen vor allem im Dickdarm; ihre Zusammensetzung verschiebt sich mit Ernährung, Lebensalter, Bewegung und weiteren Einflüssen.",
+    "Ballaststoffe aus Vollkorn, Hülsenfrüchten, Gemüse, Obst, Nüssen und Samen kommen unverdaut im Dickdarm an und sind dort für die Bakterien besonders bedeutsam.",
+    "Fermentierte Lebensmittel wie Naturjoghurt, Kefir oder mild gesäuertes, nicht durcherhitztes Sauerkraut bringen Abwechslung in die tägliche Kost.",
+    "Vielfalt zählt mehr als jedes einzelne Lebensmittel: Viele verschiedene pflanzliche Zutaten pro Woche schaffen günstige Bedingungen für eine vielfältige Gemeinschaft im Darm.",
+    "Vitamin A trägt zur Erhaltung normaler Schleimhäute bei, und Zink trägt zu einem normalen Säure-Basen-Stoffwechsel bei; bei anhaltenden Bauchbeschwerden sprechen Sie bitte mit Arzt oder Apotheker.",
+  ],
   intro: [
     "Im Darm jedes Menschen lebt eine große Gemeinschaft aus Billionen Mikroorganismen, oft Darmflora oder Mikrobiom genannt. Diese Lebensgemeinschaft verändert sich im Laufe des Lebens und reagiert empfindlich darauf, was tagtäglich auf dem Teller landet. Gerade ab der Lebensmitte fragen sich viele Menschen, womit sie ihrem Bauch etwas Gutes tun können.",
     "Dieser Ratgeber erklärt in Ruhe, was die Darmflora ist, welche Lebensmittel sie gern bekommt und warum Vielfalt auf dem Teller eine größere Rolle spielt als jedes einzelne Wundermittel. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage für den Alltag.",

@@ -9,6 +9,13 @@ export const dehnuebungenSehnen: Article = {
   metaDescription:
     "Sanfte Dehnübungen für geschmeidige Sehnen ab 55: warum Dehnen guttut, einfache sichere Übungen für den Alltag und die Rolle von Mangan, Vitamin C und Vitamin D.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Sehnen und Bänder bestehen zu einem großen Teil aus Kollagen, sind nur wenig durchblutet und reagieren empfindlich auf langes Stillsitzen.",
+    "Halten Sie jede Dehnung ruhig etwa zwanzig Sekunden, immer nur bis zu einem angenehmen Zug und nie bis zum Schmerz, und vermeiden Sie ruckartiges Federn.",
+    "Kurze tägliche Dehneinheiten bringen mehr als seltenes langes Dehnen, und ein paar Minuten Gehen vorab machen das Dehnen verträglicher.",
+    "Mangan trägt zu einer normalen Bindegewebsbildung bei, Vitamin C trägt zur normalen Kollagenbildung für eine normale Funktion von Knorpel und Knochen bei, und Vitamin D und Zink tragen zur Erhaltung normaler Knochen bei.",
+    "Bei anhaltenden Schmerzen, Schwellung oder Rötung sollten die Beschwerden ärztlich abgeklärt werden.",
+  ],
   intro: [
     "Sehnen und Bänder sind die stillen Helfer jeder Bewegung. Sie verbinden Muskeln mit Knochen und führen die Gelenke, oft ohne dass wir ihnen Beachtung schenken. Mit den Jahren bemerken viele Menschen, dass sich diese Strukturen morgens fester anfühlen und erst nach den ersten Bewegungen geschmeidiger werden.",
     "Sanftes, regelmäßiges Dehnen gehört zu den einfachsten Mitteln, um die Beweglichkeit zu erhalten. Dieser Ratgeber zeigt Ihnen ruhige Dehnübungen für den Alltag und erklärt, welche Nährstoffe Bindegewebe, Knorpel und Knochen tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

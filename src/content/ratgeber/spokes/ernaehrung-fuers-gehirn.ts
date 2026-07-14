@@ -9,6 +9,14 @@ export const ernaehrungGehirn: Article = {
   metaDescription:
     "Hirnfreundlich essen ab 55: Gemüse, Fisch und Omega-3, Vollkorn und wenig Zucker. Dazu Zink, Vitamin B6, B12 und Magnesium. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  keyFacts: [
+    "Eine hirnfreundliche Ernährung ab 55 folgt dem mediterranen Muster: viel Gemüse in vielen Farben, regelmäßig Fisch, hochwertige Öle, Vollkorn und wenig Zucker.",
+    "Zwei Portionen fettreicher Seefisch wie Lachs, Hering oder Makrele pro Woche liefern langkettige Omega-3-Fettsäuren; pflanzliche Alternativen sind Leinöl, Walnüsse und Rapsöl.",
+    "Zink trägt zu einer normalen kognitiven Funktion bei, Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems und zu einer normalen psychischen Funktion bei, Magnesium ebenfalls zur normalen Funktion des Nervensystems.",
+    "Ausreichendes Trinken gehört dazu, denn im Alter lässt das Durstgefühl nach und zu wenig Flüssigkeit macht sich rasch als Müdigkeit und Konzentrationsschwäche bemerkbar.",
+    "Ein Nahrungsergänzungsmittel kann die tägliche Versorgung begleiten, ersetzt aber weder eine ausgewogene Ernährung noch eine ärztliche Behandlung.",
+  ],
+  relatedSlugs: ["gedaechtnis-guide", "gehirnjogging-ab-60", "zink-kognitive-funktion"],
   intro: [
     "Das Gehirn macht nur einen kleinen Teil unseres Körpergewichts aus, beansprucht aber einen erstaunlich großen Anteil unserer täglichen Energie. Womit wir es versorgen, ist deshalb keine Nebensache. Gerade ab der Lebensmitte lohnt sich ein bewusster Blick auf den eigenen Speiseplan, denn was wir essen, liefert die Bausteine für einen wachen, konzentrierten Alltag.",
     "Dieser Ratgeber zeigt Ihnen, welche Grundprinzipien eine hirnfreundliche Ernährung ausmachen, welche Mikronährstoffe dabei eine Rolle spielen und wie Sie das Ganze ohne komplizierte Diätpläne in Ihren Alltag bringen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte und alltagstaugliche Grundlage.",
