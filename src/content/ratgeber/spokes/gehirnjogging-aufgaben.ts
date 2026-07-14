@@ -56,6 +56,29 @@ export const gehirnjoggingAufgaben: Article = {
       ],
     },
   ],
+  exercises: [
+    {
+      type: "quiz",
+      title: "Die Seerosen-Frage",
+      question: "Ein Teich ist nach 20 Tagen vollständig mit Seerosen bedeckt. Die Fläche verdoppelt sich jeden Tag. Nach wie vielen Tagen ist der Teich zur Hälfte bedeckt?",
+      options: ["Nach 10 Tagen", "Nach 15 Tagen", "Nach 19 Tagen", "Nach 5 Tagen"],
+      correctIndex: 2,
+      explanation: "Einen Tag vor der vollen Bedeckung ist genau die Hälfte erreicht, denn die Fläche verdoppelt sich täglich. Die Intuition sagt 10, die Logik sagt 19.",
+    },
+    {
+      type: "memory",
+      title: "Sechs Begriffe, zwanzig Sekunden",
+      instruction: "Prägen Sie sich die sechs Begriffe ein. Tipp: Verbinden Sie sie zu einer kleinen Geschichte, je absurder, desto besser merkbar.",
+      words: ["Schlüssel", "Amsel", "Teekanne", "Regenschirm", "Kirsche", "Briefmarke"],
+      seconds: 20,
+    },
+    {
+      type: "reveal",
+      title: "Der Wochentag-Dreher",
+      question: "Wenn vorgestern Freitag war: Welcher Wochentag ist übermorgen?",
+      solution: "Dienstag. Vorgestern Freitag bedeutet heute Sonntag, übermorgen ist also Dienstag. Solche Aufgaben lassen sich wunderbar selbst bauen und beim Familienbesuch weitergeben.",
+    },
+  ],
   faq: [
     {
       q: "Wie viele Aufgaben sollte ich pro Tag lösen?",

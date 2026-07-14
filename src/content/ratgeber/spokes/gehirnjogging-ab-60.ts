@@ -72,6 +72,21 @@ export const gehirnjoggingAb60: Article = {
       ],
     },
   ],
+  exercises: [
+    {
+      type: "memory",
+      title: "Die Einkaufsliste im Kopf",
+      instruction: "Gleich erscheinen sechs Begriffe für zwanzig Sekunden. Prägen Sie sie sich ein, gern mit dem Gedankenspaziergang aus Übung 1. Danach werden sie verdeckt und Sie prüfen sich selbst.",
+      words: ["Milch", "Kerzen", "Walnüsse", "Zeitung", "Honig", "Briefumschlag"],
+      seconds: 20,
+    },
+    {
+      type: "reveal",
+      title: "Kopfrechnen wie an der Kasse",
+      question: "Drei Artikel liegen im Korb: 3,80 Euro, 6,25 Euro und 2,45 Euro. Sie zahlen mit einem 20-Euro-Schein. Wie viel Wechselgeld bekommen Sie? Rechnen Sie erst selbst, dann prüfen Sie sich.",
+      solution: "Die Summe beträgt 12,50 Euro, das Wechselgeld also 7,50 Euro. Wenn das leicht war: Rechnen Sie beim nächsten Einkauf real mit und vergleichen Sie an der Kasse.",
+    },
+  ],
   faq: [
     {
       q: "Wie oft sollte ich Gehirnjogging machen?",

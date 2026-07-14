@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { ARTICLES, getArticle, getSpokes } from "@/lib/ratgeber";
 import { PRODUCTS } from "@/lib/products";
 import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
+import { ExerciseWidget } from "@/components/ratgeber/exercise-widget";
 
 const SITE = "https://www.nutra-sana.de";
 const AUTHOR = "Jonas Gütermann";
@@ -155,6 +156,19 @@ export default async function RatgeberArticlePage({
             ))}
           </div>
 
+          {/* Mitmach-Uebungen */}
+          {article.exercises && article.exercises.length > 0 && (
+            <section className="mt-12">
+              <h2 className="serif text-2xl sm:text-3xl leading-tight mb-2">
+                Direkt ausprobieren
+              </h2>
+              <p className="text-sm mb-5" style={{ color: "var(--color-muted)" }}>
+                Kein Stift, kein Heft: Diese Übungen funktionieren direkt hier auf der Seite.
+              </p>
+              <ExerciseWidget exercises={article.exercises} />
+            </section>
+          )}
+
           {/* Studienlage — nur auf Pillar-Artikeln (vermeidet Duplicate Content auf Spokes) */}
           {!article.pillarSlug && product.studies?.length > 0 && (
             <section className="mt-12">
@@ -240,12 +254,40 @@ export default async function RatgeberArticlePage({
           {article.faq.length > 0 && (
             <section className="mt-12">
               <h2 className="serif text-2xl sm:text-3xl leading-tight mb-5">Häufige Fragen</h2>
-              <div className="space-y-4">
+              <div style={{ borderTop: "1px solid rgba(12,43,99,0.14)" }}>
                 {article.faq.map((f, i) => (
-                  <div key={i}>
-                    <h3 className="font-medium mb-1">{f.q}</h3>
-                    <p className="text-sm leading-relaxed text-muted">{f.a}</p>
-                  </div>
+                  <details
+                    key={i}
+                    className="group"
+                    style={{ borderBottom: "1px solid rgba(12,43,99,0.14)" }}
+                  >
+                    <summary
+                      className="serif flex items-center gap-3 cursor-pointer list-none py-5 pr-2 text-lg font-bold"
+                      style={{ color: "var(--color-navy)" }}
+                    >
+                      <span
+                        aria-hidden
+                        className="flex-none w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold"
+                        style={{ border: "1.6px solid var(--color-navy)", fontFamily: "var(--font-sans)" }}
+                      >
+                        ?
+                      </span>
+                      <span className="flex-1">{f.q}</span>
+                      <span
+                        aria-hidden
+                        className="transition-transform group-open:rotate-180"
+                        style={{ color: "var(--color-muted)" }}
+                      >
+                        ⌄
+                      </span>
+                    </summary>
+                    <p
+                      className="text-base leading-relaxed pb-5"
+                      style={{ color: "var(--color-ink-soft)", paddingLeft: "40px" }}
+                    >
+                      {f.a}
+                    </p>
+                  </details>
                 ))}
               </div>
             </section>

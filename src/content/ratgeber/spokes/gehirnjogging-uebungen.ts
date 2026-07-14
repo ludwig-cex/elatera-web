@@ -40,6 +40,23 @@ export const gehirnjogging: Article = {
       ],
     },
   ],
+  exercises: [
+    {
+      type: "memory",
+      title: "Der Merk-Test zum Einstieg",
+      instruction: "Sechs Begriffe, zwanzig Sekunden. Danach verdeckt die Seite sie und Sie prüfen, wie viele Sie noch zusammenbekommen.",
+      words: ["Fahrrad", "Rosmarin", "Wolldecke", "Kompass", "Marmelade", "Notizbuch"],
+      seconds: 20,
+    },
+    {
+      type: "quiz",
+      title: "Kleine Logik zwischendurch",
+      question: "Anna ist älter als Bernd. Bernd ist älter als Clara. Wer ist am jüngsten?",
+      options: ["Anna", "Bernd", "Clara", "Das lässt sich nicht sagen"],
+      correctIndex: 2,
+      explanation: "Clara ist jünger als Bernd, und Bernd ist jünger als Anna, also ist Clara die Jüngste. Solche Schlussketten trainieren das folgerichtige Denken.",
+    },
+  ],
   faq: [
     {
       q: "Wie oft sollte ich Gehirnjogging machen?",
