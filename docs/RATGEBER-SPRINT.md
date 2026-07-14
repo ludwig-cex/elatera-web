@@ -29,10 +29,10 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
 4. **Registrieren** in `src/lib/ratgeber.ts` (Import + SPOKES-Array).
 5. **Prüfen**: `npx tsc --noEmit` sauber.
 6. **Deploy**: Commit + `git push` (Vercel deployt auf legacy.nutra-sana.de).
-7. **Verifizieren**: `https://legacy.nutra-sana.de/ratgeber/<slug>` → 200.
+7. **Verifizieren**: `https://ratgeber.nutra-sana.de/ratgeber/<slug>` → 200.
 8. **IndexNow-Ping** (Key: `e41818661eb08a16903b2db77472ebc9`):
-   POST https://api.indexnow.org/indexnow mit host `legacy.nutra-sana.de`,
-   keyLocation `https://legacy.nutra-sana.de/e41818661eb08a16903b2db77472ebc9.txt`
+   POST https://api.indexnow.org/indexnow mit host `ratgeber.nutra-sana.de`,
+   keyLocation `https://ratgeber.nutra-sana.de/e41818661eb08a16903b2db77472ebc9.txt`
    und der neuen URL.
 9. Diese Datei aktualisieren (Backlog/Erledigt/Log).
 
