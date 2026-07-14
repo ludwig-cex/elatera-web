@@ -5,6 +5,8 @@ import { ARTICLES, getArticle, getSpokes } from "@/lib/ratgeber";
 import { PRODUCTS } from "@/lib/products";
 import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
 import { ExerciseWidget } from "@/components/ratgeber/exercise-widget";
+import { SelfTestWidget } from "@/components/ratgeber/self-test-widget";
+import { SELF_TESTS } from "@/content/ratgeber/self-tests";
 
 const SITE = "https://www.nutra-sana.de";
 const AUTHOR = "Jonas Gütermann";
@@ -48,6 +50,7 @@ export default async function RatgeberArticlePage({
   const article = getArticle(slug);
   if (!article) notFound();
   const product = PRODUCTS[article.productSlug];
+  const selfTest = SELF_TESTS[article.productSlug];
   const pillar = article.pillarSlug ? getArticle(article.pillarSlug) : undefined;
   const spokes = article.pillarSlug ? [] : getSpokes(article.slug);
 
@@ -166,6 +169,18 @@ export default async function RatgeberArticlePage({
                 Kein Stift, kein Heft: Diese Übungen funktionieren direkt hier auf der Seite.
               </p>
               <ExerciseWidget exercises={article.exercises} />
+            </section>
+          )}
+
+          {/* Selbsttest: 5 Durchklick-Fragen, Abschlusskarte = Produkt-Bruecke */}
+          {selfTest && (
+            <section className="mt-12">
+              <SelfTestWidget
+                test={selfTest}
+                productName={product.name}
+                productSlug={product.slug}
+                articleSlug={article.slug}
+              />
             </section>
           )}
 

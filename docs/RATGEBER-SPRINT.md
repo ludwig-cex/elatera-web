@@ -19,6 +19,7 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
    - FAQ: 3–4 Fragen, die echte Suchintentionen beantworten (werden als
      Akkordeon gerendert; Fragen so formulieren, wie Menschen sie googeln/
      einer KI stellen würden, Antworten konkret in 2–4 Sätzen)
+   - **Selbsttest** kommt automatisch pro Produktthema (self-tests.ts), nichts zu tun.
    - **Mitmach-Übungen**: wo das Thema es hergibt (Übungen/Aufgaben/Training)
      1–3 `exercises` setzen (Typen memory/quiz/reveal, siehe `_types.ts` und
      Beispiele in gehirnjogging-ab-60.ts). Interaktiv schlägt beschreibend.
