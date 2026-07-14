@@ -174,7 +174,16 @@ export default async function RatgeberArticlePage({
 
           {/* Selbsttest: 5 Durchklick-Fragen, Abschlusskarte = Produkt-Bruecke */}
           {selfTest && (
-            <section className="mt-12">
+            <section
+              className="mt-12 -mx-4 sm:-mx-6 px-4 sm:px-6 py-8 rounded-3xl"
+              style={{ background: "var(--color-cream)" }}
+            >
+              <div className="eyebrow mb-1" style={{ color: "var(--color-indigo)" }}>
+                Kurz innehalten
+              </div>
+              <h2 className="serif text-2xl sm:text-3xl leading-tight mb-5">
+                Machen Sie den 30-Sekunden-Selbsttest
+              </h2>
               <SelfTestWidget
                 test={selfTest}
                 productName={product.name}

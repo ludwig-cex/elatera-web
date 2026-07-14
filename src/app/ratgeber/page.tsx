@@ -45,7 +45,7 @@ export default function RatgeberHubPage() {
               <div className="overflow-hidden" style={{ aspectRatio: "16 / 9", background: "var(--color-cream)" }}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={a.heroImage ?? `/products/${a.productSlug}/stillleben.png`}
+                  src={a.heroImage ?? `/ratgeber-img/thema-${a.productSlug}.png`}
                   alt={a.title}
                   className="w-full h-full object-cover transition-transform group-hover:scale-[1.03]"
                   loading="lazy"
@@ -80,7 +80,7 @@ export default function RatgeberHubPage() {
                   <div className="overflow-hidden" style={{ aspectRatio: "16 / 9", background: "var(--color-cream)" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={a.heroImage ?? `/products/${a.productSlug}/stillleben.png`}
+                      src={a.heroImage ?? `/ratgeber-img/thema-${a.productSlug}.png`}
                       alt={a.title}
                       className="w-full h-full object-cover transition-transform group-hover:scale-[1.03]"
                       loading="lazy"

@@ -25,13 +25,13 @@ export function SelfTestWidget({
   const done = step >= total;
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid rgba(12,43,99,0.16)" }}>
+    <div className="rounded-2xl overflow-hidden" style={{ border: "2px solid var(--color-indigo)", boxShadow: "0 14px 34px rgba(71,112,219,0.16)" }}>
       <div
         className="px-6 py-4 flex items-center justify-between gap-4"
-        style={{ background: "var(--color-navy)", color: "#fff" }}
+        style={{ background: "var(--color-indigo)", color: "#fff" }}
       >
         <div className="font-semibold text-sm sm:text-base">
-          Ihr 2-Minuten-Selbsttest: {test.title}
+          Ihr 30-Sekunden-Selbsttest: {test.title}
         </div>
         {step >= 0 && !done && (
           <div className="text-xs whitespace-nowrap" style={{ opacity: 0.85 }}>

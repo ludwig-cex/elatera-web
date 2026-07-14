@@ -1,41 +1,28 @@
 import type { MetadataRoute } from "next";
-import { PRODUCT_LIST } from "@/lib/products";
 import { ARTICLES } from "@/lib/ratgeber";
 
-const BASE_URL = "https://www.nutra-sana.de";
+// Seit der Shopify-Migration ist diese App nur noch das Ratgeber-Archiv unter
+// ratgeber.nutra-sana.de. Shop-Seiten leben auf www.nutra-sana.de (eigene
+// Shopify-Sitemap) und sind hier per Proxy umgeleitet bzw. noindex.
+const BASE_URL = "https://ratgeber.nutra-sana.de";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
-  // /pages/faq und /pages/kontakt sind reine Redirects auf /pages/hilfe-kontakt
-  // und gehören deshalb nicht in die Sitemap.
-  const staticPaths = [
-    "",
-    "/ratgeber",
-    "/pages/ueber-uns",
-    "/pages/hilfe-kontakt",
-  ];
-
-  const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
-    url: `${BASE_URL}${path}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: path === "" ? 1 : 0.6,
-  }));
-
-  const productEntries: MetadataRoute.Sitemap = PRODUCT_LIST.map((product) => ({
-    url: `${BASE_URL}/products/${product.slug}`,
-    lastModified: now,
-    changeFrequency: "weekly",
-    priority: 0.8,
-  }));
-
   const ratgeberEntries: MetadataRoute.Sitemap = ARTICLES.map((article) => ({
     url: `${BASE_URL}/ratgeber/${article.slug}`,
-    lastModified: now,
+    lastModified: article.updated ? new Date(article.updated) : now,
     changeFrequency: "monthly",
-    priority: 0.7,
+    priority: article.pillarSlug ? 0.7 : 0.8,
   }));
 
-  return [...staticEntries, ...productEntries, ...ratgeberEntries];
+  return [
+    {
+      url: `${BASE_URL}/ratgeber`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 1,
+    },
+    ...ratgeberEntries,
+  ];
 }

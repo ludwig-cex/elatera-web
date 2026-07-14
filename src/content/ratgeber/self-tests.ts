@@ -29,7 +29,7 @@ export const SELF_TESTS: Partial<Record<ProductSlug, SelfTest>> = {
       { q: "Wie zufrieden sind Sie mit Ihrer Konzentration am Nachmittag?", options: ["Sehr zufrieden", "Geht so", "Da ist Luft nach oben"] },
     ],
     result: {
-      headline: "Schön, dass Sie sich die zwei Minuten genommen haben!",
+      headline: "Schön, dass Sie sich die 30 Sekunden genommen haben!",
       text: "Egal, wo Sie gerade stehen: Mit den Übungen aus diesem Ratgeber trainieren Sie Ihren Kopf jeden Tag ein Stück weiter. Und Mentisana Intense wurde von approbierten Pharmazeuten entwickelt, um Sie dabei zu begleiten, mit Zink, das zu einer normalen kognitiven Funktion beiträgt.",
     },
   },
@@ -59,7 +59,7 @@ export const SELF_TESTS: Partial<Record<ProductSlug, SelfTest>> = {
       { q: "Wie sehr können Sie sich auf Ihre Knie und Hüften verlassen, wenn spontan etwas ansteht?", options: ["Voll und ganz", "Meistens", "Eher weniger"] },
     ],
     result: {
-      headline: "Gut gemacht, zwei Minuten für Ihre Beweglichkeit!",
+      headline: "Gut gemacht, 30 Sekunden für Ihre Beweglichkeit!",
       text: "Regelmäßige Bewegung und die Übungen aus diesem Ratgeber sind der wichtigste Hebel, und Mobilisana Intense wurde von approbierten Pharmazeuten entwickelt, um Sie dabei zu begleiten: mit Vitamin C, das zur normalen Kollagenbildung für eine normale Knorpelfunktion beiträgt.",
     },
   },
@@ -89,7 +89,7 @@ export const SELF_TESTS: Partial<Record<ProductSlug, SelfTest>> = {
       { q: "Wie viel trinken Sie an einem normalen Tag?", options: ["1,5 Liter oder mehr", "Etwa 1 Liter", "Eher weniger"] },
     ],
     result: {
-      headline: "Zwei Minuten gut investiert!",
+      headline: "30 Sekunden gut investiert!",
       text: "Gleichgewicht lässt sich in jedem Alter trainieren, die Übungen aus diesem Ratgeber zeigen wie. Vertisana Intense wurde von approbierten Pharmazeuten entwickelt, um Sie dabei zu begleiten, mit Vitamin B12, das zur normalen Funktion des Nervensystems beiträgt.",
     },
   },
@@ -149,7 +149,7 @@ export const SELF_TESTS: Partial<Record<ProductSlug, SelfTest>> = {
       { q: "Wie erholsam sind Ihre Nächte im Schnitt?", options: ["Erholsam", "Wechselhaft", "Oft zu kurz"] },
     ],
     result: {
-      headline: "Stark, dass Sie Ihrem Herzen zwei Minuten geschenkt haben!",
+      headline: "Stark, dass Sie Ihrem Herzen 30 Sekunden geschenkt haben!",
       text: "Bewegung, gute Fette und Entspannung aus diesem Ratgeber sind das Fundament. Cordisana Intense wurde von approbierten Pharmazeuten entwickelt, um Sie dabei zu begleiten, mit Vitamin B1, das zu einer normalen Herzfunktion beiträgt. Regelmäßige ärztliche Kontrollen ersetzt das selbstverständlich nicht.",
     },
   },

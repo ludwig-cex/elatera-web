@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "Nutrasana: Nahrungsergänzung in Apotheken-Qualität für Gelenke, Gedächtnis, Schlaf, Gleichgewicht & mehr – von Pharmazeuten entwickelt, in Deutschland hergestellt.",
   // Kein globales alternates.canonical hier: es würde von allen Unterseiten
   // geerbt und jede Seite (inkl. Produktseiten) auf "/" kanonisieren.
-  metadataBase: new URL("https://www.nutra-sana.de"),
+  metadataBase: new URL("https://ratgeber.nutra-sana.de"),
   applicationName: "Nutrasana",
   keywords: [
     "Nutrasana",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "de_DE",
     siteName: "Nutrasana",
-    url: "https://www.nutra-sana.de",
+    url: "https://ratgeber.nutra-sana.de",
     title: "Nutrasana — Nahrungsergänzung in Apotheken-Qualität",
     description:
       "Nahrungsergänzung in Apotheken-Qualität für Gelenke, Gedächtnis, Schlaf, Gleichgewicht & mehr – von Pharmazeuten entwickelt, in Deutschland hergestellt.",

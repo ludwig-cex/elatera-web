@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://www.nutra-sana.de/sitemap.xml",
-    host: "https://www.nutra-sana.de",
+    sitemap: "https://ratgeber.nutra-sana.de/sitemap.xml",
+    host: "https://ratgeber.nutra-sana.de",
   };
 }

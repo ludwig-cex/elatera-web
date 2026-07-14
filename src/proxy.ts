@@ -14,7 +14,49 @@ import type { NextRequest } from "next/server";
 // indexierbar — sie sind unser Content-Futter für KI-Suchen (Copilot-Kauf 14.07.).
 export function proxy(request: NextRequest) {
   const host = request.headers.get("host") ?? "";
+
+  // ratgeber.nutra-sana.de = die kanonische Heimat des Ratgebers (seit 14.07.).
+  // Ratgeber-Pfade + Infrastruktur-Dateien laufen normal (indexierbar),
+  // alles andere gehoert dem Shopify-Shop.
+  if (host.startsWith("ratgeber.")) {
+    const { pathname, search } = request.nextUrl;
+    const local =
+      pathname.startsWith("/ratgeber") ||
+      pathname.startsWith("/ratgeber-img") ||
+      pathname.startsWith("/products/") || // Artikel-Bilder unter /products/<slug>/*.png
+      pathname.startsWith("/authors") ||
+      pathname.startsWith("/_next") ||
+      pathname.startsWith("/api") ||
+      pathname === "/llms.txt" ||
+      pathname === "/BingSiteAuth.xml" ||
+      pathname === "/sitemap.xml" ||
+      pathname === "/robots.txt" ||
+      pathname === "/favicon.ico" ||
+      pathname === "/icon.svg" ||
+      /^\/[a-f0-9]{32}\.txt$/.test(pathname); // IndexNow-Key
+    if (pathname === "/") {
+      return NextResponse.redirect(`https://ratgeber.nutra-sana.de/ratgeber`, 301);
+    }
+    if (/^\/products\/[^/.]+$/.test(pathname)) {
+      return NextResponse.redirect(`https://www.nutra-sana.de${pathname}${search}`, 301);
+    }
+    if (!local) {
+      return NextResponse.redirect(`https://www.nutra-sana.de${pathname}${search}`, 301);
+    }
+    return NextResponse.next();
+  }
+
   if (host.startsWith("legacy.")) {
+    // Ratgeber-Pfade auf die neue kanonische Subdomain umziehen
+    if (
+      request.nextUrl.pathname.startsWith("/ratgeber") ||
+      request.nextUrl.pathname === "/llms.txt"
+    ) {
+      return NextResponse.redirect(
+        `https://ratgeber.nutra-sana.de${request.nextUrl.pathname}${request.nextUrl.search}`,
+        301,
+      );
+    }
     const { pathname, search } = request.nextUrl;
 
     // Shop-Pfade des ALTEN Shops auf den neuen Shopify-Shop umleiten:
