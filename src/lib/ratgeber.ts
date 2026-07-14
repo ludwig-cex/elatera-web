@@ -17,6 +17,7 @@ import { ernaehrungGelenke } from "@/content/ratgeber/spokes/ernaehrung-fuer-die
 import { knorpelVitaminC } from "@/content/ratgeber/spokes/knorpel-kollagen-vitamin-c";
 import { vitaminDGelenke } from "@/content/ratgeber/spokes/vitamin-d-gelenke-winter";
 // Spokes — Schlaf (Somnisana)
+import { schlafGuide } from "@/content/ratgeber/spokes/schlaf-guide";
 import { magnesiumEinschlafen } from "@/content/ratgeber/spokes/magnesium-beim-einschlafen";
 import { melatoninEinschlafzeit } from "@/content/ratgeber/spokes/melatonin-einschlafzeit";
 import { schlafhygiene60 } from "@/content/ratgeber/spokes/schlafhygiene-ab-60";
@@ -80,6 +81,7 @@ const SPOKES: Article[] = [
   knorpelVitaminC,
   vitaminDGelenke,
   // Schlaf
+  schlafGuide,
   magnesiumEinschlafen,
   melatoninEinschlafzeit,
   schlafhygiene60,

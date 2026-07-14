@@ -16,6 +16,7 @@ export const frueherAufwachen: Article = {
     "Magnesium und Vitamin B6 tragen zur normalen Funktion des Nervensystems bei, Magnesium zudem zu einer normalen psychischen Funktion.",
     "Ärztlich abklären lassen sollten Sie frühes Erwachen, wenn anhaltende Erschöpfung am Tag, lautes Schnarchen mit Atemaussetzern oder gedrückte Stimmung hinzukommen.",
   ],
+  relatedSlugs: ["schlaf-guide", "schlafhygiene-ab-60", "melatonin-einschlafzeit"],
   intro: [
     "Viele Menschen bemerken mit den Jahren, dass sie morgens früher wach werden als gewohnt. Schon vor Sonnenaufgang ist man hellwach, obwohl der Wecker noch lange nicht klingelt. Wer früher problemlos bis acht geschlafen hat, sitzt nun um halb sechs am Küchentisch. Das ist verbreitet und in den meisten Fällen Teil eines natürlichen Wandels.",
     "Dieser Ratgeber erklärt, warum sich der Schlaf mit dem Alter verschiebt, was im Alltag dabei hilft, einen ruhigen Rhythmus zu finden, und wann frühes Aufwachen ärztlich abgeklärt werden sollte. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

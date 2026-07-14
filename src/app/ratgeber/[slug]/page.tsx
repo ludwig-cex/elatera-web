@@ -81,6 +81,9 @@ export default async function RatgeberArticlePage({
     ...(article.keyFacts && article.keyFacts.length > 0
       ? { abstract: article.keyFacts.join(" ") }
       : {}),
+    ...(article.sources && article.sources.length > 0
+      ? { citation: article.sources.map((s) => s.url) }
+      : {}),
     publisher: { "@id": `${SITE}/#organization` },
     mainEntityOfPage: `${SITE}/ratgeber/${article.slug}`,
   };
@@ -194,6 +197,17 @@ export default async function RatgeberArticlePage({
             {article.sections.map((s, i) => (
               <section key={i}>
                 <h2 className="serif text-2xl sm:text-3xl leading-tight mb-4">{s.heading}</h2>
+                {s.image && (
+                  <div className="mb-5 rounded-2xl overflow-hidden" style={{ aspectRatio: "16 / 9" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={s.image}
+                      alt={s.imageAlt ?? s.heading}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                )}
                 <div className="space-y-4 leading-relaxed">
                   {s.paragraphs.map((p, j) => (
                     <p key={j}>{p}</p>
@@ -395,6 +409,35 @@ export default async function RatgeberArticlePage({
                   </details>
                 ))}
               </div>
+            </section>
+          )}
+
+          {/* Quellenverzeichnis: sichtbare, verifizierte Quellen (E-E-A-T/GEO) */}
+          {article.sources && article.sources.length > 0 && (
+            <section className="mt-12">
+              <h2 className="serif text-2xl sm:text-3xl leading-tight mb-4">Quellen</h2>
+              <ol className="space-y-2 text-sm" style={{ color: "var(--color-ink-soft)" }}>
+                {article.sources.map((src, i) => (
+                  <li key={i} className="flex gap-3 leading-relaxed">
+                    <span className="flex-none font-medium" style={{ color: "var(--color-muted)" }}>
+                      {i + 1}.
+                    </span>
+                    <a
+                      href={src.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline underline-offset-4 break-words"
+                      style={{ color: "var(--color-forest)" }}
+                    >
+                      {src.label}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <p className="text-xs text-muted mt-4 leading-relaxed">
+                Zuletzt fachlich geprüft am {formatDate(article.updated)} von {AUTHOR},{" "}
+                {AUTHOR_TITLE}.
+              </p>
             </section>
           )}
 

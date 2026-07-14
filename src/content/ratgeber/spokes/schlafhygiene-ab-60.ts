@@ -16,6 +16,7 @@ export const schlafhygiene60: Article = {
     "Koffein ab dem frühen Nachmittag, Alkohol am Abend und schwere späte Mahlzeiten erschweren das Ein- und Durchschlafen häufig.",
     "Melatonin trägt dazu bei, die Einschlafzeit zu verkürzen, wenn kurz vor dem Schlafengehen 1 Milligramm eingenommen wird; anhaltende Schlafprobleme gehören ärztlich abgeklärt.",
   ],
+  relatedSlugs: ["schlaf-guide", "melatonin-einschlafzeit", "frueher-aufwachen-im-alter"],
   intro: [
     "Mit den Jahren verändert sich der Schlaf. Viele Menschen über 60 schlafen leichter, wachen nachts häufiger auf oder liegen abends länger wach, als sie es früher gewohnt waren. Das ist verbreitet und meist Teil eines natürlichen Wandels, der mit dem Alter einhergeht.",
     "Vieles davon lässt sich mit den eigenen Gewohnheiten beeinflussen. Unter dem Begriff Schlafhygiene fasst man die Bedingungen und Abläufe zusammen, die einen ruhigen Schlaf begünstigen. Dieser Ratgeber zeigt Ihnen alltagsnahe Schritte für die Schlafumgebung, feste Zeiten und eine entspannte Abendroutine. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage.",

@@ -1,7 +1,18 @@
 import type { ProductSlug } from "@/lib/products";
 
-export type ArticleSection = { heading: string; paragraphs: string[] };
+export type ArticleSection = {
+  heading: string;
+  paragraphs: string[];
+  // Optionales Sektionsbild (unter /public), wird zwischen Ueberschrift und
+  // Text gerendert. Fuer Guide-/Hub-Artikel: Szenen statt Produktfotos.
+  image?: string;
+  imageAlt?: string;
+};
 export type ArticleFaq = { q: string; a: string };
+// Nummeriertes Quellenverzeichnis am Artikelende. Nur verifizierte, stabile
+// URLs (EUR-Lex, EFSA, DGE, PubMed) — nie Links raten. Sichtbare Quellen sind
+// laut GEO-Evidenz der staerkste Zitierhebel.
+export type ArticleSource = { label: string; url: string };
 
 // Interaktive Mitmach-Uebungen (gerendert von components/ratgeber/exercise-widget.tsx)
 export type Exercise =
@@ -33,4 +44,5 @@ export type Article = {
   intro: string[]; // lead paragraphs
   sections: ArticleSection[];
   faq: ArticleFaq[];
+  sources?: ArticleSource[]; // Quellenverzeichnis (nummeriert gerendert)
 };

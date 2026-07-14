@@ -114,4 +114,18 @@ export const gedaechtnisGuide: Article = {
       a: "Wenn Vergesslichkeit den Alltag spürbar beeinträchtigt, schnell zunimmt, vertraute Wege oder Namen naher Menschen betrifft oder Angehörige sich Sorgen machen, sollten Sie das ärztlich abklären lassen. Solche Fragen beantwortet weder ein Übungsprogramm noch ein Nahrungsergänzungsmittel.",
     },
   ],
+  sources: [
+    {
+      label: "Verordnung (EU) Nr. 432/2012: Liste zulässiger gesundheitsbezogener Angaben über Lebensmittel (EUR-Lex)",
+      url: "https://eur-lex.europa.eu/legal-content/DE/TXT/?uri=CELEX%3A32012R0432",
+    },
+    {
+      label: "EU-Register der gesundheitsbezogenen Angaben (Europäische Kommission)",
+      url: "https://ec.europa.eu/food/food-feed-portal/screen/health-claims/eu-register",
+    },
+    {
+      label: "Deutsche Gesellschaft für Ernährung (DGE): Referenzwerte für die Nährstoffzufuhr",
+      url: "https://www.dge.de/wissenschaft/referenzwerte/",
+    },
+  ],
 };

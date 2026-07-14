@@ -16,6 +16,7 @@ export const melatoninEinschlafzeit: Article = {
     "Melatonin gehört an das Ende des Abends: Die Einnahme jeden Abend unmittelbar vor dem Zubettgehen passt am besten zur geprüften Anwendung.",
     "Bei anhaltenden Schlafproblemen sowie in Schwangerschaft, Stillzeit oder bei Medikamenteneinnahme halten Sie vor der Anwendung bitte ärztliche Rücksprache.",
   ],
+  relatedSlugs: ["schlaf-guide", "schlafhygiene-ab-60", "magnesium-beim-einschlafen"],
   intro: [
     "Wenn das Einschlafen abends länger dauert als früher, fällt vielen Menschen ab der Lebensmitte ein Begriff ins Auge: Melatonin. Der körpereigene Botenstoff wird häufig im Zusammenhang mit der Nachtruhe genannt, oft jedoch mit größeren Versprechen verknüpft, als sachlich gerechtfertigt sind.",
     "Dieser Ratgeber erklärt nüchtern, was Melatonin im Körper ist, welche Wirkung die Europäische Behörde für Lebensmittelsicherheit geprüft und anerkannt hat und worauf Sie bei der Anwendung achten. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine sachliche Grundlage, um eine Ergänzung richtig einzuordnen.",

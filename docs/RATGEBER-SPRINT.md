@@ -42,6 +42,12 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
      Referenzwerte) und Institutionen nennen (EFSA, DGE). Statistiken und
      Quellenangaben sind laut Princeton-GEO-Paper der stärkste einzelne
      Zitierhebel (+37–115 % AI-Sichtbarkeit).
+   - **Quellen (`sources`, PFLICHT bei Guides, Soll bei Spokes)**: 3–5 Einträge,
+     NUR selbst verifizierte URLs (curl 200 bzw. doi.org-Standard). Bewährt:
+     EUR-Lex 432/2012, EU-Claims-Register, DGE-Referenzwerte, Fachgesellschaft
+     des Themas (DGSM etc.), EFSA-Journal via doi.org. NIEMALS Links raten.
+   - **Sektionsbilder (Guides)**: `image`/`imageAlt` pro Section möglich;
+     bei Hub-Artikeln 2–3 Szenenbilder im Stil der Hero-Bilder ergänzen.
 3. **Hero-Bild generieren** (Higgsfield GPT Image 2, 16:9, warme fotorealistische
    Senioren-Szene passend zum Thema, kein Text im Bild) → nach
    `public/ratgeber-img/<slug>.png`, im Artikel als `heroImage` setzen.
@@ -128,12 +134,13 @@ statt Themen zu raten.
 - [ ] zahlenraetsel-senioren — „Zahlenrätsel für Senioren: 15 Aufgaben von leicht bis knifflig"
 - [ ] fingeruebungen-gehirn — „Fingerübungen fürs Gehirn: Feinmotorik als Gedächtnistraining"
 - [ ] ernaehrung-konzentration — „Essen für den klaren Kopf: Der Wochenplan" (Abgrenzung zu ernaehrung-fuers-gehirn beachten!)
-- [ ] META schlaf-guide — „Besser schlafen ab 60: Der komplette Überblick" (Meta-Artikel für das Schlaf-Cluster, sobald 3+ Schlaf-Artikel existieren)
 - [ ] RETROFIT Answer-First — Bestandsartikel schrittweise auf Answer-First-Absätze unter jeder H2 umschreiben (2 Artikel pro Sprint-Lauf mitziehen)
-- [ ] RETROFIT Quellenverzeichnis — nummerierte Quellen-Komponente (PubMed/EFSA-Links) für Artikel, stärkster GEO-Hebel laut Evidenz; braucht saubere Quellen-Recherche pro Artikel
+- [ ] RETROFIT Quellenverzeichnis — `sources` (seit 14.07. im Article-Typ, Komponente live) auf Bestandsartikel ausrollen; NUR verifizierte URLs (EUR-Lex 432/2012, EU-Claims-Register, DGE, DGSM, doi.org für EFSA-Journal); 2 Artikel pro Sprint-Lauf mitziehen
+- [ ] META gelenke-guide — Hub für das Gelenk-Cluster nach dem Muster von gedaechtnis-guide/schlaf-guide (Kürze-Box, Answer-First, Sektionsbilder, Quellen, Wochenplan)
 
 ## Erledigt
 
+- [x] 14.07. META schlaf-guide — „Besser schlafen ab 60: Der komplette Überblick" (Hub mit Sektionsbildern, Quellenverzeichnis, Wochenplan; Vorlage für weitere Guides)
 - [x] 14.07. META gedaechtnis-guide — „Der große Gedächtnis-Guide ab 60" (Hub-Artikel, verlinkt alle 6 Gedächtnis-Artikel via relatedSlugs)
 - [x] 14.07. gehirnjogging-ab-60 — „Gehirnjogging ab 60: 6 Übungen für jeden Tag" (+ Hero-Bild)
 - [x] 14.07. gehirnjogging-aufgaben — „12 Aufgaben mit Lösungen" (+ Hero-Bild)

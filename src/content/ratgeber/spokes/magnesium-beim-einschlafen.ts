@@ -16,6 +16,7 @@ export const magnesiumEinschlafen: Article = {
     "Gute Magnesiumquellen sind Vollkornprodukte, Nüsse, Hülsenfrüchte und grünes Gemüse; eine ausgewogene Ernährung deckt den Bedarf in aller Regel.",
     "Ruhigere Abende tragen vor allem verlässliche Gewohnheiten wie feste Schlafzeiten, gedämpftes Licht und der Verzicht auf Koffein am Nachmittag; anhaltende Schlafprobleme gehören ärztlich abgeklärt.",
   ],
+  relatedSlugs: ["schlaf-guide", "melatonin-einschlafzeit", "schlafhygiene-ab-60"],
   intro: [
     "Magnesium gilt vielen als das Mineral für ruhige Abende, und im Gespräch fällt schnell der Satz, es helfe beim Einschlafen. Diese Verkürzung ist verbreitet, aber sie führt in die Irre. Magnesium ist ein wichtiger Baustein im Stoffwechsel, doch was es tatsächlich leistet und was nicht, lohnt eine sachliche Einordnung.",
     "Dieser Ratgeber erklärt, welche Aufgaben Magnesium im Körper übernimmt, welche Aussagen dazu fachlich gesichert sind und welche Alltagsgewohnheiten einen ruhigeren Abend wirklich tragen. Er ersetzt kein ärztliches Gespräch, gibt Ihnen aber eine fundierte Grundlage, um Erwartungen und Tatsachen auseinanderzuhalten.",
