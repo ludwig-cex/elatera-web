@@ -9,6 +9,7 @@ export const frueherAufwachen: Article = {
   metaDescription:
     "Warum viele Menschen ab 55 morgens früher wach werden: wie sich der Schlafrhythmus natürlich verschiebt, was im Alltag hilft und wann ein Arztbesuch sinnvoll ist.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/frueher-aufwachen-im-alter.png",
   keyFacts: [
     "Mit den Jahren verschiebt sich die innere Uhr bei vielen Menschen nach vorne: Man wird abends früher müde und morgens früher wach, Fachleute sprechen von einer Vorverlagerung des Schlaffensters.",
     "Frühes Aufwachen im Alter ist meist keine Störung, sondern eine verbreitete Begleiterscheinung des Älterwerdens, denn die tiefen Schlafphasen nehmen ab und der Schlaf wird leichter.",

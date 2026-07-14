@@ -9,6 +9,7 @@ export const ingwerGinkgo: Article = {
   metaDescription:
     "Ingwer und Ginkgo im Porträt: Herkunft, Tradition und was die Forschung zu beiden Pflanzen neutral untersucht hat. Pharmazeutisch eingeordnet für Menschen ab 55.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/ingwer-ginkgo-pflanzenkunde.png",
   keyFacts: [
     "Ingwer stammt aus dem tropischen Asien; genutzt wird traditionell der Wurzelstock, dessen würzig-scharfer Geschmack von den enthaltenen Gingerolen kommt.",
     "Ginkgo biloba gilt als eine der ältesten Baumarten der Welt; verwendet werden traditionell die fächerförmigen Blätter, aus denen standardisierte Extrakte gewonnen werden.",

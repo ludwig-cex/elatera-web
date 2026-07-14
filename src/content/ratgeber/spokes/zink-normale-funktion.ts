@@ -9,6 +9,7 @@ export const zinkNormaleFunktion: Article = {
   metaDescription:
     "Was Zink ist, welche von der EFSA geprüfte Aufgabe es im Körper hat und welche Lebensmittel gute Zinkquellen sind. Pharmazeutisch erklärt, für Menschen ab 55.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/zink-normale-funktion.png",
   keyFacts: [
     "Zink ist ein essenzielles Spurenelement, das der Körper nicht selbst bilden und kaum speichern kann, weshalb eine regelmäßige Zufuhr über die Ernährung wichtig ist.",
     "Der von der Europäischen Behörde für Lebensmittelsicherheit geprüfte Claim lautet: Vitamin C und Zink tragen dazu bei, die Zellen vor oxidativem Stress zu schützen.",

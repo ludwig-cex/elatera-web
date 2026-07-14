@@ -9,6 +9,7 @@ export const bVitamineNervensystem: Article = {
   metaDescription:
     "B6 und B12 ab 55: Was die Vitamine sind, der geprüfte EFSA-Claim zur normalen Funktion des Nervensystems, gute Quellen und wann eine Ergänzung sinnvoll ist.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/b-vitamine-nervensystem.png",
   keyFacts: [
     "Vitamin B6 und Vitamin B12 tragen zu einer normalen Funktion des Nervensystems bei; diese Aussagen sind von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gelten für die Nährstoffe selbst.",
     "Beide Vitamine sind wasserlöslich, werden vom Körper kaum gespeichert und müssen deshalb regelmäßig über die Nahrung aufgenommen werden.",

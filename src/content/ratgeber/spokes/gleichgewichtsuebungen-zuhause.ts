@@ -9,6 +9,7 @@ export const gleichgewichtsuebungenZuhause: Article = {
   metaDescription:
     "Einfache Gleichgewichtsübungen für zu Hause ab 55: sichere Schritte für mehr Standfestigkeit, Tipps zur Sturzvermeidung und die Rolle von B-Vitaminen und Magnesium.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/gleichgewichtsuebungen-zuhause.png",
   keyFacts: [
     "Das Gleichgewicht lässt sich zu Hause ohne Geräte trainieren: Bewährt haben sich die Gewichtsverlagerung an der Küchenzeile, der Einbeinstand mit Sicherung und der Gang auf einer gedachten Linie.",
     "Kurze tägliche Einheiten bringen mehr als seltenes langes Üben, denn das Nervensystem lernt vor allem durch regelmäßige Wiederholung.",

@@ -9,6 +9,7 @@ export const melatoninEinschlafzeit: Article = {
   metaDescription:
     "Melatonin und die Einschlafzeit verständlich erklärt: Was der körpereigene Botenstoff ist, der geprüfte EFSA-Claim zu 1 mg und worauf Sie bei der Anwendung achten.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/melatonin-einschlafzeit.png",
   keyFacts: [
     "Melatonin ist ein körpereigener Botenstoff aus der Zirbeldrüse, dessen Spiegel bei Dunkelheit ansteigt und mit dem Morgenlicht wieder sinkt.",
     "Melatonin trägt dazu bei, die Einschlafzeit zu verkürzen; die positive Wirkung stellt sich ein, wenn 1 mg Melatonin kurz vor dem Schlafengehen eingenommen wird.",

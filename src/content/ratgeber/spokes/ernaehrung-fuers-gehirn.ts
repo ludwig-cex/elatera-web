@@ -9,6 +9,7 @@ export const ernaehrungGehirn: Article = {
   metaDescription:
     "Hirnfreundlich essen ab 55: Gemüse, Fisch und Omega-3, Vollkorn und wenig Zucker. Dazu Zink, Vitamin B6, B12 und Magnesium. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/ernaehrung-fuers-gehirn.png",
   keyFacts: [
     "Eine hirnfreundliche Ernährung ab 55 folgt dem mediterranen Muster: viel Gemüse in vielen Farben, regelmäßig Fisch, hochwertige Öle, Vollkorn und wenig Zucker.",
     "Zwei Portionen fettreicher Seefisch wie Lachs, Hering oder Makrele pro Woche liefern langkettige Omega-3-Fettsäuren; pflanzliche Alternativen sind Leinöl, Walnüsse und Rapsöl.",

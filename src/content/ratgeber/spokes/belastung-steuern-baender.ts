@@ -9,6 +9,7 @@ export const belastungSteuernBaender: Article = {
   metaDescription:
     "Empfindliche Bänder ab 55? Wie Sie Belastung richtig dosieren, Zeichen von Überlastung erkennen und Pausen einplanen, plus die Rolle von Mangan, Vitamin C und D. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/belastung-steuern-baender.png",
   keyFacts: [
     "Sehnen und Bänder passen sich langsamer an Belastung an als Muskeln und brauchen deshalb eine schrittweise Steigerung statt sprunghafter Anforderungen.",
     "Entscheidend ist nicht das Vermeiden von Belastung, sondern ihre richtige Dosierung, denn ruhendes Bindegewebe wird eher weniger belastbar.",

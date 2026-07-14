@@ -51,6 +51,13 @@ erster organischer Kauf kam am 14.07. über Microsoft Copilot.
 3. **Hero-Bild generieren** (Higgsfield GPT Image 2, 16:9, warme fotorealistische
    Senioren-Szene passend zum Thema, kein Text im Bild) → nach
    `public/ratgeber-img/<slug>.png`, im Artikel als `heroImage` setzen.
+   **VORSCHAUBILDER MÜSSEN IMMER UNTERSCHIEDLICH SEIN**: Jeder Artikel hat sein
+   eigenes Motiv, nie zwei Artikel mit derselben oder ähnlicher Szene (auch
+   nicht ähnliche Personen/Küchen/Posen — Motivvielfalt: Personen-Szene,
+   Food-Flatlay, Detail, Situation, Ort wechseln). Die thema-<product>.png-
+   Fallbacks sind nur Übergangslösung; sobald 2+ Artikel eines Clusters auf
+   demselben Fallback liegen, sofort individuelle Bilder nachrüsten. Nach
+   jedem Lauf die Cluster-/„Lesen Sie auch"-Ansichten auf Duplikate prüfen.
 4. **Registrieren** in `src/lib/ratgeber.ts` (Import + SPOKES-Array).
 5. **Prüfen**: `npx tsc --noEmit` sauber.
 6. **Deploy**: Commit + `git push` (Vercel deployt auf legacy.nutra-sana.de).

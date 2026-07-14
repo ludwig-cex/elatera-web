@@ -9,6 +9,7 @@ export const schlafhygiene60: Article = {
   metaDescription:
     "Schlafhygiene ab 60: feste Zeiten, ruhige Schlafumgebung, Licht und Bildschirme, Koffein und Alkohol. Praktische Tipps für eine entspannte Abendroutine.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/schlafhygiene-ab-60.png",
   keyFacts: [
     "Eine kühle Raumtemperatur von etwa 16 bis 18 Grad, Dunkelheit und Ruhe im Schlafzimmer unterstützen den Körper beim Wechsel in den Ruhemodus.",
     "Feste Zubettgeh- und Aufstehzeiten, auch am Wochenende, geben dem inneren Rhythmus ab 60 einen verlässlichen Halt.",

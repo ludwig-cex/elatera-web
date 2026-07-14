@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { ARTICLES, getArticle, getSpokes, ARTICLE_BY_SLUG } from "@/lib/ratgeber";
 import { PRODUCTS } from "@/lib/products";
+import { SUPPORT_CLAIMS } from "@/lib/product-claims";
 import { EfsaDisclaimer } from "@/components/sections/efsa-disclaimer";
 import { ExerciseWidget } from "@/components/ratgeber/exercise-widget";
 import { SelfTestWidget } from "@/components/ratgeber/self-test-widget";
@@ -311,15 +312,24 @@ export default async function RatgeberArticlePage({
                 <div className="serif text-2xl leading-tight" style={{ color: "var(--color-navy)" }}>
                   {product.name}
                 </div>
+                {/* Werbliche Dachaussage — zulaessig, weil der spezifische
+                    EFSA-Claim als *-Fussnote direkt beigestellt ist (Art. 10
+                    Abs. 3 HCVO). Map: src/lib/product-claims.ts */}
+                <div className="font-semibold text-base mt-1 leading-snug" style={{ color: "var(--color-ink)" }}>
+                  {SUPPORT_CLAIMS[product.slug].headline}*
+                </div>
                 <div className="flex items-center gap-2 mt-1.5 text-sm">
                   <span aria-hidden style={{ color: "#f2b01e", letterSpacing: "1px" }}>★★★★★</span>
                   <span className="font-semibold" style={{ color: "var(--color-ink)" }}>4,7/5</span>
                   <span style={{ color: "var(--color-muted)" }}>· über 3.500 zufriedene Kundinnen und Kunden</span>
                 </div>
                 <p className="text-sm mt-2 leading-relaxed" style={{ color: "var(--color-ink-soft)" }}>
-                  {product.name} wurde von approbierten Pharmazeuten entwickelt, um Menschen genau bei
-                  diesem Thema im Alltag zu begleiten: 1 Kapsel täglich, PZN-registriert, in Deutschland
-                  hergestellt und mit 90 Tagen Geld-zurück-Garantie.
+                  Von <strong>approbierten Pharmazeuten</strong> entwickelt: <strong>1 Kapsel täglich</strong>,
+                  PZN-registriert und <strong>in Deutschland hergestellt</strong>. Sie bestellen ohne Risiko,
+                  mit <strong>90 Tagen Geld-zurück-Garantie</strong>.
+                </p>
+                <p className="text-xs mt-2.5 leading-relaxed" style={{ color: "var(--color-muted)" }}>
+                  *{SUPPORT_CLAIMS[product.slug].anchor}
                 </p>
               </div>
               <a

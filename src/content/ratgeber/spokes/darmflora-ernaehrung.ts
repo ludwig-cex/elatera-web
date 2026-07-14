@@ -9,6 +9,7 @@ export const darmfloraErnaehrung: Article = {
   metaDescription:
     "Wie die Darmflora arbeitet und was die Ernährung dazu beiträgt: ballaststoffreiche und fermentierte Lebensmittel, Vielfalt auf dem Teller, dazu die Rolle von Vitamin A und Zink. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/darmflora-ernaehrung.png",
   keyFacts: [
     "Die Darmflora ist die Gemeinschaft aus Billionen Mikroorganismen vor allem im Dickdarm; ihre Zusammensetzung verschiebt sich mit Ernährung, Lebensalter, Bewegung und weiteren Einflüssen.",
     "Ballaststoffe aus Vollkorn, Hülsenfrüchten, Gemüse, Obst, Nüssen und Samen kommen unverdaut im Dickdarm an und sind dort für die Bakterien besonders bedeutsam.",

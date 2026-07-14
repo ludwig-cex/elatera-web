@@ -9,6 +9,7 @@ export const magnesiumEinschlafen: Article = {
   metaDescription:
     "Magnesium und Schlaf: Was der Mineralstoff im Körper tut, der korrekte EFSA-Rahmen zu Nervensystem und Energie und ruhige Abendrituale ab 55. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/magnesium-beim-einschlafen.png",
   keyFacts: [
     "Magnesium ist an mehreren hundert enzymatischen Vorgängen im Körper beteiligt, darunter die Reizweiterleitung der Nerven, die Arbeit der Muskulatur und die Energiebereitstellung in den Zellen.",
     "Magnesium trägt zur normalen Funktion des Nervensystems, zu einem normalen Energiestoffwechsel, zu einer normalen psychischen Funktion und zur Erhaltung einer normalen Muskelfunktion bei.",

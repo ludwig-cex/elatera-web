@@ -9,6 +9,7 @@ export const aufwaermenVorBewegung: Article = {
   metaDescription:
     "Warum Aufwärmen ab 55 für Sehnen und Bänder wichtig ist: was dabei im Körper passiert, eine einfache Routine und die Rolle von Mangan, Vitamin C und Vitamin D.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/aufwaermen-vor-bewegung.png",
   keyFacts: [
     "Schon wenige Minuten ruhiger Bewegung erhöhen die Durchblutung in Muskeln, Sehnen und Bändern und machen das Gewebe nachgiebiger.",
     "Für die meisten Alltagsaktivitäten genügen fünf bis zehn Minuten Aufwärmen mit lockerem Gehen und ruhigem Durchbewegen der großen Gelenke.",

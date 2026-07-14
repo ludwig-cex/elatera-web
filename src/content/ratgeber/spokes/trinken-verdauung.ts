@@ -9,6 +9,7 @@ export const trinkenVerdauung: Article = {
   metaDescription:
     "Warum ausreichend Trinken ab 55 die Verdauung unterstützt, wie viel und was sinnvoll ist sowie praktische Trink-Tipps für den Alltag. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/trinken-verdauung.png",
   keyFacts: [
     "Als Orientierung gelten für gesunde Erwachsene rund 1,5 Liter Flüssigkeit am Tag aus Getränken, bei Hitze, körperlicher Aktivität oder trockener Heizungsluft entsprechend mehr.",
     "Im Alter lässt das natürliche Durstgefühl nach, weshalb viele ältere Menschen unbemerkt zu wenig trinken.",

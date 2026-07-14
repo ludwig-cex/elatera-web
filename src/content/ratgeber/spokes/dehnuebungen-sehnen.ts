@@ -9,6 +9,7 @@ export const dehnuebungenSehnen: Article = {
   metaDescription:
     "Sanfte Dehnübungen für geschmeidige Sehnen ab 55: warum Dehnen guttut, einfache sichere Übungen für den Alltag und die Rolle von Mangan, Vitamin C und Vitamin D.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/dehnuebungen-sehnen.png",
   keyFacts: [
     "Sehnen und Bänder bestehen zu einem großen Teil aus Kollagen, sind nur wenig durchblutet und reagieren empfindlich auf langes Stillsitzen.",
     "Halten Sie jede Dehnung ruhig etwa zwanzig Sekunden, immer nur bis zu einem angenehmen Zug und nie bis zum Schmerz, und vermeiden Sie ruckartiges Federn.",

@@ -9,6 +9,7 @@ export const kuerbiskerneBlase: Article = {
   metaDescription:
     "Warum Kürbiskerne seit Generationen rund um die Blase geschätzt werden: Herkunft, traditionelle Verwendung und was die Forschung neutral betrachtet. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/kuerbiskerne-blase.png",
   keyFacts: [
     "Kürbiskerne vom Gartenkürbis (Cucurbita pepo) werden besonders in Mittel- und Osteuropa seit Generationen traditionell im Zusammenhang mit dem Wohlbefinden rund um Blase und Harnwege erwähnt.",
     "Überlieferte Verwendung ist kein Beleg für eine bestimmte Wirkung, denn ein Hausmittel mit langer Geschichte bleibt ein Lebensmittel und wird dadurch nicht zum Arzneimittel.",

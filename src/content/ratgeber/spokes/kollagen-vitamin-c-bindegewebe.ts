@@ -9,6 +9,7 @@ export const kollagenVitaminCBindegewebe: Article = {
   metaDescription:
     "Kollagen und Vitamin C fürs Bindegewebe ab 55: Was Kollagen im Körper ist, wie Vitamin C zur normalen Kollagenbildung beiträgt und gute Quellen. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/kollagen-vitamin-c-bindegewebe.png",
   keyFacts: [
     "Kollagen ist das häufigste Eiweiß im menschlichen Körper und gibt Sehnen, Bändern, Knorpel, Knochen und Haut Form, Zugfestigkeit und Elastizität.",
     "Mit zunehmendem Alter verlangsamt sich die körpereigene Kollagenneubildung, und das Bindegewebe verliert allmählich an Spannkraft.",

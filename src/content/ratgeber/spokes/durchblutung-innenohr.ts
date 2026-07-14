@@ -9,6 +9,7 @@ export const durchblutungInnenohr: Article = {
   metaDescription:
     "Wie wird das Innenohr mit Blut versorgt und was verändert sich mit den Jahren? Pharmazeutisch erklärt: Hintergründe zur Durchblutung, Forschung zu Ginkgo und eine gefäßfreundliche Lebensweise.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/durchblutung-innenohr.png",
   keyFacts: [
     "Das Innenohr wird über sehr feine Endgefäße versorgt und ist auf eine stetige, gleichmäßige Durchblutung angewiesen, weil es dort kaum Ausweichwege gibt.",
     "Die Sinneszellen der Hörschnecke haben einen vergleichsweise hohen Energie- und Sauerstoffbedarf, den die Durchblutung fortlaufend decken muss.",

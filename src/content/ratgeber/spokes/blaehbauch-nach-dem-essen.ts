@@ -9,6 +9,7 @@ export const blaehbauchNachDemEssen: Article = {
   metaDescription:
     "Völlegefühl und Blähbauch nach dem Essen ab 55? Warum es dazu kommt, sanfte Alltagstipps zum langsamen Essen und kleinen Portionen sowie blähende Lebensmittel im Blick. Pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/blaehbauch-nach-dem-essen.png",
   keyFacts: [
     "Völlegefühl und Blähbauch nach dem Essen entstehen meist durch schnelles Essen, große Portionen, mitgeschluckte Luft und natürliche Gase, die beim Zersetzen mancher Nahrungsbestandteile im Darm entstehen.",
     "Langsames Essen mit gründlichem Kauen und mehrere kleinere Mahlzeiten über den Tag verteilt entlasten den Magen spürbar.",

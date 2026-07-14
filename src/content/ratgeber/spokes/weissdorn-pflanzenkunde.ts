@@ -9,6 +9,7 @@ export const weissdornPflanzenkunde: Article = {
   metaDescription:
     "Weißdorn im Porträt: Herkunft, lange Tradition und was die Forschung zum Extrakt neutral betrachtet hat. Pharmazeutisch und sachlich erklärt, ohne Heilversprechen.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/weissdorn-pflanzenkunde.png",
   keyFacts: [
     "Weißdorn, botanisch Crataegus, ist ein heimisches Rosengewächs aus Europa, Nordafrika und Westasien; traditionell verwendet werden die Blätter mit Blüten sowie die Früchte.",
     "Pittler und Kollegen (2008) haben Weißdorn-Extrakt in einer Cochrane-Übersichtsarbeit evaluiert; solche Arbeiten zu einzelnen Extrakten sind kein Wirknachweis für ein konkretes Endprodukt.",

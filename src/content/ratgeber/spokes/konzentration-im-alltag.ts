@@ -9,6 +9,7 @@ export const konzentration: Article = {
   metaDescription:
     "Wie Sie ab 55 konzentriert durch den Tag kommen: Pausen, Single-Tasking, Schlaf, Bewegung und Trinken im Alltag verankern. Pharmazeutisch erklärt, alltagsnah.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/konzentration-im-alltag.png",
   keyFacts: [
     "Konzentration lässt sich im Alltag am besten mit kurzen Pausen halten: Nach etwa 45 Minuten konzentrierter Arbeit helfen ein paar Minuten Aufstehen oder Umhergehen, damit der Kopf aufnahmefähig bleibt.",
     "Eine Sache nach der anderen zu erledigen schont die Aufmerksamkeit, denn jeder Aufgabenwechsel kostet Energie; viele Menschen sind zudem am Vormittag besonders aufnahmefähig.",

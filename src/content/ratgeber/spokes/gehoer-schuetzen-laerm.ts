@@ -9,6 +9,7 @@ export const gehoerSchuetzenLaerm: Article = {
   metaDescription:
     "Wie Lärm das Gehör belastet und wie Sie Ihre Ohren ab 55 im Alltag schützen: Gehörschutz, Pausen, regelmäßige Hörtests. Pharmazeutisch erklärt für ein bewusstes Hören.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/gehoer-schuetzen-laerm.png",
   keyFacts: [
     "Die feinen Sinneszellen im Innenohr erholen sich nur eingeschränkt, weshalb ein achtsamer Umgang mit Lärm über die Jahre eine große Rolle spielt.",
     "Für die Belastung des Gehörs zählen Lautstärke und Dauer zusammen: Müssen Sie die Stimme heben, um sich auf Armlänge verständlich zu machen, ist die Umgebung bereits recht laut.",

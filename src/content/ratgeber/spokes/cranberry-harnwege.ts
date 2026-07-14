@@ -9,6 +9,7 @@ export const cranberryHarnwege: Article = {
   metaDescription:
     "Cranberry und die Harnwege: Herkunft der roten Beere, was Studien neutral untersucht haben und wie Sie die Befunde einordnen. Pharmazeutisch und sachlich erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/cranberry-harnwege.png",
   keyFacts: [
     "Die Cranberry (Vaccinium macrocarpon) stammt aus den Moorlandschaften Nordamerikas und wird dort seit Jahrhunderten als Lebensmittel geschätzt.",
     "Eine Cochrane-Übersichtsarbeit von Jepson und Kollegen (2012) hat die Studien zur Cranberry methodisch ausgewertet, solche Arbeiten zeigen das Forschungsinteresse, belegen aber keine Wirkung eines konkreten Endprodukts.",

@@ -9,6 +9,7 @@ export const zinkKognition: Article = {
   metaDescription:
     "Welche Aufgaben Zink im Körper hat und was die geprüfte EFSA-Aussage zur normalen kognitiven Funktion bedeutet. Mit guten Zinkquellen, pharmazeutisch erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/zink-kognitive-funktion.png",
   keyFacts: [
     "Zink ist ein essenzielles Spurenelement, das der Körper weder selbst herstellen noch in nennenswertem Umfang speichern kann; es muss regelmäßig über die Nahrung zugeführt werden.",
     "Zink trägt zu einer normalen kognitiven Funktion bei; diese Aussage ist von der Europäischen Behörde für Lebensmittelsicherheit geprüft und gilt für den Nährstoff selbst.",

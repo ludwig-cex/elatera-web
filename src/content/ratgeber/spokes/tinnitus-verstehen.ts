@@ -9,6 +9,7 @@ export const tinnitusVerstehen: Article = {
   metaDescription:
     "Tinnitus ab 55: Was Ohrgeräusche sind, welche Auslöser infrage kommen und wie Betroffene im Alltag damit umgehen. Wann ein Besuch beim HNO-Arzt nötig ist.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/tinnitus-verstehen.png",
   keyFacts: [
     "Tinnitus bezeichnet Ohrgeräusche wie Pfeifen, Rauschen oder Klingeln ohne äußere Schallquelle und ist keine eigenständige Krankheit, sondern ein Symptom mit sehr unterschiedlichen Hintergründen.",
     "Ohrgeräusche sind weit verbreitet und in den meisten Fällen kein Zeichen einer ernsten Erkrankung.",

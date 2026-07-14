@@ -9,6 +9,7 @@ export const beckenbodentrainingBlase: Article = {
   metaDescription:
     "Beckenbodentraining ab 55: So finden und kräftigen Sie die Muskulatur, die Ihre Blase stützt. Einfache Übungen für den Alltag und die Rolle gut versorgter Schleimhäute.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/beckenbodentraining-blase.png",
   keyFacts: [
     "Der Beckenboden ist eine Schicht aus Muskeln und Bindegewebe, die die Blase stützt, und er bleibt wie jede Muskulatur bis ins hohe Alter trainierbar.",
     "Die Grundübung besteht darin, den Beckenboden sanft anzuspannen, die Spannung einige Sekunden zu halten und dann bewusst wieder zu lösen, in Reihen von etwa acht bis zehn Wiederholungen.",

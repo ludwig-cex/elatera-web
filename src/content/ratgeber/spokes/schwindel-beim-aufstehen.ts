@@ -9,6 +9,7 @@ export const schwindelBeimAufstehen: Article = {
   metaDescription:
     "Schwindel beim Aufstehen ab 55? Was dabei im Kreislauf passiert, ruhige Alltagstipps zum Aufstehen und Trinken und wann Sie ärztlich abklären sollten. Erklärt.",
   updated: "2026-06-15",
+  heroImage: "/ratgeber-img/schwindel-beim-aufstehen.png",
   keyFacts: [
     "Beim Aufstehen sackt ein Teil des Blutes der Schwerkraft folgend in die Beine, sodass dem Kopf für einen kurzen Moment etwas weniger Blut zur Verfügung steht; normalerweise gleicht der Körper das innerhalb von Sekunden aus.",
     "Mit den Jahren läuft dieser Kreislaufausgleich oft etwas langsamer ab, weshalb der kurze Moment der Unsicherheit deutlicher wahrgenommen wird.",
