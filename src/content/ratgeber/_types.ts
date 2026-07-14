@@ -16,6 +16,7 @@ export type Article = {
   title: string; // H1 + SEO title
   metaDescription: string; // ~150-160 chars
   updated: string; // ISO date, e.g. "2026-06-15"
+  heroImage?: string; // optional, unter /public, z. B. "/ratgeber-img/gehirnjogging-ab-60.png"
   intro: string[]; // lead paragraphs
   sections: ArticleSection[];
   faq: ArticleFaq[];

@@ -121,6 +121,19 @@ export default async function RatgeberArticlePage({
             <span>Aktualisiert {formatDate(article.updated)}</span>
           </div>
 
+          {/* Hero-Bild (optional pro Artikel) */}
+          {article.heroImage && (
+            <div className="mb-10 rounded-2xl overflow-hidden" style={{ aspectRatio: "16 / 9" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={article.heroImage}
+                alt={article.title}
+                className="w-full h-full object-cover"
+                loading="eager"
+              />
+            </div>
+          )}
+
           {/* Intro */}
           <div className="space-y-4 text-lg leading-relaxed mb-10" style={{ color: "var(--color-ink-soft)" }}>
             {article.intro.map((p, i) => (
@@ -174,37 +187,53 @@ export default async function RatgeberArticlePage({
             </section>
           )}
 
-          {/* Produkt-CTA */}
+          {/* Produkt-Support-Box: dezent werblich, mit Social Proof */}
           <aside
-            className="mt-12 p-6 rounded-xl flex flex-col sm:flex-row items-start sm:items-center gap-5"
-            style={{ background: "var(--color-cream)" }}
+            className="mt-12 rounded-2xl overflow-hidden"
+            style={{ border: "1px solid rgba(12,43,99,0.16)" }}
           >
             <div
-              className="w-20 h-20 rounded-lg flex-none overflow-hidden"
-              style={{ background: "var(--color-ivory)" }}
+              className="px-6 py-3 text-xs uppercase tracking-widest font-medium"
+              style={{ background: "var(--color-navy)", color: "#fff" }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={`/products/${product.slug}/solo.png`}
-                alt={product.name}
-                className="w-full h-full object-contain"
-                loading="lazy"
-              />
+              Unterstützung aus der Apotheken-Rezeptur
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="text-xs uppercase tracking-widest text-muted mb-1">
-                Passend zum Thema
+            <div className="p-6 flex flex-col sm:flex-row items-start sm:items-center gap-6" style={{ background: "#fff" }}>
+              <div
+                className="w-28 h-28 rounded-xl flex-none overflow-hidden"
+                style={{ background: "var(--color-cream)" }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={`/products/${product.slug}/solo.png`}
+                  alt={product.name}
+                  className="w-full h-full object-contain"
+                  loading="lazy"
+                />
               </div>
-              <div className="serif text-xl leading-tight">{product.name}</div>
-              <p className="text-sm text-muted mt-1">{product.hero.subheadline}</p>
+              <div className="flex-1 min-w-0">
+                <div className="serif text-2xl leading-tight" style={{ color: "var(--color-navy)" }}>
+                  {product.name}
+                </div>
+                <div className="flex items-center gap-2 mt-1.5 text-sm">
+                  <span aria-hidden style={{ color: "#f2b01e", letterSpacing: "1px" }}>★★★★★</span>
+                  <span className="font-semibold" style={{ color: "var(--color-ink)" }}>4,7/5</span>
+                  <span style={{ color: "var(--color-muted)" }}>· über 3.500 zufriedene Kundinnen und Kunden</span>
+                </div>
+                <p className="text-sm mt-2 leading-relaxed" style={{ color: "var(--color-ink-soft)" }}>
+                  {product.name} wurde von approbierten Pharmazeuten entwickelt, um Menschen genau bei
+                  diesem Thema im Alltag zu begleiten: 1 Kapsel täglich, PZN-registriert, in Deutschland
+                  hergestellt und mit 90 Tagen Geld-zurück-Garantie.
+                </p>
+              </div>
+              <a
+                href={`https://www.nutra-sana.de/products/${product.slug}?utm_source=ratgeber&utm_medium=content&utm_campaign=${article.slug}`}
+                className="flex-none py-3.5 px-7 rounded-full font-semibold text-sm whitespace-nowrap"
+                style={{ background: "var(--color-navy)", color: "#fff" }}
+              >
+                {product.name} ansehen
+              </a>
             </div>
-            <Link
-              href={`/products/${product.slug}`}
-              className="flex-none py-3 px-6 rounded-lg font-medium text-sm whitespace-nowrap"
-              style={{ background: "var(--color-forest)", color: "var(--color-on-dark)" }}
-            >
-              {product.name} ansehen
-            </Link>
           </aside>
 
           {/* FAQ */}

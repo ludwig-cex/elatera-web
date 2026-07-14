@@ -9,6 +9,7 @@ export const gehirnjoggingAb60: Article = {
   metaDescription:
     "6 alltagstaugliche Gehirnjogging-Übungen ab 60: ohne App, ohne Rätselheft, direkt in den Tag eingebaut. Mit Anleitung, Steigerungen und pharmazeutischer Einordnung.",
   updated: "2026-07-14",
+  heroImage: "/ratgeber-img/gehirnjogging-ab-60.png",
   intro: [
     "Für wirksames Gehirnjogging brauchen Sie weder eine App noch ein Rätselheft. Die besten Übungen verstecken sich in Momenten, die Sie ohnehin erleben: beim Einkaufen, beim Zähneputzen, auf dem Spaziergang, am Abendbrottisch. Entscheidend ist nur, diese Momente bewusst zu nutzen, statt sie im Autopiloten verstreichen zu lassen.",
     "Dieser Ratgeber stellt Ihnen sechs Übungen vor, die sich ab 60 besonders bewährt haben. Jede dauert nur wenige Minuten, braucht keinerlei Material und lässt sich steigern, sobald sie leichtfällt. Am Ende ordnen wir ein, welche Rolle Ernährung und einzelne Mikronährstoffe für die geistige Frische spielen.",

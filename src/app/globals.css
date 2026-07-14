@@ -7,30 +7,30 @@
 
 :root {
   /* Brand */
-  --color-forest: #1f3b32;
-  --color-moss: #2f5c47;
-  --color-pine: #0f2a23;
-  --color-sage: #7a9686;
+  --color-forest: #0c2b63;
+  --color-moss: #123a80;
+  --color-pine: #081d45;
+  --color-sage: #8fa3c8;
 
   /* Support */
-  --color-navy: #14304a;
-  --color-indigo: #1d4768;
-  --color-steel: #6f8aa3;
+  --color-navy: #0c2b63;
+  --color-indigo: #4770db;
+  --color-steel: #7d8db1;
 
   /* Accents */
-  --color-copper: #a36b3a;
-  --color-gold: #b5915b;
+  --color-copper: #c62026;
+  --color-gold: #d4a83c;
 
   /* Backgrounds */
-  --color-paper: #f4f1ea;
-  --color-cream: #efe9dc;
-  --color-ivory: #faf6ec;
+  --color-paper: #ffffff;
+  --color-cream: #eff0f5;
+  --color-ivory: #f7f9fc;
 
   /* Text */
-  --color-ink: #1f2a26;
-  --color-ink-soft: #3b4843;
-  --color-muted: #7a7060;
-  --color-on-dark: #faf6ec;
+  --color-ink: #10203f;
+  --color-ink-soft: #2b3a55;
+  --color-muted: #55648a;
+  --color-on-dark: #ffffff;
 
   /* Product Accents */
   --color-vertisana-bg: #e6ece4;
@@ -58,7 +58,7 @@
   --color-somnisana-capsule: #243a55;
 
   /* Type */
-  --font-serif: var(--font-cormorant), "Cormorant Garamond", Garamond, serif;
+  --font-serif: var(--font-cormorant), "Merriweather", Georgia, serif;
   --font-sans: var(--font-dm-sans), "DM Sans", system-ui, sans-serif;
 }
 

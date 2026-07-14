@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Merriweather, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -17,16 +17,15 @@ import { ChromeGate } from "@/components/site/chrome-gate";
 import { StructuredData } from "@/components/site/structured-data";
 import { Analytics } from "@vercel/analytics/next";
 
-const cormorant = Cormorant_Garamond({
+const cormorant = Merriweather({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "700", "900"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const dmSans = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-dm-sans",
   display: "swap",
 });
