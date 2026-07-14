@@ -1,9 +1,9 @@
 #!/bin/bash
-# Copies real files into public/products/<key>/ from credentials_output/produkte/<key>/.
+# Copies real files into public/products/<key>/ from asset-library/produkte/<key>/.
 # We use real files (not symlinks) because Vercel's build cannot follow symlinks
-# that point outside the repo root (../../../credentials_output/...).
+# that point outside the repo root (../../../asset-library/...).
 #
-# Renames credentials_output filenames to match elatera-web's products.ts:
+# Renames asset-library filenames to match elatera-web's products.ts:
 #   solo.png        ← packshot.png
 #   stillleben.png  ← packshot_stillleben.png
 #   nutrients.png   ← nutrient_table.png
@@ -17,12 +17,12 @@
 #
 # Existing files for vertisana/mobilisana/somnisana are LEFT UNTOUCHED —
 # this script only fills in the 6 new products. Re-run any time the
-# credentials_output source changes to refresh.
+# asset-library source changes to refresh.
 
 set -e
 cd "$(dirname "$0")/.."   # → elatera-web/
 
-CRED=../credentials_output
+CRED=../asset-library
 
 # Replace target with a real file copy (cp -L follows symlinks at source if any).
 # Uses cp -f to overwrite. Idempotent.
