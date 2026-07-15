@@ -35,7 +35,7 @@ const windowSince = berlinDay(7);
   ]);
   console.log(`Meta-Zeilen: ${meta.length} · PostHog-Zeilen: ${funnel.length} · Landungen-Zeilen: ${landings.length}`);
 
-  const { rows, unmatchedFunnel } = buildRawRows(meta, funnel, landings);
+  const { rows, unmatchedFunnel, organicRows } = buildRawRows(meta, funnel, landings);
   const u = unmatchedFunnel.reduce(
     (a, g) => ({ cta: a.cta + g.lp_cta, wk: a.wk + g.add_to_cart, kauf: a.kauf + g.purchased }),
     { cta: 0, wk: 0, kauf: 0 }
@@ -45,7 +45,7 @@ const windowSince = berlinDay(7);
       `(nicht-Ad-zugeordnet: ${u.cta} CTA, ${u.wk} WK, ${u.kauf} Kauf — organisch/direkt)`
   );
 
-  const sheet = await pushRows(rows);
+  const sheet = await pushRows([...rows, ...organicRows]);
   console.log(`Sheet: ${JSON.stringify(sheet)}\n`);
 
   const wRows = rows.filter((r) => r.date >= windowSince);

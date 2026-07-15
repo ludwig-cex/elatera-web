@@ -57,10 +57,12 @@ export async function GET(request: Request) {
       fetchLandings(since, until),
     ]);
 
-    const { rows, unmatchedFunnel } = buildRawRows(meta, funnel, landings);
+    const { rows, unmatchedFunnel, organicRows } = buildRawRows(meta, funnel, landings);
 
     // Write everything we fetched to the sheet (idempotent upsert by date).
-    const sheet = await pushRows(rows);
+    // Organik/KI-Referrals (z.B. copilot.com) gehen mit ins Sheet — als eigene
+    // Zero-Spend-Zeilen; die Ad-Aggregate unten rechnen weiter nur mit `rows`.
+    const sheet = await pushRows([...rows, ...organicRows]);
 
     // Aggregates for the briefing.
     const yRows = rows.filter((r) => r.date === until);

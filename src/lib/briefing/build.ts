@@ -38,13 +38,17 @@ const onlyDigits = (s: string) => /^\d{6,}$/.test(s);
  * id first, then by name — without ever double-counting a funnel row.
  *
  * PostHog rows that match no Meta ad (organic / direct / stale ads) are returned
- * separately so nothing is silently dropped.
+ * separately so nothing is silently dropped. `organicRows` re-shapes them as
+ * zero-spend RawRows for the sheet (source = utm_source, z.B. copilot.com beim
+ * Bing/Copilot-Referral) — sie gehören ins Rohdaten-Sheet, aber NICHT in die
+ * Ad-Aggregate (Spend/CTR/CAC), sonst verwässern organische Conversions die
+ * Ads-Auswertung.
  */
 export function buildRawRows(
   meta: MetaDayRow[],
   funnel: FunnelDayRow[],
   landings: LandingDay[] = []
-): { rows: RawRow[]; unmatchedFunnel: FunnelGroup[] } {
+): { rows: RawRow[]; unmatchedFunnel: FunnelGroup[]; organicRows: RawRow[] } {
   // Advertorial landings keyed by date|normalised-ad (summed across url-encoded
   // duplicates), looked up per Meta ad row — independent of the funnel join.
   const landingsByKey = new Map<string, number>();
@@ -148,7 +152,34 @@ export function buildRawRows(
     (g) => !g._used && (g.lp_cta || g.add_to_cart || g.checkout || g.pay_submit || g.purchased)
   );
 
-  return { rows, unmatchedFunnel };
+  const organicRows: RawRow[] = unmatchedFunnel.map((g) => ({
+    date: g.date,
+    campaign: g.campaign || "(ohne Kampagne)",
+    adset: "(kein Meta-Match)",
+    ad: g.ad || (g.source ? `(${g.source})` : "(organisch/direkt)"),
+    source: g.source,
+    impressions: 0,
+    clicks: 0,
+    spend: 0,
+    lp_cta: g.lp_cta,
+    add_to_cart: g.add_to_cart,
+    checkout: g.checkout,
+    pay_submit: g.pay_submit,
+    purchased: g.purchased,
+    landings: 0,
+    reach: 0,
+    all_clicks: 0,
+    meta_lpv: 0,
+    product_view: g.product_viewed,
+    revenue: 0,
+    product_view_direct: g.product_viewed_direct,
+    direct_cart: g.direct_cart,
+    order_click: g.order_click,
+    checkout_seeded: g.checkout_seeded,
+    order_click_seeded: g.order_click_seeded,
+  }));
+
+  return { rows, unmatchedFunnel, organicRows };
 }
 
 const keyForLevel = (r: RawRow, level: Level): string =>
