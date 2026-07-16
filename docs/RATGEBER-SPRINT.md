@@ -127,8 +127,6 @@ statt Themen zu raten.
 
 ## Backlog (Priorität von oben)
 
-- [ ] gehirnjogging-kostenlos — „Gehirnjogging kostenlos: 7 Übungen ganz ohne App und Abo" (Query-Umfeld: gehirnjogging kostenlos)
-- [ ] gedaechtnistraining-senioren — „Gedächtnistraining für Senioren: Was wirklich hilft und was Zeitverschwendung ist"
 - [ ] loci-methode — „Merkfähigkeit verbessern: Die Loci-Methode einfach erklärt (mit Übung)"
 - [ ] wortfindungsstoerungen-ab-60 — „Wortfindungsstörungen ab 60: Was normal ist und wann Sie hinschauen sollten"
 - [ ] gehirnjogging-zum-ausdrucken — „Gehirnjogging zum Ausdrucken: 10 Aufgabenblätter für jeden Tag" (ggf. PDF)
@@ -147,6 +145,8 @@ statt Themen zu raten.
 
 ## Erledigt
 
+- [x] 16.07. gehirnjogging-kostenlos — „Gehirnjogging kostenlos: 7 Übungen ganz ohne App und Abo" (7 kostenlose Übungen/Quellen, Answer-First, Quellen, 2 Mitmach-Übungen; individuelles Hero-Bild: Kartenspiel-Szene)
+- [x] 16.07. gedaechtnistraining-senioren — „Gedächtnistraining für Senioren: Was wirklich hilft und was Zeitverschwendung ist" (4 belegte Bausteine + 4 Irrtümer/Transfer-Effekt, Wochenplan, Quellen; individuelles Hero-Bild: Spaziergang im Herbst)
 - [x] 14.07. META schlaf-guide — „Besser schlafen ab 60: Der komplette Überblick" (Hub mit Sektionsbildern, Quellenverzeichnis, Wochenplan; Vorlage für weitere Guides)
 - [x] 14.07. META gedaechtnis-guide — „Der große Gedächtnis-Guide ab 60" (Hub-Artikel, verlinkt alle 6 Gedächtnis-Artikel via relatedSlugs)
 - [x] 14.07. gehirnjogging-ab-60 — „Gehirnjogging ab 60: 6 Übungen für jeden Tag" (+ Hero-Bild)
@@ -157,3 +157,11 @@ statt Themen zu raten.
 
 - 14.07.: Sprint-Setup: neues Artikel-Design (Navy-Brandmatch, Hero-Bilder,
   Support-Box mit 4,7/5 + 3.500 Kunden), IndexNow live, Bing verifiziert.
+- 16.07.: 2 Gedächtnis-Spokes (gehirnjogging-kostenlos, gedaechtnistraining-
+  senioren) fertiggestellt. Anmerkung: Die Artikel-.ts + Registrierung +
+  Gegenverlinkung waren bereits in Commit 237c6fe (Versand-Test) mitgerutscht,
+  ABER ohne Hero-Bilder und ohne Doc-Update. In diesem Lauf die beiden
+  individuellen Hero-Bilder (GPT Image 2, Kartenspiel + Herbst-Spaziergang)
+  generiert, nach public/ratgeber-img/ committet und die Sprint-Doc
+  nachgezogen. Hero-Bilder der Artikel zeigten bis dahin auf nicht deployte
+  PNGs. Backlog jetzt sauber, Bebilderung vollständig.
