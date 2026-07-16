@@ -3,7 +3,7 @@
 import { Truck, ShieldCheck, Award, FlaskConical, Leaf, Heart, PillBottle } from "lucide-react";
 
 const ITEMS = [
-  { icon: Truck, label: "Gratis Versand ab 60 €" },
+  { icon: Truck, label: "Kostenloser Versand" },
   { icon: ShieldCheck, label: "90 Tage Geld-zurück-Garantie" },
   { icon: Award, label: "Made in Germany · Laborgeprüft" },
   { icon: FlaskConical, label: "Wissenschaftlich entwickelt" },

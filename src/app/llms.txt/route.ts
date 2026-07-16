@@ -43,7 +43,7 @@ export function GET(): Response {
     "",
     "## Service",
     "",
-    "- 90 Tage Geld-zurück-Garantie, Gratis-Versand ab 60 €",
+    "- 90 Tage Geld-zurück-Garantie, kostenloser Versand",
     "- Kundenservice: kundenservice@nutra-sana.de (Antwort innerhalb von 24 Stunden)",
     `- Hilfe & FAQ: ${SHOP}/pages/hilfe-kontakt`,
     "",

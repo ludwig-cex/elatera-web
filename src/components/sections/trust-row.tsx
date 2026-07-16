@@ -4,7 +4,7 @@ export function TrustRow() {
   const items = [
     { icon: <Award className="w-4 h-4" />, label: "Made in Germany" },
     { icon: <ShieldCheck className="w-4 h-4" />, label: "90 Tage Geld zurück" },
-    { icon: <Truck className="w-4 h-4" />, label: "Gratis Versand ab 60 €" },
+    { icon: <Truck className="w-4 h-4" />, label: "Kostenloser Versand" },
     { icon: <Users className="w-4 h-4" />, label: "Über 1.200 zufriedene Kund:innen" },
   ];
   return (

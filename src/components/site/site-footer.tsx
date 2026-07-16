@@ -74,7 +74,7 @@ export function SiteFooter() {
             <ul className="space-y-2 text-sm opacity-90">
               <li>Klarna · PayPal · Apple Pay</li>
               <li>DHL · DPD · Hermes</li>
-              <li>Gratis ab 60&nbsp;€</li>
+              <li>Kostenloser Versand</li>
             </ul>
           </div>
         </div>

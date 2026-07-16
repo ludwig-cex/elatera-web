@@ -31,7 +31,7 @@ export const HELP_CATEGORIES: HelpCategory[] = [
       },
       {
         q: "Was kostet der Versand?",
-        a: "Versand innerhalb Deutschlands ist ab 60 € Warenkorbwert kostenlos. Unter 60 € berechnen wir 4,90 €. Im Spar-Abo ist der Versand dauerhaft kostenfrei — auch bei kleinerem Warenkorb.",
+        a: "Der Versand innerhalb Deutschlands ist für Sie kostenlos. Im Spar-Abo ist der Versand dauerhaft kostenfrei — auch bei kleinerem Warenkorb.",
         keywords: ["versandkosten", "kostenlos", "porto"],
       },
       {

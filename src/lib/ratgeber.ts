@@ -27,6 +27,8 @@ import { gedaechtnisGuide } from "@/content/ratgeber/spokes/gedaechtnis-guide";
 import { gehirnjogging } from "@/content/ratgeber/spokes/gehirnjogging-uebungen";
 import { gehirnjoggingAb60 } from "@/content/ratgeber/spokes/gehirnjogging-ab-60";
 import { gehirnjoggingAufgaben } from "@/content/ratgeber/spokes/gehirnjogging-aufgaben";
+import { gehirnjoggingKostenlos } from "@/content/ratgeber/spokes/gehirnjogging-kostenlos";
+import { gedaechtnistrainingSenioren } from "@/content/ratgeber/spokes/gedaechtnistraining-senioren";
 import { zinkKognition } from "@/content/ratgeber/spokes/zink-kognitive-funktion";
 import { ernaehrungGehirn } from "@/content/ratgeber/spokes/ernaehrung-fuers-gehirn";
 import { konzentration } from "@/content/ratgeber/spokes/konzentration-im-alltag";
@@ -91,6 +93,8 @@ const SPOKES: Article[] = [
   gehirnjogging,
   gehirnjoggingAb60,
   gehirnjoggingAufgaben,
+  gehirnjoggingKostenlos,
+  gedaechtnistrainingSenioren,
   zinkKognition,
   ernaehrungGehirn,
   konzentration,

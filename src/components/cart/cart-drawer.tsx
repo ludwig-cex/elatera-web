@@ -280,7 +280,7 @@ export function CartDrawer() {
                     Zur Kasse
                   </button>
                   <p className="text-[11px] text-muted text-center">
-                    Versandkostenfrei ab 60&nbsp;€ · 90 Tage Geld-zurück-Garantie
+                    Kostenloser Versand · 90 Tage Geld-zurück-Garantie
                   </p>
                 </>
               ) : step === "payment" ? (
@@ -373,7 +373,7 @@ export function CartDrawer() {
                   Zur Kasse
                 </button>
                 <p className="text-[11px] text-muted text-center">
-                  Versandkostenfrei ab 60&nbsp;€ · 90 Tage Geld-zurück-Garantie
+                  Kostenloser Versand · 90 Tage Geld-zurück-Garantie
                 </p>
               </>
             ) : submitted ? (

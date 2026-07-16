@@ -37,6 +37,8 @@ export const gedaechtnisGuide: Article = {
   relatedSlugs: [
     "gehirnjogging-ab-60",
     "gehirnjogging-aufgaben",
+    "gehirnjogging-kostenlos",
+    "gedaechtnistraining-senioren",
     "gehirnjogging-uebungen",
     "konzentration-im-alltag",
     "ernaehrung-fuers-gehirn",

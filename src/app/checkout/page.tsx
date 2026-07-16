@@ -253,7 +253,7 @@ export default function CheckoutPage() {
 
                   <div className="grid grid-cols-1 gap-2 mt-5">
                     {[
-                      { icon: <Truck className="w-4 h-4" />, label: "Versandkostenfrei ab 60 €" },
+                      { icon: <Truck className="w-4 h-4" />, label: "Kostenloser Versand" },
                       { icon: <RotateCcw className="w-4 h-4" />, label: "90 Tage Geld-zurück-Garantie" },
                       { icon: <ShieldCheck className="w-4 h-4" />, label: "Kein Geld abgebucht bis zum Versand" },
                     ].map((b) => (
