@@ -206,9 +206,9 @@ const COMMON_PHARMACIST = {
 };
 
 const COMMON_BUNDLES: Bundle[] = [
-  { months: 1, capsules: 30,  priceCents: 4999,  discountPct: 0 },
-  { months: 3, capsules: 90,  priceCents: 9898,  rrpCents: 14997, discountPct: 34, highlight: "Sehr beliebt" },
-  { months: 6, capsules: 180, priceCents: 16496, rrpCents: 29994, discountPct: 45 },
+  { months: 1, capsules: 30,  priceCents: 3999,  discountPct: 0 },
+  { months: 3, capsules: 90,  priceCents: 7918,  rrpCents: 11997, discountPct: 34, highlight: "Sehr beliebt" },
+  { months: 6, capsules: 180, priceCents: 13197, rrpCents: 23994, discountPct: 45 },
 ];
 
 export type CustomerQuote = { name: string; age: number; text: string };
